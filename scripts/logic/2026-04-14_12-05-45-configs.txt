@@ -1,0 +1,368 @@
+// --- PROJECT TREE (src) ---
+src/
+│   ├── Skryper_2025-12-03_20-02-01.exe
+│   ├── app
+│   │   ├── design
+│   │   │   └── page.tsx
+│   │   ├── dev
+│   │   │   └── page.tsx
+│   │   ├── impressum
+│   │   │   └── page.tsx
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   └── screensaver
+│   │       └── page.tsx
+│   ├── assets
+│   │   ├── badges
+│   │   ├── images
+│   │   │   └── Projects
+│   │   │       ├── colorpal_logo.webp
+│   │   │       ├── flavorfusion_logo.webp
+│   │   │       ├── inkgrid_logo.webp
+│   │   │       ├── kim_logo.webp
+│   │   │       ├── noctua_logo.webp
+│   │   │       ├── shizen-hero.webp
+│   │   │       ├── shizen-logo.webp
+│   │   │       ├── skindra_hero.webp
+│   │   │       ├── skindra_logo.webp
+│   │   │       ├── skryper_logo.webp
+│   │   │       ├── skryper_structra_logo.webp
+│   │   │       ├── structra_logo.webp
+│   │   │       └── ziran_logo.webp
+│   │   └── videos
+│   ├── components
+│   │   ├── actions
+│   │   │   ├── Button.tsx
+│   │   │   ├── ButtonGrid.tsx
+│   │   │   ├── RadioToggle.tsx
+│   │   │   ├── SegmentedControl.tsx
+│   │   │   └── ThemeToggleButton.tsx
+│   │   ├── atmosphere
+│   │   │   ├── MeshGradientBackground.tsx
+│   │   │   ├── meshEngine.ts
+│   │   │   └── visualProfile.ts
+│   │   ├── card
+│   │   │   ├── CardGrid.tsx
+│   │   │   ├── FeatureCard.tsx
+│   │   │   └── ProjectCard.tsx
+│   │   ├── data-display
+│   │   │   └── ListComponent.tsx
+│   │   ├── feedback
+│   │   │   ├── Badge.tsx
+│   │   │   ├── BadgeGrid.tsx
+│   │   │   ├── BadgeLibrary.ts
+│   │   │   ├── Callout.tsx
+│   │   │   └── StatusBadge.tsx
+│   │   ├── forms
+│   │   │   ├── Checkbox.tsx
+│   │   │   ├── FieldRow.tsx
+│   │   │   └── Select.tsx
+│   │   ├── lightbox
+│   │   │   ├── Lightbox.tsx
+│   │   │   ├── LightboxNavigation.tsx
+│   │   │   ├── ModalOverlay.tsx
+│   │   │   └── lightboxScale.ts
+│   │   ├── markdown
+│   │   │   ├── MarkdownBase.tsx
+│   │   │   ├── MarkdownCallouts.tsx
+│   │   │   ├── MarkdownCode.tsx
+│   │   │   ├── MarkdownMedia.tsx
+│   │   │   ├── MarkdownPreview.tsx
+│   │   │   ├── MarkdownTables.tsx
+│   │   │   └── index.ts
+│   │   ├── overlays
+│   │   │   └── DialogBackdrop.tsx
+│   │   ├── pagekit
+│   │   │   ├── islands
+│   │   │   │   └── ProgressIsland.tsx
+│   │   │   ├── recipes
+│   │   │   │   └── GridRecipe.tsx
+│   │   │   └── skins
+│   │   │       └── index.ts
+│   │   ├── pagination
+│   │   │   └── Pager.tsx
+│   │   ├── patterns
+│   │   │   ├── bento
+│   │   │   │   └── BentoSection.tsx
+│   │   │   ├── hero
+│   │   │   │   └── HeroRecipe.tsx
+│   │   │   ├── islands
+│   │   │   ├── sections
+│   │   │   │   └── SectionRecipe.tsx
+│   │   │   ├── skins
+│   │   │   └── wrapper
+│   │   │       ├── CardWrapper.tsx
+│   │   │       └── PageWrapper.tsx
+│   │   ├── primitives
+│   │   │   ├── Card.tsx
+│   │   │   ├── Container.tsx
+│   │   │   ├── Grid.tsx
+│   │   │   ├── Inline.tsx
+│   │   │   ├── LumenSurface.tsx
+│   │   │   ├── Section.tsx
+│   │   │   ├── Stack.tsx
+│   │   │   └── Surface.tsx
+│   │   └── utilities
+│   │       ├── HighlightText.tsx
+│   │       └── SmoothScroller.tsx
+│   ├── design
+│   │   ├── Providers.tsx
+│   │   ├── StyledComponentsRegistry.tsx
+│   │   ├── global.tsx
+│   │   ├── hooks
+│   │   │   └── useAccent.ts
+│   │   ├── semantic.ts
+│   │   ├── theme.ts
+│   │   ├── tokens.ts
+│   │   └── typography.tsx
+│   ├── errorhandling
+│   │   ├── errorBoundary.tsx
+│   │   └── errorTypes.ts
+│   ├── features
+│   │   ├── home
+│   │   │   ├── screens
+│   │   │   │   └── HomePage.tsx
+│   │   │   └── sections
+│   │   │       ├── HomeIntroduction.tsx
+│   │   │       └── MainStageSection.tsx
+│   │   └── projects
+│   │       ├── PortfolioProjectsSection.tsx
+│   │       ├── README.md
+│   │       ├── design
+│   │       │   ├── flavorfusion
+│   │       │   │   ├── FlavorFusionCard.tsx
+│   │       │   │   ├── FlavorFusionDetails.tsx
+│   │       │   │   └── FlavorFusionTeaserCard.tsx
+│   │       │   └── kim
+│   │       │       ├── KimCard.tsx
+│   │       │       ├── KimDetails.tsx
+│   │       │       └── KimTeaserCard.tsx
+│   │       ├── dev
+│   │       │   ├── inkgrid
+│   │       │   │   ├── InkGridCard.tsx
+│   │       │   │   ├── InkGridDetails.tsx
+│   │       │   │   └── InkGridTeaserCard.tsx
+│   │       │   ├── noctua
+│   │       │   │   ├── NoctuaCard.tsx
+│   │       │   │   ├── NoctuaDetails.tsx
+│   │       │   │   └── NoctuaTeaserCard.tsx
+│   │       │   ├── skindra
+│   │       │   │   ├── SkindraCard.tsx
+│   │       │   │   ├── SkindraDetails.tsx
+│   │       │   │   └── SkindraTeaserCard.tsx
+│   │       │   ├── srkyper
+│   │       │   │   ├── SkryperCard.tsx
+│   │       │   │   ├── SkryperDetails.tsx
+│   │       │   │   └── SkryperTeaserCard.tsx
+│   │       │   └── ziran
+│   │       │       ├── ZiranCard.tsx
+│   │       │       ├── ZiranDetails.tsx
+│   │       │       └── ZiranTeaserCard.tsx
+│   │       ├── fullstack
+│   │       │   └── shizen
+│   │       │       ├── ShizenCard.tsx
+│   │       │       ├── ShizenDetails.tsx
+│   │       │       └── ShizenTeaserCard.tsx
+│   │       └── projectRegistry.tsx
+│   ├── layouts
+│   │   ├── AppFooter.tsx
+│   │   ├── AppHeader.tsx
+│   │   └── Shell.tsx
+│   └── logging
+│       ├── context
+│       │   └── ids.ts
+│       ├── format.ts
+│       ├── index.ts
+│       ├── logger.ts
+│       └── sinks
+│           └── consoleSink.ts
+
+// --- eslint.config.mjs ---
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+import js from '@eslint/js'
+import { FlatCompat } from '@eslint/eslintrc'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+const compat = new FlatCompat({
+  baseDirectory: __dirname,
+  recommendedConfig: js.configs.recommended,
+  allConfig: js.configs.all,
+})
+
+export default [
+  ...compat.config({
+    extends: [
+      'next/core-web-vitals',
+      'plugin:jsx-a11y/recommended',
+      'plugin:prettier/recommended',
+    ],
+    parser: '@typescript-eslint/parser',
+    parserOptions: {
+      ecmaVersion: 2021,
+      sourceType: 'module',
+      ecmaFeatures: { jsx: true },
+      project: './tsconfig.json',
+    },
+    env: {
+      browser: true,
+      es2021: true,
+      jest: false,
+    },
+    settings: {
+      'import/resolver': {
+        typescript: { project: './tsconfig.json' },
+        node: { extensions: ['.js', '.jsx', '.mjs', '.ts', '.tsx'] },
+      },
+    },
+    rules: {
+      'no-console': 'warn',
+      'prettier/prettier': ['error'],
+    },
+    overrides: [
+      {
+        files: ['next.config.ts', '*.config.ts', '*.config.tsx'],
+        parserOptions: {
+          project: null,
+        },
+      },
+    ],
+  }),
+  {
+    ignores: [
+      '.next/**',
+      'out/**',
+      'build/**',
+      'dist/**',
+      'coverage/**',
+      'next-env.d.ts',
+    ],
+  },
+]
+
+// --- next.config.ts ---
+import type { NextConfig } from 'next'
+
+const nextConfig: NextConfig = {
+  reactStrictMode: true,
+  poweredByHeader: false,
+  images: {
+    unoptimized: true,
+  },
+  output: 'export',
+  compiler: {
+    styledComponents: true,
+  },
+}
+
+export default nextConfig
+
+// --- package.json ---
+{
+  "name": "jonas-zeihe-portfolio",
+  "version": "0.1.0",
+  "description": "Portfolio of Jonas Zeihe.",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=18.18.0"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "build:ci": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "stylelint": "stylelint \"**/*.{css}\"",
+    "version": "node -e \"import('./package.json',{assert:{type:'json'}}).then(m=>console.log(m.default.version))\""
+  },
+  "dependencies": {
+    "next": "15.5.9",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "react-icons": "^5.4.0",
+    "styled-components": "^6.1.16"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@typescript-eslint/eslint-plugin": "^8.9.0",
+    "@typescript-eslint/parser": "^8.9.0",
+    "eslint": "^9.39.4",
+    "eslint-config-next": "15.5.9",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-prettier": "^5.2.1",
+    "prettier": "^3.4.1",
+    "stylelint": "^16.11.0",
+    "stylelint-config-standard": "^36.0.1",
+    "typescript": "^5.6.0"
+  }
+}
+
+// --- prettierrc ---
+{
+    "semi": false,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "useTabs": false,
+    "trailingComma": "es5",
+    "endOfLine": "auto"
+}
+
+// --- tsconfig.json ---
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "es2022"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
+    "types": [
+      "next"
+    ],
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": [
+    "next-env.d.ts",
+    "src/**/*",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    ".next",
+    "dist",
+    "out",
+    "../legacy_archive"
+  ]
+}
