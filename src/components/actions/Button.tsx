@@ -1,0 +1,210 @@
+// src/components/actions/Button.tsx
+'use client'
+
+import { forwardRef, type ButtonHTMLAttributes } from 'react'
+import styled, { css } from 'styled-components'
+
+type Variant = 'primary' | 'secondary' | 'ghost' | 'link' | 'danger'
+type Size = 'sm' | 'md'
+
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  variant?: Variant
+  size?: Size
+  customBackground?: string
+  fullWidth?: boolean
+}
+
+const baseStyles = css`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: ${({ theme }) => theme.spacingHalf(1.25)};
+  border-radius: 0.78rem;
+  font-family: ${({ theme }) => theme.typography.fontFamily.button};
+  font-size: ${({ theme }) => theme.typography.fontSize.body};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  line-height: 1.12;
+  letter-spacing: ${({ theme }) => theme.typography.letterSpacing.normal};
+  text-decoration: none;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+  border-width: 1px;
+  border-style: solid;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.12s ease,
+    color 0.18s ease,
+    filter 0.18s ease;
+
+  &:focus-visible {
+    outline: 2px solid transparent;
+    box-shadow: 0 0 0 3px ${({ theme }) => theme.roles.focus.ring};
+  }
+
+  &:disabled,
+  &[aria-disabled='true'] {
+    cursor: not-allowed;
+    pointer-events: none;
+    transform: none;
+    filter: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+`
+
+const roleStyles = css<{ $variant: Variant; $customBg?: string }>`
+  ${({ theme, $variant, $customBg }) => {
+    if ($customBg) {
+      return css`
+        color: ${theme.roles.text.inverse};
+        background: ${$customBg};
+        border-color: transparent;
+        box-shadow: ${theme.boxShadow.sm};
+
+        &:hover {
+          filter: brightness(0.985);
+          box-shadow: ${theme.boxShadow.md};
+          transform: translateY(-1px);
+        }
+
+        &:active {
+          filter: brightness(0.96);
+          box-shadow: ${theme.boxShadow.sm};
+          transform: translateY(0);
+        }
+
+        &:disabled,
+        &[aria-disabled='true'] {
+          color: ${theme.roles.text.subtle};
+          background: ${theme.roles.surface.panelAlt};
+          border-color: ${theme.roles.border.subtle};
+          box-shadow: none;
+        }
+      `
+    }
+
+    const role = theme.roles.interactive.button[$variant]
+
+    return css`
+      color: ${role.fg};
+      background-color: ${role.bg};
+      border-color: ${role.border};
+      box-shadow: ${role.shadow === 'none'
+        ? 'none'
+        : theme.boxShadow[role.shadow]};
+
+      &:hover {
+        color: ${role.hoverFg};
+        background-color: ${role.hoverBg};
+        border-color: ${role.hoverBorder};
+        box-shadow: ${role.hoverShadow === 'none'
+          ? 'none'
+          : theme.boxShadow[role.hoverShadow]};
+        transform: ${$variant === 'link' ? 'none' : 'translateY(-1px)'};
+        text-decoration: ${$variant === 'link' ? 'underline' : 'none'};
+        text-underline-offset: ${$variant === 'link' ? '0.16em' : 'initial'};
+        text-decoration-thickness: ${$variant === 'link'
+          ? '0.06em'
+          : 'initial'};
+      }
+
+      &:active {
+        color: ${role.activeFg};
+        background-color: ${role.activeBg};
+        border-color: ${role.activeBorder};
+        box-shadow: ${role.activeShadow === 'none'
+          ? 'none'
+          : theme.boxShadow[role.activeShadow]};
+        transform: translateY(0);
+      }
+
+      &:disabled,
+      &[aria-disabled='true'] {
+        color: ${role.disabledFg};
+        background-color: ${role.disabledBg};
+        border-color: ${role.disabledBorder};
+        box-shadow: none;
+      }
+    `
+  }}
+`
+
+const sizeStyles = css<{ $size: Size }>`
+  ${({ theme, $size }) =>
+    $size === 'sm'
+      ? css`
+          min-height: ${theme.spacing(4.25)};
+          padding-inline: ${theme.spacing(1.35)};
+          padding-block: ${theme.spacingHalf(1.2)};
+          min-width: ${theme.spacing(6.75)};
+        `
+      : css`
+          min-height: ${theme.spacing(4.85)};
+          padding-inline: ${theme.spacing(1.75)};
+          padding-block: ${theme.spacingHalf(1.55)};
+          min-width: ${theme.spacing(7.5)};
+        `}
+`
+
+const linkSizeStyles = css`
+  min-height: auto;
+  min-width: 0;
+  padding-inline: ${({ theme }) => theme.spacingHalf(1)};
+  padding-block: 0;
+  box-shadow: none;
+  border-radius: ${({ theme }) => theme.borderRadius.small};
+`
+
+const widthStyles = css<{ $fullWidth: boolean; $variant: Variant }>`
+  width: ${({ $fullWidth, $variant }) =>
+    $variant === 'link' ? 'auto' : $fullWidth ? '100%' : 'auto'};
+  max-width: 100%;
+`
+
+const StyledButton = styled.button<{
+  $variant: Variant
+  $size: Size
+  $customBg?: string
+  $fullWidth: boolean
+}>`
+  ${baseStyles};
+  ${sizeStyles};
+  ${({ $variant }) => ($variant === 'link' ? linkSizeStyles : '')};
+  ${widthStyles};
+  ${roleStyles};
+`
+
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
+  {
+    variant = 'primary',
+    size = 'md',
+    customBackground,
+    fullWidth = false,
+    children,
+    ...rest
+  },
+  ref
+) {
+  return (
+    <StyledButton
+      ref={ref}
+      $variant={variant}
+      $size={size}
+      $customBg={customBackground}
+      $fullWidth={fullWidth}
+      type={rest.type ?? 'button'}
+      {...rest}
+    >
+      {children}
+    </StyledButton>
+  )
+})
+
+export default Button
