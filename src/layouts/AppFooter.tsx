@@ -29,10 +29,10 @@ export default function AppFooter() {
 
   return (
     <FooterShell role="contentinfo" aria-label="Seitenfuß">
-      <Container max="default">
+      <Container max="page">
         <FooterInner>
           <TopRow>
-            <Stack gap={0.6}>
+            <ClosingBlock gap={0.7}>
               <Typography
                 as="p"
                 variant="subtitle"
@@ -45,9 +45,9 @@ export default function AppFooter() {
                 Meta-Placeholder: Hier später eine knappe Abschlusszeile, die
                 den Weg bündelt und würdig aus der Seite hinausführt.
               </Microcopy>
-            </Stack>
+            </ClosingBlock>
 
-            <LinksCol gap={0.6} aria-label="Fußnavigation">
+            <LinksCol gap={0.55} aria-label="Fußnavigation">
               {FOOTER_NAV_ITEMS.map((item) => (
                 <FooterLink key={item.href} href={item.href}>
                   {item.label}
@@ -74,21 +74,44 @@ export default function AppFooter() {
 }
 
 const FooterShell = styled.footer`
+  position: relative;
   width: 100%;
-  background: linear-gradient(
-    180deg,
-    ${({ theme }) => theme.roles.surface.panelAlt} 0%,
-    ${({ theme }) => theme.roles.surface.chrome} 100%
-  );
   color: ${({ theme }) => theme.roles.text.primary};
-  border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
-  padding-block: ${({ theme }) => theme.spacing(3)};
+  border-top: 1px solid
+    ${({ theme }) =>
+      theme.mode === 'dark'
+        ? 'rgba(255, 255, 255, 0.08)'
+        : 'rgba(20, 23, 27, 0.08)'};
+  background:
+    radial-gradient(
+      90% 22rem at 50% 0%,
+      ${({ theme }) =>
+          theme.mode === 'dark'
+            ? 'rgba(95, 135, 134, 0.08)'
+            : 'rgba(47, 78, 80, 0.045)'}
+        0%,
+      transparent 68%
+    ),
+    linear-gradient(
+      180deg,
+      ${({ theme }) =>
+          theme.mode === 'dark'
+            ? 'rgba(18, 22, 27, 0.96)'
+            : 'rgba(243, 238, 229, 0.92)'}
+        0%,
+      ${({ theme }) => theme.roles.surface.chrome} 100%
+    );
+  padding-block: ${({ theme }) => theme.spacing(3.2)};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding-block: ${({ theme }) => theme.spacing(2.7)};
+  }
 `
 
 const FooterInner = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(2)};
+  gap: ${({ theme }) => theme.spacing(2.2)};
 `
 
 const TopRow = styled.div`
@@ -97,9 +120,14 @@ const TopRow = styled.div`
   gap: ${({ theme }) => theme.spacing(2)};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: start;
+    gap: ${({ theme }) => theme.spacing(2.4)};
   }
+`
+
+const ClosingBlock = styled(Stack)`
+  max-width: 40rem;
 `
 
 const LinksCol = styled(Stack)`
@@ -121,27 +149,22 @@ const Microcopy = styled.p`
 const FooterLink = styled(Link)`
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  min-height: ${({ theme }) => theme.spacing(4)};
-  padding: ${({ theme }) => `${theme.spacingHalf(2)} ${theme.spacing(1.1)}`};
-  border-radius: ${({ theme }) => theme.borderRadius.medium};
+  min-height: ${({ theme }) => theme.spacing(3.6)};
+  padding: ${({ theme }) => `${theme.spacingHalf(1.4)} 0`};
+  border-radius: ${({ theme }) => theme.borderRadius.small};
   text-decoration: none;
-  border: 1px solid ${({ theme }) => theme.roles.border.subtle};
-  color: ${({ theme }) => theme.roles.text.primary};
+  border: none;
+  color: ${({ theme }) => theme.roles.text.secondary};
   background: transparent;
   transition:
-    background-color 0.18s ease,
-    border-color 0.18s ease,
-    box-shadow 0.18s ease,
-    color 0.18s ease;
+    color 0.18s ease,
+    opacity 0.18s ease;
 
   &:hover,
   &:focus-visible {
-    background: ${({ theme }) => theme.roles.surface.panel};
-    border-color: ${({ theme }) => theme.getAxisRole('axisClarity').border};
     color: ${({ theme }) => theme.getAxisRole('axisClarity').text};
-    box-shadow: ${({ theme }) => theme.boxShadow.xs};
     text-decoration: none;
+    opacity: 1;
   }
 `
 
@@ -150,8 +173,12 @@ const BottomRow = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: ${({ theme }) => theme.spacing(1)};
-  padding-top: ${({ theme }) => theme.spacing(1.5)};
-  border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
+  padding-top: ${({ theme }) => theme.spacing(1.4)};
+  border-top: 1px solid
+    ${({ theme }) =>
+      theme.mode === 'dark'
+        ? 'rgba(255, 255, 255, 0.08)'
+        : 'rgba(20, 23, 27, 0.08)'};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     flex-direction: column;
@@ -166,31 +193,31 @@ const Copy = styled.p`
 `
 
 const ToTop = styled.button`
-  width: 2.75rem;
-  height: 2.75rem;
+  width: 2.7rem;
+  height: 2.7rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   align-self: flex-end;
-  background: ${({ theme }) => theme.roles.surface.panel};
-  color: ${({ theme }) => theme.roles.text.primary};
+  background: transparent;
+  color: ${({ theme }) => theme.roles.text.secondary};
   border: 1px solid ${({ theme }) => theme.roles.border.subtle};
   border-radius: ${({ theme }) => theme.borderRadius.pill};
-  box-shadow: ${({ theme }) => theme.boxShadow.xs};
-  font-size: 1rem;
+  box-shadow: none;
+  font-size: 0.95rem;
   cursor: pointer;
   transition:
     background-color 0.18s ease,
     border-color 0.18s ease,
-    box-shadow 0.18s ease,
-    color 0.18s ease;
+    color 0.18s ease,
+    box-shadow 0.18s ease;
 
   &:hover,
   &:focus-visible {
-    background: ${({ theme }) => theme.roles.surface.chrome};
+    background: ${({ theme }) => theme.roles.surface.panel};
     border-color: ${({ theme }) => theme.getAxisRole('axisClarity').border};
-    color: ${({ theme }) => theme.getAxisRole('axisClarity').text};
-    box-shadow: ${({ theme }) => theme.boxShadow.sm};
+    color: ${({ theme }) => theme.roles.text.primary};
+    box-shadow: ${({ theme }) => theme.boxShadow.xs};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {

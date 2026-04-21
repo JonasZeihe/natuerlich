@@ -194,7 +194,7 @@ export default function AppHeader() {
             </BrandWrap>
 
             <DesktopNav aria-label="Hauptnavigation">
-              <Inline gap={0.5} wrap={false} justify="end">
+              <Inline gap={0.35} wrap={false} justify="end">
                 {HEADER_SECTIONS.map((section) => (
                   <NavLink
                     key={section.id}
@@ -233,7 +233,7 @@ export default function AppHeader() {
               id="site-primary-navigation"
               aria-label="Hauptnavigation mobil"
             >
-              <Surface tone="neutral" radius="large" bordered padding="sm">
+              <Surface tone="subtle" radius="large" bordered padding="sm">
                 <MobileList>
                   {HEADER_SECTIONS.map((section) => (
                     <MobileItem key={section.id}>
@@ -265,19 +265,34 @@ const HeaderShell = styled.header<{ $compact: boolean }>`
   z-index: 1000;
   width: 100%;
   border-bottom: 1px solid
-    ${({ theme }) =>
+    ${({ theme, $compact }) =>
       withAlpha(
         theme.roles.border.subtle,
-        theme.mode === 'dark' ? 0.56 : 0.72
+        $compact
+          ? theme.mode === 'dark'
+            ? 0.72
+            : 0.82
+          : theme.mode === 'dark'
+            ? 0.42
+            : 0.56
       )};
-  background: ${({ theme }) =>
-    theme.mode === 'dark'
-      ? withAlpha(theme.roles.surface.panel, 0.82)
-      : withAlpha(theme.roles.surface.panel, 0.9)};
+  background: linear-gradient(
+    180deg,
+    ${({ theme, $compact }) =>
+        theme.mode === 'dark'
+          ? withAlpha(theme.roles.surface.chrome, $compact ? 0.9 : 0.82)
+          : withAlpha(theme.roles.surface.chrome, $compact ? 0.94 : 0.88)}
+      0%,
+    ${({ theme, $compact }) =>
+        theme.mode === 'dark'
+          ? withAlpha(theme.roles.surface.panel, $compact ? 0.92 : 0.84)
+          : withAlpha(theme.roles.surface.panel, $compact ? 0.96 : 0.9)}
+      100%
+  );
   box-shadow: ${({ theme, $compact }) =>
-    $compact ? theme.boxShadow.sm : 'none'};
-  backdrop-filter: blur(12px) saturate(1.02);
-  -webkit-backdrop-filter: blur(12px) saturate(1.02);
+    $compact ? theme.boxShadow.xs : 'none'};
+  backdrop-filter: blur(14px) saturate(1.02);
+  -webkit-backdrop-filter: blur(14px) saturate(1.02);
   transition:
     box-shadow 0.18s ease,
     background-color 0.18s ease,
@@ -322,7 +337,7 @@ const BrandStack = styled.span`
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: ${({ theme }) => theme.spacingHalf(0.45)};
+  gap: ${({ theme }) => theme.spacingHalf(0.4)};
   min-width: 0;
 `
 
@@ -340,8 +355,8 @@ const navLinkStyles = css<{ $active: boolean }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: ${({ theme }) => theme.spacing(4)};
-  padding-inline: ${({ theme }) => theme.spacing(1)};
+  min-height: ${({ theme }) => theme.spacing(3.75)};
+  padding-inline: ${({ theme }) => theme.spacing(0.95)};
   border-radius: ${({ theme }) => theme.borderRadius.pill};
   border: 1px solid transparent;
   text-decoration: none;
@@ -351,26 +366,38 @@ const navLinkStyles = css<{ $active: boolean }>`
       ? theme.typography.fontWeight.medium
       : theme.typography.fontWeight.regular};
   color: ${({ theme, $active }) =>
-    $active ? theme.getAxisRole('axisClarity').text : theme.roles.text.primary};
+    $active
+      ? theme.getAxisRole('axisClarity').text
+      : theme.roles.text.secondary};
   background: ${({ theme, $active }) =>
-    $active ? theme.roles.surface.panelAlt : 'transparent'};
+    $active
+      ? theme.mode === 'dark'
+        ? 'rgba(142, 163, 179, 0.08)'
+        : 'rgba(72, 91, 106, 0.06)'
+      : 'transparent'};
   border-color: ${({ theme, $active }) =>
-    $active ? theme.getAxisRole('axisClarity').border : 'transparent'};
-  box-shadow: ${({ theme, $active }) =>
-    $active ? theme.boxShadow.xs : 'none'};
+    $active
+      ? withAlpha(theme.getAxisRole('axisClarity').border, 0.7)
+      : 'transparent'};
+  box-shadow: none;
   transition:
     background-color 0.18s ease,
     border-color 0.18s ease,
-    color 0.18s ease,
-    box-shadow 0.18s ease;
+    color 0.18s ease;
 
   &:hover,
   &:focus-visible {
     text-decoration: none;
-    background: ${({ theme }) => theme.roles.surface.panelAlt};
-    border-color: ${({ theme }) => theme.roles.border.subtle};
-    color: ${({ theme }) => theme.getAxisRole('axisClarity').text};
-    box-shadow: ${({ theme }) => theme.boxShadow.xs};
+    background: ${({ theme }) =>
+      theme.mode === 'dark'
+        ? 'rgba(142, 163, 179, 0.06)'
+        : 'rgba(72, 91, 106, 0.045)'};
+    border-color: ${({ theme }) =>
+      withAlpha(
+        theme.roles.border.subtle,
+        theme.mode === 'dark' ? 0.74 : 0.82
+      )};
+    color: ${({ theme }) => theme.roles.text.primary};
   }
 `
 
@@ -408,7 +435,7 @@ const MenuButton = styled.button`
   background: ${({ theme }) => theme.roles.surface.panel};
   color: ${({ theme }) => theme.roles.text.primary};
   border: 1px solid ${({ theme }) => theme.roles.border.subtle};
-  box-shadow: ${({ theme }) => theme.boxShadow.xs};
+  box-shadow: none;
   cursor: pointer;
   transition:
     background-color 0.18s ease,
@@ -419,13 +446,13 @@ const MenuButton = styled.button`
   &:focus-visible {
     background: ${({ theme }) => theme.roles.surface.panelAlt};
     border-color: ${({ theme }) => theme.getAxisRole('axisClarity').border};
-    box-shadow: ${({ theme }) => theme.boxShadow.sm};
+    box-shadow: ${({ theme }) => theme.boxShadow.xs};
   }
 `
 
 const MobilePanel = styled.nav`
   display: none;
-  margin-top: ${({ theme }) => theme.spacing(0.8)};
+  margin-top: ${({ theme }) => theme.spacing(0.75)};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     display: block;
@@ -437,7 +464,7 @@ const MobileList = styled.ol`
   margin: 0;
   padding: 0;
   display: grid;
-  gap: ${({ theme }) => theme.spacingHalf(0.75)};
+  gap: ${({ theme }) => theme.spacingHalf(0.7)};
 `
 
 const MobileItem = styled.li`
@@ -448,5 +475,5 @@ const MobileLink = styled(SmoothScroller)<{ $active: boolean }>`
   ${navLinkStyles}
   width: 100%;
   justify-content: flex-start;
-  min-height: ${({ theme }) => theme.spacing(4.5)};
+  min-height: ${({ theme }) => theme.spacing(4.25)};
 `
