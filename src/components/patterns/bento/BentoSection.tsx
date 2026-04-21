@@ -1,7 +1,7 @@
 // src/components/patterns/bento/BentoSection.tsx
 'use client'
 
-import { ReactNode, Children } from 'react'
+import { ReactNode, Children, type ComponentPropsWithoutRef } from 'react'
 import styled, { css, useTheme } from 'styled-components'
 import Section from '@/components/primitives/Section'
 import Typography from '@/design/typography'
@@ -27,7 +27,7 @@ type Props = {
   layout?: Span[]
   dense?: boolean
   preset?: BentoPreset
-}
+} & Omit<ComponentPropsWithoutRef<'section'>, 'children'>
 
 export default function BentoSection({
   title,
@@ -42,6 +42,10 @@ export default function BentoSection({
   layout = [],
   dense = false,
   preset = 'triad',
+  id,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
+  ...rest
 }: Props) {
   const theme = useTheme()
   const fallbackMin = min ?? theme.grid.defaults.min
@@ -81,10 +85,13 @@ export default function BentoSection({
 
   return (
     <Section
+      id={id}
       container={wide ? 'wide' : 'default'}
       padY={padY}
       variant="body"
-      ariaLabel={typeof title === 'string' ? title : undefined}
+      ariaLabel={typeof title === 'string' ? title : ariaLabel}
+      aria-labelledby={ariaLabelledBy}
+      {...rest}
     >
       {header}
       {useTriad ? (

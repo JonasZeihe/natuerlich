@@ -26,19 +26,23 @@ type HeroProps = {
   mediaAspect?: string
 }
 
-const isPrimitive = (n: ReactNode): n is string | number =>
-  typeof n === 'string' || typeof n === 'number'
+const isPrimitive = (node: ReactNode): node is string | number =>
+  typeof node === 'string' || typeof node === 'number'
 
 const Split = styled.div`
   display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: ${({ theme }) => theme.spacing(1.5)};
+  grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.92fr);
+  gap: ${({ theme }) => theme.spacing(1.6)};
   align-items: center;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     grid-template-columns: 1fr;
-    gap: ${({ theme }) => theme.spacing(1)};
+    gap: ${({ theme }) => theme.spacing(1.1)};
   }
+`
+
+const HeadStack = styled(Stack)`
+  min-width: 0;
 `
 
 const MediaFrame = styled.div<{ $aspect?: string }>`
@@ -51,16 +55,14 @@ const MediaFrame = styled.div<{ $aspect?: string }>`
     width: 100%;
     overflow: hidden;
     border-radius: inherit;
+    display: flex;
+    align-items: stretch;
     ${({ $aspect }) => ($aspect ? `aspect-ratio: ${$aspect};` : '')}
-  }
-`
 
-const GradientBar = styled.div`
-  width: 100%;
-  height: ${({ theme }) => theme.spacingHalf(0.8)};
-  border-bottom-left-radius: ${({ theme }) => theme.borderRadius.large};
-  border-bottom-right-radius: ${({ theme }) => theme.borderRadius.large};
-  background: ${({ theme }) => theme.gradients.highlight};
+    > * {
+      width: 100%;
+    }
+  }
 `
 
 const ActionsRow = styled.div`
@@ -72,7 +74,11 @@ const ActionsRow = styled.div`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     width: 100%;
-    justify-content: flex-start;
+    align-items: stretch;
+
+    > * {
+      flex: 1 1 auto;
+    }
   }
 `
 
@@ -91,13 +97,17 @@ export default function HeroRecipe({
 }: HeroProps) {
   const titleVariant: 'h1' | 'h2' = isPageHeader ? 'h1' : 'h2'
   const titleAs: 'h1' | 'h2' = isPageHeader ? 'h1' : 'h2'
-  const shouldUseAccentForTitle = !isPageHeader && accent !== 'neutral'
 
   const Head = (
-    <Stack gap={1}>
+    <HeadStack gap={1}>
       {kicker ? (
         isPrimitive(kicker) ? (
-          <Typography as="p" variant="caption" tone="soft">
+          <Typography
+            as="p"
+            variant="caption"
+            gutter={false}
+            {...(accent !== 'neutral' ? { accent } : { tone: 'soft' as const })}
+          >
             {kicker}
           </Typography>
         ) : (
@@ -105,15 +115,13 @@ export default function HeroRecipe({
         )
       ) : null}
 
-      <Stack gap={0.55}>
+      <Stack gap={0.65}>
         {isPrimitive(title) ? (
           <Typography
             as={titleAs}
             variant={titleVariant}
             id={titleId}
-            {...(shouldUseAccentForTitle
-              ? { accent }
-              : { tone: 'strong' as const })}
+            tone="strong"
           >
             {title}
           </Typography>
@@ -123,7 +131,7 @@ export default function HeroRecipe({
 
         {lead ? (
           isPrimitive(lead) ? (
-            <Typography as="p" variant="subtitle" tone="soft">
+            <Typography as="p" variant="body" gutter={false} tone="soft">
               {lead}
             </Typography>
           ) : (
@@ -133,7 +141,7 @@ export default function HeroRecipe({
       </Stack>
 
       {actions ? <ActionsRow>{actions}</ActionsRow> : null}
-    </Stack>
+    </HeadStack>
   )
 
   const Media =
@@ -142,7 +150,6 @@ export default function HeroRecipe({
         <MediaFrame $aspect={mediaAspect}>
           <div className="inner">{media}</div>
         </MediaFrame>
-        <GradientBar />
       </Surface>
     ) : null
 
@@ -150,9 +157,11 @@ export default function HeroRecipe({
 
   return (
     <Section
+      id={isPageHeader ? 'einstieg' : undefined}
       container={container}
       padY
       variant={sectionVariant}
+      ariaLabel={isPageHeader ? 'Einstieg' : undefined}
       titleId={isPrimitive(title) ? titleId : undefined}
     >
       {variant === 'split' ? (

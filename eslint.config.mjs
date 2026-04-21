@@ -12,7 +12,7 @@ const compat = new FlatCompat({
   allConfig: js.configs.all,
 })
 
-export default [
+const config = [
   ...compat.config({
     extends: [
       'next/core-web-vitals',
@@ -43,7 +43,13 @@ export default [
     },
     overrides: [
       {
-        files: ['next.config.ts', '*.config.ts', '*.config.tsx'],
+        files: [
+          'next.config.ts',
+          '*.config.ts',
+          '*.config.tsx',
+          'eslint.config.mjs',
+          '*.config.mjs',
+        ],
         parserOptions: {
           project: null,
         },
@@ -61,3 +67,5 @@ export default [
     ],
   },
 ]
+
+export default config

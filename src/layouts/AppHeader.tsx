@@ -1,13 +1,30 @@
 // src/layouts/AppHeader.tsx
 'use client'
 
-import Link from 'next/link'
-import { useEffect, useState } from 'react'
-import { usePathname } from 'next/navigation'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import styled, { css } from 'styled-components'
 import { FiMenu, FiX } from 'react-icons/fi'
 import ThemeToggleButton from '@/components/actions/ThemeToggleButton'
-import { HEADER_NAV_ITEMS } from '@/config/navigation'
+import SmoothScroller from '@/components/utilities/SmoothScroller'
+import Container from '@/components/primitives/Container'
+import Inline from '@/components/primitives/Inline'
+import Surface from '@/components/primitives/Surface'
+import Typography from '@/design/typography'
+import {
+  SITE_SECTIONS,
+  type SiteSection,
+  type SiteSectionId,
+} from '@/features/site/model/sections'
+
+const HEADER_HEIGHT = 76
+
+const HEADER_SECTIONS: SiteSection[] = SITE_SECTIONS.filter(
+  (section) => section.showInHeader
+)
+
+const OBSERVED_SECTION_IDS: SiteSectionId[] = SITE_SECTIONS.filter(
+  (section) => section.id !== 'einstieg'
+).map((section) => section.id)
 
 const alphaHex = (value: number) =>
   Math.round(Math.max(0, Math.min(1, value)) * 255)
@@ -21,21 +38,40 @@ const withAlpha = (color: string, alpha: number) => {
   return color
 }
 
-const isActivePath = (pathname: string, href: string) => {
-  if (href === '/') return pathname === '/'
-  return pathname === href || pathname.startsWith(`${href}/`)
-}
-
 export default function AppHeader() {
-  const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [activeId, setActiveId] = useState<SiteSectionId>('einstieg')
+  const [compact, setCompact] = useState(false)
+  const shellRef = useRef<HTMLElement | null>(null)
+  const ids = useMemo(() => OBSERVED_SECTION_IDS, [])
 
   useEffect(() => {
-    setMenuOpen(false)
-  }, [pathname])
+    document.documentElement.style.setProperty(
+      '--site-header-height',
+      `${HEADER_HEIGHT}px`
+    )
+
+    return () => {
+      document.documentElement.style.removeProperty('--site-header-height')
+    }
+  }, [])
+
+  useEffect(() => {
+    const onScroll = () => {
+      setCompact(window.scrollY > 20)
+    }
+
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+    }
+  }, [])
 
   useEffect(() => {
     const root = document.documentElement
+
     if (!menuOpen) return
 
     const previousOverflow = root.style.overflow
@@ -55,139 +91,230 @@ export default function AppHeader() {
     }
   }, [menuOpen])
 
+  useEffect(() => {
+    if (!menuOpen) return
+
+    const onPointerDown = (event: PointerEvent) => {
+      const target = event.target
+
+      if (!(target instanceof Node)) return
+      if (shellRef.current?.contains(target)) return
+
+      setMenuOpen(false)
+    }
+
+    document.addEventListener('pointerdown', onPointerDown)
+
+    return () => {
+      document.removeEventListener('pointerdown', onPointerDown)
+    }
+  }, [menuOpen])
+
+  useEffect(() => {
+    const elements = ids
+      .map((id) => document.getElementById(id))
+      .filter(Boolean) as HTMLElement[]
+
+    if (!elements.length) return
+
+    const offset = HEADER_HEIGHT + 20
+
+    elements.forEach((element) => {
+      element.style.scrollMarginTop = `${offset}px`
+
+      if (!element.hasAttribute('tabindex')) {
+        element.setAttribute('tabindex', '-1')
+      }
+    })
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
+
+        if (visible[0]?.target?.id) {
+          setActiveId(visible[0].target.id as SiteSectionId)
+          return
+        }
+
+        const past = entries
+          .filter((entry) => entry.boundingClientRect.top < 0)
+          .sort((a, b) => b.boundingClientRect.top - a.boundingClientRect.top)
+
+        if (past[0]?.target?.id) {
+          setActiveId(past[0].target.id as SiteSectionId)
+        }
+      },
+      {
+        root: null,
+        rootMargin: `-${offset}px 0px -45% 0px`,
+        threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],
+      }
+    )
+
+    elements.forEach((element) => observer.observe(element))
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [ids])
+
   return (
-    <HeaderShell role="banner" aria-label="Seitenkopf">
-      <HeaderInner>
-        <TopRow>
-          <Brand href="/" aria-label="Zur Startseite von Jonas">
-            <BrandStack>
-              <BrandName>Jonas</BrandName>
-              <BrandLine>Praxis, die trägt</BrandLine>
-            </BrandStack>
-          </Brand>
+    <HeaderShell
+      ref={shellRef}
+      $compact={compact}
+      role="banner"
+      aria-label="Seitenkopf"
+    >
+      <Container max="page">
+        <HeaderInner>
+          <TopRow>
+            <BrandWrap>
+              <BrandLink targetId="einstieg" aria-label="Zum Einstieg springen">
+                <BrandStack>
+                  <Typography
+                    as="span"
+                    variant="h3"
+                    gutter={false}
+                    tone="strong"
+                  >
+                    Jonas
+                  </Typography>
+                  <Typography
+                    as="span"
+                    variant="caption"
+                    gutter={false}
+                    tone="soft"
+                  >
+                    Praxis, die trägt
+                  </Typography>
+                </BrandStack>
+              </BrandLink>
+            </BrandWrap>
 
-          <DesktopNav aria-label="Hauptnavigation">
-            {HEADER_NAV_ITEMS.map((item) => {
-              const active = isActivePath(pathname, item.href)
+            <DesktopNav aria-label="Hauptnavigation">
+              <Inline gap={0.5} wrap={false} justify="end">
+                {HEADER_SECTIONS.map((section) => (
+                  <NavLink
+                    key={section.id}
+                    targetId={section.id}
+                    $active={activeId === section.id}
+                    aria-current={activeId === section.id ? 'true' : undefined}
+                  >
+                    {section.label}
+                  </NavLink>
+                ))}
+              </Inline>
+            </DesktopNav>
 
-              return (
-                <DesktopLink
-                  key={item.href}
-                  href={item.href}
-                  $active={active}
-                  aria-current={active ? 'page' : undefined}
-                >
-                  {item.label}
-                </DesktopLink>
-              )
-            })}
-          </DesktopNav>
+            <DesktopActions>
+              <ThemeToggleButton />
+            </DesktopActions>
 
-          <DesktopActions>
-            <ThemeToggleButton />
-          </DesktopActions>
+            <MobileActions>
+              <ThemeToggleButton />
+              <MenuButton
+                type="button"
+                onClick={() => setMenuOpen((current) => !current)}
+                aria-label={
+                  menuOpen ? 'Navigation schließen' : 'Navigation öffnen'
+                }
+                aria-expanded={menuOpen}
+                aria-controls="site-primary-navigation"
+              >
+                {menuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
+              </MenuButton>
+            </MobileActions>
+          </TopRow>
 
-          <MobileActions>
-            <ThemeToggleButton />
-            <MenuButton
-              type="button"
-              onClick={() => setMenuOpen((current) => !current)}
-              aria-label={menuOpen ? 'Menü schließen' : 'Menü öffnen'}
-              aria-expanded={menuOpen}
-              aria-controls="mobile-main-navigation"
+          {menuOpen ? (
+            <MobilePanel
+              id="site-primary-navigation"
+              aria-label="Hauptnavigation mobil"
             >
-              {menuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
-            </MenuButton>
-          </MobileActions>
-        </TopRow>
-
-        {menuOpen ? (
-          <MobileMenu
-            id="mobile-main-navigation"
-            aria-label="Mobile Hauptnavigation"
-          >
-            {HEADER_NAV_ITEMS.map((item) => {
-              const active = isActivePath(pathname, item.href)
-
-              return (
-                <MobileLink
-                  key={item.href}
-                  href={item.href}
-                  $active={active}
-                  aria-current={active ? 'page' : undefined}
-                >
-                  {item.label}
-                </MobileLink>
-              )
-            })}
-          </MobileMenu>
-        ) : null}
-      </HeaderInner>
+              <Surface tone="neutral" radius="large" bordered padding="sm">
+                <MobileList>
+                  {HEADER_SECTIONS.map((section) => (
+                    <MobileItem key={section.id}>
+                      <MobileLink
+                        targetId={section.id}
+                        $active={activeId === section.id}
+                        aria-current={
+                          activeId === section.id ? 'true' : undefined
+                        }
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        {section.label}
+                      </MobileLink>
+                    </MobileItem>
+                  ))}
+                </MobileList>
+              </Surface>
+            </MobilePanel>
+          ) : null}
+        </HeaderInner>
+      </Container>
     </HeaderShell>
   )
 }
 
-const HeaderShell = styled.header`
+const HeaderShell = styled.header<{ $compact: boolean }>`
   position: sticky;
   top: 0;
   z-index: 1000;
   width: 100%;
-  background: ${({ theme }) =>
-    theme.mode === 'dark'
-      ? withAlpha(theme.roles.surface.panel, 0.78)
-      : withAlpha(theme.roles.surface.panel, 0.84)};
   border-bottom: 1px solid
     ${({ theme }) =>
       withAlpha(
         theme.roles.border.subtle,
         theme.mode === 'dark' ? 0.56 : 0.72
       )};
-  box-shadow: ${({ theme }) => theme.boxShadow.sm};
-  backdrop-filter: ${({ theme }) =>
+  background: ${({ theme }) =>
     theme.mode === 'dark'
-      ? 'blur(12px) saturate(1.04)'
-      : 'blur(10px) saturate(1.02)'};
-  -webkit-backdrop-filter: ${({ theme }) =>
-    theme.mode === 'dark'
-      ? 'blur(12px) saturate(1.04)'
-      : 'blur(10px) saturate(1.02)'};
+      ? withAlpha(theme.roles.surface.panel, 0.82)
+      : withAlpha(theme.roles.surface.panel, 0.9)};
+  box-shadow: ${({ theme, $compact }) =>
+    $compact ? theme.boxShadow.sm : 'none'};
+  backdrop-filter: blur(12px) saturate(1.02);
+  -webkit-backdrop-filter: blur(12px) saturate(1.02);
+  transition:
+    box-shadow 0.18s ease,
+    background-color 0.18s ease,
+    border-color 0.18s ease;
 `
 
 const HeaderInner = styled.div`
-  width: min(
-    100% - ${({ theme }) => theme.spacing(3)},
-    ${({ theme }) => theme.layout.containers.page}
-  );
-  margin-inline: auto;
-  padding-block: ${({ theme }) => theme.spacing(1)};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    padding-block: ${({ theme }) => theme.spacing(0.85)};
-  }
+  min-height: ${HEADER_HEIGHT}px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `
 
 const TopRow = styled.div`
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: ${({ theme }) => theme.spacing(1.25)};
+  gap: ${({ theme }) => theme.spacing(1)};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     grid-template-columns: 1fr auto;
   }
 `
 
-const Brand = styled(Link)`
+const BrandWrap = styled.div`
+  min-width: 0;
+`
+
+const BrandLink = styled(SmoothScroller)`
   display: inline-flex;
   align-items: center;
   color: inherit;
   text-decoration: none;
-  min-width: 0;
 
+  &:hover,
   &:focus-visible {
-    outline: 2px solid ${({ theme }) => theme.roles.focus.ring};
-    outline-offset: 3px;
-    border-radius: ${({ theme }) => theme.borderRadius.small};
+    text-decoration: none;
   }
 `
 
@@ -199,42 +326,30 @@ const BrandStack = styled.span`
   min-width: 0;
 `
 
-const BrandName = styled.span`
-  font-size: ${({ theme }) => theme.typography.fontSize.h3};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  line-height: ${({ theme }) => theme.typography.lineHeight.tight};
-  letter-spacing: ${({ theme }) => theme.typography.letterSpacing.tight};
-  color: ${({ theme }) => theme.roles.text.primary};
-`
-
-const BrandLine = styled.span`
-  font-size: ${({ theme }) => theme.typography.fontSize.caption};
-  color: ${({ theme }) => theme.roles.text.subtle};
-`
-
 const DesktopNav = styled.nav`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: ${({ theme }) => theme.spacingHalf(1.25)};
+  justify-content: flex-end;
+  min-width: 0;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     display: none;
   }
 `
 
-const linkStyles = css<{ $active: boolean }>`
+const navLinkStyles = css<{ $active: boolean }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: ${({ theme }) => theme.spacing(4.15)};
+  min-height: ${({ theme }) => theme.spacing(4)};
   padding-inline: ${({ theme }) => theme.spacing(1)};
   border-radius: ${({ theme }) => theme.borderRadius.pill};
   border: 1px solid transparent;
   text-decoration: none;
   font-size: ${({ theme }) => theme.typography.fontSize.small};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  line-height: 1;
+  font-weight: ${({ theme, $active }) =>
+    $active
+      ? theme.typography.fontWeight.medium
+      : theme.typography.fontWeight.regular};
   color: ${({ theme, $active }) =>
     $active ? theme.getAxisRole('axisClarity').text : theme.roles.text.primary};
   background: ${({ theme, $active }) =>
@@ -251,16 +366,16 @@ const linkStyles = css<{ $active: boolean }>`
 
   &:hover,
   &:focus-visible {
-    background: ${({ theme }) => theme.roles.surface.panel};
+    text-decoration: none;
+    background: ${({ theme }) => theme.roles.surface.panelAlt};
     border-color: ${({ theme }) => theme.roles.border.subtle};
     color: ${({ theme }) => theme.getAxisRole('axisClarity').text};
     box-shadow: ${({ theme }) => theme.boxShadow.xs};
-    text-decoration: none;
   }
 `
 
-const DesktopLink = styled(Link)<{ $active: boolean }>`
-  ${linkStyles}
+const NavLink = styled(SmoothScroller)<{ $active: boolean }>`
+  ${navLinkStyles}
 `
 
 const DesktopActions = styled.div`
@@ -289,8 +404,6 @@ const MenuButton = styled.button`
   justify-content: center;
   min-width: ${({ theme }) => theme.spacing(4.5)};
   min-height: ${({ theme }) => theme.spacing(4.5)};
-  padding: ${({ theme }) =>
-    `${theme.spacingHalf(1.5)} ${theme.spacingHalf(2)}`};
   border-radius: ${({ theme }) => theme.borderRadius.medium};
   background: ${({ theme }) => theme.roles.surface.panel};
   color: ${({ theme }) => theme.roles.text.primary};
@@ -310,24 +423,30 @@ const MenuButton = styled.button`
   }
 `
 
-const MobileMenu = styled.nav`
+const MobilePanel = styled.nav`
   display: none;
-  margin-top: ${({ theme }) => theme.spacing(0.9)};
-  padding: ${({ theme }) => theme.spacing(0.9)};
-  border: 1px solid ${({ theme }) => theme.roles.border.subtle};
-  border-radius: ${({ theme }) => theme.borderRadius.large};
-  background: ${({ theme }) => theme.roles.surface.panel};
-  box-shadow: ${({ theme }) => theme.boxShadow.md};
+  margin-top: ${({ theme }) => theme.spacing(0.8)};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    display: grid;
-    gap: ${({ theme }) => theme.spacingHalf(0.75)};
+    display: block;
   }
 `
 
-const MobileLink = styled(Link)<{ $active: boolean }>`
-  ${linkStyles}
+const MobileList = styled.ol`
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: ${({ theme }) => theme.spacingHalf(0.75)};
+`
+
+const MobileItem = styled.li`
+  display: block;
+`
+
+const MobileLink = styled(SmoothScroller)<{ $active: boolean }>`
+  ${navLinkStyles}
+  width: 100%;
   justify-content: flex-start;
   min-height: ${({ theme }) => theme.spacing(4.5)};
-  padding-inline: ${({ theme }) => theme.spacing(1)};
 `

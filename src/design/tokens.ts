@@ -1,3 +1,4 @@
+// src/design/tokens.ts
 export const clampRem = (min: number, max: number) =>
   `clamp(${min}rem, calc(${min}rem + (${max - min}) * ((100vw - 350px) / 1000)), ${max}rem)`
 

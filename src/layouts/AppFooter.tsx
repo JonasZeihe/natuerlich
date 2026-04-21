@@ -6,11 +6,26 @@ import styled from 'styled-components'
 import { FaArrowUp } from 'react-icons/fa'
 import Container from '@/components/primitives/Container'
 import Stack from '@/components/primitives/Stack'
-import { FOOTER_NAV_ITEMS } from '@/config/navigation'
+import Typography from '@/design/typography'
+
+const FOOTER_NAV_ITEMS = [
+  { href: '/kontakt', label: 'Kontakt' },
+  { href: '/impressum', label: 'Impressum' },
+  { href: '/datenschutz', label: 'Datenschutz' },
+] as const
 
 export default function AppFooter() {
-  const scrollToTop = () =>
-    document.documentElement.scrollTo({ top: 0, behavior: 'smooth' })
+  const scrollToTop = () => {
+    const reduce =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+    window.scrollTo({
+      top: 0,
+      behavior: reduce ? 'auto' : 'smooth',
+    })
+  }
 
   return (
     <FooterShell role="contentinfo" aria-label="Seitenfuß">
@@ -18,10 +33,17 @@ export default function AppFooter() {
         <FooterInner>
           <TopRow>
             <Stack gap={0.6}>
-              <Brand>Jonas</Brand>
+              <Typography
+                as="p"
+                variant="subtitle"
+                gutter={false}
+                tone="strong"
+              >
+                Jonas
+              </Typography>
               <Microcopy>
-                Eine ernsthafte, freudige und alltagstaugliche Praxis. Klar im
-                Anspruch, offen im Kontakt, ohne Nebel und ohne Pose.
+                Meta-Placeholder: Hier später eine knappe Abschlusszeile, die
+                den Weg bündelt und würdig aus der Seite hinausführt.
               </Microcopy>
             </Stack>
 
@@ -88,15 +110,6 @@ const LinksCol = styled(Stack)`
   }
 `
 
-const Brand = styled.p`
-  margin: 0;
-  font-family: ${({ theme }) => theme.typography.fontFamily.secondary};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  letter-spacing: ${({ theme }) => theme.typography.letterSpacing.tight};
-  font-size: ${({ theme }) => theme.typography.fontSize.h4};
-  color: ${({ theme }) => theme.roles.text.primary};
-`
-
 const Microcopy = styled.p`
   margin: 0;
   color: ${({ theme }) => theme.roles.text.subtle};
@@ -158,6 +171,7 @@ const ToTop = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  align-self: flex-end;
   background: ${({ theme }) => theme.roles.surface.panel};
   color: ${({ theme }) => theme.roles.text.primary};
   border: 1px solid ${({ theme }) => theme.roles.border.subtle};
@@ -177,5 +191,9 @@ const ToTop = styled.button`
     border-color: ${({ theme }) => theme.getAxisRole('axisClarity').border};
     color: ${({ theme }) => theme.getAxisRole('axisClarity').text};
     box-shadow: ${({ theme }) => theme.boxShadow.sm};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    align-self: flex-start;
   }
 `

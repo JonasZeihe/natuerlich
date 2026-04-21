@@ -1,7 +1,7 @@
 // src/components/patterns/sections/SectionRecipe.tsx
 'use client'
 
-import type { ReactNode } from 'react'
+import type { ComponentPropsWithoutRef, ReactNode } from 'react'
 import styled, { css } from 'styled-components'
 import Section from '@/components/primitives/Section'
 import Surface from '@/components/primitives/Surface'
@@ -25,7 +25,7 @@ type Props = {
   footer?: ReactNode
   rhythm?: RhythmKey
   variant?: SectionKind
-}
+} & Omit<ComponentPropsWithoutRef<'section'>, 'children'>
 
 const isPrimitive = (node: ReactNode): node is string | number =>
   typeof node === 'string' || typeof node === 'number'
@@ -103,6 +103,7 @@ export default function SectionRecipe({
   footer,
   rhythm,
   variant = 'info',
+  ...rest
 }: Props) {
   const variantConfig = VARIANT_CONFIG[variant]
   const resolvedRhythm: RhythmKey = rhythm ?? variantConfig.rhythm
@@ -166,6 +167,7 @@ export default function SectionRecipe({
       titleId={isPrimitive(title) ? titleId : undefined}
       rhythm={resolvedRhythm}
       variant={variantConfig.sectionVariant}
+      {...rest}
     >
       <BodyStack gap={0} $rhythm={resolvedRhythm}>
         {header}

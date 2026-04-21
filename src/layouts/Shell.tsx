@@ -2,7 +2,6 @@
 'use client'
 
 import React from 'react'
-import { usePathname } from 'next/navigation'
 import styled from 'styled-components'
 import AppHeader from '@/layouts/AppHeader'
 import AppFooter from '@/layouts/AppFooter'
@@ -10,9 +9,6 @@ import AppFooter from '@/layouts/AppFooter'
 type Props = { children: React.ReactNode }
 
 export default function Shell({ children }: Props) {
-  const pathname = usePathname()
-  const isScreensaver = pathname === '/screensaver'
-
   return (
     <Outer>
       <AppHeader />

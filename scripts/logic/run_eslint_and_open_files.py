@@ -1,22 +1,80 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import json
 import os
 import platform
-import re
 import subprocess
 import sys
+from collections import defaultdict
+from datetime import datetime
 from pathlib import Path
 
-MAX_FILES_TO_OPEN = 50
+MAX_FILES_TO_OPEN = 100
+
+IGNORED_TOP_LEVEL_DIRS = {
+    ".git",
+    "node_modules",
+    ".next",
+    "dist",
+    "build",
+    "out",
+    "coverage",
+}
+
+LOG_FILE_PATH: Path | None = None
 
 
-def find_frontend_root() -> Path:
+def make_timestamp() -> str:
+    return datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+
+
+def init_log_file(script_path: Path) -> Path:
+    log_path = script_path.parent / f"{make_timestamp()}-diagnostics.txt"
+    return log_path
+
+
+def write_log_line(message: str) -> None:
+    global LOG_FILE_PATH
+
+    print(message)
+    if LOG_FILE_PATH is None:
+        return
+
+    with LOG_FILE_PATH.open("a", encoding="utf-8") as f:
+        f.write(message + "\n")
+
+
+def log(message: str) -> None:
+    write_log_line(f"[diagnostics] {message}")
+
+
+def print_block(title: str, content: str) -> None:
+    write_log_line(title)
+    if content:
+        for line in content.splitlines():
+            write_log_line(line)
+    else:
+        write_log_line("(empty)")
+
+
+def find_project_root() -> Path:
     script_path = Path(__file__).resolve()
-    frontend_root = script_path.parents[2]
-    print(f"[run-eslint] Script path: {script_path}")
-    print(f"[run-eslint] Detected frontend root: {frontend_root}")
-    return frontend_root
+    project_root = script_path.parents[2]
+    log(f"Script path: {script_path}")
+    log(f"Detected project root: {project_root}")
+    return project_root
+
+
+def get_script_path() -> Path:
+    return Path(__file__).resolve()
+
+
+def get_node_command() -> str:
+    return "node.exe" if platform.system().lower().startswith("win") else "node"
+
+
+def get_npx_command() -> str:
+    return "npx.cmd" if platform.system().lower().startswith("win") else "npx"
 
 
 def get_code_command() -> str:
@@ -29,253 +87,390 @@ def get_code_command() -> str:
                 Path(local) / "Programs" / "Microsoft VS Code" / "bin" / "code.cmd"
             )
             if candidate.is_file():
-                print(f"[run-eslint] Using VS Code CLI: {candidate}")
+                log(f"Using VS Code CLI: {candidate}")
                 return str(candidate)
 
-        print(
-            "[run-eslint] VS Code CLI not found via LOCALAPPDATA, falling back to 'code'."
-        )
+        log("VS Code CLI not found via LOCALAPPDATA, falling back to 'code'.")
         return "code"
 
-    print("[run-eslint] Using 'code' CLI for non-Windows system.")
+    log("Using 'code' CLI for non-Windows system.")
     return "code"
 
 
-def run_eslint(frontend_root: Path) -> list | None:
-    print(f"[run-eslint] Running ESLint in: {frontend_root}")
-    cmd = "npx eslint . -f json"
-    print(f"[run-eslint] Command: {cmd}")
+def is_relevant_file(abs_path: Path, project_root: Path) -> bool:
+    try:
+        rel_path = abs_path.resolve().relative_to(project_root.resolve())
+    except ValueError:
+        return False
 
+    if not rel_path.parts:
+        return False
+
+    if rel_path.parts[0] in IGNORED_TOP_LEVEL_DIRS:
+        return False
+
+    return True
+
+
+def normalize_path(file_path_str: str, project_root: Path) -> Path:
+    raw_path = Path(file_path_str.strip().strip('"').strip("'"))
+    if raw_path.is_absolute():
+        return raw_path.resolve()
+    return (project_root / raw_path).resolve()
+
+
+def run_command(args: list[str], cwd: Path) -> subprocess.CompletedProcess[str] | None:
+    log(f"Running: {' '.join(args)}")
     try:
         result = subprocess.run(
-            cmd,
-            cwd=str(frontend_root),
-            shell=True,
+            args,
+            cwd=str(cwd),
             capture_output=True,
             text=True,
             encoding="utf-8",
+            errors="replace",
         )
+        log(f"Exit code: {result.returncode}")
+        return result
     except FileNotFoundError:
-        print(
-            "[run-eslint] Error: 'npx' not found. Make sure Node.js is installed "
-            "and 'npx' is in your PATH."
-        )
+        log(f"Command not found: {args[0]}")
         return None
 
-    print(f"[run-eslint] ESLint exit code: {result.returncode}")
+
+def run_eslint(project_root: Path) -> list[dict]:
+    npx = get_npx_command()
+    args = [npx, "eslint", ".", "--format", "json"]
+
+    result = run_command(args, project_root)
+    if result is None:
+        return []
 
     if result.stderr.strip():
-        print("---- ESLint stderr ----")
-        print(result.stderr)
+        print_block("---- ESLint stderr ----", result.stderr)
 
     if result.returncode not in (0, 1):
-        print("[run-eslint] ESLint returned a non-lint error. Aborting ESLint part.")
-        return None
+        log("ESLint failed in a way that is not a normal lint result.")
+        return []
 
-    if not result.stdout.strip():
-        print("[run-eslint] ESLint produced no JSON output on stdout.")
+    stdout = (result.stdout or "").strip()
+    if not stdout:
+        log("ESLint produced no JSON output.")
         return []
 
     try:
-        eslint_json = json.loads(result.stdout)
+        payload = json.loads(stdout)
     except json.JSONDecodeError:
-        print("[run-eslint] Failed to parse ESLint JSON output.")
-        print("---- ESLint raw stdout ----")
-        print(result.stdout)
-        return None
-
-    print(f"[run-eslint] Parsed ESLint JSON entries: {len(eslint_json)}")
-    return eslint_json
-
-
-def collect_eslint_files(eslint_json: list, frontend_root: Path):
-    if eslint_json is None:
+        log("Could not parse ESLint JSON output.")
+        print_block("---- ESLint raw stdout ----", result.stdout)
         return []
 
-    files = []
+    diagnostics: list[dict] = []
 
-    for entry in eslint_json:
-        messages = entry.get("messages", [])
-        if not messages:
-            continue
-
+    for entry in payload:
         file_path_str = entry.get("filePath")
         if not file_path_str:
             continue
 
-        raw_path = Path(file_path_str)
-        abs_path = (
-            raw_path if raw_path.is_absolute() else (frontend_root / raw_path).resolve()
-        )
-
-        try:
-            rel_path = abs_path.relative_to(frontend_root)
-        except ValueError:
+        abs_path = normalize_path(file_path_str, project_root)
+        if not is_relevant_file(abs_path, project_root):
             continue
 
-        if not rel_path.parts or rel_path.parts[0] != "src":
-            continue
+        messages = entry.get("messages", [])
+        for msg in messages:
+            severity = int(msg.get("severity", 0) or 0)
+            fatal = bool(msg.get("fatal", False))
 
-        first_msg = messages[0]
-        line = first_msg.get("line", 1) or 1
-        column = first_msg.get("column", 1) or 1
-        severity = first_msg.get("severity", 1)
+            if severity < 2 and not fatal:
+                continue
 
-        files.append(
-            {
-                "abs_path": abs_path,
-                "rel_path": rel_path,
-                "line": int(line),
-                "column": int(column),
-                "severity": int(severity),
-                "source": "eslint",
-            }
-        )
+            diagnostics.append(
+                {
+                    "tool": "eslint",
+                    "abs_path": abs_path,
+                    "line": int(msg.get("line", 1) or 1),
+                    "column": int(msg.get("column", 1) or 1),
+                    "severity": 2 if fatal else severity,
+                    "code": msg.get("ruleId") or "fatal",
+                    "message": (msg.get("message") or "").strip(),
+                }
+            )
 
-    print(f"[run-eslint] ESLint: files with at least one problem in src/: {len(files)}")
-
-    if not files:
-        return []
-
-    files.sort(key=lambda f: (-f["severity"], str(f["rel_path"])))
-    return files
+    log(f"ESLint diagnostics collected: {len(diagnostics)}")
+    return diagnostics
 
 
-def run_tsc(frontend_root: Path):
-    print(f"[run-eslint] Running TypeScript compiler in: {frontend_root}")
-    cmd = "npx tsc --noEmit --pretty false"
-    print(f"[run-eslint] Command: {cmd}")
+def build_typescript_diagnostics_script() -> str:
+    return r"""
+const path = require("path");
+const ts = require("typescript");
+
+const projectRoot = process.argv[2];
+const tsconfigPath = ts.findConfigFile(projectRoot, ts.sys.fileExists, "tsconfig.json");
+
+if (!tsconfigPath) {
+  console.log(JSON.stringify({
+    ok: false,
+    error: "tsconfig.json not found",
+    diagnostics: []
+  }));
+  process.exit(0);
+}
+
+const readResult = ts.readConfigFile(tsconfigPath, ts.sys.readFile);
+
+if (readResult.error) {
+  const message = ts.flattenDiagnosticMessageText(readResult.error.messageText, "\n");
+  console.log(JSON.stringify({
+    ok: false,
+    error: message,
+    diagnostics: []
+  }));
+  process.exit(0);
+}
+
+const parsed = ts.parseJsonConfigFileContent(
+  readResult.config,
+  ts.sys,
+  path.dirname(tsconfigPath),
+  undefined,
+  tsconfigPath
+);
+
+const program = ts.createProgram({
+  rootNames: parsed.fileNames,
+  options: parsed.options,
+  projectReferences: parsed.projectReferences
+});
+
+const allDiagnostics = ts.getPreEmitDiagnostics(program);
+
+const diagnostics = allDiagnostics.map((diag) => {
+  const message = ts.flattenDiagnosticMessageText(diag.messageText, "\n");
+  let fileName = null;
+  let line = 1;
+  let column = 1;
+
+  if (diag.file && typeof diag.start === "number") {
+    const pos = diag.file.getLineAndCharacterOfPosition(diag.start);
+    fileName = path.resolve(diag.file.fileName);
+    line = pos.line + 1;
+    column = pos.character + 1;
+  }
+
+  return {
+    code: diag.code != null ? `TS${diag.code}` : "TS",
+    message,
+    category: typeof diag.category === "number" ? diag.category : null,
+    filePath: fileName,
+    line,
+    column
+  };
+});
+
+console.log(JSON.stringify({
+  ok: true,
+  tsconfigPath: path.resolve(tsconfigPath),
+  diagnostics
+}));
+""".strip()
+
+
+def create_typescript_helper_file(script_dir: Path) -> Path:
+    helper_path = script_dir / "_typescript_diagnostics_helper.cjs"
+    helper_path.write_text(build_typescript_diagnostics_script(), encoding="utf-8")
+    return helper_path
+
+
+def run_typescript_diagnostics(project_root: Path, script_dir: Path) -> list[dict]:
+    node_cmd = get_node_command()
+    helper_path = create_typescript_helper_file(script_dir)
 
     try:
-        result = subprocess.run(
-            cmd,
-            cwd=str(frontend_root),
-            shell=True,
-            capture_output=True,
-            text=True,
-            encoding="utf-8",
-        )
-    except FileNotFoundError:
-        print(
-            "[run-eslint] Error: 'npx' not found while running tsc. "
-            "Make sure Node.js is installed and 'npx' is in your PATH."
-        )
-        return []
+        args = [node_cmd, str(helper_path), str(project_root)]
+        result = run_command(args, project_root)
+        if result is None:
+            return []
 
-    print(f"[run-eslint] tsc exit code: {result.returncode}")
+        if result.stderr.strip():
+            print_block("---- TypeScript helper stderr ----", result.stderr)
 
-    text = (result.stdout or "") + "\n" + (result.stderr or "")
-    if not text.strip():
-        print("[run-eslint] tsc produced no output.")
-        return []
-
-    pattern = re.compile(
-        r"^(.+?\.(?:ts|tsx|mts|cts|js|jsx|mjs))\((\d+),(\d+)\): error TS\d+:",
-        re.MULTILINE,
-    )
-
-    errors = []
-    for match in pattern.finditer(text):
-        file_str = match.group(1)
-        raw_path = Path(file_str)
-        abs_path = (
-            raw_path if raw_path.is_absolute() else (frontend_root / raw_path).resolve()
-        )
+        stdout = (result.stdout or "").strip()
+        if not stdout:
+            log("TypeScript helper produced no output.")
+            return []
 
         try:
-            rel_path = abs_path.relative_to(frontend_root)
-        except ValueError:
-            continue
+            payload = json.loads(stdout)
+        except json.JSONDecodeError:
+            log("Could not parse TypeScript helper JSON output.")
+            print_block("---- TypeScript helper raw stdout ----", result.stdout)
+            return []
 
-        if not rel_path.parts or rel_path.parts[0] != "src":
-            continue
+        if not payload.get("ok"):
+            log("TypeScript helper reported configuration failure.")
+            if payload.get("error"):
+                print_block(
+                    "---- TypeScript configuration error ----", payload["error"]
+                )
+            return []
 
-        line = int(match.group(2))
-        column = int(match.group(3))
+        raw_diagnostics = payload.get("diagnostics", [])
+        diagnostics: list[dict] = []
 
-        errors.append(
-            {
-                "abs_path": abs_path,
-                "rel_path": rel_path,
-                "line": line,
-                "column": column,
-                "severity": 2,
-                "source": "tsc",
-            }
-        )
+        for diag in raw_diagnostics:
+            file_path_str = diag.get("filePath")
+            if not file_path_str:
+                continue
 
-    print(f"[run-eslint] tsc: raw src/ errors (may contain duplicates): {len(errors)}")
+            abs_path = normalize_path(file_path_str, project_root)
+            if not is_relevant_file(abs_path, project_root):
+                continue
 
-    if not errors:
-        return []
+            diagnostics.append(
+                {
+                    "tool": "tsc",
+                    "abs_path": abs_path,
+                    "line": int(diag.get("line", 1) or 1),
+                    "column": int(diag.get("column", 1) or 1),
+                    "severity": 2,
+                    "code": diag.get("code") or "TS",
+                    "message": (diag.get("message") or "").strip(),
+                }
+            )
 
-    dedup = {}
-    for e in errors:
-        key = str(Path(e["abs_path"]).resolve())
-        if key not in dedup:
-            dedup[key] = e
-
-    unique_errors = list(dedup.values())
-    print(f"[run-eslint] tsc: unique src/ files with errors: {len(unique_errors)}")
-    unique_errors.sort(key=lambda f: (str(f["rel_path"]), f["line"], f["column"]))
-    return unique_errors
+        log(f"TypeScript diagnostics collected: {len(diagnostics)}")
+        return diagnostics
+    finally:
+        try:
+            helper_path.unlink(missing_ok=True)
+        except Exception as exc:
+            log(f"Could not delete temporary TypeScript helper: {exc}")
 
 
-def merge_problem_files(eslint_files, tsc_files, frontend_root: Path):
-    all_map = {}
+def merge_diagnostics(*groups: list[dict]) -> list[dict]:
+    merged: list[dict] = []
+    seen: set[tuple] = set()
 
-    for f in eslint_files:
-        key = str(Path(f["abs_path"]).resolve())
-        all_map[key] = f
-
-    for f in tsc_files:
-        key = str(Path(f["abs_path"]).resolve())
-        existing = all_map.get(key)
-        if existing is None:
-            all_map[key] = f
-        else:
-            if f["severity"] > existing.get("severity", 1):
-                all_map[key] = f
-
-    merged = list(all_map.values())
-    print(
-        f"[run-eslint] Total unique src/ files with problems (ESLint + tsc): {len(merged)}"
-    )
+    for group in groups:
+        for diag in group:
+            key = (
+                str(Path(diag["abs_path"]).resolve()).lower(),
+                int(diag["line"]),
+                int(diag["column"]),
+                str(diag["tool"]),
+                str(diag["code"]),
+                str(diag["message"]),
+            )
+            if key in seen:
+                continue
+            seen.add(key)
+            merged.append(diag)
 
     merged.sort(
-        key=lambda f: (-f["severity"], str(f["rel_path"]), f["line"], f["column"])
+        key=lambda d: (
+            str(d["abs_path"]).lower(),
+            d["line"],
+            d["column"],
+            d["tool"],
+            d["code"],
+        )
     )
+    log(f"Total diagnostics collected: {len(merged)}")
     return merged
 
 
-def open_files_in_vscode(files, frontend_root: Path):
-    if not files:
-        print("[run-eslint] No problems found, nothing to open.")
+def print_diagnostics(diagnostics: list[dict], project_root: Path) -> None:
+    if not diagnostics:
+        log("No diagnostics found.")
         return
 
-    limited_files = files[:MAX_FILES_TO_OPEN]
+    grouped: dict[str, list[dict]] = defaultdict(list)
 
-    if len(files) > MAX_FILES_TO_OPEN:
-        print(
-            f"[run-eslint] {len(files)} files with problems found. "
-            f"Opening only the first {MAX_FILES_TO_OPEN}."
+    for diag in diagnostics:
+        try:
+            rel = Path(diag["abs_path"]).resolve().relative_to(project_root.resolve())
+            rel_str = str(rel)
+        except ValueError:
+            rel_str = str(diag["abs_path"])
+        grouped[rel_str].append(diag)
+
+    write_log_line("==== Diagnostics ====")
+    for rel_path in sorted(grouped.keys(), key=lambda p: p.lower()):
+        write_log_line(rel_path)
+        for diag in grouped[rel_path]:
+            write_log_line(
+                f"  [{diag['tool']}] {diag['line']}:{diag['column']} "
+                f"{diag['code']} - {diag['message']}"
+            )
+
+
+def files_to_open(diagnostics: list[dict], project_root: Path) -> list[dict]:
+    by_file: dict[str, dict] = {}
+
+    for diag in diagnostics:
+        abs_path = Path(diag["abs_path"]).resolve()
+        if not is_relevant_file(abs_path, project_root):
+            continue
+
+        key = str(abs_path).lower()
+        current = by_file.get(key)
+
+        if current is None:
+            by_file[key] = diag
+            continue
+
+        current_rank = (
+            current["severity"],
+            -current["line"],
+            -current["column"],
+        )
+        new_rank = (
+            diag["severity"],
+            -diag["line"],
+            -diag["column"],
+        )
+
+        if new_rank > current_rank:
+            by_file[key] = diag
+
+    selected = list(by_file.values())
+    selected.sort(
+        key=lambda d: (
+            -d["severity"],
+            str(d["abs_path"]).lower(),
+            d["line"],
+            d["column"],
+        )
+    )
+
+    log(f"Unique files to open: {len(selected)}")
+    return selected
+
+
+def open_files_in_vscode(file_entries: list[dict]) -> None:
+    if not file_entries:
+        log("Nothing to open in VS Code.")
+        return
+
+    limited = file_entries[:MAX_FILES_TO_OPEN]
+
+    if len(file_entries) > MAX_FILES_TO_OPEN:
+        log(
+            f"{len(file_entries)} files have diagnostics. "
+            f"Opening first {MAX_FILES_TO_OPEN}."
         )
     else:
-        print(
-            f"[run-eslint] Opening {len(limited_files)} files with problems in VS Code."
-        )
+        log(f"Opening {len(limited)} files in VS Code.")
 
     code_cmd = get_code_command()
     args = [code_cmd, "--reuse-window"]
 
-    for f in limited_files:
-        abs_path = Path(f["abs_path"])
-        rel = f["rel_path"]
-        line = f["line"]
-        column = f["column"]
-        source = f.get("source", "unknown")
+    for entry in limited:
+        abs_path = Path(entry["abs_path"]).resolve()
+        line = int(entry["line"])
+        column = int(entry["column"])
 
-        print(f"[run-eslint] Scheduling open ({source}): {rel}:{line}:{column}")
+        log(f"Open: {abs_path} @ {line}:{column} ({entry['tool']} {entry['code']})")
         args.extend(["-g", f"{abs_path}:{line}:{column}"])
 
     try:
@@ -283,45 +478,53 @@ def open_files_in_vscode(files, frontend_root: Path):
             args,
             capture_output=True,
             text=True,
+            encoding="utf-8",
+            errors="replace",
         )
     except FileNotFoundError:
-        print("[run-eslint] Error: VS Code CLI not found when trying to run:")
-        print(f"  {code_cmd}")
-        print(
-            "Make sure the VS Code CLI is installed and available "
-            "in your PATH or in the default install location."
-        )
+        log("VS Code CLI not found.")
+        write_log_line(f"Tried command: {code_cmd}")
         return
 
     if result.returncode != 0:
-        print(f"[run-eslint] VS Code CLI returned exit code {result.returncode}")
+        log(f"VS Code CLI returned exit code {result.returncode}")
         if result.stderr.strip():
-            print("---- code stderr ----")
-            print(result.stderr)
+            print_block("---- VS Code stderr ----", result.stderr)
 
 
 def main() -> int:
-    print("[run-eslint] Starting ESLint + tsc run-and-open script.")
-    frontend_root = find_frontend_root()
+    global LOG_FILE_PATH
 
-    eslint_json = run_eslint(frontend_root)
-    eslint_files = collect_eslint_files(eslint_json or [], frontend_root)
+    script_path = get_script_path()
+    LOG_FILE_PATH = init_log_file(script_path)
 
-    tsc_files = run_tsc(frontend_root)
+    log("Starting diagnostics run.")
+    log(f"Log file: {LOG_FILE_PATH}")
 
-    problem_files = merge_problem_files(eslint_files, tsc_files, frontend_root)
-    if not problem_files:
-        print("[run-eslint] No src/ files with problems found (ESLint + tsc).")
+    project_root = find_project_root()
+    script_dir = script_path.parent
+
+    eslint_diagnostics = run_eslint(project_root)
+    tsc_diagnostics = run_typescript_diagnostics(project_root, script_dir)
+
+    diagnostics = merge_diagnostics(eslint_diagnostics, tsc_diagnostics)
+
+    if not diagnostics:
+        log("No relevant diagnostics found.")
         return 0
 
-    open_files_in_vscode(problem_files, frontend_root)
-    print("[run-eslint] Finished opening files.")
-    return 0
+    print_diagnostics(diagnostics, project_root)
+
+    open_targets = files_to_open(diagnostics, project_root)
+    open_files_in_vscode(open_targets)
+
+    log("Finished.")
+    return 1
 
 
 if __name__ == "__main__":
     exit_code = main()
-    print(f"[run-eslint] Done. Exit code: {exit_code}")
+    log(f"Done. Exit code: {exit_code}")
     try:
         input("Press Enter to exit...")
     except EOFError:
