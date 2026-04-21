@@ -84,34 +84,43 @@ const FooterShell = styled.footer`
         : 'rgba(20, 23, 27, 0.08)'};
   background:
     radial-gradient(
-      90% 22rem at 50% 0%,
+      90% 20rem at 50% 0%,
+      ${({ theme }) =>
+          theme.mode === 'dark'
+            ? 'rgba(209, 102, 44, 0.06)'
+            : 'rgba(162, 74, 30, 0.04)'}
+        0%,
+      transparent 68%
+    ),
+    radial-gradient(
+      120% 28rem at 50% 100%,
       ${({ theme }) =>
           theme.mode === 'dark'
             ? 'rgba(95, 135, 134, 0.08)'
-            : 'rgba(47, 78, 80, 0.045)'}
+            : 'rgba(47, 78, 80, 0.05)'}
         0%,
-      transparent 68%
+      transparent 74%
     ),
     linear-gradient(
       180deg,
       ${({ theme }) =>
           theme.mode === 'dark'
-            ? 'rgba(18, 22, 27, 0.96)'
-            : 'rgba(243, 238, 229, 0.92)'}
+            ? 'rgba(18, 22, 27, 0.92)'
+            : 'rgba(247, 242, 234, 0.9)'}
         0%,
       ${({ theme }) => theme.roles.surface.chrome} 100%
     );
-  padding-block: ${({ theme }) => theme.spacing(3.2)};
+  padding-block: ${({ theme }) => theme.spacing(3.1)};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    padding-block: ${({ theme }) => theme.spacing(2.7)};
+    padding-block: ${({ theme }) => theme.spacing(2.6)};
   }
 `
 
 const FooterInner = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(2.2)};
+  gap: ${({ theme }) => theme.spacing(2.1)};
 `
 
 const TopRow = styled.div`

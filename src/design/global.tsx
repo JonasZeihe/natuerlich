@@ -20,6 +20,7 @@ const GlobalStyles = createGlobalStyle`
     color-scheme: ${({ theme }) => theme.mode};
     text-rendering: optimizeLegibility;
     background: ${({ theme }) => theme.roles.surface.canvas};
+    scroll-behavior: smooth;
   }
 
   body {
@@ -29,52 +30,31 @@ const GlobalStyles = createGlobalStyle`
     color: ${({ theme }) => theme.roles.text.primary};
     background:
       radial-gradient(
-        110% 44rem at 50% -8rem,
+        120% 34rem at 50% -10%,
         ${({ theme }) =>
           theme.mode === 'dark'
-            ? 'rgba(95, 135, 134, 0.11)'
-            : 'rgba(47, 78, 80, 0.055)'}
-            0%,
-        transparent 58%
-      ),
-      radial-gradient(
-        72% 24rem at 10% 28%,
-        ${({ theme }) =>
-          theme.mode === 'dark'
-            ? 'rgba(142, 163, 179, 0.07)'
-            : 'rgba(72, 91, 106, 0.04)'}
-            0%,
+            ? 'rgba(95, 135, 134, 0.12)'
+            : 'rgba(47, 78, 80, 0.08)'}
+          0%,
         transparent 68%
       ),
       radial-gradient(
-        78% 28rem at 92% 76%,
+        82% 22rem at 12% 34%,
         ${({ theme }) =>
           theme.mode === 'dark'
-            ? 'rgba(209, 102, 44, 0.07)'
-            : 'rgba(162, 74, 30, 0.035)'}
-            0%,
-        transparent 70%
+            ? 'rgba(142, 163, 179, 0.07)'
+            : 'rgba(72, 91, 106, 0.045)'}
+          0%,
+        transparent 74%
       ),
       linear-gradient(
         180deg,
-        ${({ theme }) => theme.roles.surface.canvas} 0%,
+        ${({ theme }) => (theme.mode === 'dark' ? '#11161b' : '#f8f3eb')}
+          0%,
         ${({ theme }) =>
-          theme.mode === 'dark'
-            ? 'rgba(20, 24, 29, 0.995)'
-            : 'rgba(248, 244, 237, 0.995)'}
-            18%,
-        ${({ theme }) =>
-          theme.mode === 'dark'
-            ? 'rgba(17, 21, 26, 1)'
-            : 'rgba(242, 237, 228, 1)'}
-            54%,
-        ${({ theme }) =>
-          theme.mode === 'dark'
-            ? 'rgba(16, 19, 23, 1)'
-            : 'rgba(242, 238, 231, 1)'}
-            100%
+          theme.mode === 'dark' ? '#101317' : theme.roles.surface.canvas}
+          100%
       );
-    background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -139,12 +119,15 @@ const GlobalStyles = createGlobalStyle`
   }
 
   @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
     *, *::before, *::after {
       animation-duration: 0.001ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.001ms !important;
       scroll-behavior: auto !important;
-      background-attachment: scroll !important;
     }
   }
 `

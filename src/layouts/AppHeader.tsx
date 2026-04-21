@@ -270,33 +270,54 @@ const HeaderShell = styled.header<{ $compact: boolean }>`
         theme.roles.border.subtle,
         $compact
           ? theme.mode === 'dark'
-            ? 0.72
-            : 0.82
+            ? 0.68
+            : 0.78
           : theme.mode === 'dark'
-            ? 0.42
-            : 0.56
+            ? 0.24
+            : 0.34
       )};
-  background: linear-gradient(
-    180deg,
-    ${({ theme, $compact }) =>
-        theme.mode === 'dark'
-          ? withAlpha(theme.roles.surface.chrome, $compact ? 0.9 : 0.82)
-          : withAlpha(theme.roles.surface.chrome, $compact ? 0.94 : 0.88)}
-      0%,
-    ${({ theme, $compact }) =>
-        theme.mode === 'dark'
-          ? withAlpha(theme.roles.surface.panel, $compact ? 0.92 : 0.84)
-          : withAlpha(theme.roles.surface.panel, $compact ? 0.96 : 0.9)}
-      100%
-  );
+  background:
+    linear-gradient(
+      180deg,
+      ${({ theme, $compact }) =>
+          theme.mode === 'dark'
+            ? withAlpha(theme.roles.surface.chrome, $compact ? 0.84 : 0.56)
+            : withAlpha(theme.roles.surface.chrome, $compact ? 0.9 : 0.62)}
+        0%,
+      ${({ theme, $compact }) =>
+          theme.mode === 'dark'
+            ? withAlpha(theme.roles.surface.panel, $compact ? 0.9 : 0.64)
+            : withAlpha(theme.roles.surface.panel, $compact ? 0.94 : 0.7)}
+        100%
+    ),
+    radial-gradient(
+      120% 180% at 50% 0%,
+      ${({ theme, $compact }) =>
+          theme.mode === 'dark'
+            ? withAlpha(
+                theme.getAxisRole('axisResonance').surface,
+                $compact ? 0.18 : 0.1
+              )
+            : withAlpha(
+                theme.getAxisRole('axisResonance').surface,
+                $compact ? 0.16 : 0.08
+              )}
+        0%,
+      transparent 72%
+    );
   box-shadow: ${({ theme, $compact }) =>
     $compact ? theme.boxShadow.xs : 'none'};
-  backdrop-filter: blur(14px) saturate(1.02);
-  -webkit-backdrop-filter: blur(14px) saturate(1.02);
+  backdrop-filter: blur(${({ $compact }) => ($compact ? '16px' : '12px')})
+    saturate(1.04);
+  -webkit-backdrop-filter: blur(
+      ${({ $compact }) => ($compact ? '16px' : '12px')}
+    )
+    saturate(1.04);
   transition:
     box-shadow 0.18s ease,
-    background-color 0.18s ease,
-    border-color 0.18s ease;
+    border-color 0.18s ease,
+    background 0.18s ease,
+    backdrop-filter 0.18s ease;
 `
 
 const HeaderInner = styled.div`
