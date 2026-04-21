@@ -1,310 +1,275 @@
 <!-- !WAS IST NATUERLICH/APEX.md -->
-# JONAS — APEX (Urquell / Fixpunkt)
+# JONAS — APEX
 
 > Diese Website verkauft keine Methode.  
 > Sie macht einen Lehrer lesbar.
 
-Dieses Dokument ist die **Wahrheitsschicht**.  
-Wenn irgendein CoreFlow, irgendein Flow, irgendein Screen, irgendein Text, irgendeine Gestaltung oder irgendein Code-Detail dagegen spricht: **Apex gewinnt**.
+Bevor etwas gebaut wird, muss klar sein, was hier überhaupt wahr bleiben muss.
+
+Nicht jede Idee.  
+Nicht jede spätere Ausprägung.  
+Nicht jede Formulierung.
+
+Sondern das, was dieses Projekt verlieren würde, wenn es davon abrückt.
+
+Diese Website ist keine neutrale Angebotsfläche.  
+Sie ist die sichtbare Form einer Arbeit, die an Jonas als Lehrer gebunden ist.
+
+Wenn spätere Screens, Texte, Strukturen, Designs oder Entscheidungen dem widersprechen, gilt: **Apex gewinnt.**
 
 ---
 
-## I. Ursprung
+## I. Kern
 
-**Name:** Jonas — Website / Präsenz / Angebotsraum.  
-**Warum:** In diesem Feld werden Yoga, Qigong, Tai Chi, Meditation und Achtsamkeit oft in Formen sichtbar, die zu flach, zu dekorativ, zu weich, zu beliebig oder zu konsumierbar sind.
+Diese Website macht Jonas als Lehrer so lesbar, dass Menschen nicht zuerst auf Methoden, Stimmungen oder Kategorien treffen, sondern auf die Person, die diese Arbeit trägt.
 
-Was dann fehlt, ist nicht Methode.  
-Was fehlt, ist Tragfähigkeit.
+Denn was hier angeboten wird, ist nicht bloß Yoga, Qigong, Tai Chi, Meditation oder Achtsamkeit als austauschbare Sammlung.  
+Es ist eine bestimmte Weise, diese Dinge zu unterrichten:
 
-Menschen machen Erfahrungen, aber finden keinen Anschluss.  
-Sie probieren etwas aus, aber es wird nicht Teil ihres Lebens.  
-Sie suchen Tiefe, aber finden Kulisse.  
-Sie suchen Praxis, aber finden Stimmung.  
-Sie suchen Anspruch, aber finden entweder Härtepose oder Wellness.
+- mit Anspruch
+- mit Freude
+- mit Klarheit
+- ohne Esoterik
+- ohne Wellness-Verkleidung
+- ohne falsche Härte
+- mit dem Ziel, dass Praxis über den Kurs hinaus trägt
+
+Darum steht hier nicht das Feld im Zentrum.  
+Auch nicht die Methode.  
+Auch nicht das Format.
+
+Sondern Jonas als Ursprung der Angebotswahrheit.
+
+---
+
+## II. Warum dieses Projekt existiert
+
+In diesem Feld wird vieles sichtbar, das zwar freundlich, gesund oder ansprechend wirkt, aber nicht trägt.
+
+Zu oft entsteht:
+
+- Kulisse statt Substanz
+- Teilnahme statt Praxis
+- Lifestyle statt Wahrheit
+- Milde statt Klarheit
+- Methode ohne Lehrerlinie
+- Kurskonsum ohne Anschluss
+- Anspruchslosigkeit oder Pose
+
+Menschen machen Erfahrungen, aber finden keinen echten Übergang in ihr Leben.  
+Sie probieren etwas aus, aber es bleibt Episode.  
+Sie suchen Tiefe, aber finden Stimmung.  
+Sie suchen Werkzeuge, aber finden Formen ohne Tragfähigkeit.
 
 Dieses Projekt existiert, weil genau dort ein Bruch liegt.
 
----
-
-## II. Leitgedanke
-
-> „Nicht die Methode steht zuerst im Raum.  
-> Sondern die Person, die sie trägt.“
-
-Diese Website ist keine neutrale Angebotsfläche.  
-Sie ist keine Wellness-Präsenz.  
-Sie ist keine dekorative Achtsamkeitsseite.  
-Sie ist keine Kursliste mit schönem Ton.
-
-Sie ist die sichtbare Form eines Lehrers, dessen Arbeit aus gelebter Reibung, hohem Anspruch, Freude, Klarheit und echter Praxisfähigkeit kommt.
-
-Jonas verkauft nicht bloß Yoga, Qigong, Tai Chi, Meditation oder Achtsamkeit.  
-Er steht als Lehrer für eine bestimmte Art, diese Dinge zu vermitteln:
-
-- ernsthaft
-- resonant
-- klar
-- nicht esoterisch
-- nicht weichgespült
-- alltagstauglich
-- mit dem Ziel, dass Praxis über den Kurs hinaus trägt
-
-Darum gilt:
-
-- Person vor Methode
-- Resonanz vor Reichweite
-- Praxis vor Konsum
-- Transparenz vor Nebel
-- Anspruch vor Pose
-- Freude ohne Verflachung
-- Tiefe ohne Kitsch
+Nicht, um sich bitter abzugrenzen.  
+Sondern um eine bessere Wirklichkeit lesbar zu machen.
 
 ---
 
-## III. Prinzipien (Prüfschema)
+## III. Die Grundwahrheiten
 
-1. **Person vor Kategorie**  
-   Menschen begegnen hier nicht zuerst einem Feld, sondern Jonas als Lehrer.
+### 1. Person vor Methode
 
-2. **Resonanz vor Masse**  
-   Die Website muss nicht allen gefallen. Sie muss für die Richtigen klar werden.
+Diese Website beginnt nicht mit Yoga, Qigong, Tai Chi, Meditation oder Achtsamkeit.  
+Sie beginnt mit Jonas.
 
-3. **Praxis vor Kulisse**  
-   Es geht nicht um Lifestyle, nicht um Gesundheitsästhetik, nicht um dekorative Ruhe.
+Nicht aus Eitelkeit.  
+Sondern weil dieses Angebot nicht anonym, nicht austauschbar und nicht von der Person des Lehrers zu trennen ist.
 
-4. **Anspruch vor Pose**  
-   Hoher Anspruch ist wesentlich, aber nie kalt, elitär oder verkrampft.
+### 2. Resonanz vor Reichweite
 
-5. **Freude ohne Verharmlosung**  
-   Leichtigkeit und Ernst widersprechen sich nicht.
+Die erste eigentliche Schwelle ist nicht Information, sondern Resonanz.
 
-6. **Transparenz vor Ausweichbewegung**  
-   Angebot, Formate, Rahmen, Preise und Kontakt müssen klar lesbar sein.
+Ein Mensch muss früh spüren können:
 
-7. **Alltagstauglichkeit vor Eventcharakter**  
-   Die Arbeit soll Menschen in eine Praxis führen, die in ihrem Leben trägt.
+- wer ihm hier begegnet
+- ob diese Haltung für ihn trägt
+- ob das hier nur wieder Standard ist oder etwas mit Substanz
+- ob er von genau diesem Lehrer mehr sehen will
 
-8. **Glaubwürdigkeit vor Selbstinszenierung**  
-   Vertrauen entsteht nicht durch Pathos, sondern durch Übereinstimmung zwischen Person, Sprache, Haltung und Form.
+Die Website muss nicht alle halten.  
+Sie muss die Richtigen klar werden lassen.
 
-Wenn sich etwas nach Wellness, Öko-Kulisse, Gesundheitsfetisch, Guru-Pose, Kurscontainer oder Lifestyle-Marketing anfühlt, ist es verdächtig.
+### 3. Praxis vor Konsum
 
----
+Das Ziel ist nicht bloße Teilnahme.  
+Das Ziel ist Praxisfähigkeit.
 
-## IV. Unverhandelbare Wahrheiten
+Diese Arbeit soll Menschen nicht nur durch einen Kurs bewegen, sondern in etwas führen, das im Alltag weiterwirken kann:
 
-1. **Diese Website ist personenzentriert.**  
-   Nicht aus Eitelkeit, sondern weil das Angebot in der Person des Lehrers gründet.
+- als Werkzeug
+- als Anschluss
+- als eigene Praxis
+- als echte Veränderung im Leben
 
-2. **Resonanz ist die erste eigentliche Schwelle.**  
-   Ein Mensch muss früh spüren können, ob Jonas als Lehrer für ihn trägt oder nicht.
+### 4. Hoher Anspruch und Freude gehören zusammen
 
-3. **Das Angebot ist Ausfaltung der Person, nicht ihr Ersatz.**  
-   Methoden und Formate werden sichtbar, aber nie als anonyme Produktkategorien.
+Diese Arbeit will Niveau.  
+Nicht als Härtepose.  
+Nicht als Elitedekor.  
+Nicht als verkrampfte Perfektion.
 
-4. **Die Arbeit zielt auf echte Praxisfähigkeit.**  
-   Nicht auf bloßen Kurskonsum, sondern auf etwas, das im Leben weiterwirkt.
+Der Anspruch ist hoch, weil die Sache ernst ist.  
+Und die Freude bleibt wesentlich, weil die Sache lebendig sein muss.
 
-5. **Hoher Anspruch und Freude gehören zusammen.**  
-   Das Niveau ist hoch, aber nicht hart oder freudefeindlich.
+Gerade diese Verbindung ist Kern der Arbeit.
 
-6. **Kritik am Feld darf spürbar sein, aber nie bitter werden.**  
-   Diese Website grenzt sich nicht aus Nörgelei ab, sondern aus einer besseren Wirklichkeit heraus.
+### 5. Transparenz ist Teil der Wahrheit
 
-7. **Transparenz ist Teil der Glaubwürdigkeit.**  
-   Wer ist Jonas? Was bietet er an? In welchen Formaten? Für wen? Was kostet es? Wie beginnt man?  
-   Das alles muss klar sein.
-
-8. **Die Website darf nichts vortäuschen.**  
-   Keine schöne Unschärfe. Keine Stimmung ohne Substanz. Keine Tiefe ohne Tragfähigkeit.
-
-9. **Nicht jeder soll hier andocken.**  
-   Die Website darf klar selektiv wirken, wenn dadurch echte Resonanz möglich wird.
-
-10. **Die Website ist kein Methodenlexikon.**  
-    Sie muss nicht erklären, was Yoga oder Qigong „an sich“ sind. Sie muss lesbar machen, wie Jonas sie trägt.
-
----
-
-## V. Die Grundkräfte dieses Projekts
-
-### 1) Jonas
-
-Jonas ist nicht Beiwerk der Website.  
-Er ist ihr Ursprung.
-
-Die erste Frage dieser Website lautet nicht:  
-„Welche Methode wird angeboten?“
-
-Sondern:  
-„Wer ist dieser Lehrer, und trägt das für mich?“
-
-Darum ist seine Person nicht Marketing-Aufmacher, sondern Wahrheitsgrund.
-
----
-
-### 2) Praxis
-
-Praxis meint hier nicht bloße Teilnahme.
-
-Praxis meint:
-
-- etwas lernen, das trägt
-- etwas finden, das anschlussfähig ist
-- Werkzeuge entdecken, die im Alltag wirklich benutzt werden können
-- nicht nach dem Kurs wieder in Null zurückfallen
-
-Die Website darf das nicht verkitschen.  
-Sie muss es lesbar machen.
-
----
-
-### 3) Anspruch
-
-Der Anspruch ist hoch.  
-Nicht im Sinn von Härte oder Prestigegeste.  
-Sondern im Sinn von:
-
-- Genauigkeit
-- Tiefe
-- Niveau
-- Qualität
-- Ernsthaftigkeit
-- echter Vermittlungskraft
-
-Dieser Anspruch muss sichtbar sein, ohne schwer oder unnahbar zu werden.
-
----
-
-### 4) Reibung
-
-Diese Arbeit kommt nicht aus glatter Gesundheitsästhetik.  
-Sie kommt aus gelebter Reibung, aus Krisenerfahrung, aus echter Auseinandersetzung mit dem Leben.
-
-Das heißt nicht, dass diese Website düster sein soll.  
-Aber sie darf auch nicht so tun, als sei alles harmonische Oberfläche.
-
-Gerade dadurch wird sie glaubwürdig.
-
----
-
-### 5) Transparenz
-
-Diese Website darf nichts verstecken, was für eine echte Entscheidung notwendig ist.
+Wer ernsthafte Arbeit anbietet, muss sie klar lesbar machen.
 
 Dazu gehören:
 
+- Person
 - Angebot
 - Formate
-- mögliche Settings
-- Preise
 - Rahmen
+- Preise
 - Einstieg
 - Kontakt
 
 Transparenz ist hier keine Service-Beigabe.  
-Sie ist Beweis dafür, dass das Angebot ernst gemeint ist.
+Sie ist Teil der Glaubwürdigkeit.
+
+### 6. Die Website darf nichts vortäuschen
+
+Keine schöne Unschärfe.  
+Keine Tiefe ohne Tragfähigkeit.  
+Keine Stimmung als Ersatz für Wahrheit.  
+Keine Inszenierung, die stärker wirkt als das, was sie trägt.
+
+Wenn etwas nur gut aussieht, aber nicht aus dem Projektkern kommt, ist es falsch.
 
 ---
 
-### 6) Anschlussfähigkeit
+## IV. Jonas als Ursprung
 
-Die Website muss Menschen nicht nur beeindrucken, sondern ihnen einen echten Anschluss ermöglichen.
+Jonas ist hier nicht Beiwerk, Gesicht oder Vertriebsoberfläche.
 
-Nicht jeder wird weitermachen.  
-Das ist richtig.
+Er ist der Ursprung der ganzen Struktur.
 
-Aber wer Resonanz spürt, muss klar erkennen können:
+Menschen sollen hier nicht zuerst denken:
 
-- was möglich ist
-- wie man beginnen kann
-- wie Kontakt aussieht
-- worauf man sich einlässt
+- Welcher Kurs passt zu mir?
+- Welche Methode klingt interessant?
+- Was kostet das?
 
----
+Sondern zuerst spüren:
 
-## VI. Begriffe (nur das Nötige, damit nichts magisch wird)
+- Wer ist dieser Mensch?
+- Wie trägt er diese Arbeit?
+- Ist das glaubwürdig?
+- Entsteht hier Resonanz oder nicht?
 
-- **Jonas**  
-  Nicht nur Person, sondern Träger der ganzen Angebotswahrheit.
-
-- **Lehrer**  
-  Kein Rollenbild, kein Guru, kein Kursverwalter, sondern jemand, der Praxis vermittelt und trägt.
-
-- **Resonanz**  
-  Die frühe spürbare Übereinstimmung oder Nicht-Übereinstimmung zwischen Besucher und Lehrer.
-
-- **Praxis**  
-  Nicht bloße Teilnahme, sondern etwas, das über Kurs oder Termin hinaus im Leben wirksam werden kann.
-
-- **Praxisfelder**  
-  Yoga, Qigong, Tai Chi, Meditation, Achtsamkeit.
-
-- **Formate**  
-  Die konkrete Form, in der diese Arbeit angeboten wird, z. B. Kurs, Klasse, Einzelsetting, mobil, später ggf. Workshop oder weitere Formen.
-
-- **Transparenz**  
-  Klare Lesbarkeit von Person, Angebot, Rahmen, Preis und Einstieg.
-
-- **Anschluss**  
-  Der reale nächste Schritt in Kontakt, Anfrage oder Teilnahme.
+Erst daraus dürfen Angebot, Formate und Entscheidung lesbar werden.
 
 ---
 
-## VII. Ethik als Konstruktion
+## V. Was Praxis hier meint
 
-1. **Keine Wellness-Verkleidung**  
-   Es darf nichts so gestaltet werden, als ginge es primär um Wohlfühlkulisse.
+Praxis meint hier nicht bloße Teilnahme an schönen Terminen.
 
-2. **Keine falsche Milde**  
-   Das Projekt darf nicht weichgespült werden, um gefälliger zu wirken.
+Praxis meint:
 
-3. **Keine Guru- oder Gesundheitsrolle**  
-   Jonas darf weder als Heilsfigur noch als Gesundheitsfetischist erscheinen.
+- etwas lernen, das trägt
+- Werkzeuge finden, die benutzbar werden
+- über den Kurs hinaus Anschluss gewinnen
+- nicht nach dem Termin wieder in Null zurückfallen
 
-4. **Keine künstliche Schwere**  
-   Tiefe darf nicht über Pathos oder Verdunkelung simuliert werden.
+Diese Website muss genau das lesbar machen, ohne es zu überhöhen.
 
-5. **Keine versteckte Praxisrealität**  
-   Preise, Formate, Rahmen und Kontakt dürfen nicht im Nebel bleiben.
-
-6. **Keine anonyme Methodenfläche**  
-   Was hier angeboten wird, darf nie so wirken, als könne man die Person einfach austauschen.
-
-7. **Keine Stimmung statt Wahrheit**  
-   Gestaltung darf Atmosphäre tragen, aber niemals Substanz ersetzen.
+Sie darf Praxis weder verkitschen noch als Disziplinpose darstellen.  
+Sie muss zeigen, dass diese Arbeit alltagstauglich, ernst und lebendig sein kann.
 
 ---
 
-## VIII. Diese Website ist nicht
+## VI. Was Anspruch hier meint
+
+Anspruch meint hier nicht Strenge um ihrer selbst willen.
+
+Anspruch meint:
+
+- Genauigkeit
+- Tiefe
+- saubere Vermittlung
+- echtes Niveau
+- Ernsthaftigkeit
+- hohe Qualität in Form, Sprache und Ausführung
+
+Dieser Anspruch muss auf der Website spürbar werden, ohne dass er dauernd behauptet werden muss.
+
+Nicht durch Lautstärke.  
+Nicht durch Prestigezeichen.  
+Sondern durch Übereinstimmung.
+
+---
+
+## VII. Was auf keinen Fall daraus werden darf
+
+Diese Website ist nicht:
 
 - keine Yoga-Lifestyle-Seite
-- keine Öko- oder Wellnesskulisse
+- keine Wellness-Präsenz
+- keine Öko-Kulisse
 - keine spirituelle Selbstdarstellung
+- keine Gesundheitsfetisch-Seite
 - keine bloße Methodenliste
 - kein Kurscontainer
-- keine Gesundheitsfetisch-Präsenz
-- keine beruhigende Oberfläche ohne echte Tragfähigkeit
+- keine beruhigende Oberfläche ohne Tragfähigkeit
+- kein sympathischer, aber diffuser Personenauftritt
 - kein Marketing-Ort, der Tiefe behauptet und Unklarheit verkauft
 
-Diese Website ist kein schöner Rahmen für beliebige Inhalte.  
-Sie ist die sichtbare Form eines Lehrers und seiner Praxiswahrheit.
+Sie darf weder weichgespült noch künstlich schwer werden.
+
+Sie darf weder Guru noch Gesundheitsmoral ausstrahlen.
+
+Sie darf weder posieren noch beschwichtigen.
 
 ---
 
-## IX. Runtime-Haltung (kurz, hart, implementierbar)
+## VIII. Unverhandelbar
 
-- Die Person Jonas steht strukturell vor der Methodensammlung.
-- Angebotsdarstellung folgt aus der Lehrerlinie, nicht umgekehrt.
-- Transparenz über Preis, Format, Rahmen und Einstieg ist Pflicht.
-- Sprache und Gestaltung müssen gleichzeitig klar, hochwertig und unnebulös sein.
-- Nichts darf nach Wellness, Öko-Pastell oder Lifestyle-Marke kippen.
-- Die Website muss Resonanz ermöglichen, nicht maximale Breite simulieren.
-- Jede Entscheidung muss prüfen, ob sie Praxisfähigkeit, Glaubwürdigkeit und Anschluss stärkt.
+Folgendes darf nicht verraten werden:
+
+1. **Jonas steht strukturell vor der Methodensammlung.**
+
+2. **Resonanz ist die erste echte Schwelle.**
+
+3. **Das Angebot ist Ausfaltung der Person, nicht ihr Ersatz.**
+
+4. **Die Arbeit zielt auf Praxisfähigkeit, nicht auf Kurskonsum.**
+
+5. **Hoher Anspruch und Freude müssen zusammen spürbar bleiben.**
+
+6. **Transparenz über Preis, Rahmen, Format und Einstieg ist Pflicht.**
+
+7. **Nichts darf nach Wellness, Lifestyle, Guru-Pose oder schöner Unschärfe kippen.**
+
+8. **Die Website darf selektiv wirken, wenn dadurch echte Passung klarer wird.**
+
+9. **Sie muss glaubwürdig machen, nicht bloß gefallen.**
+
+10. **Sie darf nichts behaupten, was Form, Sprache und Struktur nicht tragen können.**
 
 ---
 
-## X. Ein Satz, der alles trägt
+## IX. Runtime-Haltung
 
-Diese Website macht Jonas als Lehrer so lesbar, dass die richtigen Menschen nicht bloß Methoden sehen, sondern eine ernsthafte, freudige, transparente und alltagstaugliche Praxis erkennen, in die sie wirklich eintreten können.
+Bei jeder Entscheidung ist zu prüfen:
+
+- Macht das Jonas als Lehrer klarer oder verdeckt es ihn?
+- Stärkt das Resonanz oder simuliert es nur Offenheit?
+- Führt das in Praxis oder nur in Teilnahme?
+- Erhöht das Glaubwürdigkeit oder nur Eindruck?
+- Klärt das die Realität des Angebots oder hält es sie im Nebel?
+- Entsteht hier Form aus dem Kern oder nur Oberfläche aus Geschmack?
+
+Nur was diese Prüfungen trägt, gehört in das Projekt.
+
+---
+
+## X. Ein Satz, der alles hält
+
+Diese Website macht Jonas als Lehrer so lesbar, dass die richtigen Menschen nicht bloß Methoden oder Kurse sehen, sondern eine ernsthafte, freudige, transparente und tragfähige Praxis erkennen, in die sie wirklich eintreten können.

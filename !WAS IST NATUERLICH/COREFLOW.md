@@ -1,63 +1,44 @@
 <!-- !WAS IST NATUERLICH/COREFLOW.md -->
 # JONAS — CoreFlow
 
-CoreFlow ist die **eine Hauptbewegung**, die im Kopf bleibt.  
-Keine Seitenliste. Keine Feature-Sammlung. Keine bloße Inhaltsordnung.  
-Nur: **Wie begegnet ein Mensch Jonas — woran spürt er Resonanz — wie wird das Angebot lesbar — warum entsteht Vertrauen — und wann wird daraus ein echter nächster Schritt.**
+CoreFlow hält nicht die ganze Website.  
+Er hält ihre natürliche Hauptbewegung.
 
-Apex ist die Wahrheit.  
-Flows sind die Ausfaltung.  
-CoreFlow ist der Weg.
+Nicht als Sitemap.  
+Nicht als Feature-Liste.  
+Nicht als Prozessdiagramm.
 
----
+Sondern als die Bewegung, die ein Mensch auf dieser Website idealerweise macht, wenn das, was Apex festhält, in Form übergeht.
 
-## 0) Ein Prinzip: Nicht Methode zuerst, sondern Lehrer
+Wenn Jonas als Lehrer der Ursprung ist, dann darf diese Website nicht mit Methoden, Preisen oder Kurslogik beginnen.
 
-Diese Website beginnt nicht mit Yoga.  
-Nicht mit Qigong.  
-Nicht mit Tai Chi.  
-Nicht mit Meditation oder Achtsamkeit.  
-Und auch nicht mit einer Kursübersicht.
-
-Sie beginnt mit Jonas.
-
-Denn bevor ein Mensch entscheiden kann, ob diese Arbeit für ihn etwas trägt, muss er spüren, **wer ihn hier überhaupt empfängt**.
-
-Nicht als vollständige Biografie.  
-Nicht als Selbsterzählung.  
-Sondern als erste lesbare Wahrheit:
-
-Hier ist jemand, der diese Dinge nicht dekorativ, beliebig oder weich vertritt.  
-Hier arbeitet ein Lehrer mit Haltung, Reibung, Freude, Anspruch und echter Substanz.
+Sie muss anders einsetzen.  
+Näher.  
+Klarer.  
+Wahrhaftiger.
 
 ---
 
-## 1) Erste Begegnung: Wer ist das — und trägt das für mich?
+## I. Die Hauptbewegung
 
 Ein Mensch kommt auf die Website.
 
-Er darf nicht zuerst in Methoden, Programme oder Preise fallen.  
-Er muss zuerst spüren:
+Er soll nicht zuerst in Themen, Kategorien oder Angebote fallen.  
+Er soll zuerst spüren, **wer ihn hier überhaupt empfängt**.
 
-- wer Jonas ist
-- welche Art von Arbeit ihn hier erwartet
-- dass dies keine Standard-Yoga- oder Achtsamkeitsseite ist
-- dass es hier nicht um Wellness, Kulisse oder Konsum geht
+Nicht als lange Biografie.  
+Nicht als Selbstinszenierung.  
+Sondern als erste Wahrheit:
 
-Aus dieser ersten Begegnung entsteht Resonanz oder eben nicht.
+Hier arbeitet kein austauschbarer Anbieter.  
+Hier steht ein Lehrer mit Haltung, Erfahrung, Anspruch, Freude und Reibung.  
+Und genau daraus entsteht entweder Resonanz oder eben nicht.
 
-Und genau das ist richtig.
+Das ist die erste Schwelle.
 
-Denn diese Website will nicht alle halten.  
-Sie will die Richtigen früh klar werden lassen.
+Wenn diese Schwelle trägt, öffnet sich das Angebot.
 
----
-
-## 2) Angebotsöffnung: Was wird hier konkret getragen?
-
-Wenn Resonanz möglich wird, öffnet sich das Angebot.
-
-Jetzt muss sichtbar werden, was Jonas tatsächlich anbietet:
+Dann wird sichtbar, was Jonas konkret unterrichtet:
 
 - Yoga
 - Qigong
@@ -65,138 +46,178 @@ Jetzt muss sichtbar werden, was Jonas tatsächlich anbietet:
 - Meditation
 - Achtsamkeit
 
-Aber nicht als lose Methodenliste.
+Aber nicht als lose Methodenliste.  
+Sondern als Praxisfelder, die aus derselben Lehrerlinie kommen.
 
-Sondern als lesbare Praxisfelder, die aus derselben Lehrerlinie kommen.
+Wenn diese Öffnung gelingt, reicht bloße Angebotsklarheit noch nicht.  
+Dann muss glaubwürdig werden, warum gerade diese Person das trägt.
 
-Gleichzeitig muss verständlich werden, in welchen Formen diese Arbeit stattfindet:
+Hier verdichtet sich Vertrauen.
+
+Nicht durch Pathos.  
+Nicht durch große Behauptungen.  
+Nicht durch Zertifikatsmasse.
+
+Sondern durch spürbare Übereinstimmung zwischen Person, Haltung, Erfahrung und Anspruch.
+
+Wenn Vertrauen gewachsen ist, muss die Website praktisch klar werden.
+
+Dann dürfen Rahmen, Formate, Preise, FAQ und Einstieg nicht im Nebel bleiben.  
+Jetzt wird lesbar, worauf man sich konkret einlässt.
+
+Wenn auch diese Schwelle sauber genommen ist, wird aus Klarheit Anschluss.
+
+Jetzt wird sichtbar, wie Kontakt aussieht, wie Einstieg möglich ist und welcher nächste reale Schritt offensteht.
+
+So endet die Website nicht in Eindruck, sondern in Handlung.
+
+---
+
+## II. Der Weg in seiner natürlichen Reihenfolge
+
+### 1. Erste Begegnung
+
+Die Website beginnt bei Jonas.
+
+Nicht mit einer Erklärung des Feldes.  
+Nicht mit Kursboxen.  
+Nicht mit methodischer Ordnung.
+
+Ein Mensch soll zuerst wahrnehmen:
+
+- Wer ist das?
+- Warum wirkt das nicht wie Standard?
+- Warum fühlt sich das nicht nach Wellness, Öko-Kulisse oder Kurscontainer an?
+- Will ich von genau diesem Lehrer mehr sehen?
+
+Hier entsteht Resonanz oder Nicht-Resonanz.
+
+### 2. Angebotsöffnung
+
+Erst danach öffnet sich das Angebot.
+
+Jetzt wird sichtbar, was Jonas konkret trägt.  
+Die Praxisfelder treten hervor, aber sie zerfallen nicht in Katalogästhetik.
+
+Gleichzeitig wird klar, dass diese Arbeit in verschiedenen Formen stattfinden kann:
 
 - Kurs
 - Klasse
 - Einzelsetting
 - mobile Formate
-- später ggf. weitere Formate
+- später weitere Formen
 
-Der Mensch soll danach nicht alles bis ins Letzte wissen.  
-Aber er muss klar verstehen, **was hier grundsätzlich möglich ist**.
+Diese Stelle schafft Orientierung, ohne in Produktlogik zu kippen.
 
----
+### 3. Vertrauensvertiefung
 
-## 3) Vertrauensvertiefung: Warum trägt gerade diese Person das glaubwürdig?
+Nachdem sichtbar geworden ist, was angeboten wird, stellt sich die eigentliche Frage:
 
-An diesem Punkt reicht bloße Angebotsklarheit nicht mehr.
+Warum trägt gerade diese Person das glaubwürdig?
 
-Jetzt muss sich verdichten, warum Jonas diese Arbeit auf eine Weise trägt, die glaubwürdig ist.
+Hier verdichten sich Herkunft, Erfahrung, Ausbildung, Haltung, Reibung und Unterschied zum Standard.
 
-Nicht durch Selbstinszenierung.  
-Nicht durch Pathos.  
-Nicht durch einen Zertifikatsfriedhof.
+Nicht alles muss gesagt werden.  
+Aber genug muss sichtbar werden, damit Vertrauen begründet ist.
 
-Sondern durch lesbare Herkunft, Erfahrung, Haltung, Ausbildung, Reibung und den Unterschied zum Standard.
+### 4. Transparenz
 
-Hier wird spürbar:
+Wenn Person, Angebot und Vertrauen tragen, darf nichts Entscheidendes unklar bleiben.
 
-- dass Jonas nicht bloß Methoden anbietet
-- dass sein Anspruch nicht Pose ist
-- dass seine Kritik am Feld aus echter Erfahrung kommt
-- dass er Menschen nicht in Konsum, sondern in Praxis führen will
+Jetzt braucht der Besucher Lesbarkeit über:
 
-So wird aus Sympathie oder Interesse Vertrauen.
+- Formate
+- Rahmen
+- Preise
+- typische Fragen
+- Unterschiede der Angebote
+- mögliche Einstiege
 
----
+Transparenz ist hier kein Anhang.  
+Sie ist Teil der Ernsthaftigkeit.
 
-## 4) Transparenz: Was heißt das praktisch für mich?
+### 5. Anschluss
 
-Wenn Person, Angebot und Vertrauen tragen, darf die Website nicht im Ungefähren bleiben.
-
-Jetzt müssen die Dinge klar werden, die echte Entscheidung möglich machen:
-
-- Welche Formate gibt es konkret?
-- Wie funktionieren sie?
-- Was kostet das?
-- Wie ist der Rahmen?
-- Was muss man wissen?
-- Für wen ist was sinnvoll?
-- Wie könnte Einstieg aussehen?
-
-Gerade hier zeigt sich, ob die Website ernst gemeint ist.
-
-Denn alles, was davor Haltung und Resonanz aufgebaut hat, darf hier nicht in schöner Unschärfe verschwinden.
-
-Transparenz ist kein Anhang.  
-Sie ist Teil der Wahrheit.
-
----
-
-## 5) Anschluss: Wie gehe ich jetzt weiter?
-
-Wenn diese Schwelle sauber genommen ist, wird aus Klarheit eine konkrete Möglichkeit.
-
-Jetzt muss sichtbar sein:
-
-- wie Kontakt aussieht
-- wie man anfragt
-- wie Einstieg geschehen kann
-- welche nächsten Schritte real sind
-- wie Gruppen, Einzelsettings oder andere Anstöße möglich werden
+Am Ende muss ein realer nächster Schritt offenliegen.
 
 Nicht aggressiv.  
-Nicht verkäuferisch.  
-Aber eindeutig.
+Nicht werblich.  
+Nicht diffus.
 
-Der Mensch soll nicht mit einem schönen Eindruck zurückbleiben,  
-sondern mit echter Anschlussfähigkeit.
+Sondern so, dass klar ist:
+
+- wie man Kontakt aufnimmt
+- wie man anfragt
+- wie Einstieg geschehen kann
+- welche nächsten Schritte wirklich möglich sind
 
 ---
 
-## 6) Die Hauptbewegung in einem Satz
+## III. Die Bewegung in einem Satz
 
-Wenn man diese Website auf ihre eigentliche Bewegung reduziert, lautet sie:
+Die Website führt einen Menschen von der ersten Begegnung mit Jonas über Resonanz, Angebotsklarheit, Vertrauen und praktische Transparenz in eine reale Möglichkeit des Einstiegs.
 
-> **Zuerst Jonas.  
-> Dann Resonanz.  
-> Dann Angebotsklarheit.  
-> Dann Glaubwürdigkeit und Unterschied.  
-> Dann Transparenz.  
-> Dann konkrete nächste Handlung.**
+---
 
-Das ist der Weg.
+## IV. Was diese Bewegung ausdrücklich nicht ist
 
 Nicht:
 
-> schöne Website → Methoden → Preise → Kontakt
+> schöne Website → Methodenübersicht → Preise → Kontakt
+
+Nicht:
+
+> freundlicher Eindruck → viel Atmosphäre → irgendwann vielleicht Orientierung
+
+Nicht:
+
+> gutes Branding → nette Person → unscharfes Angebot
 
 Sondern:
 
-> **Lehrer → Resonanz → Praxisfelder → Vertrauen → Klarheit → Anschluss**
+> **Lehrer → Resonanz → Praxisfelder → Glaubwürdigkeit → Transparenz → Anschluss**
+
+Das ist der Golden Path.
 
 ---
 
-## 7) Woran Drift weh tut
+## V. Warum diese Reihenfolge trägt
 
-Drift beginnt, wenn die Website sich anfühlt wie:
+Diese Website ist personenzentriert.  
+Darum muss die Person zuerst lesbar werden.
 
-- eine generische Yoga-Seite
-- eine Wellness- oder Öko-Präsenz
-- eine bloße Methodenliste
-- ein sympathischer, aber diffuser Personenauftritt
-- ein Lifestyle-Produkt
-- eine Angebotsseite, die Tiefe behauptet, aber Transparenz vermeidet
-- eine Website, die zwar gut aussieht, aber nicht klar macht, warum Jonas als Lehrer trägt
+Diese Arbeit zielt auf Praxis, nicht auf bloßen Konsum.  
+Darum muss das Angebot aus einer Lehrerlinie sichtbar werden, nicht als Produktmatrix.
 
-Die eigentliche Bewegung ist nicht:
+Diese Arbeit will Vertrauen, nicht bloß Sympathie.  
+Darum braucht sie eine eigene Vertrauensvertiefung.
 
-> schönes Gefühl erzeugen → dann mal schauen
+Diese Arbeit ist ernst gemeint.  
+Darum braucht sie klare Transparenz.
 
-Sondern:
-
-> Lehrer spürbar machen → Resonanz ermöglichen → Angebot lesbar machen → Vertrauen vertiefen → Transparenz liefern → realen Anschluss öffnen
-
-Wenn sich die Website wie Stimmung anfühlt, ist etwas verrutscht.  
-Wenn sie sich wie getragene Klarheit anfühlt, trägt sie.
+Diese Website will nicht im schönen Eindruck enden.  
+Darum braucht sie einen würdigen, realen Anschluss.
 
 ---
 
-## 8) Ein Satz, der alles zusammenzieht
+## VI. Woran Drift beginnt
 
-Ein Mensch begegnet zuerst Jonas, erkennt dann die Praxisfelder durch ihn, gewinnt Vertrauen, versteht die konkrete Realität des Angebots und kann daraus klar entscheiden, ob und wie er in diese Arbeit eintreten will.
+Die Bewegung kippt, wenn:
+
+- zuerst Methoden oder Angebote dominieren
+- Jonas als Lehrer nur behauptet, aber nicht spürbar wird
+- die Website sich wie Stimmung statt Klarheit anfühlt
+- das Angebot wie eine lose Sammlung erscheint
+- Vertrauen mit Pathos oder Nachweis-Masse verwechselt wird
+- Transparenz zu spät, zu versteckt oder zu weich erscheint
+- der Abschluss generischer wirkt als der Rest der Website
+
+Wenn sich die Website wie ein schön geordnetes Feldangebot anfühlt, ist etwas verrutscht.
+
+Wenn sie sich wie getragene Klarheit anfühlt, trägt der CoreFlow.
+
+---
+
+## VII. Ein Satz, der alles hält
+
+Ein Mensch begegnet zuerst Jonas, erkennt dann durch ihn die Praxisfelder, gewinnt begründetes Vertrauen, versteht die konkrete Realität des Angebots und kann daraus klar entscheiden, ob und wie er in diese Arbeit eintreten will.

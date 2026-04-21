@@ -11,147 +11,125 @@ Erste Begegnung / Resonanz
 
 ## 2. Intention
 
-Diese Stelle gestaltet den ersten Kontakt mit Jonas so, dass nicht bloß ein Themenfeld sichtbar wird, sondern **eine Person mit Haltung, Reibung, Freude und Anspruch**.
+Diese Stelle gestaltet den ersten Kontakt so, dass ein Mensch nicht bloß in ein Themenfeld eintritt, sondern Jonas als Lehrer wahrnimmt.
 
-Der Besucher soll früh merken:
+Der Besucher soll früh spüren:
 
-- hier beginnt keine generische Yoga- oder Achtsamkeitsseite
-- hier begegnet ihm ein Lehrer
-- diese Begegnung ist die erste eigentliche Schwelle
-- Resonanz oder Nicht-Resonanz ist ausdrücklich erlaubt
+- hier beginnt keine generische Yoga-, Qigong- oder Achtsamkeitsseite
+- hier steht eine konkrete Person im Ursprung
+- diese Person trägt Haltung, Freude, Anspruch und Reibung
+- Resonanz oder Nicht-Resonanz ist hier nicht Fehler, sondern Schwelle
 
 ---
 
 ## 3. Ergebnisbild
 
-Die Stelle trägt, wenn ein neuer Besucher innerhalb kurzer Zeit spüren kann:
+Die Stelle trägt, wenn ein neuer Besucher innerhalb kurzer Zeit sagen könnte:
 
-- wer ihm hier ungefähr begegnet
-- dass diese Arbeit nicht aus Wellness, Kulisse oder Lifestyle kommt
-- dass Jonas als Lehrer der Ursprung des Angebots ist
-- dass hier Anspruch und Freude zusammengehören
-- dass Resonanz die erste echte Entscheidungsebene ist
+- ich verstehe ungefähr, wer mir hier begegnet
+- das hier ist keine Wellness- oder Lifestyle-Seite
+- diese Arbeit wirkt personengebunden und nicht austauschbar
+- ich spüre bereits eine erste Passung oder Nicht-Passung
+- ich will entweder weitersehen oder kann sauber abspringen
 
-Der Besucher muss noch nicht alles wissen.  
-Aber er darf nicht im Beliebigen bleiben.
-
----
-
-## 4. Begriffe
-
-- **erste Begegnung**  
-  Der erste lesbare und spürbare Kontakt mit Jonas auf der Website.
-
-- **Resonanz**  
-  Die frühe innere Übereinstimmung oder Nicht-Übereinstimmung mit dem Lehrer und seiner Haltung.
-
-- **Lehrerwahrheit**  
-  Die Tatsache, dass das Angebot nicht anonym oder austauschbar ist, sondern an Jonas als Träger gebunden bleibt.
+Er muss noch nicht alles wissen.  
+Aber er darf nicht im Ungefähren bleiben.
 
 ---
 
-## 5. Vorbedingungen
+## 4. Vorbedingungen
 
 Vorher muss geklärt sein:
 
 - welche Wahrheit Jonas als Lehrer tragen soll
-- welche Haltungen und Abgrenzungen den Kern bilden
-- welche Fehlformen klar ausgeschlossen werden
-- welche Tonalität der Einstieg haben darf
+- welche Feld-Drifts ausdrücklich ausgeschlossen sind
 - dass Person vor Methode gilt
+- welche erste Tonlage die Website haben darf
+- welche Art von Bild, Text und Setzung Jonas lesbar machen kann
 
 ---
 
-## 6. Nachbedingungen
+## 5. Nachbedingungen
 
 Nach dieser Stelle muss wahr sein:
 
-- Jonas ist als Person spürbar geworden
-- die Website wirkt nicht wie ein austauschbares Feldangebot
-- der Besucher kann Resonanz oder Nicht-Resonanz empfinden
+- Jonas ist als Lehrer spürbar geworden
+- der Besucher ist nicht zuerst in Methodenlogik gefallen
+- die Website wirkt nicht austauschbar
+- erste Resonanz ist möglich geworden
 - die Tür zur Angebotsöffnung ist vorbereitet
-- die erste Wahrnehmung trägt Schwerkraft statt bloßer Stimmung
 
 ---
 
-## 7. Invarianten / Wahr bleiben muss
+## 6. Invarianten / Wahr bleiben muss
 
 Hier darf nicht verloren gehen:
 
 - Person vor Methode
-- Haltung vor Dekoration
+- Klarheit vor Stimmung
 - Anspruch ohne Härtepose
 - Freude ohne Verflachung
-- Klarheit ohne Übererklärung
+- Reibung ohne Schwereinszenierung
 - Resonanz vor Reichweite
 - keine Wellness-, Öko- oder Lifestyle-Kulisse
 - keine Guru- oder Gesundheitsrolle
 
 ---
 
-## 8. Vollzug
+## 7. Vollzug
 
-Die erste Begegnung beginnt mit Jonas selbst oder mit einer Setzung, die unmittelbar auf ihn als Lehrer zurückführt.
+Die erste Begegnung beginnt mit Jonas selbst oder mit einer Setzung, die unmittelbar auf ihn zurückführt.
 
-Nicht alle Informationen müssen hier bereits vollständig ausgebreitet werden.  
-Aber es muss sofort lesbar sein, dass dieses Angebot nicht aus schöner Oberfläche, sondern aus einer konkreten Person, gelebter Erfahrung und erkennbarem Anspruch kommt.
+Nicht mit einer erklärenden Einführung in Yoga oder Achtsamkeit.  
+Nicht mit Angebotsboxen.  
+Nicht mit organisatorischer Logik.
 
-Die Sprache bleibt knapp genug, um den Einstieg offen zu halten, aber präzise genug, um nicht beliebig zu wirken.
-
-Bild, Text, Gestalt und erste Aussage müssen gemeinsam dieselbe erste Bewegung tragen:
+Vielmehr muss hier gleichzeitig erfahrbar werden:
 
 - Wer ist das?
-- Warum fühlt sich das anders an?
-- Warum ist das nicht bloß „auch noch so eine Yogaseite“?
-- Will ich von genau diesem Menschen mehr sehen?
+- Warum wirkt das anders als Standard?
+- Warum ist das nicht bloß ein freundliches Feldangebot?
+- Will ich mich auf genau diesen Lehrer einlassen?
 
-Diese Stelle darf nicht mit Methode, Kurslogik oder Technik beginnen.  
-Sie muss Jonas lesbar machen.
+Die Sprache bleibt offen genug, um den Einstieg nicht zu überfrachten.  
+Sie bleibt klar genug, um nicht beliebig zu wirken.
 
----
-
-## 9. Anschluss
-
-Dieser Flow führt direkt in:
-
-- Angebotsöffnung
-- Praxisfelder und Formate
-- die nächste Ebene von Orientierung
-
-Denn nach der ersten Resonanz muss sichtbar werden, **was Jonas konkret trägt**.
+Bild, Typografie, Ton und erste Aussage müssen dieselbe Bewegung tragen:  
+eine erste Lesbarkeit, die weder posiert noch sich versteckt.
 
 ---
 
-## 10. Drift / Failure Mode
+## 8. Drift / Failure Mode
 
 Diese Stelle kippt, wenn:
 
-- zuerst Methoden oder Angebote dominieren
-- der Einstieg zu weich, zu dekorativ oder zu wellnesshaft wirkt
-- Jonas als Person nicht greifbar wird
-- zu viele Informationen die erste Resonanz überdecken
-- der Eindruck entsteht, dass hier eine freundliche, aber austauschbare Gesundheitsseite beginnt
-- Anspruch nur behauptet, aber nicht spürbar wird
-- die erste Begegnung zwar hübsch, aber ohne innere Linie bleibt
+- zuerst Methoden oder Kurse dominieren
+- Jonas als Person zu abstrakt bleibt
+- der Einstieg zu weich, zu brav oder zu dekorativ wirkt
+- der erste Eindruck nur freundlich, aber nicht unverwechselbar ist
+- zu viele Informationen die erste Wahrnehmung erschlagen
+- Anspruch behauptet wird, ohne Form zu bekommen
+- die Website wie eine sympathische, aber austauschbare Gesundheitsseite beginnt
 
 ---
 
-## 11. Baulogik
+## 9. Baulogik
 
 Daraus ableitbar sein müssen:
 
 - Hero-Logik
-- Reihenfolge von Bild, Aussage und erster Handlung
+- Verhältnis von Bild, Setzung und erster Aussage
 - Wahrnehmungslogik der ersten Sektion
 - erste Typo- und Bildsprache
-- Verhältnis von Person, Haltung und späterer Angebotsöffnung
-- Einstiegston für Copy und visuelle Führung
+- erste CTA- oder Scroll-Logik
+- Struktur der primären Aufmerksamkeit
+- Tonalität für den Einstieg in Copy und Design
 
 ---
 
-## 12. Ein Satz, der alles trägt
+## 10. Ein Satz, der alles trägt
 
-Die erste Begegnung muss Jonas so lesbar machen, dass ein Mensch nicht nur „ein Thema“ sieht, sondern spürt, ob genau dieser Lehrer für ihn Resonanz trägt.
+Die erste Begegnung muss Jonas so lesbar machen, dass ein Mensch nicht nur ein Feld sieht, sondern spürt, ob genau dieser Lehrer für ihn trägt.
 
 <!-- !WAS IST NATUERLICH/flows/0002.md -->
 
@@ -165,16 +143,17 @@ Angebotsöffnung / Praxisfelder und Formate
 
 ## 2. Intention
 
-Diese Stelle öffnet das Angebot so, dass aus erster Resonanz konkrete Orientierung wird.
+Diese Stelle macht aus erster Resonanz konkrete Orientierung.
 
-Der Besucher muss verstehen:
+Der Besucher soll verstehen:
 
-- was Jonas grundsätzlich anbietet
+- was Jonas grundsätzlich unterrichtet
 - welche Praxisfelder dazugehören
-- in welchen Formaten diese Arbeit stattfindet
-- dass das Angebot nicht hübsch klingt, sondern real zugänglich ist
+- in welchen Formen diese Arbeit angeboten wird
+- dass das Angebot real zugänglich ist
+- dass die Person weiterhin Ursprung des Ganzen bleibt
 
-Dabei darf die Website weder in Katalogästhetik noch in Erklärungslast kippen.
+Die Stelle darf weder in Katalogästhetik noch in Erklärlast kippen.
 
 ---
 
@@ -182,65 +161,52 @@ Dabei darf die Website weder in Katalogästhetik noch in Erklärungslast kippen.
 
 Die Stelle trägt, wenn ein Besucher danach sagen kann:
 
-- was Jonas grundsätzlich unterrichtet
-- dass die Praxisfelder zusammengehören und nicht lose nebeneinanderstehen
-- in welchen Formen diese Arbeit angeboten wird
-- dass das Angebot konkret und zugänglich ist
-- dass die Person weiterhin Träger des Ganzen bleibt
+- ich verstehe, was hier grundsätzlich angeboten wird
+- die Praxisfelder wirken zusammenhängend und nicht lose nebeneinander
+- die Formate sind erkennbar
+- das Angebot wirkt konkret, aber nicht bürokratisch
+- Jonas bleibt Träger der Angebotswahrheit
 
 ---
 
-## 4. Begriffe
-
-- **Praxisfelder**  
-  Yoga, Qigong, Tai Chi, Meditation, Achtsamkeit.
-
-- **Formate**  
-  Die konkrete Form der Vermittlung, z. B. Kurs, Klasse, Einzelsetting, mobile Arbeit, später ggf. weitere Formen.
-
-- **Angebotsöffnung**  
-  Der Übergang von erster Lehrer-Resonanz zu konkreter Angebotslesbarkeit.
-
----
-
-## 5. Vorbedingungen
+## 4. Vorbedingungen
 
 Vorher muss gegeben sein:
 
 - eine erste Begegnung mit Jonas
-- die Wahrnehmung, dass hier eine Person das Angebot trägt
-- grobe Resonanz oder zumindest ernsthaftes Interesse
-- die Einsicht, dass dies keine Standardästhetik ist
+- erste Resonanz oder zumindest ernsthaftes Interesse
+- das Gefühl, dass hier keine generische Feldseite beginnt
+- die strukturelle Setzung, dass Person vor Methode gilt
 
 ---
 
-## 6. Nachbedingungen
+## 5. Nachbedingungen
 
 Nach dieser Stelle muss wahr sein:
 
-- das Angebot ist sichtbar und lesbar
-- die Praxisfelder wirken nicht beliebig
+- das Angebot ist grundsätzlich lesbar
+- die Praxisfelder erscheinen als zusammenhängendes Arbeitsfeld
 - Formate und Felder beginnen sich zu ordnen
 - Orientierung ist entstanden
-- der Besucher versteht, was hier grundsätzlich möglich ist
+- der Übergang zur Vertrauensvertiefung ist vorbereitet
 
 ---
 
-## 7. Invarianten / Wahr bleiben muss
+## 6. Invarianten / Wahr bleiben muss
 
 Hier darf nicht verloren gehen:
 
+- Jonas bleibt Ursprung des Angebots
 - Klarheit vor Vollständigkeitsdrang
-- Jonas bleibt Träger des Angebots
-- Praxisfelder dürfen sichtbar werden, aber nie als lose Stichwortliste
-- Formate müssen lesbar, aber nicht bürokratisch wirken
+- Praxisfelder dürfen sichtbar werden, aber nicht als lose Stichwortliste
+- Formate müssen lesbar, aber nicht technisch trocken sein
 - Vielfalt darf nicht diffus werden
-- keine Katalogästhetik
 - keine anonyme Methodenfläche
+- keine Produktmatrix ohne Lehrerlinie
 
 ---
 
-## 8. Vollzug
+## 7. Vollzug
 
 Nach der ersten Begegnung öffnet sich das Angebot in seiner Grundform.
 
@@ -252,67 +218,54 @@ Jetzt werden die Praxisfelder sichtbar:
 - Meditation
 - Achtsamkeit
 
-Aber sie stehen nicht wie fünf gleichgültige Bausteine im Raum.  
-Sie müssen als zusammenhängendes Arbeitsfeld lesbar werden, das von Jonas getragen wird.
+Sie dürfen nicht wie fünf beliebige Bausteine nebeneinanderstehen.  
+Sie müssen als zusammenhängendes Feld lesbar werden, das von Jonas getragen wird.
 
-Spätestens hier muss auch sichtbar werden, dass das Angebot nicht nur „Kurse“ meint, sondern unterschiedliche Formen kennt:
+Gleichzeitig wird sichtbar, dass diese Arbeit unterschiedliche Formen kennt:
 
 - Kurs
 - Klasse
 - Einzelsetting
 - mobile Formate
-- später ggf. weitere Formen
+- später weitere Formen
 
-Die Stelle muss genug Struktur haben, damit Orientierung entsteht, ohne zu früh in Detailtiefe abzurutschen.
+Die Stelle muss Orientierung schaffen, ohne zu früh in Detailtiefe, Produktlogik oder Erklärprosa abzugleiten.
 
-Der Besucher soll weder das Gefühl haben, eine unübersichtliche Methodenwelt vor sich zu haben, noch eine harte Produktmatrix.  
-Es muss klar bleiben:
-
-Diese Praxisfelder und Formate sind **Ausfaltung derselben Lehrerlinie**.
+Der Besucher soll weder das Gefühl haben, in einer Methodenwelt zu versinken, noch vor einer nüchternen Angebotsmatrix zu stehen.
 
 ---
 
-## 9. Anschluss
-
-Dieser Flow führt direkt in:
-
-- Lehrerprofil / Vertrauensvertiefung
-- spätere Transparenz über konkrete Rahmen und Preise
-
-Denn nachdem sichtbar geworden ist, **was** angeboten wird, muss lesbar werden, **warum genau dieser Lehrer es glaubwürdig trägt**.
-
----
-
-## 10. Drift / Failure Mode
+## 8. Drift / Failure Mode
 
 Diese Stelle kippt, wenn:
 
 - alles gleich wichtig und gleich schwer wirkt
-- das Angebot wie eine lose Sammlung nebeneinandersteht
-- Praxisfelder ohne Zusammenhang präsentiert werden
-- Formatlogik fehlt
+- Praxisfelder nur als lose Sammlung erscheinen
+- Formate unklar oder gar nicht sichtbar werden
+- der Zusammenhang zwischen Feldern und Lehrerlinie fehlt
 - die Person hinter der Angebotsstruktur verschwindet
-- die Website in bloßer Vollständigkeit oder Stichwortsammlung endet
-- das Angebot anonym oder austauschbar wirkt
+- Vollständigkeit wichtiger wird als Lesbarkeit
+- das Angebot wie austauschbare Dienstleistung wirkt
 
 ---
 
-## 11. Baulogik
+## 9. Baulogik
 
 Daraus ableitbar sein müssen:
 
 - Angebotsmodule oder Kartenlogik
-- Gruppierungslogik für Praxisfelder
-- klare Trennung und Verbindung von Feld und Format
+- Gruppierung der Praxisfelder
+- Verbindung von Praxisfeld und Format
 - erste Navigations- oder Ankerlogik
-- Inhaltslogik für Kurs / Klasse / Einzelsetting / mobil
-- spätere Erweiterbarkeit ohne Strukturbruch
+- Inhaltslogik für Kurs, Klasse, Einzelsetting und mobil
+- Erweiterbarkeit bei späteren Formaten
+- Übergang zur Vertrauensvertiefung
 
 ---
 
-## 12. Ein Satz, der alles trägt
+## 10. Ein Satz, der alles trägt
 
-Die Angebotsöffnung macht sichtbar, was Jonas konkret trägt, ohne seine Arbeit in eine lose Methodenliste oder anonyme Angebotsmatrix zerfallen zu lassen.
+Die Angebotsöffnung macht sichtbar, was Jonas konkret trägt, ohne seine Arbeit in eine lose Methodenliste oder austauschbare Angebotsmatrix zerfallen zu lassen.
 
 <!-- !WAS IST NATUERLICH/flows/0003.md -->
 
@@ -326,22 +279,24 @@ Lehrerprofil / Vertrauensvertiefung
 
 ## 2. Intention
 
-Diese Stelle macht aus erster Personbegegnung und Angebotsklarheit echte Glaubwürdigkeit.
+Diese Stelle macht aus erster Wahrnehmung und Angebotsklarheit begründetes Vertrauen.
 
-Hier muss sichtbar werden:
+Jetzt muss sichtbar werden:
 
-- warum Jonas diese Arbeit trägt
-- worin seine Erfahrung, Herkunft und Haltung liegen
+- warum Jonas diese Arbeit glaubwürdig trägt
+- worin seine Haltung, Herkunft und Erfahrung liegen
 - warum sein Anspruch nicht Pose, sondern gewachsene Substanz ist
-- weshalb Vertrauen hier begründet und nicht bloß emotional erzeugt wird
+- warum diese Arbeit nicht aus Kulisse, sondern aus echter Auseinandersetzung kommt
+
+Vertrauen soll hier nicht erzeugt, sondern begründet werden.
 
 ---
 
 ## 3. Ergebnisbild
 
-Die Stelle trägt, wenn ein Besucher danach Jonas nicht nur sympathischer oder klarer findet, sondern ihm **mehr glaubt als vorher**.
+Die Stelle trägt, wenn ein Besucher danach nicht nur mehr Sympathie empfindet, sondern Jonas mehr glaubt als zuvor.
 
-Vertrauen entsteht hier nicht über Pathos, sondern über erkennbare Übereinstimmung zwischen:
+Vertrauen entsteht hier aus wahrnehmbarer Übereinstimmung zwischen:
 
 - Person
 - Erfahrung
@@ -350,47 +305,35 @@ Vertrauen entsteht hier nicht über Pathos, sondern über erkennbare Übereinsti
 - Reibung
 - Anspruch
 
-Der Unterschied zu flachen oder falschen Darstellungen wird spürbar.
+Der Unterschied zum flachen Standard wird lesbar, ohne dass er platt behauptet werden muss.
 
 ---
 
-## 4. Begriffe
-
-- **Lehrerprofil**  
-  Die sichtbare Verdichtung von Jonas als Lehrer, nicht als bloße Privatperson und nicht als bloßer Lebenslauf.
-
-- **Vertrauensvertiefung**  
-  Der Übergang von erster Resonanz in begründete Glaubwürdigkeit.
-
-- **Reibung**  
-  Durchlebte Erfahrung, Krisenfestigkeit und echte Auseinandersetzung mit Leben und Praxis.
-
----
-
-## 5. Vorbedingungen
+## 4. Vorbedingungen
 
 Vorher muss vorhanden sein:
 
 - erste Begegnung mit Jonas
 - grobe Angebotsklarheit
-- Bereitschaft des Besuchers, tiefer einzusteigen
+- Bereitschaft, tiefer auf die Person einzulassen
 - die Einsicht, dass dieses Angebot personenzentriert ist
 
 ---
 
-## 6. Nachbedingungen
+## 5. Nachbedingungen
 
 Nach dieser Stelle muss wahr sein:
 
 - Jonas ist als Lehrer greifbarer geworden
 - seine Tiefe wirkt nicht inszeniert, sondern begründet
-- seine Erfahrung und Herkunft stützen seine Glaubwürdigkeit
-- Vertrauen hat sich vertieft
-- der Unterschied zum Standard ist klarer lesbar
+- seine Erfahrung stützt seine Glaubwürdigkeit
+- hoher Anspruch erscheint menschlich und nicht leer
+- Vertrauen hat sich spürbar vertieft
+- die Schwelle zur Transparenz ist vorbereitet
 
 ---
 
-## 7. Invarianten / Wahr bleiben muss
+## 6. Invarianten / Wahr bleiben muss
 
 Hier darf nicht verloren gehen:
 
@@ -399,74 +342,64 @@ Hier darf nicht verloren gehen:
 - keine spirituelle Überhöhung
 - kein nüchterner CV-Block
 - keine weichgespülte Authentizitätsrhetorik
-- hohe Ansprüche müssen menschlich bleiben
-- Reibung und Erfahrung dürfen spürbar sein, ohne zur Last zu werden
+- Reibung darf spürbar sein, aber nicht ausgestellt werden
 - Freude und Ernst müssen zusammenbleiben
+- Nachweise dürfen Haltung stützen, aber nie ersetzen
 
 ---
 
-## 8. Vollzug
+## 7. Vollzug
 
-Diese Stelle fasst Herkunft, Erfahrung, Ausbildung, Haltung und innere Arbeit so, dass daraus weder ein Zertifikatsfriedhof noch ein Pathosprofil entsteht.
-
-Entscheidend ist nicht, alles zu erzählen.  
-Entscheidend ist, das sichtbar zu machen, was Vertrauen trägt:
+Diese Stelle verdichtet das, was Vertrauen trägt:
 
 - warum Jonas so arbeitet, wie er arbeitet
 - was ihn vom Standard trennt
-- warum sein Anspruch nicht leer ist
-- warum seine Arbeit nicht aus Kulisse, sondern aus durchlebter Tiefe kommt
-- warum er Menschen nicht bloß in Kurse, sondern in Praxis führen will
+- warum sein Anspruch nicht bloß Behauptung ist
+- warum seine Arbeit Menschen nicht in Konsum, sondern in Praxis führen will
+- warum Krisen- und Lebenserfahrung hier eher Fundament als Dekor sind
 
-Hier darf mehr Text tragen als im Einstieg.  
-Aber auch hier gilt: nur das, was diese Vertrauensbewegung wirklich stärkt.
+Ausbildungen, Zertifikate, Lehrstufen, Stundenvolumen und fachliche Nachweise können hier sichtbar werden.  
+Aber nur eingebettet in die größere Wahrheit.
 
-Ausbildungen, Zertifikate, Stundenvolumen und fachliche Nachweise können hier eine Rolle spielen.  
-Aber nur eingebettet in die größere Wahrheit: **nicht Nachweis ersetzt Haltung, sondern Nachweis stützt sie**.
+Nicht der Nachweis macht die Haltung.  
+Der Nachweis stützt sie.
 
----
-
-## 9. Anschluss
-
-Dieser Flow führt direkt in:
-
-- Transparenz über Rahmen, Formate und Preise
-- konkrete Entscheidungsfähigkeit
-
-Denn wenn Vertrauen trägt, muss das Angebot praktisch lesbar werden.
+Die Sprache darf hier mehr Gewicht tragen als im Einstieg.  
+Aber sie darf nicht in Rechtfertigung, Selbstverklärung oder Übererzählung kippen.
 
 ---
 
-## 10. Drift / Failure Mode
+## 8. Drift / Failure Mode
 
 Diese Stelle kippt, wenn:
 
 - sie wie ein Zertifikatsfriedhof wirkt
 - Jonas nur sympathisch, aber nicht substanziell erscheint
-- hoher Anspruch arrogant oder abstrakt wirkt
-- die Geschichte zu privat, zu diffus oder zu schwer wird
+- hoher Anspruch arrogant, abstrakt oder kalt wirkt
+- biografische Elemente zu privat, zu diffus oder zu schwer werden
 - Authentizität behauptet statt lesbar wird
-- Krisenerfahrung als Pathos oder Dramatik ausgestellt wird
-- die Seite die Person glorifiziert statt glaubwürdig macht
+- Reibung als Dramatisierung ausgestellt wird
+- die Person glorifiziert statt glaubwürdig gemacht wird
 
 ---
 
-## 11. Baulogik
+## 9. Baulogik
 
 Daraus ableitbar sein müssen:
 
 - Über-mich-Struktur
-- Reihenfolge von Herkunft, Haltung, Erfahrung und Qualifikation
-- Platzierung von Zertifikaten / Nachweisen
+- Reihenfolge von Haltung, Erfahrung, Herkunft und Qualifikation
+- Platzierung fachlicher Nachweise
 - Vertrauensmodule
-- Tonalität für biografische und fachliche Inhalte
-- Verdichtung zwischen Person und Professionalität
+- Tonalität für biografische Inhalte
+- Verbindung von Person und Professionalität
+- Übergang in Transparenz und praktische Lesbarkeit
 
 ---
 
-## 12. Ein Satz, der alles trägt
+## 10. Ein Satz, der alles trägt
 
-Diese Stelle macht Jonas so glaubwürdig, dass ein Besucher nicht nur Interesse spürt, sondern erkennt, warum gerade diese Person und diese Tiefe Vertrauen verdienen.
+Diese Stelle macht Jonas so glaubwürdig, dass ein Besucher nicht nur Interesse spürt, sondern erkennt, warum gerade diese Person und diese Art von Tiefe Vertrauen verdienen.
 
 <!-- !WAS IST NATUERLICH/flows/0004.md -->
 
@@ -480,71 +413,57 @@ Transparenz / FAQ / Preise / Rahmen
 
 ## 2. Intention
 
-Diese Stelle macht aus Haltung, Angebot und Vertrauen konkrete Benutzbarkeit.
+Diese Stelle übersetzt Haltung, Angebot und Vertrauen in echte Benutzbarkeit.
 
 Der Besucher muss hier ohne Reibungsverlust verstehen:
 
-- was ihn erwartet
-- was angeboten wird
-- wie Formate und Rahmen aussehen
+- was konkret angeboten wird
+- in welchem Rahmen es stattfindet
+- wie die Formate funktionieren
 - was es kostet
 - welche praktischen Fragen bereits geklärt sind
 
-Transparenz ist hier kein Anhängsel.  
-Sie ist Teil der Glaubwürdigkeit.
+Transparenz ist hier nicht Zusatz, sondern Beweis der Ernsthaftigkeit.
 
 ---
 
 ## 3. Ergebnisbild
 
-Die Stelle trägt, wenn ein Interessent danach nicht mehr das Gefühl hat, etwas erraten oder erst über Umwege herausfinden zu müssen.
+Die Stelle trägt, wenn ein Interessent danach nicht mehr das Gefühl hat, etwas erraten, erst erfragen oder sich mühsam zusammensuchen zu müssen.
 
-Er kann sich orientieren, einschätzen und entscheiden, ohne dass dadurch Tiefe oder Seriosität verloren gehen.
-
----
-
-## 4. Begriffe
-
-- **Transparenz**  
-  Die klare Lesbarkeit aller Dinge, die für eine echte Entscheidung nötig sind.
-
-- **Rahmen**  
-  Die praktischen Bedingungen des Angebots, z. B. Format, Umfang, Setting, Organisation.
-
-- **FAQ**  
-  Die strukturierte Klärung wiederkehrender praktischer Fragen.
+Er kann sich orientieren, einschätzen und entscheiden, ohne dass dadurch Tiefe oder Würde verloren gehen.
 
 ---
 
-## 5. Vorbedingungen
+## 4. Vorbedingungen
 
 Vorher muss gegeben sein:
 
 - erste Resonanz
 - Angebotswahrnehmung
 - gewachsenes Vertrauen in Jonas und seine Arbeit
-- die Bereitschaft, praktisch zu verstehen, worauf man sich einlässt
+- Bereitschaft, praktisch zu verstehen, worauf man sich einlässt
 
 ---
 
-## 6. Nachbedingungen
+## 5. Nachbedingungen
 
 Nach dieser Stelle muss wahr sein:
 
-- Transparenz ist hergestellt
 - Preise, Formate und Rahmen sind lesbar
-- Unsicherheiten sind reduziert
-- das Projekt bleibt ernst, ohne nebulös zu werden
-- der Weg in Kontakt oder Entscheidung ist vorbereitet
+- wesentliche Unsicherheiten sind reduziert
+- Transparenz ist konkret hergestellt
+- das Projekt bleibt klar, ohne trocken zu werden
+- der Weg in Entscheidung oder Kontakt ist vorbereitet
 
 ---
 
-## 7. Invarianten / Wahr bleiben muss
+## 6. Invarianten / Wahr bleiben muss
 
 Hier darf nicht verloren gehen:
 
 - Klarheit vor Schönfärbung
-- Transparenz ist Kern, nicht Zusatz
+- Transparenz ist Kern, nicht Anhang
 - keine versteckten Preise
 - keine unnötig komplizierte Sprache
 - kein Ausweichen vor praktischen Fragen
@@ -553,11 +472,11 @@ Hier darf nicht verloren gehen:
 
 ---
 
-## 8. Vollzug
+## 7. Vollzug
 
-Jetzt wird konkret, was vorher in Lehrerwahrheit, Angebot und Vertrauen vorbereitet wurde.
+Jetzt wird konkret, was vorher in Lehrerwahrheit, Angebotsklarheit und Vertrauen vorbereitet wurde.
 
-Lesbar werden müssen u. a.:
+Lesbar werden müssen unter anderem:
 
 - Preise
 - Formate
@@ -565,70 +484,50 @@ Lesbar werden müssen u. a.:
 - Umfang
 - typische Fragen
 - praktische Einstiegsrealitäten
-- ggf. Unterschiede zwischen Kurs, Klasse, Einzelsetting, mobil
+- Unterschiede zwischen Kurs, Klasse, Einzelsetting und mobil
 
-Diese Stelle darf nicht wie eine Pflichtanhang-Seite wirken.  
-Sie ist Teil der Gesamtwahrheit des Projekts.
+Diese Stelle darf nicht wie ein Pflichtanhang wirken.  
+Sie gehört zum Kern der Website.
 
-Gerade hier zeigt sich, ob die Website ernst gemeint ist.
+Gerade hier zeigt sich, ob die Arbeit ernst gemeint ist.
 
 Denn wer ernsthafte Arbeit anbietet, muss sie auch klar benennen können.
 
-Die Darstellung muss:
-
-- ordentlich
-- lesbar
-- ruhig
-- eindeutig
-- idiotensicher im besten Sinn
-
-sein.
-
+Die Darstellung muss ruhig, eindeutig, leicht benutzbar und unmissverständlich sein.  
 Nicht trocken.  
-Aber unmissverständlich.
+Aber ohne Nebel.
 
 ---
 
-## 9. Anschluss
-
-Dieser Flow führt direkt in:
-
-- Kontakt
-- Anfrage
-- Einstieg
-- konkrete nächste Handlung
-
-Denn Transparenz ist die Schwelle, an der aus Interesse echte Handlungsfähigkeit wird.
-
----
-
-## 10. Drift / Failure Mode
+## 8. Drift / Failure Mode
 
 Diese Stelle kippt, wenn:
 
 - Preise oder Rahmen unklar bleiben
 - FAQ nur wie Füllmaterial wirken
 - praktische Informationen versteckt oder zu spät auftauchen
-- Transparenz in Sprache oder Gestaltung verwässert wird
-- Besucher erst Kontakt aufnehmen müssen, um Grundlegendes zu erfahren
-- Klarheit durch zu viel Detailbürokratie wieder zerstört wird
+- Transparenz sprachlich oder gestalterisch verwässert wird
+- Besucher Kontakt aufnehmen müssen, um Grundlegendes zu erfahren
+- Klarheit durch Detailbürokratie wieder zerstört wird
+- die Ernsthaftigkeit des Projekts in schöner Unschärfe endet
 
 ---
 
-## 11. Baulogik
+## 9. Baulogik
 
 Daraus ableitbar sein müssen:
 
 - Preis- und Rahmenmodule
 - FAQ-Struktur
-- Inhaltslogik für Kurs, Klasse, Einzelsetting, mobile Formate
+- Inhaltslogik für Kurs, Klasse, Einzelsetting und mobile Formate
 - Sichtbarkeit und Platzierung von Transparenzinformationen
-- Verknüpfung zwischen Angebotsseite und praktischer Orientierung
+- Verknüpfung zwischen Angebotsdarstellung und praktischer Orientierung
 - spätere Aktualisierbarkeit dieser Inhalte
+- Übergänge in Kontakt und Einstieg
 
 ---
 
-## 12. Ein Satz, der alles trägt
+## 10. Ein Satz, der alles trägt
 
 Diese Stelle beweist die Ernsthaftigkeit des Projekts, indem sie das, was vorher Haltung war, in klare, benutzbare und glaubwürdige Transparenz übersetzt.
 
@@ -644,14 +543,16 @@ Kontakt / Einstieg / nächste Handlung
 
 ## 2. Intention
 
-Diese Stelle ermöglicht den Übergang aus Wahrnehmung und Klarheit in konkrete Anschlussfähigkeit.
+Diese Stelle ermöglicht den Übergang aus Wahrnehmung, Vertrauen und Klarheit in konkrete Anschlussfähigkeit.
 
 Der Besucher soll nicht nur mit einem guten Eindruck zurückbleiben, sondern wissen:
 
-- wie er Kontakt aufnehmen kann
+- wie Kontakt aussieht
 - welcher Einstieg möglich ist
-- wie der nächste reale Schritt aussieht
-- dass er weder gedrängt noch allein gelassen wird
+- was der nächste reale Schritt ist
+- dass er weder gedrängt noch im Ungefähren gelassen wird
+
+Der Schluss soll sich nicht wie Conversion, sondern wie natürliche Konsequenz anfühlen.
 
 ---
 
@@ -659,39 +560,26 @@ Der Besucher soll nicht nur mit einem guten Eindruck zurückbleiben, sondern wis
 
 Die Stelle trägt, wenn ein Besucher danach:
 
-- weiß, wie er Kontakt aufnehmen kann
-- versteht, welcher Einstieg möglich ist
+- weiß, wie er Jonas erreichen kann
+- versteht, welcher Einstieg für ihn möglich ist
 - keine unnötige Hürde spürt
 - sich weder verkauft noch verloren fühlt
 - erkennt, dass die Website in reale Anschlussfähigkeit mündet
 
 ---
 
-## 4. Begriffe
-
-- **Kontakt**  
-  Der konkrete Weg, Jonas zu erreichen.
-
-- **Einstieg**  
-  Die erste reale Form, in diese Arbeit hineinzukommen.
-
-- **nächste Handlung**  
-  Der nächste sinnvolle Schritt, der aus Klarheit folgen kann.
-
----
-
-## 5. Vorbedingungen
+## 4. Vorbedingungen
 
 Vorher muss gegeben sein:
 
-- Resonanz oder zumindest ernsthaftes Interesse
+- Resonanz oder ernsthaftes Interesse
 - Angebots- und Rahmenklarheit
 - gewachsene Vertrauensbasis
-- die praktische Einsicht, worauf man sich einlässt
+- praktische Einsicht, worauf man sich einlässt
 
 ---
 
-## 6. Nachbedingungen
+## 5. Nachbedingungen
 
 Nach dieser Stelle muss wahr sein:
 
@@ -703,64 +591,58 @@ Nach dieser Stelle muss wahr sein:
 
 ---
 
-## 7. Invarianten / Wahr bleiben muss
+## 6. Invarianten / Wahr bleiben muss
 
 Hier darf nicht verloren gehen:
 
 - Kontakt muss klar, niedrigschwellig und seriös sein
 - keine aggressive Conversion-Logik
-- keine vage „meld dich halt mal“-Unschärfe
+- keine vage Unschärfe
 - die Person bleibt auch hier spürbar
 - Resonanz wird in Handlung überführt, nicht in Druck
 - Klarheit ist wichtiger als Abschlussquote
+- der Schluss darf nicht generischer werden als der Rest des Projekts
 
 ---
 
-## 8. Vollzug
+## 7. Vollzug
 
-Am Ende der Hauptbewegung muss sichtbar sein, wie Menschen weitergehen können:
+Am Ende der Hauptbewegung muss sichtbar sein, wie Menschen wirklich weitergehen können:
 
 - direkte Anfrage
 - Kontaktaufnahme
-- möglicher Gruppenanstoß
-- Einzelsetting
-- ggf. spätere Schnupper- oder Einstiegsformen
+- Einstieg in Gruppe oder Einzelsetting
+- mögliche erste Abstimmung
+- spätere Schnupper- oder Einstiegsformen
 
 Diese Stelle darf nicht überfrachtet sein.  
 Aber sie muss eindeutig sein.
 
 Sie schließt die Website nicht hart ab, sondern führt in eine reale nächste Schwelle.
 
-Der Besucher soll nicht das Gefühl haben, das Projekt ende in schöner Darstellung.  
-Es muss einen tatsächlichen Anschluss geben.
+Der Besucher soll spüren, dass das Projekt nicht in Darstellung endet.  
+Es öffnet eine tatsächliche Möglichkeit des Eintritts.
 
-Kontakt darf nicht wie eine Marketing-CTA wirken.  
-Er muss sich wie die natürliche Konsequenz aus allem davor anfühlen.
-
----
-
-## 9. Anschluss
-
-Dies ist die letzte Hauptschwelle der natürlichen Website-Bewegung.
-
-Sie schließt an Transparenz, Vertrauen und Angebotsklarheit an und verwandelt diese in konkrete Handlungsmöglichkeit.
+Kontakt darf dabei nie wie Marketing-Mechanik wirken.  
+Er muss sich wie die folgerichtige Form von allem davor anfühlen.
 
 ---
 
-## 10. Drift / Failure Mode
+## 8. Drift / Failure Mode
 
 Diese Stelle kippt, wenn:
 
 - Kontaktinformationen versteckt oder unklar sind
-- der Einstieg zu diffus bleibt
+- der Einstieg diffus bleibt
 - Besucher zwar überzeugt, aber nicht handlungsfähig sind
 - die Website ohne sauberen Übergang ausläuft
 - Kontakt zu bürokratisch oder zu beliebig wirkt
-- der Schluss plötzlich generischer ist als der Rest des Projekts
+- der Schluss plötzlich standardisierter oder schwächer ist als der Rest
+- die letzte Schwelle eher Verwaltung als Anschluss vermittelt
 
 ---
 
-## 11. Baulogik
+## 9. Baulogik
 
 Daraus ableitbar sein müssen:
 
@@ -770,9 +652,10 @@ Daraus ableitbar sein müssen:
 - mögliche Einstiegsformate
 - Schlusslogik der Website
 - Übergänge aus Angebots- und Transparenzbereichen in die Kontaktaufnahme
+- klare Informationsdichte für den letzten Schritt
 
 ---
 
-## 12. Ein Satz, der alles trägt
+## 10. Ein Satz, der alles trägt
 
 Diese Stelle sorgt dafür, dass die Website nicht in Eindruck endet, sondern in einer klaren, würdigen und realen Möglichkeit, mit Jonas in Kontakt und in Praxis einzutreten.

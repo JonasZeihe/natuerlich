@@ -1,511 +1,643 @@
 <!-- !WAS IST NATUERLICH/PROTO_DESIGN.md -->
-# 🌑 JONAS — Proto-Designsystem
+# JONAS — Proto-Designsystem
 
-**Die vor-visuelle Wahrheit dieses Projekts.**  
-_Keine Farben. Keine Komponenten. Keine Werte._  
-_Nur Ableitbarkeit._
+**Die vor-visuelle Energie dieser Website.**  
+_Noch keine Farben. Noch keine Komponenten. Noch keine Styles._  
+_Erst die Spannung. Dann die Form._
 
 ---
 
 ## 0. Zweck dieses Dokuments
 
-Dieses Dokument definiert die **emotionale, ethische und strukturelle Wahrheit** dieser Website, aus der später UI, Farben, Typografie, Motion, Bildsprache und Komponenten systematisch abgeleitet werden.
+Diese Website darf nicht aus gutem Geschmack gebaut werden.
 
-Es ist **kein Designsystem**.  
-Es ist der **Ursprung**.
+Nicht aus einem Moodboard.  
+Nicht aus „clean“.  
+Nicht aus „premium“.  
+Nicht aus „minimal“.  
+Nicht aus „authentisch“.  
+Nicht aus Yoga-Ästhetik.  
+Nicht aus Wellness-Abwehr.
 
-Diese Website darf nicht aus Trends, Wellnessästhetik oder bloßem „sieht gut aus“ gebaut werden.  
-Sie muss aus derselben Quelle entstehen wie Jonas’ Arbeit selbst:
+Sie braucht vorher etwas anderes:
 
-- Haltung
-- Resonanz
-- Anspruch
-- Reibung
-- Freude
-- Klarheit
-- Tragfähigkeit
+eine innere Bewegung,  
+eine Spannungsfigur,  
+eine Art von Öffnung und Bruch,  
+von Zug und Verdichtung,  
+von Gewicht und Fluss.
 
-Alles, was später visuell entsteht, muss aus dieser Wahrheit ableitbar sein.
+Denn Jonas’ Arbeit ist nicht statisch.
+
+Sie beginnt nicht als Stil.  
+Sie beginnt als Resonanz.  
+Dann wird klar, dass hier etwas trägt.  
+Dann wird es ernster.  
+Dann dichter.  
+Dann praktischer.  
+Dann wieder offen.
+
+Diese Gestaltung muss genau das können.
+
+Nicht nur Haltung zeigen.  
+Nicht nur Fehler vermeiden.  
+Sondern **spürbar werden, ohne sich aufzudrängen**.
+
+Dieses Dokument hält deshalb nicht zuerst Werte fest, sondern die vor-visuelle Wahrheit, aus der später Typografie, Raum, Kontrast, Bild, Motion und UI entstehen dürfen.
 
 ---
 
-## 1. Projektkern (aus der Wahrheit extrahiert)
+## 1. Ursprungsspannung
 
-Dieses Projekt existiert nicht, um Yoga, Qigong, Tai Chi, Meditation und Achtsamkeit als schöne Themen sichtbar zu machen.
+Diese Website existiert nicht, um schöne Themen sichtbar zu machen.
 
-Es existiert, weil in diesem Feld oft genau das fehlt, was Menschen eigentlich suchen:
+Sie existiert, weil in diesem Feld zu oft genau das fehlt, was Menschen eigentlich suchen:
 
-- echte Tragfähigkeit
-- klare Vermittlung
-- gelebte Tiefe
+- Tragfähigkeit
+- Substanz
+- echte Vermittlung
 - Anspruch ohne Pose
 - Freude ohne Verflachung
-- Praxis, die im Leben weiterwirkt
-
-Die Website macht deshalb nicht zuerst Methoden sichtbar.  
-Sie macht **einen Lehrer** sichtbar.
-
-Nicht als Marke.  
-Nicht als Guru.  
-Nicht als Wellnessfigur.  
-Sondern als jemanden, dessen Arbeit aus gelebter Reibung, hoher Präzision, innerer Ernsthaftigkeit und echter Unterrichtsfreude kommt.
-
-Das emotional gelöste Problem ist nicht bloß Informationsmangel.
-
-Es ist dies:
-
-> Menschen finden in diesem Feld oft nur Kulisse, Konsum, Weichheit, Kitsch oder Standard.  
-> Diese Website soll stattdessen spürbar machen, dass hier jemand steht, bei dem Praxis wirklich tragen kann.
-
-Wenn es dieses Projekt nicht gäbe, würde genau diese Form von Wahrheit unsichtbar bleiben:
-
-- Tiefe ohne Schwulst
-- Anspruch ohne Härtepose
-- Freude ohne Lifestyle-Kitsch
-- Klarheit ohne Flachheit
 - Praxis statt bloßer Teilnahme
 
----
+Was Menschen oft finden, ist etwas anderes:
 
-## 2. Haltung & Ethik
+- Kulisse
+- Lifestyle
+- Weichzeichnung
+- Kitsch
+- Gesundheitsmoral
+- Kursbetrieb ohne Nachwirkung
+- freundliche Oberfläche ohne echten Halt
 
-### Wie verhält sich dieses System gegenüber Menschen?
+Diese Website muss deshalb etwas leisten, was in diesem Feld selten ist:
 
-Dieses System begegnet Menschen:
+Sie muss **einen Lehrer** sichtbar machen,  
+bevor sie Methoden sichtbar macht.
 
-- klar
-- würdig
-- offen
-- resonant
-- nicht anbiedernd
-- nicht manipulativ
-- nicht herablassend
-- nicht vernebelnd
+Und sie muss zeigen, dass diese Arbeit nicht nur sympathisch, sondern tragfähig ist.
 
-Es will nicht alle halten.  
-Es will die Richtigen früh klar werden lassen.
+Die eigentliche Spannung dieser Website ist daher nicht:
 
-Es führt nicht in Konsum, sondern in mögliche Praxis.  
-Es verkauft keine Stimmung.  
-Es trägt eine Haltung.
+Ruhe oder Aktivität.  
+Hell oder dunkel.  
+Klar oder poetisch.
 
----
+Sondern:
 
-### Was wird bewusst nicht getan?
+**spürbare Menschlichkeit unter hohem Anspruch**  
+**echte Wärme ohne Weichzeichnung**  
+**Tiefe ohne Nebel**  
+**Präzision ohne Sterilität**  
+**Freude, die durch Reibung gegangen ist**
 
-- Es wird keine Wellness-Atmosphäre simuliert.
-- Es wird keine Öko- oder Naturromantik benutzt, um Tiefe zu behaupten.
-- Es wird kein spiritueller Kitsch erzeugt.
-- Es wird keine Gesundheitsmoral inszeniert.
-- Es wird keine Lifestyle-Identität verkauft.
-- Es wird keine emotionale Weichzeichnung benutzt, um zugänglicher zu wirken.
-- Es wird kein Funnel gebaut, der Druck erzeugt.
-- Es wird keine künstliche Schwere inszeniert, um Tiefe zu spielen.
+Das ist der Ursprung.
 
 ---
 
-### Wo ist Kontrolle verboten?
+## 2. Die Bewegungsfigur
 
-- Menschen dürfen nicht in künstliche Conversion-Logik gedrängt werden.
-- Resonanz darf nicht über UI-Tricks erzwungen werden.
-- Klarheit darf nicht als Steuerungsinstrument missbraucht werden.
-- Die Website darf nicht mit Unschärfe arbeiten, um Kontakt zu erzwingen.
-- Wahrnehmung darf geführt, aber nie manipuliert werden.
+Diese Website darf nicht wie eine flache ruhige Fläche wirken.
+
+Sie braucht eine innere Kurve.
+
+Nicht als Show.  
+Nicht als Effekt.  
+Sondern als Wahrnehmungswahrheit.
+
+Ihre Grundbewegung lautet:
+
+**Öffnung → Resonanz → Verdichtung → Bewährung → Druck → Neuöffnung → Fluss**
+
+Oder anders gesagt:
+
+Am Anfang steht etwas Stimmiges.  
+Nicht naiv, aber offen.  
+Etwas spricht an.  
+Etwas macht Raum.  
+Etwas sagt nicht alles, aber genug, dass man eintreten will.
+
+Dann kommt der Bruch.  
+Nicht als lauter Schock.  
+Sondern als Einsicht:  
+Hier geht es nicht um bloße Atmosphäre.  
+Hier steht Anspruch im Raum.  
+Hier trägt etwas mehr Gewicht, als der erste Eindruck vielleicht vermuten ließ.
+
+Dann muss sich die Form bewähren.  
+Jetzt reicht Oberfläche nicht mehr.  
+Jetzt zählen Haltung, Struktur, Ernst, Dichte, Unterscheidung.
+
+Dann wird es stellenweise hart.  
+Nicht brutalistisch.  
+Nicht aggressiv.  
+Aber druckvoll.  
+Kontraste dürfen enger werden.  
+Räume dichter.  
+Aussagen klarer.  
+Wahrnehmung fokussierter.
+
+Dann öffnet sich die Sache erneut.  
+Nicht zurück in die anfängliche Leichtigkeit.  
+Sondern in eine neue Lesbarkeit.  
+Eine, die durch Ernst und Dichte hindurchgegangen ist.
+
+Und am Ende braucht es Fluss.  
+Nicht Finale.  
+Nicht Pointe.  
+Nicht Triumph.
+
+Fluss.
+
+Eine Form, die nicht mehr festhalten muss,  
+weil sie trägt.
+
+Diese Kurve ist nicht mechanisch.  
+Sie darf höher, tiefer, schärfer oder weicher verlaufen.  
+Aber sie muss spürbar bleiben.
 
 ---
 
-### Wo ist Bewertung ausgeschlossen?
+## 3. Zustandsräume
 
-- Die Website bewertet nicht, ob jemand „gut genug“ für diese Praxis ist.
-- Sie arbeitet nicht mit moralischem Gesundheitsideal.
-- Sie konstruiert kein „richtiges Leben“ als Lifestyle.
-- Sie spricht nicht aus einer Überlegenheit, sondern aus Haltung.
+Diese Website kennt nicht nur eine Stimmung.  
+Sie kennt wiederkehrende Zustände.
+
+### 1. Ansprechbarkeit
+
+Der erste Raum.
+
+Hier öffnet sich etwas.  
+Nicht weich.  
+Nicht harmlos.  
+Aber zugänglich.
+
+Der Besucher fühlt nicht sofort Distanz, sondern Gegenwart.
+
+### 2. Resonanz
+
+Der entscheidende Frühzustand.
+
+Nicht Gefallen.  
+Nicht Sympathie.  
+Sondern das erste innere Ja oder Nein:
+
+Trägt dieser Mensch für mich?  
+Ist das bloß wieder Standard?  
+Oder steht hier wirklich jemand?
+
+### 3. Verdichtung
+
+Jetzt wird die Sache schwerer.
+
+Nicht unlesbar.  
+Nicht dunkel aus Geste.  
+Sondern konzentrierter.  
+Man merkt: Das hier ist nicht Kulisse.
+
+### 4. Bewährung
+
+Hier zeigt sich, ob die Gestaltung mehr kann als Stimmung.
+
+Jetzt zählen Haltung, Struktur, Präzision, Ton, Raum und Gewicht zusammen.  
+Nichts darf behauptet sein, was die Form nicht halten kann.
+
+### 5. Druck
+
+Das ist der Punkt, an dem Design nicht nur schön, sondern ernst werden muss.
+
+Kontraste dürfen hier schärfer sein.  
+Führung klarer.  
+Setzungen härter.  
+Nicht aus Kälte, sondern weil Wirklichkeit da ist.
+
+### 6. Neuöffnung
+
+Nach Verdichtung und Druck darf die Gestaltung nicht geschlossen bleiben.
+
+Sie muss wieder Luft gewinnen.  
+Nicht als Ausweichbewegung, sondern als neue Klarheit.  
+Weniger naiv, aber offener.
+
+### 7. Fluss
+
+Der letzte Zustand.
+
+Nicht Beruhigung.  
+Nicht Wegdämmern.  
+Sondern tragende Bewegung.
+
+Etwas bleibt offen, ohne lose zu werden.  
+Etwas geht weiter, ohne zu drängen.
 
 ---
 
-## 3. Emotionale Token (keine Farben)
+## 4. Gestaltkräfte
 
-### RESONANZ
-
-Die erste echte Schwelle.  
-Nicht Reichweite. Nicht Gefallen. Sondern das spürbare „Ja“ oder „Nein“ zwischen Mensch und Lehrer.
+Erst hier werden die eigentlichen Kräfte benannt.
 
 ### SCHÄRFE
 
-Klar wie ein Messer, tief wie ein Ozean.  
-Schärfe meint hier nicht Aggression, sondern präzise Unterscheidung, geistige Wachheit und formale Konsequenz.
+Die Fähigkeit, zu unterscheiden.
 
-### ERDUNG
+Schärfe heißt hier nicht Aggression.  
+Sondern Trennschärfe, Setzungskraft, geistige Wachheit.
 
-Kontakt zur Wirklichkeit.  
-Keine ätherische Schwebe, keine Kulisse, kein Wegdriften. Das System steht im Leben, nicht daneben.
+Später sichtbar in:
 
-### AUFBRUCH
+- Hierarchie
+- Typografiegewicht
+- klaren Kanten im Denken
+- sauber gesetzten Kontrasten
+- präziser Informationsführung
 
-Innere Bewegung nach vorn.  
-Nicht Hektik, sondern der Impuls, dass hier etwas beginnen, sich öffnen oder sich aufrichten darf.
+Kippt in: Härtepose, Überkontrolle, kalte Strenge.
 
-### WÜRDE
+---
 
-Ernsthaftigkeit ohne Pathos.  
-Klarheit ohne Kälte. Haltung ohne Pose. Das System verliert nie seine innere Höhe.
+### TIEFE
 
-### LEBENDIGKEIT
+Das, was nach dem ersten Eindruck bleibt.
 
-Freude, Zug, Spürbarkeit, Spielkraft.  
-Nicht verspielt im dekorativen Sinn, sondern lebendig im Sinn von Präsenz, Wachheit und echter Energie.
+Tiefe heißt hier nicht Dunkelheit und nicht spiritueller Nebel.  
+Sondern Mehrschichtigkeit, Nachhall, Reibung, Gewicht.
 
-### PRÄZISION
+Später sichtbar in:
 
-Jede Form soll gesetzt wirken.  
-Nichts beliebig, nichts zufällig, nichts verwaschen. Präzision ist der sichtbare Ausdruck von Anspruch.
+- Dichte einzelner Sektionen
+- langsamerer Lesbarkeit an wichtigen Stellen
+- semantischer Schichtung
+- dunkleren Zustandsräumen
+- nicht sofort erschöpfter Wirkung
+
+Kippt in: Schwereinszenierung, Unklarheit, pseudotiefe Atmosphäre.
+
+---
+
+### ZUG
+
+Die Kraft, die weiterführt.
+
+Zug ist nicht Hektik.  
+Nicht Conversion-Druck.  
+Sondern der Impuls, dass etwas weiter will.
+
+Später sichtbar in:
+
+- Scrollenergie
+- Übergängen
+- räumlicher Staffelung
+- klaren Fortsetzungsbewegungen
+- sauber gesetzten Spannungswechseln
+
+Kippt in: Getriebenheit, Marketinggestus, Nervosität.
+
+---
+
+### STAND
+
+Die Kraft, die hält.
+
+Stand ist geerdete Wirklichkeit.  
+Keine Rustikalität.  
+Keine Erd-Ästhetik.  
+Sondern Form mit Bodenhaftung.
+
+Später sichtbar in:
+
+- ruhenden Flächen
+- belastbaren Layoutachsen
+- klaren Ausgangs- und Zielpunkten
+- glaubwürdiger Materialität
+- organisatorischer Lesbarkeit
+
+Kippt in: Schwere, Trägheit, Abgeschlossenheit.
+
+---
 
 ### WÄRME
 
-Menschliche Zugänglichkeit ohne Weichzeichnung.  
-Das System bleibt offen und nahbar, ohne in Wohlfühlästhetik zu kippen.
+Menschliche Zugänglichkeit ohne Weichzeichnung.
 
-### TRAGFÄHIGKEIT
+Wärme heißt hier nicht Kuscheligkeit.  
+Sie heißt: offen, lesbar, nicht abweisend, nicht geschniegelt.
 
-Was hier sichtbar wird, soll nicht nur beeindrucken, sondern halten.  
-Nicht nur im ersten Eindruck, sondern im Nachklang und in der realen Benutzbarkeit.
+Später sichtbar in:
+
+- Nähe im Ton
+- ansprechbaren Zuständen
+- Übergängen, die nicht stoßen
+- klarer Benutzerführung ohne Distanzgestus
+
+Kippt in: Gefälligkeit, Wohlfühlästhetik, Einlullung.
 
 ---
 
-## 4. Design-Achsen
+### WÜRDE
 
-## 4.1 Schärfe ↔ Tiefe
+Die Haltung, die nichts nötig hat.
 
-### Bedeutung
+Würde ist hier weder Pomp noch sakrale Schwere.  
+Sondern innere Höhe ohne Pose.
 
-Diese Achse ist die Hauptachse des Projekts.
+Später sichtbar in:
 
-**Schärfe** steht für:
+- Maß
+- Zurückhaltung an den richtigen Stellen
+- nicht hektischem Kontrastgebrauch
+- souveräner Typo
+- sauberem Verhältnis von Raum und Gewicht
 
-- Klarheit
-- Präzision
-- Unterscheidbarkeit
-- Kante
-- geistige Wachheit
-- formale Konsequenz
+Kippt in: Steifheit, Erhabenheitsgestus, Distanzkälte.
 
-**Tiefe** steht für:
+---
 
-- innere Weite
-- Mehrschichtigkeit
-- Reibung
-- Ernst
-- Substanz
-- nachwirkende Dichte
+### LEBENDIGKEIT
 
-### Funktion
+Die Energie, die spürbar macht, dass hier nicht bloß Ordnung herrscht.
+
+Lebendigkeit ist nicht Verspieltheit.  
+Sondern Präsenz, Wachheit, Antwortfähigkeit.
+
+Später sichtbar in:
+
+- Mikroenergie
+- Bewegungsantworten
+- lebendigen Zustandswechseln
+- dynamischer, aber nicht nervöser Führung
+
+Kippt in: Unruhe, Effektlust, dekorative Bewegung.
+
+---
+
+### PRÄZISION
+
+Die Weigerung, ungefähr zu sein.
+
+Präzision heißt hier: Jede Form muss gesetzt wirken.  
+Nicht geschniegelt.  
+Nicht steril.  
+Aber entschieden.
+
+Später sichtbar in:
+
+- Textabständen
+- Kontrastdosierung
+- Bildausschnitten
+- Rasterdisziplin
+- Interaktionsverhalten
+
+Kippt in: Künstlichkeit, Überdefinition, sterile Perfektion.
+
+---
+
+## 5. Hauptachsen
+
+### 1. Schärfe ↔ Tiefe
+
+Das ist die tragende Achse des Projekts.
+
+Schärfe sorgt dafür, dass nichts vernebelt.  
+Tiefe sorgt dafür, dass nichts flach wird.
 
 Diese Achse trägt:
 
+- Hierarchie
+- Textgewicht
+- Informationsdichte
 - Typocharakter
-- Textdichte
+- semantische Staffelung
 - Kontrastlogik
-- Informationsgewicht
-- semantische Schichtung
-- Hierarchien
-- die Frage, wie „klar“ etwas sichtbar wird, ohne flach zu sein
 
-### Wahrheit
-
-Wenn diese Achse kippt, wird das Projekt entweder:
-
-- oberflächlich-scharf
-- oder tief, aber unlesbar
-
-Beides ist falsch.
+Kippt sie, wird das Projekt entweder zu glatt oder zu schwammig.
 
 ---
 
-## 4.2 Erdung ↔ Aufbruch
+### 2. Stand ↔ Zug
 
-### Bedeutung
+Das ist die Bewegungsachse.
 
-Diese Achse trägt die Bewegungswahrheit.
-
-**Erdung** steht für:
-
-- Stand
-- Ruhe im Boden
-- Realitätskontakt
-- Glaubwürdigkeit
-- nicht abheben
-- nicht driften
-
-**Aufbruch** steht für:
-
-- Öffnung
-- Vorwärtsimpuls
-- neue Möglichkeit
-- Praxisbeginn
-- Bewegungsenergie
-- Entwicklung
-
-### Funktion
+Stand gibt dem System Boden.  
+Zug bringt es voran.
 
 Diese Achse trägt:
 
-- räumliche Dramaturgie
-- Scroll- und Bewegungslogik
-- Motion-Grundhaltung
+- Scrollverhalten
+- Raumdramaturgie
 - Übergänge
 - CTA-Spannung
-- Komposition von ruhenden und ziehenden Bereichen
+- Sektionstempo
+- Richtungsgefühl
 
-### Wahrheit
-
-Wenn diese Achse kippt, wird das Projekt entweder:
-
-- schwer, statisch und abgeschlossen
-- oder unruhig, trendig und haltlos
-
-Beides ist falsch.
+Kippt sie, wird das Projekt entweder statisch oder aufgeregt.
 
 ---
 
-## 4.3 Ruhe ↔ Lebendigkeit
+### 3. Wärme ↔ Würde
 
-### Bedeutung
+Das ist die menschliche Achse.
 
-Diese Achse verhindert zwei Fehlformen gleichzeitig:
-
-- tote, wellnesshafte Ruhe
-- hektische, aufgeregte Lebendigkeit
-
-**Ruhe** steht für:
-
-- Sammlung
-- Atem
-- Gelassenheit
-- Klarheit ohne Lärm
-- innere Ordnung
-
-**Lebendigkeit** steht für:
-
-- Präsenz
-- Zug
-- Spielkraft
-- Wachheit
-- spürbare Energie
-
-Hier liegt auch das, was an **Phoon / OVER9000 / müheloser Kontrolle** erinnert:  
-nicht laut, aber unübersehbar.  
-Nicht gepresst, sondern mit natürlicher Dominanz.
-
-### Funktion
+Wärme hält die Website offen.  
+Würde hält sie vor Verflachung geschützt.
 
 Diese Achse trägt:
 
-- Motion-Spannung
-- Interaktionscharakter
-- Mikroenergie
-- Bildrhythmus
-- Raumtempo
-- den Unterschied zwischen „beruhigend“ und „lebendig gesammelt“
+- Nähe und Distanz
+- Tonalität
+- den Charakter von Bildern
+- Ansprache
+- die soziale Qualität des Interfaces
 
-### Wahrheit
-
-Wenn diese Achse kippt, wird das Projekt entweder:
-
-- schläfrig
-- oder nervös
-
-Beides verrät Jonas.
+Kippt sie, wird das Projekt entweder zu freundlich oder zu steif.
 
 ---
 
-## 5. Übersetzungslogik
-
-Hier wird festgelegt, wie aus Wahrheit später Design entsteht.
+## 6. Übersetzungslogik
 
 ### Welche Achse trägt Struktur?
 
 **Schärfe ↔ Tiefe**
 
-Sie bestimmt:
+Struktur muss klar genug sein, um zu führen,  
+und dicht genug, um nicht banal zu werden.
 
-- Hierarchie
-- Leselogik
-- Informationsdichte
-- Kontrastgewicht
-- semantische Ebenen
-- die Strenge oder Offenheit von Layoutentscheidungen
+Das betrifft:
 
-Struktur muss immer scharf genug sein, um lesbar zu bleiben,  
-und tief genug, um nicht banal zu wirken.
+- Layout
+- Typografie
+- Informationsordnung
+- Modulgewicht
+- Hierarchien
 
 ---
 
 ### Welche Achse trägt Bewegung?
 
-**Erdung ↔ Aufbruch**
+**Stand ↔ Zug**
 
-Sie bestimmt:
+Bewegung darf nicht ornamental sein.  
+Sie muss aus der Sache kommen.
 
-- Übergänge
+Das betrifft:
+
 - Scrollgefühl
-- Einstiegs- und Abschlussdynamik
-- Bewegungsrichtungen
-- Spannungsbögen
-- die Frage, wann etwas ruht und wann es zieht
-
-Bewegung darf nie ornamental sein.  
-Sie muss immer aus innerer Notwendigkeit kommen.
+- Sektionstransitionen
+- Motion
+- Fortsetzungsimpulse
+- CTA-Energie
 
 ---
 
 ### Welche Achse trägt emotionale Signale?
 
-**Ruhe ↔ Lebendigkeit**
+**Wärme ↔ Würde**
 
-Sie bestimmt:
+Diese Website muss ansprechbar bleiben, ohne weich zu werden.  
+Und hoch bleiben, ohne abzuheben.
 
-- Nähe
-- Energie
-- Atmosphärenwechsel
-- Interaktionsgefühl
-- Aufforderungscharakter
-- den Ton zwischen Sammlung und Zug
+Das betrifft:
 
-Emotionale Signale dürfen nicht aus Deko entstehen.  
-Sie müssen aus Haltung entstehen.
+- Intro-Zustände
+- Kontaktmomente
+- Textnähe
+- Bildsprache
+- Microinteractions
 
 ---
 
 ### Wie entstehen Kontraste?
 
-Kontraste entstehen nicht primär durch „mehr Farbe“ oder „mehr Effekt“,  
-sondern durch:
+Nicht primär durch Lautstärke.  
+Sondern durch:
 
-- Verdichtung vs. Öffnung
-- Schwere vs. Luft
-- Sammlung vs. Zug
-- Kante vs. Raum
-- Masse vs. Beweglichkeit
-- präzise Setzung vs. lebendige Antwort
+- Öffnung vs. Verdichtung
+- Luft vs. Masse
+- Stand vs. Zug
+- Helligkeit vs. Gewicht
+- Präzision vs. Weite
+- Nähe vs. Souveränität
 
-Kontraste müssen würdig bleiben.  
-Kein Trendkontrast. Kein Tech-Kontrast. Kein Wellnesskontrast.
+Kontraste müssen fühlbar sein.  
+Aber nie modisch.
 
 ---
 
 ### Wie wird Balance gehalten?
 
-Balance ist hier **nicht Mitte**.  
-Balance ist **treffend dosierte Konsequenz**.
+Balance heißt hier nicht Mittelwert.
 
-Das bedeutet:
+Balance heißt:  
+**Jede Stelle bekommt genau die Kraft, die sie für ihre Aufgabe braucht.**
 
-- nicht überall Tiefe
-- nicht überall Schärfe
-- nicht überall Ruhe
-- nicht überall Zug
+Manche Stellen dürfen ruhig nur tragen.  
+Andere müssen schneiden.  
+Wieder andere verdichten oder öffnen.
 
-Sondern:
-Jede Stelle bekommt genau die Kraft, die sie für ihre Aufgabe braucht.
+Gleichverteilung wäre Verrat.
 
 ---
 
-## 6. Light / Dark als Zustandsräume
+## 7. Light / Dark als Zustandsräume
 
-Light und Dark sind hier **keine Farbschemata**, sondern **Bewusstseins- und Atmosphärenräume**.
+Light und Dark sind hier keine Themes.  
+Sie sind zwei atmosphärische Modi.
 
 ### Light
 
-Light bedeutet in diesem Projekt:
+Light ist dort, wo etwas zugänglich wird.
 
-- Lesbarkeit
-- Offenheit
-- Ansprechbarkeit
-- Zugänglichkeit
-- Gegenwärtigkeit
-- konkrete Orientierung
-- Einladung in Kontakt und Praxis
+Nicht fröhlich.  
+Nicht steril.  
+Sondern lesbar, offen, gegenwärtig, erreichbar.
 
-Light ist nicht „fröhlich“ und nicht „sauber“.  
-Light ist das, was etwas **zugänglich und sichtbar** macht.
+Light steht für:
+
+- Einstieg
+- erste Resonanz
+- Angebotslesbarkeit
+- Orientierung
+- Kontaktfähigkeit
+- Handlung
 
 ---
 
 ### Dark
 
-Dark bedeutet in diesem Projekt:
+Dark ist dort, wo etwas Gewicht bekommt.
 
-- Verdichtung
-- Sammlung
-- Tiefe
-- Ernst
-- Nachhall
-- innere Weite
-- Würde
-- Herkunft aus Reibung
+Nicht mystisch.  
+Nicht dramatisch.  
+Sondern gesammelt, dichter, ernster, nachhallender.
 
-Dark ist nicht „mystisch“ und nicht „dramatisch“.  
-Dark ist der Raum, in dem etwas Gewicht bekommt.
+Dark steht für:
 
----
-
-### Wann wechselt das System bewusst den Zustand?
-
-Ein Zustandswechsel kann sinnvoll sein:
-
-- wenn von erster Offenheit in tiefere Lehrerwahrheit gewechselt wird
-- wenn aus Angebotsklarheit in Vertrauensvertiefung gegangen wird
-- wenn aus praktischer Lesbarkeit in innere Verdichtung oder zurück gewechselt wird
-- wenn eine Sektion mehr Sammlung oder mehr Zug braucht
-
-Der Wechsel darf nie als Gimmick erscheinen.  
-Er muss sich wie **natürliche Atembewegung** anfühlen.
+- Lehrerwahrheit
+- Reibung
+- Vertrauensvertiefung
+- innere Schwere ohne Schwerepose
+- Konzentration
+- Nachdruck
 
 ---
 
-## 7. Design-Verbote
+### Wann wechselt das System?
+
+Der Wechsel darf nie gimmickhaft sein.
+
+Er ist sinnvoll:
+
+- wenn aus erster Öffnung in tiefere Lehrerwahrheit gegangen wird
+- wenn aus Angebotsklarheit Verdichtung wird
+- wenn nach Druck wieder neue Luft gebraucht wird
+- wenn Anschluss wieder offener und leichter werden muss
+
+Light und Dark müssen sich wie Atem verhalten.  
+Nicht wie Theme-Toggle.
+
+---
+
+## 8. Design-Verbote
 
 Explizit verboten sind:
 
-- Pastell-Wellness-Ästhetik
-- Öko-Farbklischees
-- Spa-/Retreat-Anmutung
+- Pastell-Wellness
+- Öko-Klischees
+- Spa- und Retreat-Optik
 - generische Achtsamkeitsvisualität
-- spiritueller Nebel
 - Naturromantik als Tiefe-Ersatz
-- Gesundheitsfetisch-Optik
-- weichgespülte „freundliche“ Beliebigkeit
+- Gesundheitsfetisch-Design
+- weichgespülte Freundlichkeit
 - sterile Coach-Ästhetik
 - trendige Tech-Cleanliness
+- pseudo-premium Ruhe
 - Brutalismus aus Coolness
-- rustikale Erdigkeit
-- dekorative Verspieltheit
-- zu viel „Zen“
+- dekorative Spiritualität
+- künstliche Übermilde
 - schöne Unschärfe
-- künstliche Überruhe
+- expressive Härte als Selbstzweck
 
-Wo wäre „schön“ falsch?
+Schönheit ist falsch, wenn sie:
 
-- Wenn Schönheit die Reibung ausradiert
-- wenn Schönheit Schärfe weichzeichnet
-- wenn Schönheit Tiefe verkitscht
-- wenn Schönheit Kontakt zur Wirklichkeit verliert
-- wenn Schönheit die Lehrerwahrheit durch Ästhetik ersetzt
+- Reibung ausradiert
+- Schärfe weichzeichnet
+- Tiefe verkitscht
+- Jonas hinter Atmosphäre versteckt
+- mehr Bild als Wahrheit ist
 
 ---
 
-## 8. Ableitungsversprechen
+## 9. Ableitungsversprechen
 
 Aus diesem Dokument dürfen später entstehen:
 
-- Farbpaletten
+- Farbwelten
 - Typografie
 - Bildsprache
 - Motion-Prinzipien
 - Raum- und Dichtelogik
 - Komponentencharakter
 - Interaktionsverhalten
-- Light-/Dark-Themes
+- Light-/Dark-Zustände
 - Materialität
 - Kontrastsysteme
 
@@ -516,27 +648,28 @@ Aber nur unter dieser Bedingung:
 - Person vor Kulisse
 - Schärfe ohne Aggression
 - Tiefe ohne Nebel
-- Erdung ohne Rustikalität
-- Aufbruch ohne Hektik
-- Ruhe ohne Schläfrigkeit
-- Lebendigkeit ohne Albernheit
-- Würde ohne Schwerepose
+- Stand ohne Schwere
+- Zug ohne Hektik
 - Wärme ohne Weichzeichnung
+- Würde ohne Distanzpose
+- Lebendigkeit ohne Albernheit
 - Präzision ohne Sterilität
+- Fluss ohne Beliebigkeit
 
-Wenn spätere visuelle Entscheidungen diesen Wahrheiten widersprechen, sind sie falsch — auch wenn sie „gut aussehen“.
-
----
-
-## 9. Leitsätze
-
-1. **Diese Gestaltung darf nie Stimmung statt Wahrheit liefern.**
-2. **Jede Form muss Jonas als Lehrer schärfen, nicht verdecken.**
-3. **Was schön ist, aber nicht trägt, ist hier falsch.**
-4. **Schärfe, Erdung und lebendige Ruhe sind keine Stilmittel, sondern die Form dieser Wahrheit.**
+Wenn spätere Designentscheidungen dem widersprechen, sind sie falsch.  
+Auch wenn sie gut aussehen.
 
 ---
 
-## 10. Ein Satz, der alles trägt
+## 10. Leitsätze
 
-Dieses Proto-Designsystem übersetzt Jonas’ Lehrerwahrheit in eine gestalterische Grundform, die scharf, geerdet, würdig, lebendig und tief ist — ohne Wellness, Kitsch, Nebel oder Pose.
+1. **Diese Gestaltung darf nicht bloß gefallen. Sie muss tragen.**
+2. **Was Stimmung liefert, aber Jonas als Lehrer verdeckt, ist falsch.**
+3. **Jede Form muss Schärfe, Wärme, Würde und Zug so dosieren, dass nichts posiert und nichts einschläft.**
+4. **Das Design darf öffnen, verdichten, drücken und wieder fließen — aber nie den Kontakt zur Wirklichkeit verlieren.**
+
+---
+
+## 11. Ein Satz, der alles trägt
+
+Dieses Proto-Designsystem übersetzt Jonas’ Lehrerwahrheit in eine Gestaltung, die ansprechbar beginnt, sich verdichtet, Gewicht tragen kann, wieder öffnet und am Ende in einen klaren, würdigen und lebendigen Fluss findet.
