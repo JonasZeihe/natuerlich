@@ -42,13 +42,14 @@ const Outer = styled.section<{
 }>`
   position: relative;
   width: 100%;
+  isolation: isolate;
 
   ${({ theme, $rhythm, $tone, $bleed }) => {
     const rhythm = theme.layout.section[$rhythm]
     const tone = theme.getSectionTone($tone)
 
     return css`
-      margin-block: ${rhythm.gap};
+      margin-block: calc(${rhythm.gap} * ${tone.gapScale});
 
       ${$bleed
         ? css`
@@ -57,11 +58,11 @@ const Outer = styled.section<{
         : ''}
 
       @media (max-width: ${theme.breakpoints.md}) {
-        margin-block: calc(${rhythm.gap} * 0.84);
+        margin-block: calc(${rhythm.gap} * ${tone.gapScale} * 0.84);
       }
 
       @media (max-width: ${theme.breakpoints.sm}) {
-        margin-block: calc(${rhythm.gap} * 0.72);
+        margin-block: calc(${rhythm.gap} * ${tone.gapScale} * 0.72);
       }
 
       background: ${tone.base};
@@ -79,28 +80,53 @@ const Outer = styled.section<{
               inset 0 -1px 0 ${tone.edge};
           `
         : ''}
+
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        opacity: ${tone.washOpacity};
+        background: linear-gradient(
+          180deg,
+          ${tone.wash} 0%,
+          transparent 18%,
+          transparent 82%,
+          ${tone.wash} 100%
+        );
+      }
     `
   }}
 `
 
-const Inner = styled.div<{ $padY: boolean; $rhythm: RhythmKey }>`
+const Inner = styled.div<{
+  $padY: boolean
+  $rhythm: RhythmKey
+  $tone: SectionToneKey
+}>`
   position: relative;
+  z-index: 1;
   width: 100%;
 
-  ${({ theme, $padY, $rhythm }) =>
-    $padY
+  ${({ theme, $padY, $rhythm, $tone }) => {
+    const rhythm = theme.layout.section[$rhythm]
+    const tone = theme.getSectionTone($tone)
+
+    return $padY
       ? css`
-          padding-block: ${theme.layout.section[$rhythm].pad};
+          padding-block: calc(${rhythm.pad} * ${tone.padScale});
 
           @media (max-width: ${theme.breakpoints.md}) {
-            padding-block: calc(${theme.layout.section[$rhythm].pad} * 0.86);
+            padding-block: calc(${rhythm.pad} * ${tone.padScale} * 0.86);
           }
 
           @media (max-width: ${theme.breakpoints.sm}) {
-            padding-block: calc(${theme.layout.section[$rhythm].pad} * 0.74);
+            padding-block: calc(${rhythm.pad} * ${tone.padScale} * 0.74);
           }
         `
-      : ''}
+      : ''
+  }}
 `
 
 export default function Section({
@@ -135,7 +161,7 @@ export default function Section({
       {...rest}
       {...sectionAriaProps}
     >
-      <Inner $padY={padY} $rhythm={resolvedRhythm}>
+      <Inner $padY={padY} $rhythm={resolvedRhythm} $tone={tone}>
         <Container max={container}>
           {header}
           {children}

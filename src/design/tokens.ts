@@ -30,9 +30,16 @@ export const TYPOGRAPHY = {
     relaxed: 1.72,
   },
   letterSpacing: {
+    tighter: '-0.026em',
     tight: '-0.018em',
     normal: '0',
     wide: '0.024em',
+  },
+  measure: {
+    compact: '18ch',
+    title: '22ch',
+    prose: '64ch',
+    wide: '72ch',
   },
 } as const
 
@@ -98,30 +105,65 @@ export const SECTION_TONES = {
   default: {
     overlayOpacity: 0,
     lineOpacity: 0,
+    gapScale: 1,
+    padScale: 1,
+    washOpacity: 0,
   },
   opening: {
     overlayOpacity: 1,
     lineOpacity: 1,
+    gapScale: 1.08,
+    padScale: 1.08,
+    washOpacity: 0.8,
   },
   clarify: {
     overlayOpacity: 1,
     lineOpacity: 1,
+    gapScale: 0.98,
+    padScale: 1,
+    washOpacity: 0.48,
   },
   expand: {
     overlayOpacity: 1,
     lineOpacity: 1,
+    gapScale: 1.04,
+    padScale: 1.02,
+    washOpacity: 0.62,
   },
   deepen: {
     overlayOpacity: 1,
     lineOpacity: 1,
+    gapScale: 0.94,
+    padScale: 0.96,
+    washOpacity: 0.74,
+  },
+  threshold: {
+    overlayOpacity: 1,
+    lineOpacity: 1,
+    gapScale: 0.9,
+    padScale: 0.92,
+    washOpacity: 0.82,
+  },
+  pressure: {
+    overlayOpacity: 1,
+    lineOpacity: 1,
+    gapScale: 0.84,
+    padScale: 0.9,
+    washOpacity: 0.92,
   },
   relief: {
     overlayOpacity: 1,
     lineOpacity: 1,
+    gapScale: 1.02,
+    padScale: 1.04,
+    washOpacity: 0.38,
   },
   arrival: {
     overlayOpacity: 1,
     lineOpacity: 1,
+    gapScale: 0.96,
+    padScale: 1,
+    washOpacity: 0.52,
   },
 } as const
 
@@ -448,6 +490,8 @@ export type SectionToneKey =
   | 'clarify'
   | 'expand'
   | 'deepen'
+  | 'threshold'
+  | 'pressure'
   | 'relief'
   | 'arrival'
 export type Palette = typeof PALETTE

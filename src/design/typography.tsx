@@ -13,12 +13,17 @@ type Variant = 'h1' | 'h2' | 'h3' | 'subtitle' | 'body' | 'caption'
 type Align = 'left' | 'right' | 'center' | 'justify'
 type Tone = 'neutral' | 'soft' | 'strong'
 type SemanticColor = 'primary' | 'secondary' | 'subtle' | 'link' | 'linkHover'
+type Measure = 'compact' | 'title' | 'prose' | 'wide' | 'full'
+type Cadence = 'open' | 'neutral' | 'dense'
+
 type TypographyProps = {
   variant?: Variant
   align?: Align
   color?: SemanticColor
   accent?: AxisKey | 'neutral'
   tone?: Tone
+  measure?: Measure
+  cadence?: Cadence
   gutter?: boolean
   as?: ElementType
   children: ReactNode
@@ -45,7 +50,7 @@ const variantCSS = (variant: Variant, theme: DefaultTheme, gutter: boolean) => {
         font-size: ${fontSize.h1};
         font-weight: ${fontWeight.bold};
         line-height: ${lineHeight.tight};
-        letter-spacing: ${letterSpacing.tight};
+        letter-spacing: ${letterSpacing.tighter};
         margin-bottom: ${gutter ? spacing(2.5) : 0};
         text-wrap: balance;
       `
@@ -62,7 +67,7 @@ const variantCSS = (variant: Variant, theme: DefaultTheme, gutter: boolean) => {
       return css`
         font-size: ${fontSize.h3};
         font-weight: ${fontWeight.medium};
-        line-height: 1.34;
+        line-height: 1.32;
         letter-spacing: ${letterSpacing.normal};
         margin-bottom: ${gutter ? spacing(1.45) : 0};
       `
@@ -93,6 +98,36 @@ const variantCSS = (variant: Variant, theme: DefaultTheme, gutter: boolean) => {
   }
 }
 
+const measureCSS = (measure: Measure, theme: DefaultTheme) => {
+  if (measure === 'full') {
+    return css`
+      max-width: none;
+    `
+  }
+
+  return css`
+    max-width: ${theme.typography.measure[measure]};
+  `
+}
+
+const cadenceCSS = (cadence: Cadence, variant: Variant) => {
+  if (cadence === 'open') {
+    return css`
+      line-height: ${variant === 'body' || variant === 'subtitle' ? 1.68 : 1.2};
+    `
+  }
+
+  if (cadence === 'dense') {
+    return css`
+      line-height: ${variant === 'body' || variant === 'subtitle'
+        ? 1.48
+        : 1.12};
+    `
+  }
+
+  return ''
+}
+
 const accentCSS = (
   accent: AxisKey | 'neutral',
   variant: Variant,
@@ -112,12 +147,6 @@ const accentCSS = (
     `
   }
 
-  if (variant === 'body' || variant === 'subtitle') {
-    return css`
-      color: ${axis.text};
-    `
-  }
-
   return css`
     color: ${axis.text};
   `
@@ -130,13 +159,18 @@ type StyledProps = {
   $semanticColor?: SemanticColor
   $accent?: AxisKey | 'neutral'
   $tone: Tone
+  $measure: Measure
+  $cadence: Cadence
 }
 
 const StyledTypography = styled.span<StyledProps>`
   margin: 0;
   padding: 0;
+  min-width: 0;
   text-align: ${({ $align }) => $align};
   ${({ $variant, theme, $gutter }) => variantCSS($variant, theme, $gutter)}
+  ${({ $measure, theme }) => measureCSS($measure, theme)}
+  ${({ $cadence, $variant }) => cadenceCSS($cadence, $variant)}
 
   ${({ theme, $variant, $semanticColor, $accent, $tone }) => {
     if ($semanticColor) {
@@ -158,7 +192,6 @@ const StyledTypography = styled.span<StyledProps>`
     if ($tone === 'strong') {
       return css`
         color: ${theme.roles.text.primary};
-        text-wrap: balance;
       `
     }
 
@@ -173,13 +206,16 @@ const StyledTypography = styled.span<StyledProps>`
     `
   }}
 
-  ${({ $variant, $accent, theme }) =>
-    ($variant === 'h1' || $variant === 'h2') && $accent && $accent !== 'neutral'
+  ${({ $variant, $measure, $accent, theme }) =>
+    ($variant === 'h1' || $variant === 'h2') &&
+    $measure === 'title' &&
+    $accent &&
+    $accent !== 'neutral'
       ? css`
-          max-width: 18ch;
+          max-width: ${theme.typography.measure.title};
 
           @media (max-width: ${theme.breakpoints.md}) {
-            max-width: 22ch;
+            max-width: 24ch;
           }
         `
       : ''}
@@ -211,6 +247,12 @@ export default function Typography({
   color,
   accent,
   tone = 'neutral',
+  measure = variant === 'body'
+    ? 'prose'
+    : variant === 'caption'
+      ? 'wide'
+      : 'title',
+  cadence = 'neutral',
   gutter = true,
   as,
   children,
@@ -227,6 +269,8 @@ export default function Typography({
       $semanticColor={color}
       $accent={accent}
       $tone={tone}
+      $measure={measure}
+      $cadence={cadence}
       {...rest}
     >
       {children}

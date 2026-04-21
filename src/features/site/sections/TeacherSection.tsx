@@ -8,7 +8,7 @@ import Stack from '@/components/primitives/Stack'
 import Typography from '@/design/typography'
 
 const SectionStack = styled(Stack)`
-  gap: ${({ theme }) => theme.spacing(1.35)};
+  gap: ${({ theme }) => theme.spacing(1.2)};
 `
 
 const TopSurface = styled(Surface)`
@@ -52,7 +52,7 @@ export default function TeacherSection() {
       container="default"
       variant="body"
       rhythm="default"
-      tone="deepen"
+      tone="pressure"
     >
       <SectionStack>
         <TopSurface
@@ -61,6 +61,8 @@ export default function TeacherSection() {
           radius="large"
           bordered
           padding="lg"
+          density="dense"
+          emphasis="strong"
         >
           <Stack gap={0.82}>
             <Typography
@@ -68,6 +70,7 @@ export default function TeacherSection() {
               variant="caption"
               gutter={false}
               accent="axisResonance"
+              measure="wide"
             >
               Jonas als Lehrer
             </Typography>
@@ -77,6 +80,8 @@ export default function TeacherSection() {
               variant="h2"
               gutter={false}
               accent="axisResonance"
+              cadence="dense"
+              measure="title"
               id="lehrer-title"
             >
               Meta-Placeholder: Hier später die verdichtete Lehrerhaltung. Es
@@ -84,13 +89,25 @@ export default function TeacherSection() {
               Arbeit ausdrücklich nicht ist.
             </Typography>
 
-            <Typography as="p" variant="body" gutter={false}>
+            <Typography
+              as="p"
+              variant="body"
+              gutter={false}
+              measure="prose"
+              cadence="dense"
+            >
               Meta-Placeholder: Diese erste Setzung muss später Person vor
               Methode, Anspruch ohne Pose, Praxis statt Kulisse und Freude ohne
               Verflachung lesbar machen.
             </Typography>
 
-            <Typography as="p" variant="body" gutter={false} tone="soft">
+            <Typography
+              as="p"
+              variant="body"
+              gutter={false}
+              tone="soft"
+              measure="prose"
+            >
               Meta-Placeholder: Diese Passage eröffnet Vertrauen. Sie behauptet
               nichts, sie trägt. Kein Wellness-Ton. Keine Über-mich-Rhetorik.
               Keine Guru-Anmutung.
@@ -105,6 +122,8 @@ export default function TeacherSection() {
             radius="large"
             bordered
             padding="lg"
+            density="dense"
+            emphasis="strong"
           >
             <Stack gap={0.9}>
               <Typography
@@ -112,6 +131,7 @@ export default function TeacherSection() {
                 variant="caption"
                 gutter={false}
                 accent="axisResonance"
+                measure="wide"
               >
                 Eigener Weg und Reibung
               </Typography>
@@ -121,18 +141,32 @@ export default function TeacherSection() {
                 variant="h3"
                 gutter={false}
                 accent="axisResonance"
+                cadence="dense"
+                measure="title"
               >
                 Meta-Placeholder: Hier später die eigene Erfahrung, Reibung und
                 der Weg in die Praxis.
               </Typography>
 
-              <Typography as="p" variant="body" gutter={false}>
+              <Typography
+                as="p"
+                variant="body"
+                gutter={false}
+                measure="prose"
+                cadence="dense"
+              >
                 Meta-Placeholder: Später muss hier sichtbar werden, wie erste
                 Wirksamkeitserfahrungen, Bruchstellen, Krisen oder
                 Wiederannäherung den Weg in diese Arbeit geprägt haben.
               </Typography>
 
-              <Typography as="p" variant="body" gutter={false} tone="soft">
+              <Typography
+                as="p"
+                variant="body"
+                gutter={false}
+                tone="soft"
+                measure="prose"
+              >
                 Meta-Placeholder: Reibung als Quelle von Klarheit. Nicht
                 dramatisieren. Nicht pathologisieren. Nicht biografisch
                 ausufern. Nur das, was Glaubwürdigkeit wirklich trägt.
@@ -147,6 +181,8 @@ export default function TeacherSection() {
               radius="large"
               bordered
               padding="md"
+              density="dense"
+              emphasis="steady"
             >
               <Stack gap={0.8}>
                 <Typography
@@ -154,6 +190,7 @@ export default function TeacherSection() {
                   variant="caption"
                   gutter={false}
                   accent="axisClarity"
+                  measure="wide"
                 >
                   Unterrichtsverständnis
                 </Typography>
@@ -163,12 +200,19 @@ export default function TeacherSection() {
                   variant="h3"
                   gutter={false}
                   accent="axisClarity"
+                  cadence="dense"
+                  measure="title"
                 >
                   Meta-Placeholder: Hier später lesbar machen, wie Jonas lehrt
                   und warum das im Alltag trägt.
                 </Typography>
 
-                <Typography as="p" variant="body" gutter={false}>
+                <Typography
+                  as="p"
+                  variant="body"
+                  gutter={false}
+                  measure="prose"
+                >
                   Meta-Placeholder: Systemisch, pragmatisch, alltagstauglich,
                   nicht dogmatisch. Methoden erscheinen als Werkzeuge, nicht als
                   Identität.
@@ -182,6 +226,7 @@ export default function TeacherSection() {
               radius="large"
               bordered
               padding="sm"
+              emphasis="quiet"
             >
               <MediaPlaceholder>
                 <Typography
@@ -189,6 +234,7 @@ export default function TeacherSection() {
                   variant="body"
                   gutter={false}
                   accent="axisClarity"
+                  measure="prose"
                 >
                   Bild-Placeholder: Reale Lehrerpräsenz. Ruhige, klare
                   Körperlichkeit. Keine Heldenpose. Keine Naturromantik. Keine
@@ -205,6 +251,8 @@ export default function TeacherSection() {
           radius="large"
           bordered
           padding="md"
+          density="balanced"
+          emphasis="steady"
         >
           <Stack gap={0.8}>
             <Typography
@@ -212,6 +260,7 @@ export default function TeacherSection() {
               variant="caption"
               gutter={false}
               accent="axisClarity"
+              measure="wide"
             >
               Fachliche Grundlage
             </Typography>
@@ -221,19 +270,26 @@ export default function TeacherSection() {
               variant="h3"
               gutter={false}
               accent="axisClarity"
+              measure="title"
             >
               Meta-Placeholder: Hier später die geordnete, belastbare
               Ausbildung.
             </Typography>
 
-            <Typography as="p" variant="body" gutter={false}>
+            <Typography as="p" variant="body" gutter={false} measure="prose">
               Meta-Placeholder: Später werden hier die fachlichen Grundlagen
               ruhig und klar sichtbar. Yoga, Qigong, Taijiquan, Meditation,
               Entspannung, dokumentierter Gesamtumfang sowie Vermittlung,
               Methodik und Didaktik.
             </Typography>
 
-            <Typography as="p" variant="body" gutter={false} tone="soft">
+            <Typography
+              as="p"
+              variant="body"
+              gutter={false}
+              tone="soft"
+              measure="prose"
+            >
               Meta-Placeholder: Nachweise stützen hier die Haltung, sie ersetzen
               sie nicht. Keine Zertifikatswand. Keine dekorativen Labels. Keine
               CV-Sprache.

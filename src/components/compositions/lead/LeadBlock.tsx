@@ -125,7 +125,15 @@ export default function LeadBlock({
   const resolvedMediaTone = resolveMediaTone(mediaTone)
 
   const head = (
-    <HeadWrap tone="soft" accent={accent} radius="large" bordered padding="lg">
+    <HeadWrap
+      tone="soft"
+      accent={accent}
+      radius="large"
+      bordered
+      padding="lg"
+      density="balanced"
+      emphasis="steady"
+    >
       <HeadStack gap={1}>
         {kicker ? (
           isPrimitive(kicker) ? (
@@ -133,6 +141,7 @@ export default function LeadBlock({
               as="p"
               variant="caption"
               gutter={false}
+              measure="wide"
               {...(accent !== 'neutral'
                 ? { accent }
                 : { tone: 'soft' as const })}
@@ -144,7 +153,7 @@ export default function LeadBlock({
           )
         ) : null}
 
-        <Stack gap={0.62}>
+        <Stack gap={0.7}>
           {isPrimitive(title) ? (
             <Typography
               as={titleAs}
@@ -152,6 +161,8 @@ export default function LeadBlock({
               id={titleId}
               accent={accent}
               tone="strong"
+              cadence="dense"
+              measure="title"
               gutter={false}
             >
               {title}
@@ -162,7 +173,14 @@ export default function LeadBlock({
 
           {lead ? (
             isPrimitive(lead) ? (
-              <Typography as="p" variant="body" gutter={false} tone="soft">
+              <Typography
+                as="p"
+                variant="body"
+                gutter={false}
+                tone="soft"
+                cadence="open"
+                measure="prose"
+              >
                 {lead}
               </Typography>
             ) : (
@@ -184,6 +202,7 @@ export default function LeadBlock({
         radius="large"
         bordered={resolvedMediaTone !== 'open'}
         padding="none"
+        emphasis="steady"
       >
         <MediaFrame $aspect={mediaAspect}>
           <div className="inner">{media}</div>

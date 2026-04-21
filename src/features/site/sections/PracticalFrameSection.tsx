@@ -46,7 +46,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
       container="default"
       variant="body"
       rhythm="default"
-      tone="relief"
+      tone="threshold"
     >
       <SectionStack>
         <Surface
@@ -55,6 +55,8 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
           radius="large"
           bordered
           padding="lg"
+          density="dense"
+          emphasis="strong"
         >
           <Stack gap={0.82}>
             <Typography
@@ -62,6 +64,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
               variant="caption"
               gutter={false}
               accent="axisClarity"
+              measure="wide"
             >
               Rahmen
             </Typography>
@@ -71,6 +74,8 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
               variant="h2"
               gutter={false}
               accent="axisClarity"
+              cadence="dense"
+              measure="title"
               id="rahmen-title"
             >
               Meta-Placeholder: Hier später die klare Einordnung, wie das
@@ -78,14 +83,26 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
               praktische Orientierung wird.
             </Typography>
 
-            <Typography as="p" variant="body" gutter={false}>
+            <Typography
+              as="p"
+              variant="body"
+              gutter={false}
+              measure="prose"
+              cadence="dense"
+            >
               Meta-Placeholder: Diese Stelle muss später Formate, Preise, Rahmen
               und typische Einstiegslagen so ordnen, dass ein Mensch verstehen
               kann, was grundsätzlich möglich ist, ohne in Produktkatalog,
               Vollständigkeitsdrang oder Bürokratie zu kippen.
             </Typography>
 
-            <Typography as="p" variant="body" gutter={false} tone="soft">
+            <Typography
+              as="p"
+              variant="body"
+              gutter={false}
+              tone="soft"
+              measure="prose"
+            >
               Meta-Placeholder: Das Angebot wird später nicht zuerst nach
               Methode, sondern nach Funktion und Anschlusslage lesbar gemacht:
               Einstieg, regelmäßige Praxis, individuell, professionell,
@@ -108,6 +125,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 variant="caption"
                 gutter={false}
                 accent="axisEnergy"
+                measure="wide"
               >
                 Einstieg und Basis
               </Typography>
@@ -117,19 +135,26 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 variant="h3"
                 gutter={false}
                 accent="axisEnergy"
+                measure="title"
               >
                 Meta-Placeholder: Hier später niederschwellige Formate, über die
                 ein erster Zugang sinnvoll möglich ist.
               </Typography>
 
-              <Typography as="p" variant="body" gutter={false}>
+              <Typography as="p" variant="body" gutter={false} measure="prose">
                 Meta-Placeholder: Auftaktkurs, Baseline, kompakte Grundpraxis,
                 Einführungsformate oder andere erste Schwellen. Später hier
                 lesbar machen, welche Formate eher Orientierung, Wiederholung
                 oder erste Erfahrung tragen.
               </Typography>
 
-              <Typography as="p" variant="body" gutter={false} tone="soft">
+              <Typography
+                as="p"
+                variant="body"
+                gutter={false}
+                tone="soft"
+                measure="prose"
+              >
                 Meta-Placeholder: Typische Dauer, grobe Laufzeit, typische
                 Einstiegssituation und eine grobe Preisrichtung statt harter
                 Detailauflistung.
@@ -150,6 +175,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 variant="caption"
                 gutter={false}
                 accent="axisClarity"
+                measure="wide"
               >
                 Regelmäßige Praxis
               </Typography>
@@ -159,20 +185,27 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 variant="h3"
                 gutter={false}
                 accent="axisClarity"
+                measure="title"
               >
                 Meta-Placeholder: Hier später Kurs- und Klassenformate für
                 Menschen, die kontinuierlicher einsteigen oder weitergehen
                 wollen.
               </Typography>
 
-              <Typography as="p" variant="body" gutter={false}>
+              <Typography as="p" variant="body" gutter={false} measure="prose">
                 Meta-Placeholder: Später hier geordnet sichtbar machen, wie
                 regelmäßige Kurse, Praxisklassen oder fortlaufende Formate
                 grundsätzlich aufgebaut sind und worin sich Kurs, Klasse und
                 andere wiederkehrende Angebote funktional unterscheiden.
               </Typography>
 
-              <Typography as="p" variant="body" gutter={false} tone="soft">
+              <Typography
+                as="p"
+                variant="body"
+                gutter={false}
+                tone="soft"
+                measure="prose"
+              >
                 Orientierung über Verbindlichkeit, Rhythmus, typische Dauer und
                 grobe Preislogik. Keine Produktmatrix. Keine Methodenliste ohne
                 Zusammenhang.
@@ -193,6 +226,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 variant="caption"
                 gutter={false}
                 accent="axisResonance"
+                measure="wide"
               >
                 Individuelle Wege
               </Typography>
@@ -202,19 +236,26 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 variant="h3"
                 gutter={false}
                 accent="axisResonance"
+                measure="title"
               >
                 Meta-Placeholder: Hier später Einzelsettings und persönliche
                 Praxisbegleitung.
               </Typography>
 
-              <Typography as="p" variant="body" gutter={false}>
+              <Typography as="p" variant="body" gutter={false} measure="prose">
                 Meta-Placeholder: Später hier erklären, wann Einzelunterricht,
                 individuelle Praxisbegleitung oder ein präziseres 1:1-Format
                 sinnvoll ist, für wen das passt und wie sich das von
                 Gruppenformaten unterscheidet.
               </Typography>
 
-              <Typography as="p" variant="body" gutter={false} tone="soft">
+              <Typography
+                as="p"
+                variant="body"
+                gutter={false}
+                tone="soft"
+                measure="prose"
+              >
                 Grobe Preisarchitektur, typische Dauer und Funktion der Formate.
                 Nicht luxuriös inszenieren. Nicht verkaufen. Nur sauber
                 einordnen.
@@ -235,6 +276,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 variant="caption"
                 gutter={false}
                 accent="axisEnergy"
+                measure="wide"
               >
                 Professionell und extern
               </Typography>
@@ -244,19 +286,26 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 variant="h3"
                 gutter={false}
                 accent="axisEnergy"
+                measure="title"
               >
                 Meta-Placeholder: Hier später Firmen-, Team- oder andere
                 professionelle Formate lesbar machen.
               </Typography>
 
-              <Typography as="p" variant="body" gutter={false}>
+              <Typography as="p" variant="body" gutter={false} measure="prose">
                 Meta-Placeholder: Bewegte Pause, Reset-Formate, Workshops,
                 Gesundheits- oder Teamkontexte. Später hier sichtbar machen,
                 dass diese Angebote einer eigenen professionellen Logik folgen
                 und nicht einfach Gruppenkurse in anderem Gewand sind.
               </Typography>
 
-              <Typography as="p" variant="body" gutter={false} tone="soft">
+              <Typography
+                as="p"
+                variant="body"
+                gutter={false}
+                tone="soft"
+                measure="prose"
+              >
                 Typische Einsatzformen, kompakte Verständlichkeit und eigene
                 Preislogik. Kein BGM-Sprech. Keine Business-Fassade.
               </Typography>
@@ -270,6 +319,8 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
           radius="large"
           bordered
           padding="md"
+          density="balanced"
+          emphasis="steady"
         >
           <Stack gap={0.78}>
             <Typography
@@ -277,6 +328,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
               variant="caption"
               gutter={false}
               accent="axisClarity"
+              measure="wide"
             >
               Funktionslogik
             </Typography>
@@ -286,19 +338,26 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
               variant="h3"
               gutter={false}
               accent="axisClarity"
+              measure="title"
             >
               Meta-Placeholder: Hier später die innere Ordnung des Angebots
               knapp erklären.
             </Typography>
 
-            <Typography as="p" variant="body" gutter={false}>
+            <Typography as="p" variant="body" gutter={false} measure="prose">
               Meta-Placeholder: Später hier lesbar machen, dass Angebote nach
               Funktion unterschieden werden können: Einstieg und Zugang, Aufbau
               und Lernen, regelmäßige Praxis, individuelle Begleitung,
               professionelle Formate und Vertiefung.
             </Typography>
 
-            <Typography as="p" variant="body" gutter={false} tone="soft">
+            <Typography
+              as="p"
+              variant="body"
+              gutter={false}
+              tone="soft"
+              measure="prose"
+            >
               Meta-Placeholder: Diese Fläche ist kein Kategorienfriedhof,
               sondern der ruhige Schlüssel, mit dem Besucher die Angebotswelt
               später besser lesen können.
@@ -320,6 +379,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 variant="caption"
                 gutter={false}
                 accent="axisClarity"
+                measure="wide"
               >
                 FAQ
               </Typography>
@@ -329,11 +389,18 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 variant="h3"
                 gutter={false}
                 accent="axisClarity"
+                measure="title"
               >
                 Meta-Placeholder: Welche Form ist für einen Einstieg sinnvoll?
               </Typography>
 
-              <Typography as="p" variant="body" gutter={false} tone="soft">
+              <Typography
+                as="p"
+                variant="body"
+                gutter={false}
+                tone="soft"
+                measure="prose"
+              >
                 Meta-Placeholder: Später hier eine ruhige, entlastende Antwort
                 mit Bezug auf unterschiedliche Einstiegslagen statt pauschaler
                 Empfehlung.
@@ -354,6 +421,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 variant="caption"
                 gutter={false}
                 accent="axisClarity"
+                measure="wide"
               >
                 FAQ
               </Typography>
@@ -363,12 +431,19 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 variant="h3"
                 gutter={false}
                 accent="axisClarity"
+                measure="title"
               >
                 Meta-Placeholder: Brauche ich Vorerfahrung oder bestimmte
                 Voraussetzungen?
               </Typography>
 
-              <Typography as="p" variant="body" gutter={false} tone="soft">
+              <Typography
+                as="p"
+                variant="body"
+                gutter={false}
+                tone="soft"
+                measure="prose"
+              >
                 Meta-Placeholder: Später hier klären, wie zugänglich die Arbeit
                 grundsätzlich ist und wo Unterschiede zwischen Formaten relevant
                 werden.
@@ -389,6 +464,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 variant="caption"
                 gutter={false}
                 accent="axisClarity"
+                measure="wide"
               >
                 FAQ
               </Typography>
@@ -398,12 +474,19 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 variant="h3"
                 gutter={false}
                 accent="axisClarity"
+                measure="title"
               >
                 Meta-Placeholder: Was ist online, vor Ort, mobil oder im
                 Gruppenrahmen möglich?
               </Typography>
 
-              <Typography as="p" variant="body" gutter={false} tone="soft">
+              <Typography
+                as="p"
+                variant="body"
+                gutter={false}
+                tone="soft"
+                measure="prose"
+              >
                 Meta-Placeholder: Später hier Settings und Rahmen so klären,
                 dass praktische Unsicherheit sinkt, ohne in Logistiktext zu
                 kippen.
@@ -424,6 +507,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 variant="caption"
                 gutter={false}
                 accent="axisClarity"
+                measure="wide"
               >
                 FAQ
               </Typography>
@@ -433,12 +517,19 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 variant="h3"
                 gutter={false}
                 accent="axisClarity"
+                measure="title"
               >
                 Meta-Placeholder: Wie transparent sind Preise, Laufzeiten und
                 Verbindlichkeit?
               </Typography>
 
-              <Typography as="p" variant="body" gutter={false} tone="soft">
+              <Typography
+                as="p"
+                variant="body"
+                gutter={false}
+                tone="soft"
+                measure="prose"
+              >
                 Meta-Placeholder: Später hier klar machen, dass Preise, Formate,
                 Laufzeiten und Rahmen nicht im Nebel bleiben, sondern Teil der
                 Glaubwürdigkeit sind.
@@ -453,6 +544,8 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
           radius="large"
           bordered
           padding="md"
+          density="balanced"
+          emphasis="steady"
         >
           <Stack gap={0.78}>
             <Typography
@@ -460,11 +553,12 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
               variant="caption"
               gutter={false}
               accent="axisResonance"
+              measure="wide"
             >
               Nächster Schritt
             </Typography>
 
-            <Typography as="p" variant="body" gutter={false}>
+            <Typography as="p" variant="body" gutter={false} measure="prose">
               Meta-Placeholder: Diese Schlussbewegung muss später den Übergang
               in Kontakt oder Anfrage tragen. Wenn noch unklar ist, welches
               Format passt, soll der nächste Schritt nicht Druck erzeugen,

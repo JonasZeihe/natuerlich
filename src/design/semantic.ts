@@ -41,8 +41,12 @@ export type SectionToneRole = {
   base: string
   edge: string
   line: string
+  wash: string
   overlayOpacity: number
   lineOpacity: number
+  washOpacity: number
+  gapScale: number
+  padScale: number
 }
 
 export type SurfaceRoles = {
@@ -229,50 +233,100 @@ const buildSectionToneRoles = (
     base: 'transparent',
     edge: 'transparent',
     line: 'transparent',
+    wash: 'transparent',
     overlayOpacity: SECTION_TONES.default.overlayOpacity,
     lineOpacity: SECTION_TONES.default.lineOpacity,
+    washOpacity: SECTION_TONES.default.washOpacity,
+    gapScale: SECTION_TONES.default.gapScale,
+    padScale: SECTION_TONES.default.padScale,
   },
   opening: {
-    base: mode === 'light' ? p.surface[0] : p.surface[0],
+    base: p.surface[0],
     edge: mode === 'light' ? p.axisEnergy.surface : p.axisEnergy[6],
     line: mode === 'light' ? p.axisEnergy.border : p.axisEnergy[4],
+    wash: mode === 'light' ? p.axisEnergy[0] : p.axisEnergy.surface,
     overlayOpacity: SECTION_TONES.opening.overlayOpacity,
     lineOpacity: SECTION_TONES.opening.lineOpacity,
+    washOpacity: SECTION_TONES.opening.washOpacity,
+    gapScale: SECTION_TONES.opening.gapScale,
+    padScale: SECTION_TONES.opening.padScale,
   },
   clarify: {
     base: mode === 'light' ? p.axisClarity.surface : p.surface[1],
     edge: mode === 'light' ? p.axisClarity[1] : p.axisClarity[6],
     line: mode === 'light' ? p.axisClarity.border : p.axisClarity[4],
+    wash: mode === 'light' ? p.axisClarity[0] : p.axisClarity.surface,
     overlayOpacity: SECTION_TONES.clarify.overlayOpacity,
     lineOpacity: SECTION_TONES.clarify.lineOpacity,
+    washOpacity: SECTION_TONES.clarify.washOpacity,
+    gapScale: SECTION_TONES.clarify.gapScale,
+    padScale: SECTION_TONES.clarify.padScale,
   },
   expand: {
-    base: mode === 'light' ? p.axisEnergy.surface : p.axisEnergy.surface,
+    base: p.axisEnergy.surface,
     edge: mode === 'light' ? p.axisEnergy[1] : p.axisEnergy[6],
     line: mode === 'light' ? p.axisEnergy.border : p.axisEnergy[4],
+    wash: mode === 'light' ? p.axisEnergy[0] : p.axisEnergy.surface,
     overlayOpacity: SECTION_TONES.expand.overlayOpacity,
     lineOpacity: SECTION_TONES.expand.lineOpacity,
+    washOpacity: SECTION_TONES.expand.washOpacity,
+    gapScale: SECTION_TONES.expand.gapScale,
+    padScale: SECTION_TONES.expand.padScale,
   },
   deepen: {
     base: mode === 'light' ? p.axisResonance.surface : p.surface.backdrop,
     edge: mode === 'light' ? p.axisResonance[1] : p.axisResonance[6],
     line: mode === 'light' ? p.axisResonance.border : p.axisResonance[4],
+    wash: mode === 'light' ? p.axisResonance[0] : p.axisResonance.surface,
     overlayOpacity: SECTION_TONES.deepen.overlayOpacity,
     lineOpacity: SECTION_TONES.deepen.lineOpacity,
+    washOpacity: SECTION_TONES.deepen.washOpacity,
+    gapScale: SECTION_TONES.deepen.gapScale,
+    padScale: SECTION_TONES.deepen.padScale,
+  },
+  threshold: {
+    base: mode === 'light' ? p.surface.card : p.surface.backdrop,
+    edge: mode === 'light' ? p.axisClarity[4] : p.axisClarity[5],
+    line: mode === 'light' ? p.axisClarity[5] : p.axisClarity[3],
+    wash: mode === 'light' ? p.axisClarity.surface : p.axisClarity.surface,
+    overlayOpacity: SECTION_TONES.threshold.overlayOpacity,
+    lineOpacity: SECTION_TONES.threshold.lineOpacity,
+    washOpacity: SECTION_TONES.threshold.washOpacity,
+    gapScale: SECTION_TONES.threshold.gapScale,
+    padScale: SECTION_TONES.threshold.padScale,
+  },
+  pressure: {
+    base: mode === 'light' ? p.depth.ultraLight : p.neutral.background,
+    edge: mode === 'light' ? p.axisResonance[5] : p.axisResonance[4],
+    line: mode === 'light' ? p.axisClarity[6] : p.axisClarity[3],
+    wash: mode === 'light' ? p.axisResonance[1] : p.axisResonance.surface,
+    overlayOpacity: SECTION_TONES.pressure.overlayOpacity,
+    lineOpacity: SECTION_TONES.pressure.lineOpacity,
+    washOpacity: SECTION_TONES.pressure.washOpacity,
+    gapScale: SECTION_TONES.pressure.gapScale,
+    padScale: SECTION_TONES.pressure.padScale,
   },
   relief: {
     base: mode === 'light' ? p.surface[0] : p.surface[1],
     edge: mode === 'light' ? p.axisClarity.surface : p.axisClarity[6],
     line: mode === 'light' ? p.axisClarity.border : p.axisClarity[4],
+    wash: mode === 'light' ? p.surface[0] : p.surface[1],
     overlayOpacity: SECTION_TONES.relief.overlayOpacity,
     lineOpacity: SECTION_TONES.relief.lineOpacity,
+    washOpacity: SECTION_TONES.relief.washOpacity,
+    gapScale: SECTION_TONES.relief.gapScale,
+    padScale: SECTION_TONES.relief.padScale,
   },
   arrival: {
-    base: mode === 'light' ? p.axisResonance.surface : p.axisResonance.surface,
+    base: p.axisResonance.surface,
     edge: mode === 'light' ? p.axisEnergy.surface : p.axisEnergy[6],
     line: mode === 'light' ? p.axisEnergy.border : p.axisEnergy[4],
+    wash: mode === 'light' ? p.axisEnergy[0] : p.axisResonance.surface,
     overlayOpacity: SECTION_TONES.arrival.overlayOpacity,
     lineOpacity: SECTION_TONES.arrival.lineOpacity,
+    washOpacity: SECTION_TONES.arrival.washOpacity,
+    gapScale: SECTION_TONES.arrival.gapScale,
+    padScale: SECTION_TONES.arrival.padScale,
   },
 })
 
@@ -355,7 +409,7 @@ export const buildSemantic = (mode: Mode): SemanticRoles => {
       inset: {
         bg: surfaces.inset,
         fg: p.text.main,
-        border: mode === 'light' ? p.surface[4] : p.surface[4],
+        border: p.surface[4],
         shadow: 'none',
         backdrop: 'none',
       },

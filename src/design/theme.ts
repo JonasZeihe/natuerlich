@@ -41,7 +41,7 @@ const createTheme = (mode: Mode) => {
   }
 
   const motifs = {
-    spotlight: { insetScale: 1, washAlpha: 0 },
+    spotlight: { insetScale: 1, washAlpha: 0.08 },
     zebra: { altSurface: roles.surface.panelAlt },
     edgeToEdge: { container: 'wide' as const },
   }
@@ -114,37 +114,12 @@ const createTheme = (mode: Mode) => {
       }
     }
 
-    if (tone === 'panel') {
-      return {
-        bg: base.bg,
-        fg: base.fg,
-        border: axisRole.border,
-        shadow: 'none',
-        backdrop: 'none',
-      }
-    }
-
-    if (tone === 'elevated') {
-      return {
-        bg: base.bg,
-        fg: base.fg,
-        border: axisRole.border,
-        shadow: 'none',
-        backdrop: 'none',
-      }
-    }
-
-    if (tone === 'inset') {
-      return {
-        bg: base.bg,
-        fg: base.fg,
-        border: axisRole.border,
-        shadow: 'none',
-        backdrop: 'none',
-      }
-    }
-
-    if (tone === 'band') {
+    if (
+      tone === 'panel' ||
+      tone === 'elevated' ||
+      tone === 'inset' ||
+      tone === 'band'
+    ) {
       return {
         bg: base.bg,
         fg: base.fg,
