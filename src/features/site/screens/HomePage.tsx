@@ -2,55 +2,121 @@
 'use client'
 
 import styled from 'styled-components'
-import PageWrapper from '@/components/patterns/wrapper/PageWrapper'
+import PageCanvas from '@/components/compositions/page/PageCanvas'
+import { getClientLogger } from '@/logging'
 import { type SiteSectionId } from '@/features/site/model/sections'
 import ContactSection from '@/features/site/sections/ContactSection'
 import EntrySection from '@/features/site/sections/EntrySection'
-import PositioningSection from '@/features/site/sections/PositioningSection'
+import OrientationSection from '@/features/site/sections/OrientationSection'
 import PracticeSection from '@/features/site/sections/PracticeSection'
-import PracticalInfoSection from '@/features/site/sections/PracticalInfoSection'
+import PracticalFrameSection from '@/features/site/sections/PracticalFrameSection'
 import TeacherSection from '@/features/site/sections/TeacherSection'
 
-const scrollToSection = (targetId: SiteSectionId) => {
+const scrollToSection = (
+  targetId: SiteSectionId,
+  source: 'entry_practice' | 'entry_frame' | 'practice_frame' | 'frame_contact'
+) => {
+  const logger = getClientLogger().withContext({
+    cat: 'flow',
+    phase: 'intent',
+  })
+
+  logger.info('flow_section_intent', {
+    targetId,
+    source,
+  })
+
   const element = document.getElementById(targetId)
-  if (!element) return
+  if (!element) {
+    getClientLogger()
+      .withContext({
+        cat: 'flow',
+        phase: 'fail',
+      })
+      .warn('flow_section_target_missing', {
+        targetId,
+        source,
+      })
+    return
+  }
 
   const reduce =
     window.matchMedia &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
+  const behavior: ScrollBehavior = reduce ? 'auto' : 'smooth'
+
   element.scrollIntoView({
-    behavior: reduce ? 'auto' : 'smooth',
+    behavior,
     block: 'start',
   })
 
   try {
     history.replaceState(null, '', `#${targetId}`)
-  } catch {}
+  } catch (error) {
+    getClientLogger()
+      .withContext({
+        cat: 'flow',
+        phase: 'fail',
+      })
+      .error(
+        'flow_history_sync_failed',
+        error,
+        {
+          targetId,
+          source,
+        },
+        [
+          {
+            code: 'NAVIGATION_ERROR',
+            name: error instanceof Error ? error.name : 'NonError',
+            message: error instanceof Error ? error.message : String(error),
+            hint: 'history state could not be synchronized after flow transition',
+            detail: {
+              targetId,
+              source,
+            },
+          },
+        ]
+      )
+  }
+
+  getClientLogger()
+    .withContext({
+      cat: 'flow',
+      phase: 'success',
+    })
+    .info('flow_section_completed', {
+      targetId,
+      source,
+      behavior,
+    })
 }
 
 export default function HomePage() {
   return (
-    <PageWrapper variant="landing" introOffset={false} noFooterGap>
+    <PageCanvas variant="landing" introOffset={false} noFooterGap>
       <Content>
         <EntrySection
-          onGoToPractice={() => scrollToSection('praxis')}
-          onGoToFrame={() => scrollToSection('rahmen')}
+          onGoToPractice={() => scrollToSection('praxis', 'entry_practice')}
+          onGoToFrame={() => scrollToSection('rahmen', 'entry_frame')}
         />
 
-        <PositioningSection />
+        <OrientationSection />
 
-        <PracticeSection onGoToFrame={() => scrollToSection('rahmen')} />
+        <PracticeSection
+          onGoToFrame={() => scrollToSection('rahmen', 'practice_frame')}
+        />
 
         <TeacherSection />
 
-        <PracticalInfoSection
-          onGoToContact={() => scrollToSection('kontakt')}
+        <PracticalFrameSection
+          onGoToContact={() => scrollToSection('kontakt', 'frame_contact')}
         />
 
         <ContactSection />
       </Content>
-    </PageWrapper>
+    </PageCanvas>
   )
 }
 

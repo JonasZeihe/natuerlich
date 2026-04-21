@@ -81,9 +81,9 @@ export default function ThemeToggleButton() {
     getClientLogger()
       .withContext({
         cat: 'theme',
-        phase: 'toggle',
+        phase: 'intent',
       })
-      .info('theme_toggle', {
+      .info('theme_toggle_intent', {
         from: mode,
         to: nextMode,
       })

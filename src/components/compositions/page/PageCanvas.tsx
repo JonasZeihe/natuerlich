@@ -1,20 +1,20 @@
-// src/components/patterns/wrapper/PageWrapper.tsx
+// src/components/compositions/page/PageCanvas.tsx
 'use client'
 
 import { ReactNode } from 'react'
 import styled, { css } from 'styled-components'
 
-type PageWrapperVariant = 'default' | 'landing' | 'article'
+type PageCanvasVariant = 'default' | 'landing' | 'article'
 
-type PageWrapperProps = React.ComponentPropsWithoutRef<'div'> & {
-  variant?: PageWrapperVariant
+type PageCanvasProps = React.ComponentPropsWithoutRef<'div'> & {
+  variant?: PageCanvasVariant
   introOffset?: boolean
   noFooterGap?: boolean
   children: ReactNode
 }
 
 const Root = styled.div<{
-  $variant: PageWrapperVariant
+  $variant: PageCanvasVariant
   $introOffset: boolean
   $noFooterGap: boolean
 }>`
@@ -61,13 +61,13 @@ const Root = styled.div<{
   }
 `
 
-export default function PageWrapper({
+export default function PageCanvas({
   variant = 'default',
   introOffset = false,
   noFooterGap = false,
   children,
   ...rest
-}: PageWrapperProps) {
+}: PageCanvasProps) {
   return (
     <Root
       $variant={variant}

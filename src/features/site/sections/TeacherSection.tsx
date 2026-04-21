@@ -7,12 +7,20 @@ import Surface from '@/components/primitives/Surface'
 import Stack from '@/components/primitives/Stack'
 import Typography from '@/design/typography'
 
+const SectionStack = styled(Stack)`
+  gap: ${({ theme }) => theme.spacing(1.35)};
+`
+
+const TopSurface = styled(Surface)`
+  max-width: 58rem;
+`
+
 const MiddleLayout = styled.div`
   display: grid;
   gap: ${({ theme }) => theme.spacing(1.15)};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    grid-template-columns: minmax(0, 1.42fr) minmax(18rem, 0.86fr);
+    grid-template-columns: minmax(0, 1.36fr) minmax(18rem, 0.9fr);
     gap: ${({ theme }) => theme.spacing(1.3)};
     align-items: stretch;
   }
@@ -46,41 +54,49 @@ export default function TeacherSection() {
       rhythm="default"
       tone="deepen"
     >
-      <Stack gap={1.3}>
-        <Stack gap={0.82}>
-          <Typography
-            as="p"
-            variant="caption"
-            gutter={false}
-            accent="axisResonance"
-          >
-            Jonas als Lehrer
-          </Typography>
+      <SectionStack>
+        <TopSurface
+          tone="panel"
+          accent="axisResonance"
+          radius="large"
+          bordered
+          padding="lg"
+        >
+          <Stack gap={0.82}>
+            <Typography
+              as="p"
+              variant="caption"
+              gutter={false}
+              accent="axisResonance"
+            >
+              Jonas als Lehrer
+            </Typography>
 
-          <Typography
-            as="h2"
-            variant="h2"
-            gutter={false}
-            accent="axisResonance"
-            id="lehrer-title"
-          >
-            Meta-Placeholder: Hier später die verdichtete Lehrerhaltung. Es muss
-            klar werden, wofür Jonas steht, wie er arbeitet und was diese Arbeit
-            ausdrücklich nicht ist.
-          </Typography>
+            <Typography
+              as="h2"
+              variant="h2"
+              gutter={false}
+              accent="axisResonance"
+              id="lehrer-title"
+            >
+              Meta-Placeholder: Hier später die verdichtete Lehrerhaltung. Es
+              muss klar werden, wofür Jonas steht, wie er arbeitet und was diese
+              Arbeit ausdrücklich nicht ist.
+            </Typography>
 
-          <Typography as="p" variant="body" gutter={false}>
-            Meta-Placeholder: Diese erste Setzung muss später Person vor
-            Methode, Anspruch ohne Pose, Praxis statt Kulisse und Freude ohne
-            Verflachung lesbar machen.
-          </Typography>
+            <Typography as="p" variant="body" gutter={false}>
+              Meta-Placeholder: Diese erste Setzung muss später Person vor
+              Methode, Anspruch ohne Pose, Praxis statt Kulisse und Freude ohne
+              Verflachung lesbar machen.
+            </Typography>
 
-          <Typography as="p" variant="body" gutter={false} tone="soft">
-            Meta-Placeholder: Diese Passage eröffnet Vertrauen. Sie behauptet
-            nichts, sie trägt. Kein Wellness-Ton. Keine Über-mich-Rhetorik.
-            Keine Guru-Anmutung.
-          </Typography>
-        </Stack>
+            <Typography as="p" variant="body" gutter={false} tone="soft">
+              Meta-Placeholder: Diese Passage eröffnet Vertrauen. Sie behauptet
+              nichts, sie trägt. Kein Wellness-Ton. Keine Über-mich-Rhetorik.
+              Keine Guru-Anmutung.
+            </Typography>
+          </Stack>
+        </TopSurface>
 
         <MiddleLayout>
           <Surface
@@ -224,7 +240,7 @@ export default function TeacherSection() {
             </Typography>
           </Stack>
         </Surface>
-      </Stack>
+      </SectionStack>
     </Section>
   )
 }

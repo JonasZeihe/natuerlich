@@ -7,6 +7,10 @@ import Surface from '@/components/primitives/Surface'
 import Stack from '@/components/primitives/Stack'
 import Typography from '@/design/typography'
 
+const SectionStack = styled(Stack)`
+  gap: ${({ theme }) => theme.spacing(1.2)};
+`
+
 const DetailGrid = styled.div`
   display: grid;
   gap: ${({ theme }) => theme.spacing(1.05)};
@@ -16,6 +20,10 @@ const DetailGrid = styled.div`
     gap: ${({ theme }) => theme.spacing(1.15)};
     align-items: stretch;
   }
+`
+
+const IntroSurface = styled(Surface)`
+  max-width: 58rem;
 `
 
 export default function ContactSection() {
@@ -29,8 +37,8 @@ export default function ContactSection() {
       rhythm="compact"
       tone="arrival"
     >
-      <Stack gap={1.15}>
-        <Surface
+      <SectionStack>
+        <IntroSurface
           tone="panel"
           accent="axisEnergy"
           radius="large"
@@ -70,7 +78,7 @@ export default function ContactSection() {
               Anschlussfähigkeit.
             </Typography>
           </Stack>
-        </Surface>
+        </IntroSurface>
 
         <DetailGrid>
           <Surface
@@ -156,7 +164,7 @@ export default function ContactSection() {
         </DetailGrid>
 
         <Surface
-          tone="soft"
+          tone="panel"
           accent="axisResonance"
           radius="large"
           bordered
@@ -184,7 +192,7 @@ export default function ContactSection() {
             </Typography>
           </Stack>
         </Surface>
-      </Stack>
+      </SectionStack>
     </Section>
   )
 }

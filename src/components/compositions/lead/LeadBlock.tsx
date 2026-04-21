@@ -1,4 +1,4 @@
-// src/components/patterns/hero/HeroRecipe.tsx
+// src/components/compositions/lead/LeadBlock.tsx
 'use client'
 
 import { ReactNode } from 'react'
@@ -10,9 +10,9 @@ import Typography from '@/design/typography'
 import type { AxisKey, SectionToneKey, SurfaceToneKey } from '@/design/theme'
 
 type ContainerSize = 'default' | 'wide' | 'narrow'
-type HeroVariant = 'default' | 'split'
+type LeadBlockVariant = 'default' | 'split'
 
-type HeroProps = {
+type LeadBlockProps = {
   title: ReactNode
   kicker?: ReactNode
   lead?: ReactNode
@@ -22,7 +22,7 @@ type HeroProps = {
   accent?: AxisKey | 'neutral'
   isPageHeader?: boolean
   titleId?: string
-  variant?: HeroVariant
+  variant?: LeadBlockVariant
   mediaAspect?: string
   tone?: SectionToneKey
   mediaTone?: SurfaceToneKey
@@ -33,32 +33,35 @@ const isPrimitive = (node: ReactNode): node is string | number =>
 
 const Split = styled.div`
   display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
-  gap: ${({ theme }) => theme.spacing(1.45)};
+  grid-template-columns: minmax(0, 1.06fr) minmax(0, 0.94fr);
+  gap: ${({ theme }) => theme.spacing(1.5)};
   align-items: stretch;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     grid-template-columns: 1fr;
-    gap: ${({ theme }) => theme.spacing(1)};
+    gap: ${({ theme }) => theme.spacing(1.05)};
   }
+`
+
+const HeadWrap = styled(Surface)`
+  height: 100%;
 `
 
 const HeadStack = styled(Stack)`
   min-width: 0;
   justify-content: center;
-  height: 100%;
+  min-height: 100%;
 `
 
-const HeadWrap = styled.div`
-  min-width: 0;
-  align-self: stretch;
+const MediaShell = styled(Surface)`
+  height: 100%;
 `
 
 const MediaFrame = styled.div<{ $aspect?: string }>`
   width: 100%;
-  border-radius: inherit;
   min-height: 100%;
   height: 100%;
+  border-radius: inherit;
 
   .inner {
     position: relative;
@@ -102,7 +105,7 @@ const resolveMediaTone = (tone: SurfaceToneKey): SurfaceToneKey => {
   return tone
 }
 
-export default function HeroRecipe({
+export default function LeadBlock({
   title,
   kicker,
   lead,
@@ -116,14 +119,14 @@ export default function HeroRecipe({
   mediaAspect,
   tone = 'default',
   mediaTone = 'soft',
-}: HeroProps) {
+}: LeadBlockProps) {
   const titleVariant: 'h1' | 'h2' = isPageHeader ? 'h1' : 'h2'
   const titleAs: 'h1' | 'h2' = isPageHeader ? 'h1' : 'h2'
   const resolvedMediaTone = resolveMediaTone(mediaTone)
 
   const head = (
-    <HeadWrap>
-      <HeadStack gap={0.95}>
+    <HeadWrap tone="soft" accent={accent} radius="large" bordered padding="lg">
+      <HeadStack gap={1}>
         {kicker ? (
           isPrimitive(kicker) ? (
             <Typography
@@ -141,7 +144,7 @@ export default function HeroRecipe({
           )
         ) : null}
 
-        <Stack gap={0.58}>
+        <Stack gap={0.62}>
           {isPrimitive(title) ? (
             <Typography
               as={titleAs}
@@ -175,7 +178,7 @@ export default function HeroRecipe({
 
   const mediaNode =
     media != null ? (
-      <Surface
+      <MediaShell
         tone={resolvedMediaTone}
         accent={accent}
         radius="large"
@@ -185,7 +188,7 @@ export default function HeroRecipe({
         <MediaFrame $aspect={mediaAspect}>
           <div className="inner">{media}</div>
         </MediaFrame>
-      </Surface>
+      </MediaShell>
     ) : null
 
   return (

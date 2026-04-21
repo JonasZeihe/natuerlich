@@ -7,6 +7,7 @@ import React, {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react'
 import styled from 'styled-components'
@@ -14,6 +15,7 @@ import { ThemeProvider, type DefaultTheme } from 'styled-components'
 import GlobalStyles from '@/design/global'
 import { darkTheme, lightTheme } from '@/design/theme'
 import type { Mode } from '@/design/tokens'
+import { getClientLogger, initClientLogging } from '@/logging'
 
 const STORAGE_KEY = 'natuerlichkeit:theme'
 
@@ -137,14 +139,36 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   const [hydrated, setHydrated] = useState(false)
   const [mode, setModeState] = useState<Mode>('light')
   const [userLocked, setUserLocked] = useState(false)
+  const bootLoggedRef = useRef(false)
 
   useEffect(() => {
+    const { logger } = initClientLogging({
+      app: 'natuerlich',
+    })
+
     const stored = readStoredMode()
     const nextMode = stored ?? getSystemMode()
+    const source = stored ? 'storage' : 'system'
+
     setModeState(nextMode)
     setUserLocked(stored !== null)
     applyModeToDom(nextMode)
     setHydrated(true)
+
+    if (!bootLoggedRef.current) {
+      bootLoggedRef.current = true
+
+      logger
+        .withContext({
+          cat: 'theme',
+          phase: 'init',
+        })
+        .info('theme_bootstrap_ready', {
+          mode: nextMode,
+          source,
+          userLocked: stored !== null,
+        })
+    }
   }, [])
 
   useEffect(() => {
@@ -155,13 +179,34 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     if (userLocked) {
       safeSetItem(STORAGE_KEY, mode)
     }
+
+    getClientLogger()
+      .withContext({
+        cat: 'theme',
+        phase: 'sync',
+      })
+      .info('theme_dom_synced', {
+        mode,
+        userLocked,
+      })
   }, [hydrated, mode, userLocked])
 
   useEffect(() => {
     if (!hydrated || userLocked || !window.matchMedia) return
 
     const media = window.matchMedia('(prefers-color-scheme: dark)')
-    const onChange = () => setModeState(media.matches ? 'dark' : 'light')
+    const logger = getClientLogger().withContext({
+      cat: 'theme',
+      phase: 'observe',
+    })
+
+    const onChange = () => {
+      const nextMode = media.matches ? 'dark' : 'light'
+      logger.info('theme_system_mode_changed', {
+        mode: nextMode,
+      })
+      setModeState(nextMode)
+    }
 
     if (media.addEventListener) {
       media.addEventListener('change', onChange)
@@ -195,6 +240,16 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     safeSetItem(STORAGE_KEY, nextMode)
     setModeState(nextMode)
     applyModeToDom(nextMode)
+
+    getClientLogger()
+      .withContext({
+        cat: 'theme',
+        phase: 'state',
+      })
+      .info('theme_mode_set', {
+        mode: nextMode,
+        source: 'user',
+      })
   }, [])
 
   const toggleMode = useCallback(() => {
@@ -207,6 +262,16 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     const nextMode = getSystemMode()
     setModeState(nextMode)
     applyModeToDom(nextMode)
+
+    getClientLogger()
+      .withContext({
+        cat: 'theme',
+        phase: 'sync',
+      })
+      .info('theme_user_lock_cleared', {
+        mode: nextMode,
+        source: 'system',
+      })
   }, [])
 
   const api = useMemo<ThemeApi>(

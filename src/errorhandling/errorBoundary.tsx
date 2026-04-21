@@ -2,7 +2,8 @@
 'use client'
 
 import React from 'react'
-import { getClientLogger, type Logger, type LogContext } from '@/logging'
+import styled from 'styled-components'
+import { getClientLogger, type LogContext, type Logger } from '@/logging'
 import { classifyErrorToCauses } from './errorTypes'
 
 type Props = {
@@ -16,6 +17,16 @@ type State = {
   hasError: boolean
 }
 
+const BoundaryFallback = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 12rem;
+  padding: ${({ theme }) => theme.spacing(2)};
+  color: ${({ theme }) => theme.roles.text.primary};
+  background: ${({ theme }) => theme.roles.surface.canvas};
+`
+
 export class AppErrorBoundary extends React.Component<Props, State> {
   public state: State = { hasError: false }
 
@@ -25,12 +36,14 @@ export class AppErrorBoundary extends React.Component<Props, State> {
 
   public componentDidCatch(error: unknown, info: React.ErrorInfo): void {
     const baseLogger = this.props.logger ?? getClientLogger()
-    const logger = this.props.context
-      ? baseLogger.withContext(this.props.context)
-      : baseLogger
+    const logger = baseLogger.withContext({
+      cat: 'boundary',
+      phase: 'fail',
+      ...(this.props.context ?? {}),
+    })
 
     logger.error(
-      'react_error_boundary',
+      'react_boundary_failure',
       error,
       {
         componentStack: info.componentStack ?? '',
@@ -43,11 +56,13 @@ export class AppErrorBoundary extends React.Component<Props, State> {
 
   public render(): React.ReactNode {
     if (this.state.hasError) {
-      return this.props.fallback ?? <div>Etwas ist schiefgelaufen.</div>
+      return (
+        this.props.fallback ?? (
+          <BoundaryFallback>Etwas ist schiefgelaufen.</BoundaryFallback>
+        )
+      )
     }
 
     return this.props.children
   }
 }
-
-export { AppErrorBoundary as HelvetraErrorBoundary }

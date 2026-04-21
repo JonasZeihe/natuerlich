@@ -1,8 +1,8 @@
 // src/components/primitives/Grid.tsx
 'use client'
 
-import { ReactNode } from 'react'
-import styled, { css, DefaultTheme } from 'styled-components'
+import { type ComponentPropsWithoutRef, type ReactNode } from 'react'
+import styled, { css, type DefaultTheme } from 'styled-components'
 
 type Columns = number | 'auto'
 type BreakpointKey = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
@@ -14,7 +14,7 @@ type Props = {
   dense?: boolean
   switchAt?: BreakpointKey | string
   children?: ReactNode
-} & Omit<React.ComponentPropsWithoutRef<'div'>, 'children'>
+} & Omit<ComponentPropsWithoutRef<'div'>, 'children'>
 
 const toGap = (theme: DefaultTheme, gap?: number | string) => {
   if (typeof gap === 'number') return theme.spacing(gap)

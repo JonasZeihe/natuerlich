@@ -1,4 +1,4 @@
-// src/features/site/sections/PracticalInfoSection.tsx
+// src/features/site/sections/PracticalFrameSection.tsx
 'use client'
 
 import styled from 'styled-components'
@@ -8,6 +8,10 @@ import Section from '@/components/primitives/Section'
 import Surface from '@/components/primitives/Surface'
 import Stack from '@/components/primitives/Stack'
 import Typography from '@/design/typography'
+
+const SectionStack = styled(Stack)`
+  gap: ${({ theme }) => theme.spacing(1.35)};
+`
 
 const GroupGrid = styled.div`
   display: grid;
@@ -33,7 +37,7 @@ type Props = {
   onGoToContact: () => void
 }
 
-export default function PracticalInfoSection({ onGoToContact }: Props) {
+export default function PracticalFrameSection({ onGoToContact }: Props) {
   return (
     <Section
       id="rahmen"
@@ -44,7 +48,7 @@ export default function PracticalInfoSection({ onGoToContact }: Props) {
       rhythm="default"
       tone="relief"
     >
-      <Stack gap={1.3}>
+      <SectionStack>
         <Surface
           tone="panel"
           accent="axisClarity"
@@ -169,9 +173,9 @@ export default function PracticalInfoSection({ onGoToContact }: Props) {
               </Typography>
 
               <Typography as="p" variant="body" gutter={false} tone="soft">
-                Meta-Placeholder: Orientierung über Verbindlichkeit, Rhythmus,
-                typische Dauer und grobe Preislogik. Keine Produktmatrix. Keine
-                Methodenliste ohne Zusammenhang.
+                Orientierung über Verbindlichkeit, Rhythmus, typische Dauer und
+                grobe Preislogik. Keine Produktmatrix. Keine Methodenliste ohne
+                Zusammenhang.
               </Typography>
             </Stack>
           </Card>
@@ -211,9 +215,9 @@ export default function PracticalInfoSection({ onGoToContact }: Props) {
               </Typography>
 
               <Typography as="p" variant="body" gutter={false} tone="soft">
-                Meta-Placeholder: Grobe Preisarchitektur, typische Dauer und
-                Funktion der Formate. Nicht luxuriös inszenieren. Nicht
-                verkaufen. Nur sauber einordnen.
+                Grobe Preisarchitektur, typische Dauer und Funktion der Formate.
+                Nicht luxuriös inszenieren. Nicht verkaufen. Nur sauber
+                einordnen.
               </Typography>
             </Stack>
           </Card>
@@ -253,9 +257,8 @@ export default function PracticalInfoSection({ onGoToContact }: Props) {
               </Typography>
 
               <Typography as="p" variant="body" gutter={false} tone="soft">
-                Meta-Placeholder: Typische Einsatzformen, kompakte
-                Verständlichkeit und eigene Preislogik. Kein BGM-Sprech. Keine
-                Business-Fassade.
+                Typische Einsatzformen, kompakte Verständlichkeit und eigene
+                Preislogik. Kein BGM-Sprech. Keine Business-Fassade.
               </Typography>
             </Stack>
           </Card>
@@ -473,7 +476,7 @@ export default function PracticalInfoSection({ onGoToContact }: Props) {
             </Button>
           </Stack>
         </Surface>
-      </Stack>
+      </SectionStack>
     </Section>
   )
 }

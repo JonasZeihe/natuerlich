@@ -55,16 +55,28 @@ const errorMessage = (error: unknown): string => {
   return String(error)
 }
 
+const hasMessagePart = (value: string, parts: string[]) =>
+  parts.some((part) => value.includes(part))
+
 export const classifyErrorToCauses = (
   error: unknown,
   detail?: unknown
 ): LogCause[] => {
   const name = errorName(error)
   const message = errorMessage(error)
-  const normalized = message.toLowerCase()
+  const normalizedName = name.toLowerCase()
+  const normalizedMessage = message.toLowerCase()
   const safeDetail = sanitizeFields(detail)
+  const componentStack =
+    safeDetail && typeof safeDetail.componentStack === 'string'
+      ? safeDetail.componentStack
+      : ''
 
-  if (name === 'SecurityError' || normalized.includes('security')) {
+  if (
+    name === 'SecurityError' ||
+    normalizedName.includes('security') ||
+    normalizedMessage.includes('security')
+  ) {
     return [
       {
         code: 'SECURITY_ERROR',
@@ -76,13 +88,64 @@ export const classifyErrorToCauses = (
     ]
   }
 
+  if (
+    hasMessagePart(normalizedMessage, [
+      'missing theme key',
+      'must be used within',
+    ]) ||
+    hasMessagePart(normalizedName, ['invariant', 'context'])
+  ) {
+    return [
+      {
+        code: 'CONTEXT_ERROR',
+        name,
+        message,
+        hint: 'inspect provider composition and missing context assumptions',
+        detail: safeDetail,
+      },
+    ]
+  }
+
+  if (
+    hasMessagePart(normalizedMessage, [
+      'target',
+      'scroll',
+      'replaceState'.toLowerCase(),
+      'replace state',
+      'history',
+      'navigation',
+    ])
+  ) {
+    return [
+      {
+        code: 'NAVIGATION_ERROR',
+        name,
+        message,
+        hint: 'inspect target lookup, scroll fallback and history sync',
+        detail: safeDetail,
+      },
+    ]
+  }
+
+  if (componentStack) {
+    return [
+      {
+        code: 'BOUNDARY_ERROR',
+        name,
+        message,
+        hint: 'inspect component stack and failing render branch',
+        detail: safeDetail,
+      },
+    ]
+  }
+
   if (name === 'TypeError') {
     return [
       {
-        code: 'TYPE_ERROR',
+        code: 'INTEGRITY_ERROR',
         name,
         message,
-        hint: 'inspect runtime state',
+        hint: 'inspect missing values, invalid access or broken assumptions',
         detail: safeDetail,
       },
     ]
@@ -91,10 +154,31 @@ export const classifyErrorToCauses = (
   if (name === 'RangeError') {
     return [
       {
-        code: 'RANGE_ERROR',
+        code: 'INTEGRITY_ERROR',
         name,
         message,
-        hint: 'inspect value bounds',
+        hint: 'inspect bounds and derived values',
+        detail: safeDetail,
+      },
+    ]
+  }
+
+  if (
+    hasMessagePart(normalizedMessage, [
+      'hydrate',
+      'hydration',
+      'render',
+      'hook',
+      'hooks',
+    ]) ||
+    hasMessagePart(normalizedName, ['render'])
+  ) {
+    return [
+      {
+        code: 'RENDER_ERROR',
+        name,
+        message,
+        hint: 'inspect render branch, hydration state and hook usage',
         detail: safeDetail,
       },
     ]
@@ -102,10 +186,10 @@ export const classifyErrorToCauses = (
 
   return [
     {
-      code: 'UNKNOWN_ERROR',
+      code: 'RUNTIME_ERROR',
       name,
       message,
-      hint: 'inspect stack and component state',
+      hint: 'inspect stack and local runtime state',
       detail: safeDetail,
     },
   ]

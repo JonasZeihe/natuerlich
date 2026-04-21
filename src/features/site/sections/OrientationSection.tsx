@@ -1,4 +1,4 @@
-// src/features/site/sections/PositioningSection.tsx
+// src/features/site/sections/OrientationSection.tsx
 'use client'
 
 import styled from 'styled-components'
@@ -6,6 +6,10 @@ import Section from '@/components/primitives/Section'
 import Surface from '@/components/primitives/Surface'
 import Stack from '@/components/primitives/Stack'
 import Typography from '@/design/typography'
+
+const SectionStack = styled(Stack)`
+  gap: ${({ theme }) => theme.spacing(1.35)};
+`
 
 const ContrastGrid = styled.div`
   display: grid;
@@ -18,7 +22,11 @@ const ContrastGrid = styled.div`
   }
 `
 
-export default function PositioningSection() {
+const IntroSurface = styled(Surface)`
+  max-width: 56rem;
+`
+
+export default function OrientationSection() {
   return (
     <Section
       id="einordnung"
@@ -29,36 +37,45 @@ export default function PositioningSection() {
       rhythm="default"
       tone="clarify"
     >
-      <Stack gap={1.3}>
-        <Stack gap={0.82}>
-          <Typography
-            as="p"
-            variant="caption"
-            gutter={false}
-            accent="axisClarity"
-          >
-            Einordnung
-          </Typography>
+      <SectionStack>
+        <IntroSurface
+          tone="panel"
+          accent="axisClarity"
+          radius="large"
+          bordered
+          padding="lg"
+        >
+          <Stack gap={0.9}>
+            <Typography
+              as="p"
+              variant="caption"
+              gutter={false}
+              accent="axisClarity"
+            >
+              Einordnung
+            </Typography>
 
-          <Typography
-            as="h2"
-            variant="h2"
-            gutter={false}
-            accent="axisClarity"
-            id="einordnung-title"
-          >
-            Meta-Placeholder: Hier später die klare Setzung, was diese Arbeit im
-            Kern ist und warum sie sich anders anfühlt als eine generische
-            Yoga-, Achtsamkeits- oder Gesundheitspräsenz.
-          </Typography>
+            <Typography
+              as="h2"
+              variant="h2"
+              gutter={false}
+              accent="axisClarity"
+              id="einordnung-title"
+            >
+              Meta-Placeholder: Hier später die klare Setzung, was diese Arbeit
+              im Kern ist und warum sie sich anders anfühlt als eine generische
+              Yoga-, Achtsamkeits- oder Gesundheitspräsenz.
+            </Typography>
 
-          <Typography as="p" variant="body" gutter={false}>
-            Meta-Placeholder: Diese Stelle muss später das Feld entnebeln. Nicht
-            durch Polemik, sondern durch präzise Unterscheidung. Es soll lesbar
-            werden, dass es hier um ernsthafte, freudige, alltagstaugliche
-            Praxis geht und nicht um Kulisse, Konsum oder Pose.
-          </Typography>
-        </Stack>
+            <Typography as="p" variant="body" gutter={false}>
+              Meta-Placeholder: Diese Stelle muss später das Feld entnebeln.
+              Nicht durch Polemik, sondern durch präzise Unterscheidung. Es soll
+              lesbar werden, dass es hier um ernsthafte, freudige,
+              alltagstaugliche Praxis geht und nicht um Kulisse, Konsum oder
+              Pose.
+            </Typography>
+          </Stack>
+        </IntroSurface>
 
         <ContrastGrid>
           <Surface
@@ -104,7 +121,7 @@ export default function PositioningSection() {
             accent="axisClarity"
             radius="large"
             bordered
-            padding="md"
+            padding="lg"
           >
             <Stack gap={0.82}>
               <Typography
@@ -147,7 +164,7 @@ export default function PositioningSection() {
           bordered
           padding="md"
         >
-          <Stack gap={0.75}>
+          <Stack gap={0.72}>
             <Typography
               as="p"
               variant="caption"
@@ -165,7 +182,7 @@ export default function PositioningSection() {
             </Typography>
           </Stack>
         </Surface>
-      </Stack>
+      </SectionStack>
     </Section>
   )
 }

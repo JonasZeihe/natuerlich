@@ -12,7 +12,11 @@ type Props = {
   onGoToFrame: () => void
 }
 
-const SplitGrid = styled.div`
+const SectionStack = styled(Stack)`
+  gap: ${({ theme }) => theme.spacing(1.35)};
+`
+
+const IntroGrid = styled.div`
   display: grid;
   gap: ${({ theme }) => theme.spacing(1.15)};
 
@@ -29,9 +33,13 @@ const PairGrid = styled.div`
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: ${({ theme }) => theme.spacing(1.3)};
+    gap: ${({ theme }) => theme.spacing(1.25)};
     align-items: stretch;
   }
+`
+
+const HeaderSurface = styled(Surface)`
+  max-width: 58rem;
 `
 
 export default function PracticeSection({ onGoToFrame }: Props) {
@@ -45,31 +53,39 @@ export default function PracticeSection({ onGoToFrame }: Props) {
       rhythm="default"
       tone="expand"
     >
-      <Stack gap={1.3}>
-        <Stack gap={0.7}>
-          <Typography
-            as="p"
-            variant="caption"
-            gutter={false}
-            accent="axisEnergy"
-          >
-            Praxis
-          </Typography>
+      <SectionStack>
+        <HeaderSurface
+          tone="soft"
+          accent="axisEnergy"
+          radius="large"
+          bordered
+          padding="lg"
+        >
+          <Stack gap={0.74}>
+            <Typography
+              as="p"
+              variant="caption"
+              gutter={false}
+              accent="axisEnergy"
+            >
+              Praxis
+            </Typography>
 
-          <Typography
-            as="h2"
-            variant="h2"
-            gutter={false}
-            accent="axisEnergy"
-            id="praxis-title"
-          >
-            Frage dieser Stelle: Was wird hier konkret getragen, wie hängt es
-            zusammen und in welchen Formen ist ein Einstieg grundsätzlich
-            möglich?
-          </Typography>
-        </Stack>
+            <Typography
+              as="h2"
+              variant="h2"
+              gutter={false}
+              accent="axisEnergy"
+              id="praxis-title"
+            >
+              Frage dieser Stelle: Was wird hier konkret getragen, wie hängt es
+              zusammen und in welchen Formen ist ein Einstieg grundsätzlich
+              möglich?
+            </Typography>
+          </Stack>
+        </HeaderSurface>
 
-        <SplitGrid>
+        <IntroGrid>
           <Surface
             tone="accent"
             accent="axisEnergy"
@@ -152,7 +168,7 @@ export default function PracticeSection({ onGoToFrame }: Props) {
               </Typography>
             </Stack>
           </Surface>
-        </SplitGrid>
+        </IntroGrid>
 
         <PairGrid>
           <Surface
@@ -242,7 +258,7 @@ export default function PracticeSection({ onGoToFrame }: Props) {
             </Stack>
           </Surface>
         </PairGrid>
-      </Stack>
+      </SectionStack>
     </Section>
   )
 }

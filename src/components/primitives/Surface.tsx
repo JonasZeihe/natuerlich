@@ -73,7 +73,7 @@ const Base = styled.div<StyledProps>`
   }
 `
 
-export default forwardRef<HTMLDivElement, Props>(function Surface(
+const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
   {
     tone = 'panel',
     accent = 'neutral',
@@ -99,3 +99,5 @@ export default forwardRef<HTMLDivElement, Props>(function Surface(
     </Base>
   )
 })
+
+export default Surface

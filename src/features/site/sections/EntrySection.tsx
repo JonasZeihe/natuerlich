@@ -3,8 +3,9 @@
 
 import styled from 'styled-components'
 import Button from '@/components/actions/Button'
-import HeroRecipe from '@/components/patterns/hero/HeroRecipe'
+import LeadBlock from '@/components/compositions/lead/LeadBlock'
 import Stack from '@/components/primitives/Stack'
+import Surface from '@/components/primitives/Surface'
 import Typography from '@/design/typography'
 
 type Props = {
@@ -12,16 +13,20 @@ type Props = {
   onGoToFrame: () => void
 }
 
-const MediaContent = styled(Stack)`
+const MediaShell = styled(Stack)`
   height: 100%;
-  justify-content: flex-end;
+  justify-content: space-between;
   min-height: 0;
   padding: clamp(1rem, 2vw, 1.35rem);
 `
 
+const MediaBand = styled(Surface)`
+  margin-top: auto;
+`
+
 export default function EntrySection({ onGoToPractice, onGoToFrame }: Props) {
   return (
-    <HeroRecipe
+    <LeadBlock
       container="wide"
       isPageHeader
       variant="split"
@@ -44,29 +49,52 @@ export default function EntrySection({ onGoToPractice, onGoToFrame }: Props) {
       }
       mediaAspect="4 / 5"
       media={
-        <MediaContent
-          gap={0.72}
-          role="img"
-          aria-label="Meta-Placeholder für das Einstiegsbild"
-        >
-          <Typography
-            as="p"
-            variant="caption"
-            gutter={false}
+        <MediaShell gap={1}>
+          <Stack gap={0.78}>
+            <Typography
+              as="p"
+              variant="caption"
+              gutter={false}
+              accent="axisClarity"
+            >
+              Bild-Placeholder
+            </Typography>
+
+            <Typography
+              as="p"
+              variant="body"
+              gutter={false}
+              accent="axisClarity"
+            >
+              Meta-Placeholder: Präsenzbild von Jonas oder eine Bildsituation,
+              die Haltung, Körperlichkeit und Wirklichkeit trägt.
+            </Typography>
+          </Stack>
+
+          <MediaBand
+            tone="soft"
             accent="axisClarity"
+            radius="large"
+            bordered
+            padding="md"
           >
-            Bild-Placeholder
-          </Typography>
+            <Stack gap={0.48}>
+              <Typography
+                as="p"
+                variant="body"
+                gutter={false}
+                accent="axisClarity"
+              >
+                Meta-Placeholder: Diese Medienfläche soll später nicht Kulisse
+                sein, sondern eine frühe Form von Lehrerpräsenz.
+              </Typography>
 
-          <Typography as="p" variant="body" gutter={false} accent="axisClarity">
-            Meta-Placeholder: Präsenzbild von Jonas oder eine Bildsituation, die
-            Haltung, Körperlichkeit und Wirklichkeit trägt.
-          </Typography>
-
-          <Typography as="p" variant="body" gutter={false} tone="soft">
-            Keine Naturtapete. Keine Symbolik. Keine Wellness-Anmutung.
-          </Typography>
-        </MediaContent>
+              <Typography as="p" variant="body" gutter={false} tone="soft">
+                Keine Naturtapete. Keine Symbolik. Keine Wellness-Anmutung.
+              </Typography>
+            </Stack>
+          </MediaBand>
+        </MediaShell>
       }
     />
   )

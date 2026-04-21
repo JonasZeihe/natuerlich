@@ -7,8 +7,8 @@ import {
   type ReactNode,
 } from 'react'
 import styled, { css } from 'styled-components'
-import Surface from './Surface'
 import type { AxisKey, SurfaceToneKey } from '@/design/theme'
+import Surface from './Surface'
 
 type Emphasis = 'none' | 'soft'
 type Padding = 'sm' | 'md' | 'lg'

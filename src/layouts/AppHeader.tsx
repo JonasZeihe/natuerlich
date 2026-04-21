@@ -9,6 +9,7 @@ import Container from '@/components/primitives/Container'
 import Inline from '@/components/primitives/Inline'
 import SmoothScroller from '@/components/utilities/SmoothScroller'
 import Typography from '@/design/typography'
+import { getClientLogger } from '@/logging'
 import {
   SITE_SECTIONS,
   type SiteSection,
@@ -31,12 +32,23 @@ export default function AppHeader() {
   const [compact, setCompact] = useState(false)
   const shellRef = useRef<HTMLElement | null>(null)
   const ids = useMemo(() => OBSERVED_SECTION_IDS, [])
+  const compactLoggedRef = useRef<boolean | null>(null)
+  const activeLoggedRef = useRef<SiteSectionId | null>(null)
 
   useEffect(() => {
     document.documentElement.style.setProperty(
       '--site-header-height',
       `${HEADER_HEIGHT}px`
     )
+
+    getClientLogger()
+      .withContext({
+        cat: 'ui',
+        phase: 'init',
+      })
+      .info('header_ready', {
+        headerHeight: HEADER_HEIGHT,
+      })
 
     return () => {
       document.documentElement.style.removeProperty('--site-header-height')
@@ -57,6 +69,21 @@ export default function AppHeader() {
   }, [])
 
   useEffect(() => {
+    if (compactLoggedRef.current === compact) return
+
+    compactLoggedRef.current = compact
+
+    getClientLogger()
+      .withContext({
+        cat: 'ui',
+        phase: 'state',
+      })
+      .info('header_compact_state_changed', {
+        compact,
+      })
+  }, [compact])
+
+  useEffect(() => {
     const root = document.documentElement
 
     if (!menuOpen) return
@@ -66,6 +93,15 @@ export default function AppHeader() {
 
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
+        getClientLogger()
+          .withContext({
+            cat: 'navigation',
+            phase: 'state',
+          })
+          .info('header_mobile_menu_closed', {
+            source: 'escape',
+          })
+
         setMenuOpen(false)
       }
     }
@@ -87,6 +123,15 @@ export default function AppHeader() {
       if (!(target instanceof Node)) return
       if (shellRef.current?.contains(target)) return
 
+      getClientLogger()
+        .withContext({
+          cat: 'navigation',
+          phase: 'state',
+        })
+        .info('header_mobile_menu_closed', {
+          source: 'outside_pointer',
+        })
+
       setMenuOpen(false)
     }
 
@@ -102,7 +147,17 @@ export default function AppHeader() {
       .map((id) => document.getElementById(id))
       .filter(Boolean) as HTMLElement[]
 
-    if (!elements.length) return
+    if (!elements.length) {
+      getClientLogger()
+        .withContext({
+          cat: 'navigation',
+          phase: 'fail',
+        })
+        .warn('header_observed_sections_missing', {
+          observedIds: ids,
+        })
+      return
+    }
 
     const offset = HEADER_HEIGHT + 20
 
@@ -142,10 +197,53 @@ export default function AppHeader() {
 
     elements.forEach((element) => observer.observe(element))
 
+    getClientLogger()
+      .withContext({
+        cat: 'navigation',
+        phase: 'observe',
+      })
+      .info('header_section_observer_ready', {
+        observedIds: elements.map((element) => element.id),
+        offset,
+      })
+
     return () => {
       observer.disconnect()
     }
   }, [ids])
+
+  useEffect(() => {
+    if (activeLoggedRef.current === activeId) return
+
+    activeLoggedRef.current = activeId
+
+    getClientLogger()
+      .withContext({
+        cat: 'navigation',
+        phase: 'observe',
+      })
+      .info('header_active_section_changed', {
+        activeId,
+      })
+  }, [activeId])
+
+  const handleMenuToggle = () => {
+    setMenuOpen((current) => {
+      const next = !current
+
+      getClientLogger()
+        .withContext({
+          cat: 'navigation',
+          phase: 'intent',
+        })
+        .info('header_mobile_menu_toggled', {
+          from: current ? 'open' : 'closed',
+          to: next ? 'open' : 'closed',
+        })
+
+      return next
+    })
+  }
 
   return (
     <HeaderShell
@@ -203,7 +301,7 @@ export default function AppHeader() {
               <ThemeToggleButton />
               <MenuButton
                 type="button"
-                onClick={() => setMenuOpen((current) => !current)}
+                onClick={handleMenuToggle}
                 aria-label={
                   menuOpen ? 'Navigation schließen' : 'Navigation öffnen'
                 }
@@ -229,7 +327,17 @@ export default function AppHeader() {
                       aria-current={
                         activeId === section.id ? 'true' : undefined
                       }
-                      onClick={() => setMenuOpen(false)}
+                      onClick={() => {
+                        getClientLogger()
+                          .withContext({
+                            cat: 'navigation',
+                            phase: 'intent',
+                          })
+                          .info('header_mobile_navigation_intent', {
+                            targetId: section.id,
+                          })
+                        setMenuOpen(false)
+                      }}
                     >
                       {section.label}
                     </MobileLink>

@@ -3,8 +3,8 @@
 
 import type { ComponentPropsWithoutRef, ReactNode } from 'react'
 import styled, { css } from 'styled-components'
-import Container from './Container'
 import type { SectionToneKey } from '@/design/theme'
+import Container from './Container'
 
 type ContainerSize = 'narrow' | 'default' | 'wide' | 'full'
 type RhythmKey = 'compact' | 'default' | 'spacious'
@@ -42,6 +42,7 @@ const Outer = styled.section<{
 }>`
   position: relative;
   width: 100%;
+
   ${({ theme, $rhythm, $tone, $bleed }) => {
     const rhythm = theme.layout.section[$rhythm]
     const tone = theme.getSectionTone($tone)
@@ -85,6 +86,7 @@ const Outer = styled.section<{
 const Inner = styled.div<{ $padY: boolean; $rhythm: RhythmKey }>`
   position: relative;
   width: 100%;
+
   ${({ theme, $padY, $rhythm }) =>
     $padY
       ? css`
@@ -120,13 +122,9 @@ export default function Section({
   const accessibleLabel = ariaLabel ?? rest['aria-label']
   const sectionAriaProps =
     accessibleLabel && !labelledBy
-      ? {
-          'aria-label': accessibleLabel,
-        }
+      ? { 'aria-label': accessibleLabel }
       : labelledBy
-        ? {
-            'aria-labelledby': labelledBy,
-          }
+        ? { 'aria-labelledby': labelledBy }
         : {}
 
   return (

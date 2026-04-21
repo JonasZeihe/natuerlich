@@ -3,6 +3,7 @@
 
 import React from 'react'
 import styled from 'styled-components'
+import { AppErrorBoundary } from '@/errorhandling/errorBoundary'
 import AppFooter from '@/layouts/AppFooter'
 import AppHeader from '@/layouts/AppHeader'
 
@@ -13,9 +14,19 @@ export default function Shell({ children }: Props) {
     <Outer>
       <AppHeader />
       <MainShell>
-        <Main id="main" role="main" tabIndex={-1}>
-          {children}
-        </Main>
+        <AppErrorBoundary
+          context={{
+            cat: 'boundary',
+            phase: 'fail',
+            fields: {
+              area: 'shell',
+            },
+          }}
+        >
+          <Main id="main" role="main" tabIndex={-1}>
+            {children}
+          </Main>
+        </AppErrorBoundary>
       </MainShell>
       <AppFooter />
     </Outer>
