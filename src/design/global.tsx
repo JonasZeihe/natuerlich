@@ -19,8 +19,8 @@ const GlobalStyles = createGlobalStyle`
     -webkit-text-size-adjust: 100%;
     color-scheme: ${({ theme }) => theme.mode};
     text-rendering: optimizeLegibility;
-    background: ${({ theme }) => theme.roles.surface.canvas};
     scroll-behavior: smooth;
+    background: ${({ theme }) => theme.roles.surface.canvas};
   }
 
   body {
@@ -28,33 +28,7 @@ const GlobalStyles = createGlobalStyle`
     font-size: ${({ theme }) => theme.typography.fontSize.body};
     line-height: ${({ theme }) => theme.typography.lineHeight.normal};
     color: ${({ theme }) => theme.roles.text.primary};
-    background:
-      radial-gradient(
-        120% 34rem at 50% -10%,
-        ${({ theme }) =>
-          theme.mode === 'dark'
-            ? 'rgba(95, 135, 134, 0.12)'
-            : 'rgba(47, 78, 80, 0.08)'}
-          0%,
-        transparent 68%
-      ),
-      radial-gradient(
-        82% 22rem at 12% 34%,
-        ${({ theme }) =>
-          theme.mode === 'dark'
-            ? 'rgba(142, 163, 179, 0.07)'
-            : 'rgba(72, 91, 106, 0.045)'}
-          0%,
-        transparent 74%
-      ),
-      linear-gradient(
-        180deg,
-        ${({ theme }) => (theme.mode === 'dark' ? '#11161b' : '#f8f3eb')}
-          0%,
-        ${({ theme }) =>
-          theme.mode === 'dark' ? '#101317' : theme.roles.surface.canvas}
-          100%
-      );
+    background: ${({ theme }) => theme.roles.surface.canvas};
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -67,7 +41,6 @@ const GlobalStyles = createGlobalStyle`
     text-decoration-color: ${({ theme }) => theme.roles.text.link};
     transition:
       color 0.18s ease,
-      opacity 0.18s ease,
       text-decoration-color 0.18s ease;
   }
 
@@ -103,10 +76,12 @@ const GlobalStyles = createGlobalStyle`
     border: 1px solid ${({ theme }) => theme.roles.border.subtle};
     border-radius: ${({ theme }) => theme.borderRadius.small};
     color: ${({ theme }) => theme.roles.text.primary};
+    box-shadow: none;
   }
 
   ::placeholder {
     color: ${({ theme }) => theme.roles.text.subtle};
+    opacity: 1;
   }
 
   :focus-visible {
@@ -115,7 +90,7 @@ const GlobalStyles = createGlobalStyle`
   }
 
   code, kbd, samp, pre {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
   }
 
   @media (prefers-reduced-motion: reduce) {

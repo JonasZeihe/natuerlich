@@ -2,18 +2,19 @@
 'use client'
 
 import styled from 'styled-components'
-import Card from '@/components/primitives/Card'
 import Section from '@/components/primitives/Section'
+import Surface from '@/components/primitives/Surface'
 import Stack from '@/components/primitives/Stack'
 import Typography from '@/design/typography'
 
 const ContrastGrid = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(1.25)};
+  gap: ${({ theme }) => theme.spacing(1.1)};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: ${({ theme }) => theme.spacing(1.5)};
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+    gap: ${({ theme }) => theme.spacing(1.3)};
+    align-items: stretch;
   }
 `
 
@@ -26,43 +27,63 @@ export default function PositioningSection() {
       container="default"
       variant="body"
       rhythm="default"
+      tone="clarify"
     >
-      <Stack gap={1.5}>
-        <Card tone="neutral" radius="large" bordered padding="lg">
-          <Stack gap={1}>
-            <Typography as="p" variant="caption" gutter={false} tone="soft">
-              Einordnung
-            </Typography>
+      <Stack gap={1.3}>
+        <Stack gap={0.82}>
+          <Typography
+            as="p"
+            variant="caption"
+            gutter={false}
+            accent="axisClarity"
+          >
+            Einordnung
+          </Typography>
 
-            <Typography
-              as="h2"
-              variant="h2"
-              gutter={false}
-              id="einordnung-title"
-            >
-              Meta-Placeholder: Hier später die klare Setzung, was diese Arbeit
-              im Kern ist und warum sie sich anders anfühlt als eine generische
-              Yoga-, Achtsamkeits- oder Gesundheitspräsenz.
-            </Typography>
+          <Typography
+            as="h2"
+            variant="h2"
+            gutter={false}
+            accent="axisClarity"
+            id="einordnung-title"
+          >
+            Meta-Placeholder: Hier später die klare Setzung, was diese Arbeit im
+            Kern ist und warum sie sich anders anfühlt als eine generische
+            Yoga-, Achtsamkeits- oder Gesundheitspräsenz.
+          </Typography>
 
-            <Typography as="p" variant="body" gutter={false}>
-              Meta-Placeholder: Diese Stelle muss später das Feld entnebeln.
-              Nicht durch Polemik, sondern durch präzise Unterscheidung. Es soll
-              lesbar werden, dass es hier um ernsthafte, freudige,
-              alltagstaugliche Praxis geht und nicht um Kulisse, Konsum oder
-              Pose.
-            </Typography>
-          </Stack>
-        </Card>
+          <Typography as="p" variant="body" gutter={false}>
+            Meta-Placeholder: Diese Stelle muss später das Feld entnebeln. Nicht
+            durch Polemik, sondern durch präzise Unterscheidung. Es soll lesbar
+            werden, dass es hier um ernsthafte, freudige, alltagstaugliche
+            Praxis geht und nicht um Kulisse, Konsum oder Pose.
+          </Typography>
+        </Stack>
 
         <ContrastGrid>
-          <Card tone="elevated" radius="large" bordered padding="md">
-            <Stack gap={0.9}>
-              <Typography as="p" variant="caption" gutter={false} tone="soft">
+          <Surface
+            tone="panel"
+            accent="axisResonance"
+            radius="large"
+            bordered
+            padding="lg"
+          >
+            <Stack gap={0.82}>
+              <Typography
+                as="p"
+                variant="caption"
+                gutter={false}
+                accent="axisResonance"
+              >
                 Worum es hier geht
               </Typography>
 
-              <Typography as="h3" variant="h3" gutter={false} tone="strong">
+              <Typography
+                as="h3"
+                variant="h3"
+                gutter={false}
+                accent="axisResonance"
+              >
                 Meta-Placeholder: Später die positive Einordnung dieser Arbeit.
               </Typography>
 
@@ -76,21 +97,31 @@ export default function PositioningSection() {
                 zeigen, was Menschen hier tatsächlich finden können.
               </Typography>
             </Stack>
-          </Card>
+          </Surface>
 
-          <Card
+          <Surface
             tone="accent"
-            axis="axisClarity"
+            accent="axisClarity"
             radius="large"
             bordered
             padding="md"
           >
-            <Stack gap={0.9}>
-              <Typography as="p" variant="caption" gutter={false}>
+            <Stack gap={0.82}>
+              <Typography
+                as="p"
+                variant="caption"
+                gutter={false}
+                accent="axisClarity"
+              >
                 Worum es hier nicht geht
               </Typography>
 
-              <Typography as="h3" variant="h3" gutter={false} tone="strong">
+              <Typography
+                as="h3"
+                variant="h3"
+                gutter={false}
+                accent="axisClarity"
+              >
                 Meta-Placeholder: Später die klare Negativabgrenzung ohne
                 Bitterkeit.
               </Typography>
@@ -106,12 +137,23 @@ export default function PositioningSection() {
                 nörgeln. Sie klärt, statt sich zu beschweren.
               </Typography>
             </Stack>
-          </Card>
+          </Surface>
         </ContrastGrid>
 
-        <Card tone="neutral" radius="large" bordered padding="md">
-          <Stack gap={0.9}>
-            <Typography as="p" variant="caption" gutter={false} tone="soft">
+        <Surface
+          tone="soft"
+          accent="axisClarity"
+          radius="large"
+          bordered
+          padding="md"
+        >
+          <Stack gap={0.75}>
+            <Typography
+              as="p"
+              variant="caption"
+              gutter={false}
+              accent="axisClarity"
+            >
               Übergang
             </Typography>
 
@@ -122,7 +164,7 @@ export default function PositioningSection() {
               Einstieg grundsätzlich möglich ist.
             </Typography>
           </Stack>
-        </Card>
+        </Surface>
       </Stack>
     </Section>
   )

@@ -1,10 +1,22 @@
 // src/features/site/sections/ContactSection.tsx
 'use client'
 
-import Card from '@/components/primitives/Card'
+import styled from 'styled-components'
 import Section from '@/components/primitives/Section'
+import Surface from '@/components/primitives/Surface'
 import Stack from '@/components/primitives/Stack'
 import Typography from '@/design/typography'
+
+const DetailGrid = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(1.05)};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: ${({ theme }) => theme.spacing(1.15)};
+    align-items: stretch;
+  }
+`
 
 export default function ContactSection() {
   return (
@@ -15,21 +27,33 @@ export default function ContactSection() {
       container="default"
       variant="outro"
       rhythm="compact"
+      tone="arrival"
     >
-      <Stack gap={1.5}>
-        <Card
-          tone="accent"
-          axis="axisEnergy"
+      <Stack gap={1.15}>
+        <Surface
+          tone="panel"
+          accent="axisEnergy"
           radius="large"
           bordered
           padding="lg"
         >
-          <Stack gap={1}>
-            <Typography as="p" variant="caption" gutter={false}>
+          <Stack gap={0.82}>
+            <Typography
+              as="p"
+              variant="caption"
+              gutter={false}
+              accent="axisEnergy"
+            >
               Kontakt
             </Typography>
 
-            <Typography as="h2" variant="h2" gutter={false} id="kontakt-title">
+            <Typography
+              as="h2"
+              variant="h2"
+              gutter={false}
+              accent="axisEnergy"
+              id="kontakt-title"
+            >
               Meta-Placeholder: Hier später die klare Schlusssetzung, dass ein
               realer Eintritt jetzt möglich ist, ohne Druck und ohne Unschärfe.
             </Typography>
@@ -46,59 +70,105 @@ export default function ContactSection() {
               Anschlussfähigkeit.
             </Typography>
           </Stack>
-        </Card>
+        </Surface>
 
-        <Card tone="neutral" radius="large" bordered padding="md">
-          <Stack gap={0.9}>
-            <Typography as="p" variant="caption" gutter={false} tone="soft">
-              Kontaktweg
-            </Typography>
+        <DetailGrid>
+          <Surface
+            tone="soft"
+            accent="axisClarity"
+            radius="large"
+            bordered
+            padding="md"
+          >
+            <Stack gap={0.78}>
+              <Typography
+                as="p"
+                variant="caption"
+                gutter={false}
+                accent="axisClarity"
+              >
+                Kontaktweg
+              </Typography>
 
-            <Typography as="h3" variant="h3" gutter={false}>
-              Meta-Placeholder: Hier später der konkrete Weg der
-              Kontaktaufnahme.
-            </Typography>
+              <Typography
+                as="h3"
+                variant="h3"
+                gutter={false}
+                accent="axisClarity"
+              >
+                Meta-Placeholder: Hier später der konkrete Weg der
+                Kontaktaufnahme.
+              </Typography>
 
-            <Typography as="p" variant="body" gutter={false}>
-              Meta-Placeholder: Später hier klar benennen, wie Jonas erreichbar
-              ist und welcher Kontaktweg für einen ersten Schritt gedacht ist.
-            </Typography>
+              <Typography as="p" variant="body" gutter={false}>
+                Meta-Placeholder: Später hier klar benennen, wie Jonas
+                erreichbar ist und welcher Kontaktweg für einen ersten Schritt
+                gedacht ist.
+              </Typography>
 
-            <Typography as="p" variant="body" gutter={false} tone="soft">
-              Meta-Placeholder: Diese Stelle muss später so konkret sein, dass
-              kein Rätsel bleibt, aber auch keine technische Formularästhetik
-              entsteht.
-            </Typography>
-          </Stack>
-        </Card>
+              <Typography as="p" variant="body" gutter={false} tone="soft">
+                Meta-Placeholder: Diese Stelle muss später so konkret sein, dass
+                kein Rätsel bleibt, aber auch keine technische Formularästhetik
+                entsteht.
+              </Typography>
+            </Stack>
+          </Surface>
 
-        <Card tone="elevated" radius="large" bordered padding="md">
-          <Stack gap={0.9}>
-            <Typography as="p" variant="caption" gutter={false} tone="soft">
-              Erster Schritt
-            </Typography>
+          <Surface
+            tone="soft"
+            accent="axisResonance"
+            radius="large"
+            bordered
+            padding="md"
+          >
+            <Stack gap={0.78}>
+              <Typography
+                as="p"
+                variant="caption"
+                gutter={false}
+                accent="axisResonance"
+              >
+                Erster Schritt
+              </Typography>
 
-            <Typography as="h3" variant="h3" gutter={false}>
-              Meta-Placeholder: Hier später Orientierung für Menschen, die noch
-              nicht genau wissen, welches Format passt.
-            </Typography>
+              <Typography
+                as="h3"
+                variant="h3"
+                gutter={false}
+                accent="axisResonance"
+              >
+                Meta-Placeholder: Hier später Orientierung für Menschen, die
+                noch nicht genau wissen, welches Format passt.
+              </Typography>
 
-            <Typography as="p" variant="body" gutter={false}>
-              Meta-Placeholder: Später hier lesbar machen, dass man sich auch
-              dann melden kann, wenn die passende Form noch nicht ganz klar ist
-              und erst gemeinsam eingeordnet werden muss.
-            </Typography>
+              <Typography as="p" variant="body" gutter={false}>
+                Meta-Placeholder: Später hier lesbar machen, dass man sich auch
+                dann melden kann, wenn die passende Form noch nicht ganz klar
+                ist und erst gemeinsam eingeordnet werden muss.
+              </Typography>
 
-            <Typography as="p" variant="body" gutter={false} tone="soft">
-              Meta-Placeholder: Diese Passage entlastet. Sie nimmt Unsicherheit
-              ernst, ohne alles weich oder beliebig zu machen.
-            </Typography>
-          </Stack>
-        </Card>
+              <Typography as="p" variant="body" gutter={false} tone="soft">
+                Meta-Placeholder: Diese Passage entlastet. Sie nimmt
+                Unsicherheit ernst, ohne alles weich oder beliebig zu machen.
+              </Typography>
+            </Stack>
+          </Surface>
+        </DetailGrid>
 
-        <Card tone="neutral" radius="large" bordered padding="md">
-          <Stack gap={0.9}>
-            <Typography as="p" variant="caption" gutter={false} tone="soft">
+        <Surface
+          tone="soft"
+          accent="axisResonance"
+          radius="large"
+          bordered
+          padding="md"
+        >
+          <Stack gap={0.75}>
+            <Typography
+              as="p"
+              variant="caption"
+              gutter={false}
+              accent="axisResonance"
+            >
               Was dann geschieht
             </Typography>
 
@@ -113,7 +183,7 @@ export default function ContactSection() {
               soll aus Klarheit, Ruhe und Würde tragen.
             </Typography>
           </Stack>
-        </Card>
+        </Surface>
       </Stack>
     </Section>
   )

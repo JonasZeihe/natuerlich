@@ -7,17 +7,24 @@ import Section from '@/components/primitives/Section'
 import Surface from '@/components/primitives/Surface'
 import Stack from '@/components/primitives/Stack'
 import Typography from '@/design/typography'
-import type { AxisKey } from '@/design/theme'
+import type { AxisKey, SectionToneKey, SurfaceToneKey } from '@/design/theme'
 
-type SurfaceVariant = 'subtle' | 'intense' | 'none'
 type RhythmKey = 'compact' | 'default' | 'spacious'
 type SectionKind = 'info' | 'resonance' | 'call'
+type ResolvedSurfaceTone =
+  | 'open'
+  | 'soft'
+  | 'panel'
+  | 'elevated'
+  | 'inset'
+  | 'band'
+  | 'accent'
 
 type Props = {
   title?: ReactNode
   intro?: ReactNode
   children?: ReactNode
-  surface?: SurfaceVariant
+  surface?: SurfaceToneKey
   accent?: AxisKey | 'neutral'
   narrow?: boolean
   titleId?: string
@@ -25,43 +32,50 @@ type Props = {
   footer?: ReactNode
   rhythm?: RhythmKey
   variant?: SectionKind
+  tone?: SectionToneKey
 } & Omit<ComponentPropsWithoutRef<'section'>, 'children'>
 
 const isPrimitive = (node: ReactNode): node is string | number =>
   typeof node === 'string' || typeof node === 'number'
 
-const mapTone = (surface: SurfaceVariant): 'neutral' | 'subtle' | 'accent' => {
+const resolveSurface = (surface: SurfaceToneKey): ResolvedSurfaceTone => {
+  if (surface === 'subtle') return 'soft'
+  if (surface === 'neutral') return 'panel'
+  if (surface === 'none') return 'open'
   if (surface === 'intense') return 'accent'
-  if (surface === 'subtle') return 'subtle'
-  return 'neutral'
+  return surface
 }
 
 const VARIANT_CONFIG: Record<
   SectionKind,
   {
-    surface: SurfaceVariant
+    surface: SurfaceToneKey
     accent: AxisKey | 'neutral'
     rhythm: RhythmKey
     sectionVariant: 'intro' | 'body' | 'outro'
+    tone: SectionToneKey
   }
 > = {
   info: {
-    surface: 'subtle',
+    surface: 'open',
     accent: 'neutral',
     rhythm: 'default',
     sectionVariant: 'body',
+    tone: 'clarify',
   },
   resonance: {
-    surface: 'subtle',
+    surface: 'soft',
     accent: 'axisResonance',
     rhythm: 'spacious',
     sectionVariant: 'body',
+    tone: 'deepen',
   },
   call: {
-    surface: 'intense',
+    surface: 'band',
     accent: 'axisEnergy',
     rhythm: 'default',
     sectionVariant: 'outro',
+    tone: 'arrival',
   },
 }
 
@@ -103,13 +117,16 @@ export default function SectionRecipe({
   footer,
   rhythm,
   variant = 'info',
+  tone,
   ...rest
 }: Props) {
   const variantConfig = VARIANT_CONFIG[variant]
   const resolvedRhythm: RhythmKey = rhythm ?? variantConfig.rhythm
   const resolvedAccent: AxisKey | 'neutral' = accent ?? variantConfig.accent
-  const resolvedSurface: SurfaceVariant = surface ?? variantConfig.surface
-  const tone = mapTone(resolvedSurface)
+  const resolvedSurface: ResolvedSurfaceTone = resolveSurface(
+    surface ?? variantConfig.surface
+  )
+  const resolvedTone = tone ?? variantConfig.tone
 
   const hasHeader = title != null || intro != null
   const hasContent = children != null
@@ -140,15 +157,15 @@ export default function SectionRecipe({
   ) : null
 
   const content = hasContent ? (
-    resolvedSurface === 'none' ? (
+    resolvedSurface === 'open' ? (
       children
     ) : (
       <Surface
-        tone={tone}
+        tone={resolvedSurface}
         accent={resolvedAccent}
         radius="large"
         bordered
-        padding="md"
+        padding={resolvedSurface === 'band' ? 'lg' : 'md'}
       >
         {children}
       </Surface>
@@ -167,6 +184,7 @@ export default function SectionRecipe({
       titleId={isPrimitive(title) ? titleId : undefined}
       rhythm={resolvedRhythm}
       variant={variantConfig.sectionVariant}
+      tone={resolvedTone}
       {...rest}
     >
       <BodyStack gap={0} $rhythm={resolvedRhythm}>

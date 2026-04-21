@@ -36,10 +36,8 @@ const baseStyles = css`
   transition:
     background-color 0.18s ease,
     border-color 0.18s ease,
-    box-shadow 0.18s ease,
-    transform 0.12s ease,
     color 0.18s ease,
-    filter 0.18s ease;
+    transform 0.12s ease;
 
   &:focus-visible {
     outline: 2px solid transparent;
@@ -51,7 +49,6 @@ const baseStyles = css`
     cursor: not-allowed;
     pointer-events: none;
     transform: none;
-    filter: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -65,18 +62,14 @@ const roleStyles = css<{ $variant: Variant; $customBg?: string }>`
       return css`
         color: ${theme.roles.text.inverse};
         background: ${$customBg};
-        border-color: transparent;
-        box-shadow: ${theme.boxShadow.sm};
+        border-color: ${$customBg};
+        box-shadow: none;
 
         &:hover {
-          filter: brightness(0.985);
-          box-shadow: ${theme.boxShadow.md};
           transform: translateY(-1px);
         }
 
         &:active {
-          filter: brightness(0.96);
-          box-shadow: ${theme.boxShadow.sm};
           transform: translateY(0);
         }
 
@@ -96,17 +89,12 @@ const roleStyles = css<{ $variant: Variant; $customBg?: string }>`
       color: ${role.fg};
       background-color: ${role.bg};
       border-color: ${role.border};
-      box-shadow: ${role.shadow === 'none'
-        ? 'none'
-        : theme.boxShadow[role.shadow]};
+      box-shadow: none;
 
       &:hover {
         color: ${role.hoverFg};
         background-color: ${role.hoverBg};
         border-color: ${role.hoverBorder};
-        box-shadow: ${role.hoverShadow === 'none'
-          ? 'none'
-          : theme.boxShadow[role.hoverShadow]};
         transform: ${$variant === 'link' ? 'none' : 'translateY(-1px)'};
         text-decoration: ${$variant === 'link' ? 'underline' : 'none'};
         text-underline-offset: ${$variant === 'link' ? '0.16em' : 'initial'};
@@ -119,9 +107,6 @@ const roleStyles = css<{ $variant: Variant; $customBg?: string }>`
         color: ${role.activeFg};
         background-color: ${role.activeBg};
         border-color: ${role.activeBorder};
-        box-shadow: ${role.activeShadow === 'none'
-          ? 'none'
-          : theme.boxShadow[role.activeShadow]};
         transform: translateY(0);
       }
 
@@ -140,16 +125,16 @@ const sizeStyles = css<{ $size: Size }>`
   ${({ theme, $size }) =>
     $size === 'sm'
       ? css`
-          min-height: ${theme.spacing(4.25)};
-          padding-inline: ${theme.spacing(1.35)};
-          padding-block: ${theme.spacingHalf(1.2)};
-          min-width: ${theme.spacing(6.75)};
+          min-height: ${theme.spacing(4)};
+          padding-inline: ${theme.spacing(1.25)};
+          padding-block: ${theme.spacingHalf(1.1)};
+          min-width: ${theme.spacing(6.5)};
         `
       : css`
-          min-height: ${theme.spacing(4.85)};
-          padding-inline: ${theme.spacing(1.75)};
-          padding-block: ${theme.spacingHalf(1.55)};
-          min-width: ${theme.spacing(7.5)};
+          min-height: ${theme.spacing(4.6)};
+          padding-inline: ${theme.spacing(1.6)};
+          padding-block: ${theme.spacingHalf(1.45)};
+          min-width: ${theme.spacing(7.2)};
         `}
 `
 

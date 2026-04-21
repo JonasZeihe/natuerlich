@@ -5,6 +5,7 @@ import { ReactNode, Children, type ComponentPropsWithoutRef } from 'react'
 import styled, { css, useTheme } from 'styled-components'
 import Section from '@/components/primitives/Section'
 import Typography from '@/design/typography'
+import type { SectionToneKey } from '@/design/theme'
 
 type Span = {
   col?: number
@@ -27,6 +28,7 @@ type Props = {
   layout?: Span[]
   dense?: boolean
   preset?: BentoPreset
+  tone?: SectionToneKey
 } & Omit<ComponentPropsWithoutRef<'section'>, 'children'>
 
 export default function BentoSection({
@@ -42,6 +44,7 @@ export default function BentoSection({
   layout = [],
   dense = false,
   preset = 'triad',
+  tone = 'default',
   id,
   'aria-label': ariaLabel,
   'aria-labelledby': ariaLabelledBy,
@@ -89,6 +92,7 @@ export default function BentoSection({
       container={wide ? 'wide' : 'default'}
       padY={padY}
       variant="body"
+      tone={tone}
       ariaLabel={typeof title === 'string' ? title : ariaLabel}
       aria-labelledby={ariaLabelledBy}
       {...rest}

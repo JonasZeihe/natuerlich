@@ -1,8 +1,7 @@
 // src/components/pagekit/skins/index.ts
-import type { AxisKey } from '@/design/theme'
+import type { AxisKey, SectionToneKey, SurfaceToneKey } from '@/design/theme'
 
 export type RhythmKey = 'compact' | 'default' | 'spacious'
-export type SurfaceTone = 'subtle' | 'intense' | 'none'
 
 export type SkinKey =
   | 'home'
@@ -15,15 +14,16 @@ export type SkinKey =
   | 'support'
   | 'auth'
 
-export type SectionToneProfile = {
-  infoSurface?: SurfaceTone
-  resonanceSurface?: SurfaceTone
-  callSurface?: SurfaceTone
+export type SectionProfile = {
+  tone?: SectionToneKey
+  surface?: SurfaceToneKey
 }
 
 export type HeroProfile = {
   container?: 'default' | 'wide' | 'narrow'
   variant?: 'default' | 'split'
+  tone?: SectionToneKey
+  mediaTone?: SurfaceToneKey
 }
 
 export type BentoProfile = {
@@ -31,18 +31,24 @@ export type BentoProfile = {
   min?: string
   gap?: number
   columns?: number | 'auto'
+  tone?: SectionToneKey
 }
 
 export type PageSkin = {
   axisKey: AxisKey | 'neutral'
-  surfaceTone: SurfaceTone
   rhythm: RhythmKey
+  defaultSectionTone: SectionToneKey
+  defaultSurfaceTone: SurfaceToneKey
   gridProps?: {
     min?: string
     gap?: number
     columns?: number | 'auto'
   }
-  sections?: SectionToneProfile
+  sections?: {
+    info?: SectionProfile
+    resonance?: SectionProfile
+    call?: SectionProfile
+  }
   hero?: HeroProfile
   bento?: BentoProfile
 }
@@ -50,139 +56,165 @@ export type PageSkin = {
 export const pageSkins: Record<SkinKey, PageSkin> = {
   home: {
     axisKey: 'axisResonance',
-    surfaceTone: 'subtle',
     rhythm: 'spacious',
+    defaultSectionTone: 'deepen',
+    defaultSurfaceTone: 'soft',
     gridProps: { min: '18rem', gap: 2, columns: 'auto' },
     sections: {
-      infoSurface: 'subtle',
-      resonanceSurface: 'subtle',
-      callSurface: 'intense',
+      info: { tone: 'clarify', surface: 'open' },
+      resonance: { tone: 'deepen', surface: 'soft' },
+      call: { tone: 'arrival', surface: 'band' },
     },
     hero: {
       container: 'wide',
       variant: 'default',
+      tone: 'opening',
+      mediaTone: 'soft',
     },
     bento: {
       preset: 'triad',
       min: '18rem',
       gap: 2,
       columns: 'auto',
+      tone: 'expand',
     },
   },
   blogIndex: {
     axisKey: 'axisClarity',
-    surfaceTone: 'subtle',
     rhythm: 'default',
+    defaultSectionTone: 'clarify',
+    defaultSurfaceTone: 'soft',
     gridProps: { min: '18rem', gap: 2, columns: 'auto' },
     sections: {
-      infoSurface: 'subtle',
-      resonanceSurface: 'subtle',
-      callSurface: 'intense',
+      info: { tone: 'clarify', surface: 'open' },
+      resonance: { tone: 'deepen', surface: 'soft' },
+      call: { tone: 'arrival', surface: 'band' },
     },
     hero: {
       container: 'default',
       variant: 'default',
+      tone: 'opening',
+      mediaTone: 'soft',
     },
   },
   blogCategory: {
     axisKey: 'axisClarity',
-    surfaceTone: 'subtle',
     rhythm: 'default',
+    defaultSectionTone: 'clarify',
+    defaultSurfaceTone: 'soft',
     gridProps: { min: '18rem', gap: 2, columns: 'auto' },
     sections: {
-      infoSurface: 'subtle',
-      resonanceSurface: 'subtle',
-      callSurface: 'intense',
+      info: { tone: 'clarify', surface: 'open' },
+      resonance: { tone: 'deepen', surface: 'soft' },
+      call: { tone: 'arrival', surface: 'band' },
     },
     hero: {
       container: 'default',
       variant: 'default',
+      tone: 'opening',
+      mediaTone: 'soft',
     },
   },
   blogPost: {
     axisKey: 'axisResonance',
-    surfaceTone: 'subtle',
     rhythm: 'spacious',
+    defaultSectionTone: 'deepen',
+    defaultSurfaceTone: 'soft',
     gridProps: { min: '18rem', gap: 2, columns: 'auto' },
     sections: {
-      infoSurface: 'subtle',
-      resonanceSurface: 'subtle',
-      callSurface: 'intense',
+      info: { tone: 'clarify', surface: 'open' },
+      resonance: { tone: 'deepen', surface: 'soft' },
+      call: { tone: 'arrival', surface: 'band' },
     },
     hero: {
       container: 'narrow',
       variant: 'default',
+      tone: 'opening',
+      mediaTone: 'open',
     },
   },
   about: {
     axisKey: 'axisResonance',
-    surfaceTone: 'subtle',
     rhythm: 'default',
+    defaultSectionTone: 'deepen',
+    defaultSurfaceTone: 'soft',
     gridProps: { min: '18rem', gap: 2, columns: 'auto' },
     sections: {
-      infoSurface: 'subtle',
-      resonanceSurface: 'subtle',
-      callSurface: 'intense',
+      info: { tone: 'clarify', surface: 'open' },
+      resonance: { tone: 'deepen', surface: 'soft' },
+      call: { tone: 'arrival', surface: 'band' },
     },
     hero: {
       container: 'narrow',
       variant: 'default',
+      tone: 'opening',
+      mediaTone: 'soft',
     },
   },
   search: {
     axisKey: 'axisClarity',
-    surfaceTone: 'none',
     rhythm: 'compact',
+    defaultSectionTone: 'relief',
+    defaultSurfaceTone: 'open',
     gridProps: { min: '18rem', gap: 2, columns: 'auto' },
     sections: {
-      infoSurface: 'none',
-      resonanceSurface: 'none',
-      callSurface: 'intense',
+      info: { tone: 'relief', surface: 'open' },
+      resonance: { tone: 'deepen', surface: 'soft' },
+      call: { tone: 'arrival', surface: 'band' },
     },
   },
   impressum: {
     axisKey: 'neutral',
-    surfaceTone: 'subtle',
     rhythm: 'default',
+    defaultSectionTone: 'relief',
+    defaultSurfaceTone: 'soft',
     gridProps: { min: '18rem', gap: 2, columns: 'auto' },
     sections: {
-      infoSurface: 'subtle',
-      resonanceSurface: 'subtle',
-      callSurface: 'intense',
+      info: { tone: 'relief', surface: 'soft' },
+      resonance: { tone: 'deepen', surface: 'soft' },
+      call: { tone: 'arrival', surface: 'band' },
     },
     hero: {
       container: 'narrow',
       variant: 'default',
+      tone: 'clarify',
+      mediaTone: 'open',
     },
   },
   support: {
     axisKey: 'neutral',
-    surfaceTone: 'subtle',
     rhythm: 'default',
+    defaultSectionTone: 'relief',
+    defaultSurfaceTone: 'soft',
     gridProps: { min: '18rem', gap: 2, columns: 'auto' },
     sections: {
-      infoSurface: 'subtle',
-      resonanceSurface: 'subtle',
-      callSurface: 'intense',
+      info: { tone: 'relief', surface: 'soft' },
+      resonance: { tone: 'deepen', surface: 'soft' },
+      call: { tone: 'arrival', surface: 'band' },
     },
     hero: {
       container: 'narrow',
       variant: 'default',
+      tone: 'clarify',
+      mediaTone: 'open',
     },
   },
   auth: {
     axisKey: 'axisClarity',
-    surfaceTone: 'none',
     rhythm: 'compact',
+    defaultSectionTone: 'relief',
+    defaultSurfaceTone: 'open',
     gridProps: { min: '18rem', gap: 2, columns: 1 },
     sections: {
-      infoSurface: 'none',
-      resonanceSurface: 'subtle',
-      callSurface: 'intense',
+      info: { tone: 'relief', surface: 'open' },
+      resonance: { tone: 'deepen', surface: 'soft' },
+      call: { tone: 'arrival', surface: 'band' },
     },
     hero: {
       container: 'narrow',
       variant: 'default',
+      tone: 'opening',
+      mediaTone: 'open',
     },
   },
 }

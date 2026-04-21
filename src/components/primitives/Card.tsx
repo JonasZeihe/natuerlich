@@ -8,16 +8,15 @@ import {
 } from 'react'
 import styled, { css } from 'styled-components'
 import Surface from './Surface'
-import type { AxisKey } from '@/design/theme'
+import type { AxisKey, SurfaceToneKey } from '@/design/theme'
 
-type Tone = 'neutral' | 'elevated' | 'accent'
 type Emphasis = 'none' | 'soft'
 type Padding = 'sm' | 'md' | 'lg'
 type Radius = 'none' | 'small' | 'medium' | 'large' | 'pill'
 
 type Props = {
   padding?: Padding
-  tone?: Tone
+  tone?: SurfaceToneKey
   axis?: AxisKey | 'neutral'
   interactive?: boolean
   emphasis?: Emphasis
@@ -36,11 +35,14 @@ const StyledCard = styled(Surface)<StyledProps>`
   display: flex;
   flex-direction: column;
   width: 100%;
+  min-width: 0;
   overflow: hidden;
   cursor: ${({ $interactive }) => ($interactive ? 'pointer' : 'default')};
   transition:
+    border-color 0.18s ease,
     box-shadow 0.18s ease,
-    border-color 0.18s ease;
+    transform 0.18s ease,
+    background-color 0.18s ease;
 
   @media (prefers-reduced-motion: reduce) {
     transition: none;
@@ -52,17 +54,36 @@ const StyledCard = styled(Surface)<StyledProps>`
           &:hover,
           &:focus-within {
             outline: 0;
-            box-shadow: ${theme.boxShadow.md};
             border-color: ${theme.getAxisRole($axis).border};
+            box-shadow: ${theme.boxShadow.sm};
+            transform: translateY(-1px);
           }
+        `
+      : ''}
+
+  ${({ theme, $axis, $emphasis }) =>
+    $emphasis !== 'none' && $axis !== 'neutral'
+      ? css`
+          border-color: ${theme.getAxisRole($axis).border};
         `
       : ''}
 `
 
+const resolveCardTone = (
+  tone: SurfaceToneKey,
+  axis: AxisKey | 'neutral',
+  interactive: boolean
+): SurfaceToneKey => {
+  if (tone === 'open') return axis === 'neutral' ? 'soft' : 'accent'
+  if (tone === 'band') return axis === 'neutral' ? 'panel' : 'band'
+  if (tone === 'panel' && interactive && axis !== 'neutral') return 'elevated'
+  return tone
+}
+
 const Card = forwardRef<HTMLDivElement, Props>(function Card(
   {
     padding = 'md',
-    tone = 'neutral',
+    tone = 'panel',
     axis = 'neutral',
     interactive = false,
     emphasis = 'soft',
@@ -78,7 +99,7 @@ const Card = forwardRef<HTMLDivElement, Props>(function Card(
   return (
     <StyledCard
       ref={ref}
-      tone={tone}
+      tone={resolveCardTone(tone, axis, interactive)}
       accent={axis}
       radius={radius}
       padding={padding}

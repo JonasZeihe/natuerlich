@@ -4,6 +4,7 @@
 import { type ReactNode } from 'react'
 import styled from 'styled-components'
 import Card from '@/components/primitives/Card'
+import type { AxisKey, SurfaceToneKey } from '@/design/theme'
 
 type Emphasis = 'soft' | 'medium' | 'strong'
 
@@ -12,7 +13,7 @@ type CardWrapperProps = React.ComponentPropsWithoutRef<'div'> & {
   children: ReactNode
 }
 
-const emphasisToAxis = (emphasis: Emphasis) => {
+const emphasisToAxis = (emphasis: Emphasis): AxisKey | 'neutral' => {
   if (emphasis === 'strong') return 'axisEnergy'
   if (emphasis === 'medium') return 'axisClarity'
   return 'neutral'
@@ -20,6 +21,12 @@ const emphasisToAxis = (emphasis: Emphasis) => {
 
 const emphasisToCardEmphasis = (emphasis: Emphasis): 'none' | 'soft' => {
   if (emphasis === 'soft') return 'none'
+  return 'soft'
+}
+
+const emphasisToTone = (emphasis: Emphasis): SurfaceToneKey => {
+  if (emphasis === 'strong') return 'elevated'
+  if (emphasis === 'medium') return 'panel'
   return 'soft'
 }
 
@@ -42,7 +49,7 @@ export default function CardWrapper({
 }: CardWrapperProps) {
   return (
     <Card
-      tone="neutral"
+      tone={emphasisToTone(emphasis)}
       axis={emphasisToAxis(emphasis)}
       interactive={emphasis !== 'soft'}
       emphasis={emphasisToCardEmphasis(emphasis)}

@@ -5,6 +5,7 @@ import {
   LAYOUT,
   PALETTE,
   RADIUS,
+  SECTION_TONES,
   SHADOWS,
   SPACING,
   SPACING_HALF,
@@ -12,8 +13,16 @@ import {
   type AxisKey,
   type Mode,
   type PaletteMode,
+  type SectionToneKey,
+  type SurfaceToneKey,
 } from './tokens'
-import { buildSemantic, type AxisRole, type IntentRole } from './semantic'
+import {
+  buildSemantic,
+  type AxisRole,
+  type IntentRole,
+  type SectionToneRole,
+  type SurfaceToneRole,
+} from './semantic'
 
 const createTheme = (mode: Mode) => {
   const palette: PaletteMode = PALETTE[mode]
@@ -21,10 +30,10 @@ const createTheme = (mode: Mode) => {
   const boxShadow = SHADOWS[mode]
 
   const gradients = {
-    primary: `linear-gradient(135deg, ${palette.axisClarity[3]}, ${palette.axisClarity.main})`,
-    secondary: `linear-gradient(135deg, ${palette.axisEnergy[3]}, ${palette.axisEnergy.main})`,
-    accent: `linear-gradient(135deg, ${palette.axisResonance[3]}, ${palette.axisResonance.main})`,
-    highlight: `linear-gradient(135deg, ${palette.axisClarity.main}, ${palette.axisEnergy.main})`,
+    primary: palette.axisClarity.base,
+    secondary: palette.axisEnergy.base,
+    accent: palette.axisResonance.base,
+    highlight: palette.axisEnergy.hover,
   } as const
 
   const grid = {
@@ -32,8 +41,8 @@ const createTheme = (mode: Mode) => {
   }
 
   const motifs = {
-    spotlight: { insetScale: 0.96, washAlpha: mode === 'light' ? 0.04 : 0.08 },
-    zebra: { altSurface: palette.surface[2] },
+    spotlight: { insetScale: 1, washAlpha: 0 },
+    zebra: { altSurface: roles.surface.panelAlt },
     edgeToEdge: { container: 'wide' as const },
   }
 
@@ -59,6 +68,95 @@ const createTheme = (mode: Mode) => {
     key: 'neutral' | 'info' | 'success' | 'warning' | 'danger'
   ): IntentRole => roles.intent[key]
 
+  const getSurfaceTone = (
+    tone: SurfaceToneKey,
+    axis: AxisKey | 'neutral' = 'neutral'
+  ): SurfaceToneRole => {
+    const axisRole = getAxisRole(axis)
+
+    if (tone === 'none') return roles.surfaceTone.open
+    if (tone === 'neutral') return roles.surfaceTone.panel
+    if (tone === 'subtle') return roles.surfaceTone.soft
+
+    if (tone === 'accent') {
+      return {
+        bg: axisRole.surface,
+        fg: axisRole.text,
+        border: axisRole.border,
+        shadow: 'none',
+        backdrop: 'none',
+      }
+    }
+
+    if (tone === 'intense') {
+      return {
+        bg: axisRole.fill,
+        fg: axisRole.contrast,
+        border: axisRole.fillHover,
+        shadow: 'none',
+        backdrop: 'none',
+      }
+    }
+
+    const base = roles.surfaceTone[tone]
+
+    if (axis === 'neutral') {
+      return base
+    }
+
+    if (tone === 'soft') {
+      return {
+        bg: axisRole.surface,
+        fg: axisRole.text,
+        border: axisRole.border,
+        shadow: 'none',
+        backdrop: 'none',
+      }
+    }
+
+    if (tone === 'panel') {
+      return {
+        bg: base.bg,
+        fg: base.fg,
+        border: axisRole.border,
+        shadow: 'none',
+        backdrop: 'none',
+      }
+    }
+
+    if (tone === 'elevated') {
+      return {
+        bg: base.bg,
+        fg: base.fg,
+        border: axisRole.border,
+        shadow: 'none',
+        backdrop: 'none',
+      }
+    }
+
+    if (tone === 'inset') {
+      return {
+        bg: base.bg,
+        fg: base.fg,
+        border: axisRole.border,
+        shadow: 'none',
+        backdrop: 'none',
+      }
+    }
+
+    if (tone === 'band') {
+      return {
+        bg: base.bg,
+        fg: base.fg,
+        border: axisRole.border,
+        shadow: 'none',
+        backdrop: 'none',
+      }
+    }
+
+    return base
+  }
+
   const getSurfaceRole = (
     tone:
       | 'canvas'
@@ -68,14 +166,21 @@ const createTheme = (mode: Mode) => {
       | 'panelSubtle'
       | 'elevated'
       | 'inset'
+      | 'soft'
+      | 'band'
   ) => ({
     bg: roles.surface[tone],
     fg: roles.text.primary,
     border:
-      tone === 'panelSubtle' || tone === 'inset'
+      tone === 'panelSubtle' || tone === 'inset' || tone === 'soft'
         ? roles.border.subtle
-        : roles.border.strong,
+        : tone === 'band'
+          ? roles.axis.axisResonance.border
+          : roles.border.strong,
   })
+
+  const getSectionTone = (tone: SectionToneKey): SectionToneRole =>
+    roles.sectionTone[tone]
 
   return {
     mode,
@@ -88,6 +193,7 @@ const createTheme = (mode: Mode) => {
       breakpoints: BREAKPOINTS,
       shadows: SHADOWS[mode],
       layout: LAYOUT,
+      sectionTones: SECTION_TONES,
     },
     roles,
     gradients,
@@ -105,6 +211,8 @@ const createTheme = (mode: Mode) => {
     getAxisRole,
     getIntentRole,
     getSurfaceRole,
+    getSurfaceTone,
+    getSectionTone,
   }
 }
 
@@ -113,7 +221,7 @@ export const darkTheme = createTheme('dark')
 
 export default lightTheme
 
-export type { AxisKey } from './tokens'
+export type { AxisKey, SectionToneKey, SurfaceToneKey } from './tokens'
 export type AppTheme = typeof lightTheme
 
 declare module 'styled-components' {

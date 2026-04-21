@@ -5,10 +5,9 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import styled, { css } from 'styled-components'
 import { FiMenu, FiX } from 'react-icons/fi'
 import ThemeToggleButton from '@/components/actions/ThemeToggleButton'
-import SmoothScroller from '@/components/utilities/SmoothScroller'
 import Container from '@/components/primitives/Container'
 import Inline from '@/components/primitives/Inline'
-import Surface from '@/components/primitives/Surface'
+import SmoothScroller from '@/components/utilities/SmoothScroller'
 import Typography from '@/design/typography'
 import {
   SITE_SECTIONS,
@@ -25,18 +24,6 @@ const HEADER_SECTIONS: SiteSection[] = SITE_SECTIONS.filter(
 const OBSERVED_SECTION_IDS: SiteSectionId[] = SITE_SECTIONS.filter(
   (section) => section.id !== 'einstieg'
 ).map((section) => section.id)
-
-const alphaHex = (value: number) =>
-  Math.round(Math.max(0, Math.min(1, value)) * 255)
-    .toString(16)
-    .padStart(2, '0')
-
-const withAlpha = (color: string, alpha: number) => {
-  if (!color.startsWith('#')) return color
-  if (color.length === 7) return `${color}${alphaHex(alpha)}`
-  if (color.length === 9) return `${color.slice(0, 7)}${alphaHex(alpha)}`
-  return color
-}
 
 export default function AppHeader() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -194,7 +181,7 @@ export default function AppHeader() {
             </BrandWrap>
 
             <DesktopNav aria-label="Hauptnavigation">
-              <Inline gap={0.35} wrap={false} justify="end">
+              <Inline gap={0.25} wrap={false} justify="end">
                 {HEADER_SECTIONS.map((section) => (
                   <NavLink
                     key={section.id}
@@ -233,24 +220,22 @@ export default function AppHeader() {
               id="site-primary-navigation"
               aria-label="Hauptnavigation mobil"
             >
-              <Surface tone="subtle" radius="large" bordered padding="sm">
-                <MobileList>
-                  {HEADER_SECTIONS.map((section) => (
-                    <MobileItem key={section.id}>
-                      <MobileLink
-                        targetId={section.id}
-                        $active={activeId === section.id}
-                        aria-current={
-                          activeId === section.id ? 'true' : undefined
-                        }
-                        onClick={() => setMenuOpen(false)}
-                      >
-                        {section.label}
-                      </MobileLink>
-                    </MobileItem>
-                  ))}
-                </MobileList>
-              </Surface>
+              <MobileList>
+                {HEADER_SECTIONS.map((section) => (
+                  <MobileItem key={section.id}>
+                    <MobileLink
+                      targetId={section.id}
+                      $active={activeId === section.id}
+                      aria-current={
+                        activeId === section.id ? 'true' : undefined
+                      }
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      {section.label}
+                    </MobileLink>
+                  </MobileItem>
+                ))}
+              </MobileList>
             </MobilePanel>
           ) : null}
         </HeaderInner>
@@ -266,58 +251,25 @@ const HeaderShell = styled.header<{ $compact: boolean }>`
   width: 100%;
   border-bottom: 1px solid
     ${({ theme, $compact }) =>
-      withAlpha(
-        theme.roles.border.subtle,
-        $compact
-          ? theme.mode === 'dark'
-            ? 0.68
-            : 0.78
-          : theme.mode === 'dark'
-            ? 0.24
-            : 0.34
-      )};
-  background:
-    linear-gradient(
-      180deg,
-      ${({ theme, $compact }) =>
-          theme.mode === 'dark'
-            ? withAlpha(theme.roles.surface.chrome, $compact ? 0.84 : 0.56)
-            : withAlpha(theme.roles.surface.chrome, $compact ? 0.9 : 0.62)}
-        0%,
-      ${({ theme, $compact }) =>
-          theme.mode === 'dark'
-            ? withAlpha(theme.roles.surface.panel, $compact ? 0.9 : 0.64)
-            : withAlpha(theme.roles.surface.panel, $compact ? 0.94 : 0.7)}
-        100%
-    ),
-    radial-gradient(
-      120% 180% at 50% 0%,
-      ${({ theme, $compact }) =>
-          theme.mode === 'dark'
-            ? withAlpha(
-                theme.getAxisRole('axisResonance').surface,
-                $compact ? 0.18 : 0.1
-              )
-            : withAlpha(
-                theme.getAxisRole('axisResonance').surface,
-                $compact ? 0.16 : 0.08
-              )}
-        0%,
-      transparent 72%
-    );
-  box-shadow: ${({ theme, $compact }) =>
-    $compact ? theme.boxShadow.xs : 'none'};
-  backdrop-filter: blur(${({ $compact }) => ($compact ? '16px' : '12px')})
-    saturate(1.04);
-  -webkit-backdrop-filter: blur(
-      ${({ $compact }) => ($compact ? '16px' : '12px')}
-    )
-    saturate(1.04);
+      $compact ? theme.roles.border.strong : theme.roles.border.subtle};
+  background: ${({ theme }) => theme.roles.surface.canvas};
+  box-shadow: none;
   transition:
-    box-shadow 0.18s ease,
     border-color 0.18s ease,
-    background 0.18s ease,
-    backdrop-filter 0.18s ease;
+    background-color 0.18s ease;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: ${({ theme, $compact }) =>
+      $compact ? theme.roles.border.strong : 'transparent'};
+    transition: background-color 0.18s ease;
+    pointer-events: none;
+  }
 `
 
 const HeaderInner = styled.div`
@@ -358,7 +310,7 @@ const BrandStack = styled.span`
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: ${({ theme }) => theme.spacingHalf(0.4)};
+  gap: ${({ theme }) => theme.spacingHalf(0.35)};
   min-width: 0;
 `
 
@@ -376,8 +328,8 @@ const navLinkStyles = css<{ $active: boolean }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: ${({ theme }) => theme.spacing(3.75)};
-  padding-inline: ${({ theme }) => theme.spacing(0.95)};
+  min-height: ${({ theme }) => theme.spacing(3.25)};
+  padding-inline: ${({ theme }) => theme.spacing(0.8)};
   border-radius: ${({ theme }) => theme.borderRadius.pill};
   border: 1px solid transparent;
   text-decoration: none;
@@ -390,35 +342,19 @@ const navLinkStyles = css<{ $active: boolean }>`
     $active
       ? theme.getAxisRole('axisClarity').text
       : theme.roles.text.secondary};
-  background: ${({ theme, $active }) =>
-    $active
-      ? theme.mode === 'dark'
-        ? 'rgba(142, 163, 179, 0.08)'
-        : 'rgba(72, 91, 106, 0.06)'
-      : 'transparent'};
-  border-color: ${({ theme, $active }) =>
-    $active
-      ? withAlpha(theme.getAxisRole('axisClarity').border, 0.7)
-      : 'transparent'};
+  background: transparent;
   box-shadow: none;
   transition:
-    background-color 0.18s ease,
+    color 0.18s ease,
     border-color 0.18s ease,
-    color 0.18s ease;
+    background-color 0.18s ease;
 
   &:hover,
   &:focus-visible {
     text-decoration: none;
-    background: ${({ theme }) =>
-      theme.mode === 'dark'
-        ? 'rgba(142, 163, 179, 0.06)'
-        : 'rgba(72, 91, 106, 0.045)'};
-    border-color: ${({ theme }) =>
-      withAlpha(
-        theme.roles.border.subtle,
-        theme.mode === 'dark' ? 0.74 : 0.82
-      )};
     color: ${({ theme }) => theme.roles.text.primary};
+    border-color: ${({ theme }) => theme.roles.border.subtle};
+    background: ${({ theme }) => theme.roles.surface.chrome};
   }
 `
 
@@ -450,10 +386,10 @@ const MenuButton = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: ${({ theme }) => theme.spacing(4.5)};
-  min-height: ${({ theme }) => theme.spacing(4.5)};
+  min-width: ${({ theme }) => theme.spacing(4.25)};
+  min-height: ${({ theme }) => theme.spacing(4.25)};
   border-radius: ${({ theme }) => theme.borderRadius.medium};
-  background: ${({ theme }) => theme.roles.surface.panel};
+  background: transparent;
   color: ${({ theme }) => theme.roles.text.primary};
   border: 1px solid ${({ theme }) => theme.roles.border.subtle};
   box-shadow: none;
@@ -461,19 +397,21 @@ const MenuButton = styled.button`
   transition:
     background-color 0.18s ease,
     border-color 0.18s ease,
-    box-shadow 0.18s ease;
+    color 0.18s ease;
 
   &:hover,
   &:focus-visible {
-    background: ${({ theme }) => theme.roles.surface.panelAlt};
-    border-color: ${({ theme }) => theme.getAxisRole('axisClarity').border};
-    box-shadow: ${({ theme }) => theme.boxShadow.xs};
+    background: ${({ theme }) => theme.roles.surface.chrome};
+    border-color: ${({ theme }) => theme.roles.border.strong};
+    color: ${({ theme }) => theme.getAxisRole('axisClarity').text};
   }
 `
 
 const MobilePanel = styled.nav`
   display: none;
-  margin-top: ${({ theme }) => theme.spacing(0.75)};
+  margin-top: ${({ theme }) => theme.spacing(0.7)};
+  padding-top: ${({ theme }) => theme.spacing(0.25)};
+  border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     display: block;
@@ -483,9 +421,9 @@ const MobilePanel = styled.nav`
 const MobileList = styled.ol`
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: ${({ theme }) => `${theme.spacing(0.35)} 0 0`};
   display: grid;
-  gap: ${({ theme }) => theme.spacingHalf(0.7)};
+  gap: ${({ theme }) => theme.spacingHalf(0.55)};
 `
 
 const MobileItem = styled.li`
@@ -496,5 +434,5 @@ const MobileLink = styled(SmoothScroller)<{ $active: boolean }>`
   ${navLinkStyles}
   width: 100%;
   justify-content: flex-start;
-  min-height: ${({ theme }) => theme.spacing(4.25)};
+  min-height: ${({ theme }) => theme.spacing(4)};
 `

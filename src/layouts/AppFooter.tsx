@@ -47,7 +47,7 @@ export default function AppFooter() {
               </Microcopy>
             </ClosingBlock>
 
-            <LinksCol gap={0.55} aria-label="Fußnavigation">
+            <LinksCol gap={0.4} aria-label="Fußnavigation">
               {FOOTER_NAV_ITEMS.map((item) => (
                 <FooterLink key={item.href} href={item.href}>
                   {item.label}
@@ -77,61 +77,30 @@ const FooterShell = styled.footer`
   position: relative;
   width: 100%;
   color: ${({ theme }) => theme.roles.text.primary};
-  border-top: 1px solid
-    ${({ theme }) =>
-      theme.mode === 'dark'
-        ? 'rgba(255, 255, 255, 0.08)'
-        : 'rgba(20, 23, 27, 0.08)'};
-  background:
-    radial-gradient(
-      90% 20rem at 50% 0%,
-      ${({ theme }) =>
-          theme.mode === 'dark'
-            ? 'rgba(209, 102, 44, 0.06)'
-            : 'rgba(162, 74, 30, 0.04)'}
-        0%,
-      transparent 68%
-    ),
-    radial-gradient(
-      120% 28rem at 50% 100%,
-      ${({ theme }) =>
-          theme.mode === 'dark'
-            ? 'rgba(95, 135, 134, 0.08)'
-            : 'rgba(47, 78, 80, 0.05)'}
-        0%,
-      transparent 74%
-    ),
-    linear-gradient(
-      180deg,
-      ${({ theme }) =>
-          theme.mode === 'dark'
-            ? 'rgba(18, 22, 27, 0.92)'
-            : 'rgba(247, 242, 234, 0.9)'}
-        0%,
-      ${({ theme }) => theme.roles.surface.chrome} 100%
-    );
-  padding-block: ${({ theme }) => theme.spacing(3.1)};
+  border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
+  background: ${({ theme }) => theme.roles.surface.canvas};
+  padding-block: ${({ theme }) => theme.spacing(2.75)};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    padding-block: ${({ theme }) => theme.spacing(2.6)};
+    padding-block: ${({ theme }) => theme.spacing(2.35)};
   }
 `
 
 const FooterInner = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(2.1)};
+  gap: ${({ theme }) => theme.spacing(1.9)};
 `
 
 const TopRow = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  gap: ${({ theme }) => theme.spacing(2)};
+  gap: ${({ theme }) => theme.spacing(1.75)};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: start;
-    gap: ${({ theme }) => theme.spacing(2.4)};
+    gap: ${({ theme }) => theme.spacing(2.15)};
   }
 `
 
@@ -158,22 +127,19 @@ const Microcopy = styled.p`
 const FooterLink = styled(Link)`
   display: inline-flex;
   align-items: center;
-  min-height: ${({ theme }) => theme.spacing(3.6)};
-  padding: ${({ theme }) => `${theme.spacingHalf(1.4)} 0`};
+  min-height: ${({ theme }) => theme.spacing(3.2)};
+  padding: ${({ theme }) => `${theme.spacingHalf(1)} 0`};
   border-radius: ${({ theme }) => theme.borderRadius.small};
   text-decoration: none;
   border: none;
   color: ${({ theme }) => theme.roles.text.secondary};
   background: transparent;
-  transition:
-    color 0.18s ease,
-    opacity 0.18s ease;
+  transition: color 0.18s ease;
 
   &:hover,
   &:focus-visible {
-    color: ${({ theme }) => theme.getAxisRole('axisClarity').text};
+    color: ${({ theme }) => theme.roles.text.primary};
     text-decoration: none;
-    opacity: 1;
   }
 `
 
@@ -182,12 +148,8 @@ const BottomRow = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: ${({ theme }) => theme.spacing(1)};
-  padding-top: ${({ theme }) => theme.spacing(1.4)};
-  border-top: 1px solid
-    ${({ theme }) =>
-      theme.mode === 'dark'
-        ? 'rgba(255, 255, 255, 0.08)'
-        : 'rgba(20, 23, 27, 0.08)'};
+  padding-top: ${({ theme }) => theme.spacing(1.25)};
+  border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     flex-direction: column;
@@ -202,8 +164,8 @@ const Copy = styled.p`
 `
 
 const ToTop = styled.button`
-  width: 2.7rem;
-  height: 2.7rem;
+  width: 2.55rem;
+  height: 2.55rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -213,20 +175,18 @@ const ToTop = styled.button`
   border: 1px solid ${({ theme }) => theme.roles.border.subtle};
   border-radius: ${({ theme }) => theme.borderRadius.pill};
   box-shadow: none;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   cursor: pointer;
   transition:
-    background-color 0.18s ease,
-    border-color 0.18s ease,
     color 0.18s ease,
-    box-shadow 0.18s ease;
+    border-color 0.18s ease,
+    background-color 0.18s ease;
 
   &:hover,
   &:focus-visible {
-    background: ${({ theme }) => theme.roles.surface.panel};
-    border-color: ${({ theme }) => theme.getAxisRole('axisClarity').border};
+    background: ${({ theme }) => theme.roles.surface.chrome};
+    border-color: ${({ theme }) => theme.roles.border.strong};
     color: ${({ theme }) => theme.roles.text.primary};
-    box-shadow: ${({ theme }) => theme.boxShadow.xs};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {

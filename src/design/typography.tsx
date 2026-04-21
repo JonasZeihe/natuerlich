@@ -47,6 +47,7 @@ const variantCSS = (variant: Variant, theme: DefaultTheme, gutter: boolean) => {
         line-height: ${lineHeight.tight};
         letter-spacing: ${letterSpacing.tight};
         margin-bottom: ${gutter ? spacing(2.5) : 0};
+        text-wrap: balance;
       `
     case 'h2':
       return css`
@@ -55,6 +56,7 @@ const variantCSS = (variant: Variant, theme: DefaultTheme, gutter: boolean) => {
         line-height: 1.16;
         letter-spacing: ${letterSpacing.tight};
         margin-bottom: ${gutter ? spacing(2) : 0};
+        text-wrap: balance;
       `
     case 'h3':
       return css`
@@ -75,7 +77,7 @@ const variantCSS = (variant: Variant, theme: DefaultTheme, gutter: boolean) => {
     case 'caption':
       return css`
         font-size: ${fontSize.caption};
-        font-weight: ${fontWeight.regular};
+        font-weight: ${fontWeight.medium};
         line-height: 1.42;
         letter-spacing: ${letterSpacing.wide};
         margin-bottom: ${gutter ? spacing(0.75) : 0};
@@ -89,6 +91,36 @@ const variantCSS = (variant: Variant, theme: DefaultTheme, gutter: boolean) => {
         margin-bottom: ${gutter ? spacing(1) : 0};
       `
   }
+}
+
+const accentCSS = (
+  accent: AxisKey | 'neutral',
+  variant: Variant,
+  theme: DefaultTheme
+) => {
+  const axis = theme.getAxisRole(accent)
+
+  if (accent === 'neutral') {
+    return css`
+      color: ${theme.roles.text.primary};
+    `
+  }
+
+  if (variant === 'caption') {
+    return css`
+      color: ${axis.fill};
+    `
+  }
+
+  if (variant === 'body' || variant === 'subtitle') {
+    return css`
+      color: ${axis.text};
+    `
+  }
+
+  return css`
+    color: ${axis.text};
+  `
 }
 
 type StyledProps = {
@@ -114,10 +146,7 @@ const StyledTypography = styled.span<StyledProps>`
     }
 
     if ($accent) {
-      const axis = theme.getAxisRole($accent)
-      return css`
-        color: ${axis.text};
-      `
+      return accentCSS($accent, $variant, theme)
     }
 
     if ($tone === 'soft') {
@@ -143,6 +172,37 @@ const StyledTypography = styled.span<StyledProps>`
       color: ${theme.roles.text.primary};
     `
   }}
+
+  ${({ $variant, $accent, theme }) =>
+    ($variant === 'h1' || $variant === 'h2') && $accent && $accent !== 'neutral'
+      ? css`
+          max-width: 18ch;
+
+          @media (max-width: ${theme.breakpoints.md}) {
+            max-width: 22ch;
+          }
+        `
+      : ''}
+
+  a {
+    color: ${({ theme }) => theme.roles.text.link};
+    text-decoration-color: ${({ theme }) => theme.roles.text.link};
+
+    &:hover {
+      color: ${({ theme }) => theme.roles.text.linkHover};
+      text-decoration-color: ${({ theme }) => theme.roles.text.linkHover};
+    }
+  }
+
+  strong {
+    font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+    color: inherit;
+  }
+
+  em {
+    font-style: italic;
+    color: inherit;
+  }
 `
 
 export default function Typography({

@@ -1,5 +1,12 @@
 // src/design/semantic.ts
-import { PALETTE, type AxisKey, type Mode, type PaletteMode } from './tokens'
+import {
+  PALETTE,
+  SECTION_TONES,
+  type AxisKey,
+  type Mode,
+  type PaletteMode,
+  type SectionToneKey,
+} from './tokens'
 
 export type AxisRole = {
   text: string
@@ -22,6 +29,22 @@ export type IntentRole = {
   focusRing: string
 }
 
+export type SurfaceToneRole = {
+  bg: string
+  fg: string
+  border: string
+  shadow: string
+  backdrop: string
+}
+
+export type SectionToneRole = {
+  base: string
+  edge: string
+  line: string
+  overlayOpacity: number
+  lineOpacity: number
+}
+
 export type SurfaceRoles = {
   canvas: string
   chrome: string
@@ -32,6 +55,8 @@ export type SurfaceRoles = {
   inset: string
   interactive: string
   backdrop: string
+  soft: string
+  band: string
 }
 
 export type TextRoles = {
@@ -98,6 +123,15 @@ export type InteractiveRoles = {
 export type SemanticRoles = {
   text: TextRoles
   surface: SurfaceRoles
+  surfaceTone: {
+    open: SurfaceToneRole
+    soft: SurfaceToneRole
+    panel: SurfaceToneRole
+    elevated: SurfaceToneRole
+    inset: SurfaceToneRole
+    band: SurfaceToneRole
+  }
+  sectionTone: Record<SectionToneKey, SectionToneRole>
   border: BorderRoles
   focus: FocusRoles
   overlay: OverlayRoles
@@ -113,7 +147,7 @@ export type SemanticRoles = {
 }
 
 const buildAxisRole = (group: PaletteMode[AxisKey]): AxisRole => ({
-  text: group.main,
+  text: group[5],
   fill: group.base,
   fillHover: group.hover,
   fillActive: group.active,
@@ -125,14 +159,14 @@ const buildAxisRole = (group: PaletteMode[AxisKey]): AxisRole => ({
 })
 
 const buildIntentRole = (
-  text: string,
+  contrast: string,
   group: PaletteMode['success' | 'warning' | 'danger'] | PaletteMode[AxisKey]
 ): IntentRole => ({
-  text: group.main,
+  text: group[5],
   surface: group.surface,
   surfaceStrong: group[1],
   border: group.border,
-  contrast: text,
+  contrast,
   focusRing: group.base,
 })
 
@@ -151,15 +185,15 @@ const buildSolidButtonRole = (
     fg: foreground,
     bg: role.fill,
     border: role.fill,
-    shadow: 'sm',
+    shadow: 'none',
     hoverFg: foreground,
     hoverBg: role.fillHover,
     hoverBorder: role.fillHover,
-    hoverShadow: 'md',
+    hoverShadow: 'none',
     activeFg: foreground,
     activeBg: role.fillActive,
     activeBorder: role.fillActive,
-    activeShadow: 'sm',
+    activeShadow: 'none',
     disabledFg: p.text.subtle,
     disabledBg: p.surface[1],
     disabledBorder: p.neutral.border,
@@ -170,21 +204,76 @@ const buildSubtleButtonRole = (
   p: PaletteMode,
   role: IntentRole | AxisRole
 ): ButtonRole => ({
-  fg: role.contrast,
+  fg: role.text,
   bg: role.surface,
   border: role.border,
-  shadow: 'xs',
-  hoverFg: role.contrast,
+  shadow: 'none',
+  hoverFg: role.text,
   hoverBg: role.surfaceStrong,
   hoverBorder: role.text,
-  hoverShadow: 'sm',
-  activeFg: role.contrast,
+  hoverShadow: 'none',
+  activeFg: role.text,
   activeBg: role.surface,
   activeBorder: role.border,
-  activeShadow: 'xs',
+  activeShadow: 'none',
   disabledFg: p.text.subtle,
   disabledBg: p.surface[1],
   disabledBorder: p.neutral.border,
+})
+
+const buildSectionToneRoles = (
+  mode: Mode,
+  p: PaletteMode
+): Record<SectionToneKey, SectionToneRole> => ({
+  default: {
+    base: 'transparent',
+    edge: 'transparent',
+    line: 'transparent',
+    overlayOpacity: SECTION_TONES.default.overlayOpacity,
+    lineOpacity: SECTION_TONES.default.lineOpacity,
+  },
+  opening: {
+    base: mode === 'light' ? p.surface[0] : p.surface[0],
+    edge: mode === 'light' ? p.axisEnergy.surface : p.axisEnergy[6],
+    line: mode === 'light' ? p.axisEnergy.border : p.axisEnergy[4],
+    overlayOpacity: SECTION_TONES.opening.overlayOpacity,
+    lineOpacity: SECTION_TONES.opening.lineOpacity,
+  },
+  clarify: {
+    base: mode === 'light' ? p.axisClarity.surface : p.surface[1],
+    edge: mode === 'light' ? p.axisClarity[1] : p.axisClarity[6],
+    line: mode === 'light' ? p.axisClarity.border : p.axisClarity[4],
+    overlayOpacity: SECTION_TONES.clarify.overlayOpacity,
+    lineOpacity: SECTION_TONES.clarify.lineOpacity,
+  },
+  expand: {
+    base: mode === 'light' ? p.axisEnergy.surface : p.axisEnergy.surface,
+    edge: mode === 'light' ? p.axisEnergy[1] : p.axisEnergy[6],
+    line: mode === 'light' ? p.axisEnergy.border : p.axisEnergy[4],
+    overlayOpacity: SECTION_TONES.expand.overlayOpacity,
+    lineOpacity: SECTION_TONES.expand.lineOpacity,
+  },
+  deepen: {
+    base: mode === 'light' ? p.axisResonance.surface : p.surface.backdrop,
+    edge: mode === 'light' ? p.axisResonance[1] : p.axisResonance[6],
+    line: mode === 'light' ? p.axisResonance.border : p.axisResonance[4],
+    overlayOpacity: SECTION_TONES.deepen.overlayOpacity,
+    lineOpacity: SECTION_TONES.deepen.lineOpacity,
+  },
+  relief: {
+    base: mode === 'light' ? p.surface[0] : p.surface[1],
+    edge: mode === 'light' ? p.axisClarity.surface : p.axisClarity[6],
+    line: mode === 'light' ? p.axisClarity.border : p.axisClarity[4],
+    overlayOpacity: SECTION_TONES.relief.overlayOpacity,
+    lineOpacity: SECTION_TONES.relief.lineOpacity,
+  },
+  arrival: {
+    base: mode === 'light' ? p.axisResonance.surface : p.axisResonance.surface,
+    edge: mode === 'light' ? p.axisEnergy.surface : p.axisEnergy[6],
+    line: mode === 'light' ? p.axisEnergy.border : p.axisEnergy[4],
+    overlayOpacity: SECTION_TONES.arrival.overlayOpacity,
+    lineOpacity: SECTION_TONES.arrival.lineOpacity,
+  },
 })
 
 export const buildSemantic = (mode: Mode): SemanticRoles => {
@@ -202,13 +291,27 @@ export const buildSemantic = (mode: Mode): SemanticRoles => {
     surfaceStrong: p.surface[2],
     border: p.neutral.border,
     contrast: p.text.main,
-    focusRing: p.axisClarity.base,
+    focusRing: p.axisEnergy.base,
   }
 
   const infoIntent = buildIntentRole(p.text.main, p.axisResonance)
   const successIntent = buildIntentRole(p.text.main, p.success)
   const warningIntent = buildIntentRole(p.text.main, p.warning)
   const dangerIntent = buildIntentRole(p.text.main, p.danger)
+
+  const surfaces: SurfaceRoles = {
+    canvas: p.neutral.background,
+    chrome: p.surface[0],
+    panel: p.surface.card,
+    panelAlt: mode === 'light' ? p.surface[1] : p.surface[2],
+    panelSubtle: mode === 'light' ? p.axisResonance.surface : p.surface[1],
+    elevated: mode === 'light' ? p.neutral.surface : p.surface[2],
+    inset: mode === 'light' ? p.surface[2] : p.surface.backdrop,
+    interactive: p.surface.hover,
+    backdrop: p.surface.backdrop,
+    soft: mode === 'light' ? p.surface[0] : p.surface[1],
+    band: mode === 'light' ? p.axisResonance.surface : p.axisClarity.surface,
+  }
 
   return {
     text: {
@@ -219,21 +322,56 @@ export const buildSemantic = (mode: Mode): SemanticRoles => {
       link: p.axisClarity.base,
       linkHover: p.axisClarity.hover,
     },
-    surface: {
-      canvas: p.neutral.background,
-      chrome: p.surface[0],
-      panel: p.surface.card,
-      panelAlt: p.surface[1],
-      panelSubtle: p.surface[2],
-      elevated: p.surface[0],
-      inset: p.neutral.backdrop,
-      interactive: p.surface.hover,
-      backdrop: p.surface.backdrop,
+    surface: surfaces,
+    surfaceTone: {
+      open: {
+        bg: 'transparent',
+        fg: p.text.main,
+        border: 'transparent',
+        shadow: 'none',
+        backdrop: 'none',
+      },
+      soft: {
+        bg: surfaces.soft,
+        fg: p.text.main,
+        border: mode === 'light' ? p.surface[2] : p.surface[4],
+        shadow: 'none',
+        backdrop: 'none',
+      },
+      panel: {
+        bg: surfaces.panel,
+        fg: p.text.main,
+        border: mode === 'light' ? p.surface[2] : p.surface[4],
+        shadow: 'none',
+        backdrop: 'none',
+      },
+      elevated: {
+        bg: surfaces.elevated,
+        fg: p.text.main,
+        border: mode === 'light' ? p.axisClarity.border : p.axisClarity[4],
+        shadow: 'none',
+        backdrop: 'none',
+      },
+      inset: {
+        bg: surfaces.inset,
+        fg: p.text.main,
+        border: mode === 'light' ? p.surface[4] : p.surface[4],
+        shadow: 'none',
+        backdrop: 'none',
+      },
+      band: {
+        bg: surfaces.band,
+        fg: p.text.main,
+        border: mode === 'light' ? p.axisResonance.border : p.axisResonance[4],
+        shadow: 'none',
+        backdrop: 'none',
+      },
     },
+    sectionTone: buildSectionToneRoles(mode, p),
     border: {
-      subtle: p.neutral.border,
-      strong: p.surface[4],
-      accent: p.axisClarity.border,
+      subtle: mode === 'light' ? p.surface[2] : p.surface[4],
+      strong: mode === 'light' ? p.axisClarity.border : p.axisClarity[4],
+      accent: p.axisEnergy.border,
       inverse: p.text.inverse,
     },
     focus: {
@@ -241,8 +379,7 @@ export const buildSemantic = (mode: Mode): SemanticRoles => {
       ringInset: p.axisEnergy.hover,
     },
     overlay: {
-      scrim:
-        mode === 'light' ? 'rgba(17, 20, 24, 0.46)' : 'rgba(5, 7, 10, 0.68)',
+      scrim: mode === 'light' ? '#101417' : '#05070A',
     },
     axis,
     intent: {
@@ -260,7 +397,7 @@ export const buildSemantic = (mode: Mode): SemanticRoles => {
         secondary: buildSolidButtonRole(mode, p, axis.axisEnergy, {
           inverse: true,
         }),
-        ghost: buildSubtleButtonRole(p, neutralIntent),
+        ghost: buildSubtleButtonRole(p, axis.axisResonance),
         link: {
           fg: p.axisClarity.base,
           bg: 'transparent',
@@ -270,7 +407,7 @@ export const buildSemantic = (mode: Mode): SemanticRoles => {
           hoverBg: 'transparent',
           hoverBorder: 'transparent',
           hoverShadow: 'none',
-          activeFg: p.axisClarity.base,
+          activeFg: p.axisClarity.hover,
           activeBg: 'transparent',
           activeBorder: 'transparent',
           activeShadow: 'none',
@@ -282,11 +419,11 @@ export const buildSemantic = (mode: Mode): SemanticRoles => {
       },
       toggle: {
         fg: p.text.main,
-        bg: p.surface[0],
-        border: p.neutral.border,
+        bg: mode === 'light' ? p.surface[0] : p.surface[1],
+        border: p.axisClarity.border,
         icon: p.axisEnergy.base,
-        hoverBg: p.surface.hover,
-        hoverBorder: p.axisClarity.border,
+        hoverBg: mode === 'light' ? p.surface[1] : p.surface[2],
+        hoverBorder: p.axisEnergy.border,
       },
     },
   }

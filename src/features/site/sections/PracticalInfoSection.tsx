@@ -5,26 +5,27 @@ import styled from 'styled-components'
 import Button from '@/components/actions/Button'
 import Card from '@/components/primitives/Card'
 import Section from '@/components/primitives/Section'
+import Surface from '@/components/primitives/Surface'
 import Stack from '@/components/primitives/Stack'
 import Typography from '@/design/typography'
 
 const GroupGrid = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(1.25)};
+  gap: ${({ theme }) => theme.spacing(1.05)};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: ${({ theme }) => theme.spacing(1.5)};
+    gap: ${({ theme }) => theme.spacing(1.2)};
   }
 `
 
 const FaqGrid = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(1.1)};
+  gap: ${({ theme }) => theme.spacing(0.95)};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: ${({ theme }) => theme.spacing(1.25)};
+    gap: ${({ theme }) => theme.spacing(1.05)};
   }
 `
 
@@ -41,15 +42,33 @@ export default function PracticalInfoSection({ onGoToContact }: Props) {
       container="default"
       variant="body"
       rhythm="default"
+      tone="relief"
     >
-      <Stack gap={1.5}>
-        <Card tone="neutral" radius="large" bordered padding="lg">
-          <Stack gap={1}>
-            <Typography as="p" variant="caption" gutter={false} tone="soft">
+      <Stack gap={1.3}>
+        <Surface
+          tone="panel"
+          accent="axisClarity"
+          radius="large"
+          bordered
+          padding="lg"
+        >
+          <Stack gap={0.82}>
+            <Typography
+              as="p"
+              variant="caption"
+              gutter={false}
+              accent="axisClarity"
+            >
               Rahmen
             </Typography>
 
-            <Typography as="h2" variant="h2" gutter={false} id="rahmen-title">
+            <Typography
+              as="h2"
+              variant="h2"
+              gutter={false}
+              accent="axisClarity"
+              id="rahmen-title"
+            >
               Meta-Placeholder: Hier später die klare Einordnung, wie das
               Angebot grundsätzlich aufgebaut ist und wie aus Interesse
               praktische Orientierung wird.
@@ -69,16 +88,32 @@ export default function PracticalInfoSection({ onGoToContact }: Props) {
               Vertiefung.
             </Typography>
           </Stack>
-        </Card>
+        </Surface>
 
         <GroupGrid>
-          <Card tone="elevated" radius="large" bordered padding="md">
-            <Stack gap={0.9}>
-              <Typography as="p" variant="caption" gutter={false} tone="soft">
+          <Card
+            tone="soft"
+            axis="axisEnergy"
+            radius="large"
+            bordered
+            padding="md"
+          >
+            <Stack gap={0.82}>
+              <Typography
+                as="p"
+                variant="caption"
+                gutter={false}
+                accent="axisEnergy"
+              >
                 Einstieg und Basis
               </Typography>
 
-              <Typography as="h3" variant="h3" gutter={false} tone="strong">
+              <Typography
+                as="h3"
+                variant="h3"
+                gutter={false}
+                accent="axisEnergy"
+              >
                 Meta-Placeholder: Hier später niederschwellige Formate, über die
                 ein erster Zugang sinnvoll möglich ist.
               </Typography>
@@ -98,13 +133,29 @@ export default function PracticalInfoSection({ onGoToContact }: Props) {
             </Stack>
           </Card>
 
-          <Card tone="neutral" radius="large" bordered padding="md">
-            <Stack gap={0.9}>
-              <Typography as="p" variant="caption" gutter={false} tone="soft">
+          <Card
+            tone="panel"
+            axis="axisClarity"
+            radius="large"
+            bordered
+            padding="md"
+          >
+            <Stack gap={0.82}>
+              <Typography
+                as="p"
+                variant="caption"
+                gutter={false}
+                accent="axisClarity"
+              >
                 Regelmäßige Praxis
               </Typography>
 
-              <Typography as="h3" variant="h3" gutter={false} tone="strong">
+              <Typography
+                as="h3"
+                variant="h3"
+                gutter={false}
+                accent="axisClarity"
+              >
                 Meta-Placeholder: Hier später Kurs- und Klassenformate für
                 Menschen, die kontinuierlicher einsteigen oder weitergehen
                 wollen.
@@ -125,13 +176,29 @@ export default function PracticalInfoSection({ onGoToContact }: Props) {
             </Stack>
           </Card>
 
-          <Card tone="neutral" radius="large" bordered padding="md">
-            <Stack gap={0.9}>
-              <Typography as="p" variant="caption" gutter={false} tone="soft">
+          <Card
+            tone="panel"
+            axis="axisResonance"
+            radius="large"
+            bordered
+            padding="md"
+          >
+            <Stack gap={0.82}>
+              <Typography
+                as="p"
+                variant="caption"
+                gutter={false}
+                accent="axisResonance"
+              >
                 Individuelle Wege
               </Typography>
 
-              <Typography as="h3" variant="h3" gutter={false} tone="strong">
+              <Typography
+                as="h3"
+                variant="h3"
+                gutter={false}
+                accent="axisResonance"
+              >
                 Meta-Placeholder: Hier später Einzelsettings und persönliche
                 Praxisbegleitung.
               </Typography>
@@ -151,13 +218,29 @@ export default function PracticalInfoSection({ onGoToContact }: Props) {
             </Stack>
           </Card>
 
-          <Card tone="elevated" radius="large" bordered padding="md">
-            <Stack gap={0.9}>
-              <Typography as="p" variant="caption" gutter={false} tone="soft">
+          <Card
+            tone="soft"
+            axis="axisEnergy"
+            radius="large"
+            bordered
+            padding="md"
+          >
+            <Stack gap={0.82}>
+              <Typography
+                as="p"
+                variant="caption"
+                gutter={false}
+                accent="axisEnergy"
+              >
                 Professionell und extern
               </Typography>
 
-              <Typography as="h3" variant="h3" gutter={false} tone="strong">
+              <Typography
+                as="h3"
+                variant="h3"
+                gutter={false}
+                accent="axisEnergy"
+              >
                 Meta-Placeholder: Hier später Firmen-, Team- oder andere
                 professionelle Formate lesbar machen.
               </Typography>
@@ -178,19 +261,29 @@ export default function PracticalInfoSection({ onGoToContact }: Props) {
           </Card>
         </GroupGrid>
 
-        <Card
-          tone="accent"
-          axis="axisClarity"
+        <Surface
+          tone="soft"
+          accent="axisClarity"
           radius="large"
           bordered
           padding="md"
         >
-          <Stack gap={0.9}>
-            <Typography as="p" variant="caption" gutter={false}>
+          <Stack gap={0.78}>
+            <Typography
+              as="p"
+              variant="caption"
+              gutter={false}
+              accent="axisClarity"
+            >
               Funktionslogik
             </Typography>
 
-            <Typography as="h3" variant="h3" gutter={false} tone="strong">
+            <Typography
+              as="h3"
+              variant="h3"
+              gutter={false}
+              accent="axisClarity"
+            >
               Meta-Placeholder: Hier später die innere Ordnung des Angebots
               knapp erklären.
             </Typography>
@@ -208,16 +301,32 @@ export default function PracticalInfoSection({ onGoToContact }: Props) {
               später besser lesen können.
             </Typography>
           </Stack>
-        </Card>
+        </Surface>
 
         <FaqGrid>
-          <Card tone="neutral" radius="large" bordered padding="md">
-            <Stack gap={0.75}>
-              <Typography as="p" variant="caption" gutter={false} tone="soft">
+          <Card
+            tone="soft"
+            axis="axisClarity"
+            radius="large"
+            bordered
+            padding="md"
+          >
+            <Stack gap={0.72}>
+              <Typography
+                as="p"
+                variant="caption"
+                gutter={false}
+                accent="axisClarity"
+              >
                 FAQ
               </Typography>
 
-              <Typography as="h3" variant="h3" gutter={false}>
+              <Typography
+                as="h3"
+                variant="h3"
+                gutter={false}
+                accent="axisClarity"
+              >
                 Meta-Placeholder: Welche Form ist für einen Einstieg sinnvoll?
               </Typography>
 
@@ -229,13 +338,29 @@ export default function PracticalInfoSection({ onGoToContact }: Props) {
             </Stack>
           </Card>
 
-          <Card tone="neutral" radius="large" bordered padding="md">
-            <Stack gap={0.75}>
-              <Typography as="p" variant="caption" gutter={false} tone="soft">
+          <Card
+            tone="soft"
+            axis="axisClarity"
+            radius="large"
+            bordered
+            padding="md"
+          >
+            <Stack gap={0.72}>
+              <Typography
+                as="p"
+                variant="caption"
+                gutter={false}
+                accent="axisClarity"
+              >
                 FAQ
               </Typography>
 
-              <Typography as="h3" variant="h3" gutter={false}>
+              <Typography
+                as="h3"
+                variant="h3"
+                gutter={false}
+                accent="axisClarity"
+              >
                 Meta-Placeholder: Brauche ich Vorerfahrung oder bestimmte
                 Voraussetzungen?
               </Typography>
@@ -248,13 +373,29 @@ export default function PracticalInfoSection({ onGoToContact }: Props) {
             </Stack>
           </Card>
 
-          <Card tone="neutral" radius="large" bordered padding="md">
-            <Stack gap={0.75}>
-              <Typography as="p" variant="caption" gutter={false} tone="soft">
+          <Card
+            tone="soft"
+            axis="axisClarity"
+            radius="large"
+            bordered
+            padding="md"
+          >
+            <Stack gap={0.72}>
+              <Typography
+                as="p"
+                variant="caption"
+                gutter={false}
+                accent="axisClarity"
+              >
                 FAQ
               </Typography>
 
-              <Typography as="h3" variant="h3" gutter={false}>
+              <Typography
+                as="h3"
+                variant="h3"
+                gutter={false}
+                accent="axisClarity"
+              >
                 Meta-Placeholder: Was ist online, vor Ort, mobil oder im
                 Gruppenrahmen möglich?
               </Typography>
@@ -267,13 +408,29 @@ export default function PracticalInfoSection({ onGoToContact }: Props) {
             </Stack>
           </Card>
 
-          <Card tone="neutral" radius="large" bordered padding="md">
-            <Stack gap={0.75}>
-              <Typography as="p" variant="caption" gutter={false} tone="soft">
+          <Card
+            tone="soft"
+            axis="axisClarity"
+            radius="large"
+            bordered
+            padding="md"
+          >
+            <Stack gap={0.72}>
+              <Typography
+                as="p"
+                variant="caption"
+                gutter={false}
+                accent="axisClarity"
+              >
                 FAQ
               </Typography>
 
-              <Typography as="h3" variant="h3" gutter={false}>
+              <Typography
+                as="h3"
+                variant="h3"
+                gutter={false}
+                accent="axisClarity"
+              >
                 Meta-Placeholder: Wie transparent sind Preise, Laufzeiten und
                 Verbindlichkeit?
               </Typography>
@@ -287,9 +444,20 @@ export default function PracticalInfoSection({ onGoToContact }: Props) {
           </Card>
         </FaqGrid>
 
-        <Card tone="neutral" radius="large" bordered padding="md">
-          <Stack gap={0.9}>
-            <Typography as="p" variant="caption" gutter={false} tone="soft">
+        <Surface
+          tone="panel"
+          accent="axisResonance"
+          radius="large"
+          bordered
+          padding="md"
+        >
+          <Stack gap={0.78}>
+            <Typography
+              as="p"
+              variant="caption"
+              gutter={false}
+              accent="axisResonance"
+            >
               Nächster Schritt
             </Typography>
 
@@ -304,7 +472,7 @@ export default function PracticalInfoSection({ onGoToContact }: Props) {
               Meta-Placeholder: Kontakt und Einstieg
             </Button>
           </Stack>
-        </Card>
+        </Surface>
       </Stack>
     </Section>
   )
