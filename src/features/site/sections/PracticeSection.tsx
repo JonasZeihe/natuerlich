@@ -52,21 +52,23 @@ export default function PracticeSection({ onGoToFrame }: Props) {
       variant="body"
       rhythm="default"
       tone="expand"
+      energy="tension"
     >
       <SectionStack>
         <HeaderSurface
           tone="soft"
-          accent="axisEnergy"
+          energy="opening"
           radius="large"
           bordered
           padding="lg"
+          weight="steady"
         >
           <Stack gap={0.74}>
             <Typography
               as="p"
               variant="caption"
               gutter={false}
-              accent="axisEnergy"
+              accent="axisOpening"
             >
               Praxis
             </Typography>
@@ -75,7 +77,7 @@ export default function PracticeSection({ onGoToFrame }: Props) {
               as="h2"
               variant="h2"
               gutter={false}
-              accent="axisEnergy"
+              accent="axisOpening"
               id="praxis-title"
             >
               Frage dieser Stelle: Was wird hier konkret getragen, wie hängt es
@@ -88,27 +90,23 @@ export default function PracticeSection({ onGoToFrame }: Props) {
         <IntroGrid>
           <Surface
             tone="accent"
-            accent="axisEnergy"
+            energy="flow"
             radius="large"
             bordered
             padding="lg"
+            weight="steady"
           >
             <Stack gap={0.9}>
               <Typography
                 as="p"
                 variant="caption"
                 gutter={false}
-                accent="axisEnergy"
+                accent="axisFlow"
               >
                 Grundlage
               </Typography>
 
-              <Typography
-                as="h3"
-                variant="h3"
-                gutter={false}
-                accent="axisEnergy"
-              >
+              <Typography as="h3" variant="h3" gutter={false} accent="axisFlow">
                 Meta-Placeholder: Hier später die tragende Grundfläche von
                 Meditation, Achtsamkeit und Entspannung als gemeinsamer Boden
                 aller Praxisfelder.
@@ -130,17 +128,18 @@ export default function PracticeSection({ onGoToFrame }: Props) {
 
           <Surface
             tone="panel"
-            accent="axisResonance"
+            energy="opening"
             radius="large"
             bordered
             padding="lg"
+            weight="steady"
           >
             <Stack gap={0.82}>
               <Typography
                 as="p"
                 variant="caption"
                 gutter={false}
-                accent="axisResonance"
+                accent="axisOpening"
               >
                 Ausfaltung
               </Typography>
@@ -149,7 +148,7 @@ export default function PracticeSection({ onGoToFrame }: Props) {
                 as="h3"
                 variant="h3"
                 gutter={false}
-                accent="axisResonance"
+                accent="axisOpening"
               >
                 Meta-Placeholder: Hier später Yoga als eigenständige Sparte mit
                 klarem Charakter, eigener Ausrichtung und spürbarer Verbindung
@@ -173,7 +172,7 @@ export default function PracticeSection({ onGoToFrame }: Props) {
         <PairGrid>
           <Surface
             tone="soft"
-            accent="axisResonance"
+            energy="flow"
             radius="large"
             bordered
             padding="lg"
@@ -183,17 +182,12 @@ export default function PracticeSection({ onGoToFrame }: Props) {
                 as="p"
                 variant="caption"
                 gutter={false}
-                accent="axisResonance"
+                accent="axisFlow"
               >
                 Verwandtschaft
               </Typography>
 
-              <Typography
-                as="h3"
-                variant="h3"
-                gutter={false}
-                accent="axisResonance"
-              >
+              <Typography as="h3" variant="h3" gutter={false} accent="axisFlow">
                 Meta-Placeholder: Hier später Qigong und Tai Chi als nähere
                 Verwandtschaft sichtbar machen: unterschieden, aber aus einer
                 engeren Linie lesbar.
@@ -214,7 +208,7 @@ export default function PracticeSection({ onGoToFrame }: Props) {
 
           <Surface
             tone="panel"
-            accent="axisClarity"
+            energy="density"
             radius="large"
             bordered
             padding="lg"
@@ -224,7 +218,7 @@ export default function PracticeSection({ onGoToFrame }: Props) {
                 as="p"
                 variant="caption"
                 gutter={false}
-                accent="axisClarity"
+                accent="axisDensity"
               >
                 Formate
               </Typography>
@@ -233,7 +227,7 @@ export default function PracticeSection({ onGoToFrame }: Props) {
                 as="h3"
                 variant="h3"
                 gutter={false}
-                accent="axisClarity"
+                accent="axisDensity"
               >
                 Meta-Placeholder: Hier später die Grundformate knapp und klar
                 benennen, in denen diese Arbeit grundsätzlich stattfindet.

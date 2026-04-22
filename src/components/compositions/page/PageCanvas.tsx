@@ -1,7 +1,7 @@
 // src/components/compositions/page/PageCanvas.tsx
 'use client'
 
-import { ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import styled, { css } from 'styled-components'
 
 type PageCanvasVariant = 'default' | 'landing' | 'article'

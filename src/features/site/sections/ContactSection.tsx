@@ -36,21 +36,23 @@ export default function ContactSection() {
       variant="outro"
       rhythm="compact"
       tone="arrival"
+      energy="flow"
     >
       <SectionStack>
         <IntroSurface
           tone="panel"
-          accent="axisEnergy"
+          energy="flow"
           radius="large"
           bordered
           padding="lg"
+          weight="steady"
         >
           <Stack gap={0.82}>
             <Typography
               as="p"
               variant="caption"
               gutter={false}
-              accent="axisEnergy"
+              accent="axisFlow"
             >
               Kontakt
             </Typography>
@@ -59,7 +61,7 @@ export default function ContactSection() {
               as="h2"
               variant="h2"
               gutter={false}
-              accent="axisEnergy"
+              accent="axisFlow"
               id="kontakt-title"
             >
               Meta-Placeholder: Hier später die klare Schlusssetzung, dass ein
@@ -83,7 +85,7 @@ export default function ContactSection() {
         <DetailGrid>
           <Surface
             tone="soft"
-            accent="axisClarity"
+            energy="density"
             radius="large"
             bordered
             padding="md"
@@ -93,7 +95,7 @@ export default function ContactSection() {
                 as="p"
                 variant="caption"
                 gutter={false}
-                accent="axisClarity"
+                accent="axisDensity"
               >
                 Kontaktweg
               </Typography>
@@ -102,7 +104,7 @@ export default function ContactSection() {
                 as="h3"
                 variant="h3"
                 gutter={false}
-                accent="axisClarity"
+                accent="axisDensity"
               >
                 Meta-Placeholder: Hier später der konkrete Weg der
                 Kontaktaufnahme.
@@ -124,7 +126,7 @@ export default function ContactSection() {
 
           <Surface
             tone="soft"
-            accent="axisResonance"
+            energy="flow"
             radius="large"
             bordered
             padding="md"
@@ -134,17 +136,12 @@ export default function ContactSection() {
                 as="p"
                 variant="caption"
                 gutter={false}
-                accent="axisResonance"
+                accent="axisFlow"
               >
                 Erster Schritt
               </Typography>
 
-              <Typography
-                as="h3"
-                variant="h3"
-                gutter={false}
-                accent="axisResonance"
-              >
+              <Typography as="h3" variant="h3" gutter={false} accent="axisFlow">
                 Meta-Placeholder: Hier später Orientierung für Menschen, die
                 noch nicht genau wissen, welches Format passt.
               </Typography>
@@ -165,17 +162,18 @@ export default function ContactSection() {
 
         <Surface
           tone="panel"
-          accent="axisResonance"
+          energy="density"
           radius="large"
           bordered
           padding="md"
+          weight="steady"
         >
           <Stack gap={0.75}>
             <Typography
               as="p"
               variant="caption"
               gutter={false}
-              accent="axisResonance"
+              accent="axisDensity"
             >
               Was dann geschieht
             </Typography>

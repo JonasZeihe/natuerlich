@@ -1,10 +1,16 @@
 // src/design/semantic.ts
 import {
-  PALETTE,
-  SECTION_TONES,
+  ENERGY_ALIASES,
+  FOUNDATION_STATUS,
+  NEUTRAL,
+  PROJECT_ENERGY,
+  PROTO_STATES,
+  SECTION_TONE_MAP,
   type AxisKey,
+  type EnergyInput,
+  type EnergyMix,
   type Mode,
-  type PaletteMode,
+  type ProtoStateKey,
   type SectionToneKey,
 } from './tokens'
 
@@ -33,11 +39,11 @@ export type SurfaceToneRole = {
   bg: string
   fg: string
   border: string
-  shadow: string
-  backdrop: string
+  shadow: 'none' | 'xs' | 'sm' | 'md' | 'lg' | 'glow'
+  backdrop: 'none'
 }
 
-export type SectionToneRole = {
+export type StateToneRole = {
   base: string
   edge: string
   line: string
@@ -135,7 +141,8 @@ export type SemanticRoles = {
     inset: SurfaceToneRole
     band: SurfaceToneRole
   }
-  sectionTone: Record<SectionToneKey, SectionToneRole>
+  stateTone: Record<ProtoStateKey, StateToneRole>
+  sectionTone: Record<SectionToneKey, StateToneRole>
   border: BorderRoles
   focus: FocusRoles
   overlay: OverlayRoles
@@ -150,63 +157,172 @@ export type SemanticRoles = {
   interactive: InteractiveRoles
 }
 
-const buildAxisRole = (group: PaletteMode[AxisKey]): AxisRole => ({
-  text: group[5],
-  fill: group.base,
-  fillHover: group.hover,
-  fillActive: group.active,
-  surface: group.surface,
-  surfaceStrong: group[1],
-  border: group.border,
-  contrast: group.contrast,
-  focusRing: group.base,
-})
+const mixHex = (first: string, second: string, weight = 0.5) =>
+  `color-mix(in srgb, ${first} ${Math.round(weight * 100)}%, ${second})`
 
-const buildIntentRole = (
-  contrast: string,
-  group: PaletteMode['success' | 'warning' | 'danger'] | PaletteMode[AxisKey]
-): IntentRole => ({
-  text: group[5],
-  surface: group.surface,
-  surfaceStrong: group[1],
-  border: group.border,
-  contrast,
-  focusRing: group.base,
-})
+const isAxisKey = (value: string): value is AxisKey =>
+  value === 'axisOpening' ||
+  value === 'axisTension' ||
+  value === 'axisDensity' ||
+  value === 'axisFlow'
 
-const buildSolidButtonRole = (
-  mode: Mode,
-  p: PaletteMode,
-  role: AxisRole,
-  options: {
-    inverse?: boolean
-  } = {}
-): ButtonRole => {
-  const foreground =
-    options.inverse && mode === 'light' ? p.text.inverse : role.contrast
+export const resolveAxisKey = (input: EnergyInput): AxisKey => {
+  if (isAxisKey(input)) return input
+  return ENERGY_ALIASES[input]
+}
+
+const buildAxisRole = (mode: Mode, key: AxisKey): AxisRole => {
+  const group = PROJECT_ENERGY[mode][key]
+  const neutral = NEUTRAL[mode]
 
   return {
-    fg: foreground,
-    bg: role.fill,
-    border: role.fill,
-    shadow: 'none',
-    hoverFg: foreground,
-    hoverBg: role.fillHover,
-    hoverBorder: role.fillHover,
-    hoverShadow: 'none',
-    activeFg: foreground,
-    activeBg: role.fillActive,
-    activeBorder: role.fillActive,
-    activeShadow: 'none',
-    disabledFg: p.text.subtle,
-    disabledBg: p.surface[1],
-    disabledBorder: p.neutral.border,
+    text: mode === 'light' ? group.strong : group.main,
+    fill: group.main,
+    fillHover: mixHex(group.main, group.strong, 0.68),
+    fillActive: mixHex(group.main, group.strong, 0.82),
+    surface: group.soft,
+    surfaceStrong: mixHex(group.soft, neutral.surfaceAlt, 0.64),
+    border: mixHex(group.main, neutral.borderStrong, 0.56),
+    contrast: neutral.inverse,
+    focusRing: group.main,
   }
 }
 
+const mergeAxisRoles = (first: AxisRole, second: AxisRole): AxisRole => ({
+  text: mixHex(first.text, second.text),
+  fill: mixHex(first.fill, second.fill),
+  fillHover: mixHex(first.fillHover, second.fillHover),
+  fillActive: mixHex(first.fillActive, second.fillActive),
+  surface: mixHex(first.surface, second.surface),
+  surfaceStrong: mixHex(first.surfaceStrong, second.surfaceStrong),
+  border: mixHex(first.border, second.border),
+  contrast: first.contrast,
+  focusRing: mixHex(first.focusRing, second.focusRing),
+})
+
+export const resolveAxisMix = (
+  mode: Mode,
+  mix?: EnergyMix
+): AxisRole | null => {
+  if (!mix) return null
+
+  const first = resolveAxisKey(mix[0])
+  const second = resolveAxisKey(mix[1])
+
+  return mergeAxisRoles(buildAxisRole(mode, first), buildAxisRole(mode, second))
+}
+
+const buildIntentRole = (
+  mode: Mode,
+  input: AxisKey | 'success' | 'warning' | 'danger'
+): IntentRole => {
+  const neutral = NEUTRAL[mode]
+
+  if (input === 'success' || input === 'warning' || input === 'danger') {
+    const group = FOUNDATION_STATUS[mode][input]
+
+    return {
+      text: mode === 'light' ? group.strong : group.main,
+      surface: group.soft,
+      surfaceStrong: mixHex(group.soft, neutral.surfaceAlt, 0.62),
+      border: mixHex(group.main, neutral.borderStrong, 0.56),
+      contrast: neutral.inverse,
+      focusRing: group.main,
+    }
+  }
+
+  const axis = buildAxisRole(mode, input)
+
+  return {
+    text: axis.text,
+    surface: axis.surface,
+    surfaceStrong: axis.surfaceStrong,
+    border: axis.border,
+    contrast: axis.contrast,
+    focusRing: axis.focusRing,
+  }
+}
+
+const buildStateToneRoles = (
+  mode: Mode
+): Record<ProtoStateKey, StateToneRole> => {
+  const neutral = NEUTRAL[mode]
+
+  const createStateTone = (state: ProtoStateKey): StateToneRole => {
+    const config = PROTO_STATES[state]
+
+    return {
+      base: neutral.surface,
+      edge: neutral.borderStrong,
+      line: neutral.borderSoft,
+      wash: mixHex(neutral.surface, neutral.elevated, 0.56),
+      overlayOpacity: config.edge,
+      lineOpacity: config.line,
+      washOpacity: config.wash,
+      gapScale:
+        config.rhythm === 'spacious'
+          ? 1.06
+          : config.rhythm === 'compact'
+            ? 0.9
+            : 1,
+      padScale:
+        config.rhythm === 'spacious'
+          ? 1.06
+          : config.rhythm === 'compact'
+            ? 0.94
+            : 1,
+    }
+  }
+
+  return {
+    approachable: createStateTone('approachable'),
+    resonance: createStateTone('resonance'),
+    density: createStateTone('density'),
+    proof: createStateTone('proof'),
+    pressure: createStateTone('pressure'),
+    reopen: createStateTone('reopen'),
+    flow: createStateTone('flow'),
+  }
+}
+
+const buildSectionToneRoles = (
+  stateTone: Record<ProtoStateKey, StateToneRole>
+): Record<SectionToneKey, StateToneRole> => ({
+  default: stateTone[SECTION_TONE_MAP.default],
+  opening: stateTone[SECTION_TONE_MAP.opening],
+  clarify: stateTone[SECTION_TONE_MAP.clarify],
+  expand: stateTone[SECTION_TONE_MAP.expand],
+  deepen: stateTone[SECTION_TONE_MAP.deepen],
+  threshold: stateTone[SECTION_TONE_MAP.threshold],
+  pressure: stateTone[SECTION_TONE_MAP.pressure],
+  relief: stateTone[SECTION_TONE_MAP.relief],
+  arrival: stateTone[SECTION_TONE_MAP.arrival],
+})
+
+const buildSolidButtonRole = (
+  axis: AxisRole,
+  neutral: (typeof NEUTRAL)[Mode]
+): ButtonRole => ({
+  fg: neutral.inverse,
+  bg: axis.fill,
+  border: axis.fill,
+  shadow: 'none',
+  hoverFg: neutral.inverse,
+  hoverBg: axis.fillHover,
+  hoverBorder: axis.fillHover,
+  hoverShadow: 'none',
+  activeFg: neutral.inverse,
+  activeBg: axis.fillActive,
+  activeBorder: axis.fillActive,
+  activeShadow: 'none',
+  disabledFg: neutral.textSoft,
+  disabledBg: neutral.surfaceAlt,
+  disabledBorder: neutral.borderSoft,
+})
+
 const buildSubtleButtonRole = (
-  p: PaletteMode,
-  role: IntentRole | AxisRole
+  role: IntentRole | AxisRole,
+  neutral: (typeof NEUTRAL)[Mode]
 ): ButtonRole => ({
   fg: role.text,
   bg: role.surface,
@@ -214,226 +330,125 @@ const buildSubtleButtonRole = (
   shadow: 'none',
   hoverFg: role.text,
   hoverBg: role.surfaceStrong,
-  hoverBorder: role.text,
+  hoverBorder: role.border,
   hoverShadow: 'none',
   activeFg: role.text,
   activeBg: role.surface,
   activeBorder: role.border,
   activeShadow: 'none',
-  disabledFg: p.text.subtle,
-  disabledBg: p.surface[1],
-  disabledBorder: p.neutral.border,
-})
-
-const buildSectionToneRoles = (
-  mode: Mode,
-  p: PaletteMode
-): Record<SectionToneKey, SectionToneRole> => ({
-  default: {
-    base: 'transparent',
-    edge: 'transparent',
-    line: 'transparent',
-    wash: 'transparent',
-    overlayOpacity: SECTION_TONES.default.overlayOpacity,
-    lineOpacity: SECTION_TONES.default.lineOpacity,
-    washOpacity: SECTION_TONES.default.washOpacity,
-    gapScale: SECTION_TONES.default.gapScale,
-    padScale: SECTION_TONES.default.padScale,
-  },
-  opening: {
-    base: p.surface[0],
-    edge: mode === 'light' ? p.axisEnergy.surface : p.axisEnergy[6],
-    line: mode === 'light' ? p.axisEnergy.border : p.axisEnergy[4],
-    wash: mode === 'light' ? p.axisEnergy[0] : p.axisEnergy.surface,
-    overlayOpacity: SECTION_TONES.opening.overlayOpacity,
-    lineOpacity: SECTION_TONES.opening.lineOpacity,
-    washOpacity: SECTION_TONES.opening.washOpacity,
-    gapScale: SECTION_TONES.opening.gapScale,
-    padScale: SECTION_TONES.opening.padScale,
-  },
-  clarify: {
-    base: mode === 'light' ? p.axisClarity.surface : p.surface[1],
-    edge: mode === 'light' ? p.axisClarity[1] : p.axisClarity[6],
-    line: mode === 'light' ? p.axisClarity.border : p.axisClarity[4],
-    wash: mode === 'light' ? p.axisClarity[0] : p.axisClarity.surface,
-    overlayOpacity: SECTION_TONES.clarify.overlayOpacity,
-    lineOpacity: SECTION_TONES.clarify.lineOpacity,
-    washOpacity: SECTION_TONES.clarify.washOpacity,
-    gapScale: SECTION_TONES.clarify.gapScale,
-    padScale: SECTION_TONES.clarify.padScale,
-  },
-  expand: {
-    base: p.axisEnergy.surface,
-    edge: mode === 'light' ? p.axisEnergy[1] : p.axisEnergy[6],
-    line: mode === 'light' ? p.axisEnergy.border : p.axisEnergy[4],
-    wash: mode === 'light' ? p.axisEnergy[0] : p.axisEnergy.surface,
-    overlayOpacity: SECTION_TONES.expand.overlayOpacity,
-    lineOpacity: SECTION_TONES.expand.lineOpacity,
-    washOpacity: SECTION_TONES.expand.washOpacity,
-    gapScale: SECTION_TONES.expand.gapScale,
-    padScale: SECTION_TONES.expand.padScale,
-  },
-  deepen: {
-    base: mode === 'light' ? p.axisResonance.surface : p.surface.backdrop,
-    edge: mode === 'light' ? p.axisResonance[1] : p.axisResonance[6],
-    line: mode === 'light' ? p.axisResonance.border : p.axisResonance[4],
-    wash: mode === 'light' ? p.axisResonance[0] : p.axisResonance.surface,
-    overlayOpacity: SECTION_TONES.deepen.overlayOpacity,
-    lineOpacity: SECTION_TONES.deepen.lineOpacity,
-    washOpacity: SECTION_TONES.deepen.washOpacity,
-    gapScale: SECTION_TONES.deepen.gapScale,
-    padScale: SECTION_TONES.deepen.padScale,
-  },
-  threshold: {
-    base: mode === 'light' ? p.surface.card : p.surface.backdrop,
-    edge: mode === 'light' ? p.axisClarity[4] : p.axisClarity[5],
-    line: mode === 'light' ? p.axisClarity[5] : p.axisClarity[3],
-    wash: mode === 'light' ? p.axisClarity.surface : p.axisClarity.surface,
-    overlayOpacity: SECTION_TONES.threshold.overlayOpacity,
-    lineOpacity: SECTION_TONES.threshold.lineOpacity,
-    washOpacity: SECTION_TONES.threshold.washOpacity,
-    gapScale: SECTION_TONES.threshold.gapScale,
-    padScale: SECTION_TONES.threshold.padScale,
-  },
-  pressure: {
-    base: mode === 'light' ? p.depth.ultraLight : p.neutral.background,
-    edge: mode === 'light' ? p.axisResonance[5] : p.axisResonance[4],
-    line: mode === 'light' ? p.axisClarity[6] : p.axisClarity[3],
-    wash: mode === 'light' ? p.axisResonance[1] : p.axisResonance.surface,
-    overlayOpacity: SECTION_TONES.pressure.overlayOpacity,
-    lineOpacity: SECTION_TONES.pressure.lineOpacity,
-    washOpacity: SECTION_TONES.pressure.washOpacity,
-    gapScale: SECTION_TONES.pressure.gapScale,
-    padScale: SECTION_TONES.pressure.padScale,
-  },
-  relief: {
-    base: mode === 'light' ? p.surface[0] : p.surface[1],
-    edge: mode === 'light' ? p.axisClarity.surface : p.axisClarity[6],
-    line: mode === 'light' ? p.axisClarity.border : p.axisClarity[4],
-    wash: mode === 'light' ? p.surface[0] : p.surface[1],
-    overlayOpacity: SECTION_TONES.relief.overlayOpacity,
-    lineOpacity: SECTION_TONES.relief.lineOpacity,
-    washOpacity: SECTION_TONES.relief.washOpacity,
-    gapScale: SECTION_TONES.relief.gapScale,
-    padScale: SECTION_TONES.relief.padScale,
-  },
-  arrival: {
-    base: p.axisResonance.surface,
-    edge: mode === 'light' ? p.axisEnergy.surface : p.axisEnergy[6],
-    line: mode === 'light' ? p.axisEnergy.border : p.axisEnergy[4],
-    wash: mode === 'light' ? p.axisEnergy[0] : p.axisResonance.surface,
-    overlayOpacity: SECTION_TONES.arrival.overlayOpacity,
-    lineOpacity: SECTION_TONES.arrival.lineOpacity,
-    washOpacity: SECTION_TONES.arrival.washOpacity,
-    gapScale: SECTION_TONES.arrival.gapScale,
-    padScale: SECTION_TONES.arrival.padScale,
-  },
+  disabledFg: neutral.textSoft,
+  disabledBg: neutral.surfaceAlt,
+  disabledBorder: neutral.borderSoft,
 })
 
 export const buildSemantic = (mode: Mode): SemanticRoles => {
-  const p = PALETTE[mode]
+  const neutral = NEUTRAL[mode]
 
   const axis = {
-    axisClarity: buildAxisRole(p.axisClarity),
-    axisEnergy: buildAxisRole(p.axisEnergy),
-    axisResonance: buildAxisRole(p.axisResonance),
+    axisOpening: buildAxisRole(mode, 'axisOpening'),
+    axisTension: buildAxisRole(mode, 'axisTension'),
+    axisDensity: buildAxisRole(mode, 'axisDensity'),
+    axisFlow: buildAxisRole(mode, 'axisFlow'),
+  }
+
+  const stateTone = buildStateToneRoles(mode)
+
+  const surfaces: SurfaceRoles = {
+    canvas: neutral.background,
+    chrome: neutral.surface,
+    panel: neutral.surface,
+    panelAlt: neutral.surfaceAlt,
+    panelSubtle: mixHex(neutral.surface, axis.axisFlow.surface, 0.18),
+    elevated: neutral.elevated,
+    inset: neutral.inset,
+    interactive: mixHex(neutral.surfaceAlt, neutral.elevated, 0.52),
+    backdrop: neutral.backdrop,
+    soft: mixHex(neutral.surface, neutral.elevated, 0.5),
+    band: mixHex(neutral.surface, axis.axisDensity.surface, 0.26),
   }
 
   const neutralIntent: IntentRole = {
-    text: p.text.main,
-    surface: p.surface[1],
-    surfaceStrong: p.surface[2],
-    border: p.neutral.border,
-    contrast: p.text.main,
-    focusRing: p.axisEnergy.base,
+    text: neutral.text,
+    surface: neutral.surfaceAlt,
+    surfaceStrong: mixHex(neutral.surfaceAlt, neutral.elevated, 0.5),
+    border: neutral.borderSoft,
+    contrast: neutral.text,
+    focusRing: axis.axisOpening.focusRing,
   }
 
-  const infoIntent = buildIntentRole(p.text.main, p.axisResonance)
-  const successIntent = buildIntentRole(p.text.main, p.success)
-  const warningIntent = buildIntentRole(p.text.main, p.warning)
-  const dangerIntent = buildIntentRole(p.text.main, p.danger)
-
-  const surfaces: SurfaceRoles = {
-    canvas: p.neutral.background,
-    chrome: p.surface[0],
-    panel: p.surface.card,
-    panelAlt: mode === 'light' ? p.surface[1] : p.surface[2],
-    panelSubtle: mode === 'light' ? p.axisResonance.surface : p.surface[1],
-    elevated: mode === 'light' ? p.neutral.surface : p.surface[2],
-    inset: mode === 'light' ? p.surface[2] : p.surface.backdrop,
-    interactive: p.surface.hover,
-    backdrop: p.surface.backdrop,
-    soft: mode === 'light' ? p.surface[0] : p.surface[1],
-    band: mode === 'light' ? p.axisResonance.surface : p.axisClarity.surface,
-  }
+  const infoIntent = buildIntentRole(mode, 'axisFlow')
+  const successIntent = buildIntentRole(mode, 'success')
+  const warningIntent = buildIntentRole(mode, 'warning')
+  const dangerIntent = buildIntentRole(mode, 'danger')
 
   return {
     text: {
-      primary: p.text.main,
-      secondary: mode === 'light' ? p.depth.main : p.depth[5],
-      subtle: p.text.subtle,
-      inverse: p.text.inverse,
-      link: p.axisClarity.base,
-      linkHover: p.axisClarity.hover,
+      primary: neutral.text,
+      secondary: mixHex(neutral.textSoft, neutral.text, 0.34),
+      subtle: neutral.textSoft,
+      inverse: neutral.inverse,
+      link: axis.axisDensity.fill,
+      linkHover: axis.axisDensity.fillHover,
     },
     surface: surfaces,
     surfaceTone: {
       open: {
         bg: 'transparent',
-        fg: p.text.main,
+        fg: neutral.text,
         border: 'transparent',
         shadow: 'none',
         backdrop: 'none',
       },
       soft: {
         bg: surfaces.soft,
-        fg: p.text.main,
-        border: mode === 'light' ? p.surface[2] : p.surface[4],
+        fg: neutral.text,
+        border: neutral.borderSoft,
         shadow: 'none',
         backdrop: 'none',
       },
       panel: {
         bg: surfaces.panel,
-        fg: p.text.main,
-        border: mode === 'light' ? p.surface[2] : p.surface[4],
+        fg: neutral.text,
+        border: neutral.borderSoft,
         shadow: 'none',
         backdrop: 'none',
       },
       elevated: {
         bg: surfaces.elevated,
-        fg: p.text.main,
-        border: mode === 'light' ? p.axisClarity.border : p.axisClarity[4],
+        fg: neutral.text,
+        border: neutral.borderStrong,
         shadow: 'none',
         backdrop: 'none',
       },
       inset: {
         bg: surfaces.inset,
-        fg: p.text.main,
-        border: p.surface[4],
+        fg: neutral.text,
+        border: neutral.borderSoft,
         shadow: 'none',
         backdrop: 'none',
       },
       band: {
         bg: surfaces.band,
-        fg: p.text.main,
-        border: mode === 'light' ? p.axisResonance.border : p.axisResonance[4],
+        fg: neutral.text,
+        border: axis.axisDensity.border,
         shadow: 'none',
         backdrop: 'none',
       },
     },
-    sectionTone: buildSectionToneRoles(mode, p),
+    stateTone,
+    sectionTone: buildSectionToneRoles(stateTone),
     border: {
-      subtle: mode === 'light' ? p.surface[2] : p.surface[4],
-      strong: mode === 'light' ? p.axisClarity.border : p.axisClarity[4],
-      accent: p.axisEnergy.border,
-      inverse: p.text.inverse,
+      subtle: neutral.borderSoft,
+      strong: neutral.borderStrong,
+      accent: axis.axisOpening.border,
+      inverse: neutral.inverse,
     },
     focus: {
-      ring: p.axisEnergy.base,
-      ringInset: p.axisEnergy.hover,
+      ring: axis.axisOpening.focusRing,
+      ringInset: axis.axisOpening.fillHover,
     },
     overlay: {
-      scrim: mode === 'light' ? '#101417' : '#05070A',
+      scrim: mode === 'light' ? '#101417' : '#040607',
     },
     axis,
     intent: {
@@ -445,39 +460,35 @@ export const buildSemantic = (mode: Mode): SemanticRoles => {
     },
     interactive: {
       button: {
-        primary: buildSolidButtonRole(mode, p, axis.axisClarity, {
-          inverse: true,
-        }),
-        secondary: buildSolidButtonRole(mode, p, axis.axisEnergy, {
-          inverse: true,
-        }),
-        ghost: buildSubtleButtonRole(p, axis.axisResonance),
+        primary: buildSolidButtonRole(axis.axisDensity, neutral),
+        secondary: buildSolidButtonRole(axis.axisOpening, neutral),
+        ghost: buildSubtleButtonRole(axis.axisFlow, neutral),
         link: {
-          fg: p.axisClarity.base,
+          fg: axis.axisDensity.fill,
           bg: 'transparent',
           border: 'transparent',
           shadow: 'none',
-          hoverFg: p.axisClarity.hover,
+          hoverFg: axis.axisDensity.fillHover,
           hoverBg: 'transparent',
           hoverBorder: 'transparent',
           hoverShadow: 'none',
-          activeFg: p.axisClarity.hover,
+          activeFg: axis.axisDensity.fillActive,
           activeBg: 'transparent',
           activeBorder: 'transparent',
           activeShadow: 'none',
-          disabledFg: p.text.subtle,
+          disabledFg: neutral.textSoft,
           disabledBg: 'transparent',
           disabledBorder: 'transparent',
         },
-        danger: buildSubtleButtonRole(p, dangerIntent),
+        danger: buildSubtleButtonRole(dangerIntent, neutral),
       },
       toggle: {
-        fg: p.text.main,
-        bg: mode === 'light' ? p.surface[0] : p.surface[1],
-        border: p.axisClarity.border,
-        icon: p.axisEnergy.base,
-        hoverBg: mode === 'light' ? p.surface[1] : p.surface[2],
-        hoverBorder: p.axisEnergy.border,
+        fg: neutral.text,
+        bg: neutral.surface,
+        border: neutral.borderSoft,
+        icon: axis.axisOpening.fill,
+        hoverBg: neutral.surfaceAlt,
+        hoverBorder: neutral.borderStrong,
       },
     },
   }

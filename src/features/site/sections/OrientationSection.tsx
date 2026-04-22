@@ -36,21 +36,23 @@ export default function OrientationSection() {
       variant="body"
       rhythm="default"
       tone="clarify"
+      energy="opening"
     >
       <SectionStack>
         <IntroSurface
           tone="panel"
-          accent="axisClarity"
+          energy="opening"
           radius="large"
           bordered
           padding="lg"
+          weight="steady"
         >
           <Stack gap={0.9}>
             <Typography
               as="p"
               variant="caption"
               gutter={false}
-              accent="axisClarity"
+              accent="axisDensity"
             >
               Einordnung
             </Typography>
@@ -59,7 +61,7 @@ export default function OrientationSection() {
               as="h2"
               variant="h2"
               gutter={false}
-              accent="axisClarity"
+              accent="axisDensity"
               id="einordnung-title"
             >
               Meta-Placeholder: Hier später die klare Setzung, was diese Arbeit
@@ -80,27 +82,23 @@ export default function OrientationSection() {
         <ContrastGrid>
           <Surface
             tone="panel"
-            accent="axisResonance"
+            energy="flow"
             radius="large"
             bordered
             padding="lg"
+            weight="steady"
           >
             <Stack gap={0.82}>
               <Typography
                 as="p"
                 variant="caption"
                 gutter={false}
-                accent="axisResonance"
+                accent="axisFlow"
               >
                 Worum es hier geht
               </Typography>
 
-              <Typography
-                as="h3"
-                variant="h3"
-                gutter={false}
-                accent="axisResonance"
-              >
+              <Typography as="h3" variant="h3" gutter={false} accent="axisFlow">
                 Meta-Placeholder: Später die positive Einordnung dieser Arbeit.
               </Typography>
 
@@ -118,17 +116,18 @@ export default function OrientationSection() {
 
           <Surface
             tone="accent"
-            accent="axisClarity"
+            energy="tension"
             radius="large"
             bordered
             padding="lg"
+            weight="steady"
           >
             <Stack gap={0.82}>
               <Typography
                 as="p"
                 variant="caption"
                 gutter={false}
-                accent="axisClarity"
+                accent="axisTension"
               >
                 Worum es hier nicht geht
               </Typography>
@@ -137,7 +136,7 @@ export default function OrientationSection() {
                 as="h3"
                 variant="h3"
                 gutter={false}
-                accent="axisClarity"
+                accent="axisTension"
               >
                 Meta-Placeholder: Später die klare Negativabgrenzung ohne
                 Bitterkeit.
@@ -159,7 +158,7 @@ export default function OrientationSection() {
 
         <Surface
           tone="soft"
-          accent="axisClarity"
+          energy="density"
           radius="large"
           bordered
           padding="md"
@@ -169,7 +168,7 @@ export default function OrientationSection() {
               as="p"
               variant="caption"
               gutter={false}
-              accent="axisClarity"
+              accent="axisDensity"
             >
               Übergang
             </Typography>

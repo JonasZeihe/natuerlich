@@ -35,7 +35,7 @@ const SideColumn = styled.div`
 
 const MediaPlaceholder = styled.div`
   min-height: 18rem;
-  border: 1px dashed ${({ theme }) => theme.getAxisRole('axisClarity').border};
+  border: 1px dashed ${({ theme }) => theme.getAxisRole('axisDensity').border};
   border-radius: ${({ theme }) => theme.borderRadius.medium};
   background: ${({ theme }) => theme.roles.surface.inset};
   display: flex;
@@ -53,23 +53,23 @@ export default function TeacherSection() {
       variant="body"
       rhythm="default"
       tone="pressure"
+      mix={['density', 'tension']}
     >
       <SectionStack>
         <TopSurface
           tone="panel"
-          accent="axisResonance"
+          mix={['density', 'tension']}
           radius="large"
           bordered
           padding="lg"
-          density="dense"
-          emphasis="strong"
+          weight="strong"
         >
           <Stack gap={0.82}>
             <Typography
               as="p"
               variant="caption"
               gutter={false}
-              accent="axisResonance"
+              accent="axisTension"
               measure="wide"
             >
               Jonas als Lehrer
@@ -79,7 +79,7 @@ export default function TeacherSection() {
               as="h2"
               variant="h2"
               gutter={false}
-              accent="axisResonance"
+              accent="axisTension"
               cadence="dense"
               measure="title"
               id="lehrer-title"
@@ -118,19 +118,18 @@ export default function TeacherSection() {
         <MiddleLayout>
           <Surface
             tone="accent"
-            accent="axisResonance"
+            energy="tension"
             radius="large"
             bordered
             padding="lg"
-            density="dense"
-            emphasis="strong"
+            weight="strong"
           >
             <Stack gap={0.9}>
               <Typography
                 as="p"
                 variant="caption"
                 gutter={false}
-                accent="axisResonance"
+                accent="axisTension"
                 measure="wide"
               >
                 Eigener Weg und Reibung
@@ -140,7 +139,7 @@ export default function TeacherSection() {
                 as="h3"
                 variant="h3"
                 gutter={false}
-                accent="axisResonance"
+                accent="axisTension"
                 cadence="dense"
                 measure="title"
               >
@@ -177,19 +176,18 @@ export default function TeacherSection() {
           <SideColumn>
             <Surface
               tone="panel"
-              accent="axisClarity"
+              energy="density"
               radius="large"
               bordered
               padding="md"
-              density="dense"
-              emphasis="steady"
+              weight="steady"
             >
               <Stack gap={0.8}>
                 <Typography
                   as="p"
                   variant="caption"
                   gutter={false}
-                  accent="axisClarity"
+                  accent="axisDensity"
                   measure="wide"
                 >
                   Unterrichtsverständnis
@@ -199,7 +197,7 @@ export default function TeacherSection() {
                   as="h3"
                   variant="h3"
                   gutter={false}
-                  accent="axisClarity"
+                  accent="axisDensity"
                   cadence="dense"
                   measure="title"
                 >
@@ -222,18 +220,18 @@ export default function TeacherSection() {
 
             <Surface
               tone="inset"
-              accent="axisClarity"
+              energy="density"
               radius="large"
               bordered
               padding="sm"
-              emphasis="quiet"
+              weight="quiet"
             >
               <MediaPlaceholder>
                 <Typography
                   as="p"
                   variant="body"
                   gutter={false}
-                  accent="axisClarity"
+                  accent="axisDensity"
                   measure="prose"
                 >
                   Bild-Placeholder: Reale Lehrerpräsenz. Ruhige, klare
@@ -247,19 +245,18 @@ export default function TeacherSection() {
 
         <Surface
           tone="soft"
-          accent="axisClarity"
+          energy="density"
           radius="large"
           bordered
           padding="md"
-          density="balanced"
-          emphasis="steady"
+          weight="steady"
         >
           <Stack gap={0.8}>
             <Typography
               as="p"
               variant="caption"
               gutter={false}
-              accent="axisClarity"
+              accent="axisDensity"
               measure="wide"
             >
               Fachliche Grundlage
@@ -269,7 +266,7 @@ export default function TeacherSection() {
               as="h3"
               variant="h3"
               gutter={false}
-              accent="axisClarity"
+              accent="axisDensity"
               measure="title"
             >
               Meta-Placeholder: Hier später die geordnete, belastbare

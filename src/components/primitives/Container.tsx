@@ -16,7 +16,7 @@ const Container = styled.div<{ max?: ContainerMax }>`
   max-width: ${({ theme, max = 'content' }) =>
     max === 'full' ? 'none' : theme.layout.containers[max]};
   margin-inline: auto;
-  padding-inline: clamp(0.75rem, 3vw, 1.5rem);
+  padding-inline: ${({ theme }) => theme.layout.containerInset};
 `
 
 export default Container

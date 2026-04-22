@@ -42,7 +42,7 @@ const ListItemRow = styled.li`
 
   &:hover {
     background: ${({ theme }) => theme.roles.surface.interactive};
-    border-color: ${({ theme }) => theme.getAxisRole('axisResonance').border};
+    border-color: ${({ theme }) => theme.getAxisRole('axisFlow').border};
     box-shadow: ${({ theme }) => theme.boxShadow.md};
     transform: translateY(-1px);
   }
@@ -59,7 +59,7 @@ const IconWrapper = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${({ theme }) => theme.getAxisRole('axisResonance').text};
+  color: ${({ theme }) => theme.getAxisRole('axisFlow').text};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     font-size: 1.1rem;
@@ -75,7 +75,7 @@ const Content = styled.div`
   min-width: 0;
 
   & strong {
-    color: ${({ theme }) => theme.getAxisRole('axisResonance').text};
+    color: ${({ theme }) => theme.getAxisRole('axisFlow').text};
     font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   }
 

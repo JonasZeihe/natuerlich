@@ -1,7 +1,7 @@
 // src/components/utilities/HighlightText.tsx
 'use client'
 
-import { ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import styled from 'styled-components'
 import useAccent from '@/design/hooks/useAccent'
 import type { AxisKey } from '@/design/theme'
@@ -9,7 +9,7 @@ import type { AxisKey } from '@/design/theme'
 type HighlightTextProps = {
   children: ReactNode
   color?: string
-  accent?: AxisKey | 'neutral'
+  accent?: AxisKey
   soft?: boolean
 }
 
@@ -31,7 +31,7 @@ const Highlight = styled.span<{
 export default function HighlightText({
   children,
   color,
-  accent = 'axisEnergy',
+  accent = 'axisOpening',
   soft = true,
 }: HighlightTextProps) {
   const accentInfo = useAccent(accent)

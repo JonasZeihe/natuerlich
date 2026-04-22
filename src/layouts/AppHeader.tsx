@@ -17,6 +17,11 @@ import {
 } from '@/features/site/model/sections'
 
 const HEADER_HEIGHT = 76
+const TOP_LOCK_OFFSET = 16
+const HIDE_START_OFFSET = 120
+const HIDE_DELTA = 10
+const REVEAL_DELTA = 8
+const ACTIVE_OFFSET = HEADER_HEIGHT + 40
 
 const HEADER_SECTIONS: SiteSection[] = SITE_SECTIONS.filter(
   (section) => section.showInHeader
@@ -26,14 +31,39 @@ const OBSERVED_SECTION_IDS: SiteSectionId[] = SITE_SECTIONS.filter(
   (section) => section.id !== 'einstieg'
 ).map((section) => section.id)
 
+const getActiveSectionId = (
+  ids: readonly SiteSectionId[],
+  offset: number
+): SiteSectionId => {
+  let active: SiteSectionId = 'einstieg'
+
+  for (const id of ids) {
+    const element = document.getElementById(id)
+    if (!element) continue
+
+    if (element.offsetTop <= offset) {
+      active = id
+      continue
+    }
+
+    break
+  }
+
+  return active
+}
+
 export default function AppHeader() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [activeId, setActiveId] = useState<SiteSectionId>('einstieg')
   const [compact, setCompact] = useState(false)
+  const [hidden, setHidden] = useState(false)
+
   const shellRef = useRef<HTMLElement | null>(null)
   const ids = useMemo(() => OBSERVED_SECTION_IDS, [])
   const compactLoggedRef = useRef<boolean | null>(null)
   const activeLoggedRef = useRef<SiteSectionId | null>(null)
+  const hiddenLoggedRef = useRef<boolean | null>(null)
+  const lastScrollYRef = useRef(0)
 
   useEffect(() => {
     document.documentElement.style.setProperty(
@@ -56,54 +86,118 @@ export default function AppHeader() {
   }, [])
 
   useEffect(() => {
-    const onScroll = () => {
-      setCompact(window.scrollY > 20)
+    const elements = ids
+      .map((id) => document.getElementById(id))
+      .filter(Boolean) as HTMLElement[]
+
+    if (!elements.length) {
+      getClientLogger()
+        .withContext({
+          cat: 'navigation',
+          phase: 'fail',
+        })
+        .warn('header_observed_sections_missing', {
+          observedIds: ids,
+        })
+      return
     }
 
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
+    elements.forEach((element) => {
+      element.style.scrollMarginTop = `${ACTIVE_OFFSET}px`
 
-    return () => {
-      window.removeEventListener('scroll', onScroll)
-    }
-  }, [])
-
-  useEffect(() => {
-    if (compactLoggedRef.current === compact) return
-
-    compactLoggedRef.current = compact
+      if (!element.hasAttribute('tabindex')) {
+        element.setAttribute('tabindex', '-1')
+      }
+    })
 
     getClientLogger()
       .withContext({
-        cat: 'ui',
-        phase: 'state',
+        cat: 'navigation',
+        phase: 'observe',
       })
-      .info('header_compact_state_changed', {
-        compact,
+      .info('header_section_tracking_ready', {
+        observedIds: elements.map((element) => element.id),
+        offset: ACTIVE_OFFSET,
       })
-  }, [compact])
+  }, [ids])
 
   useEffect(() => {
-    const root = document.documentElement
+    const syncFromScroll = () => {
+      const currentY = window.scrollY
+      const delta = currentY - lastScrollYRef.current
 
+      if (currentY <= TOP_LOCK_OFFSET) {
+        setCompact(false)
+        setHidden(false)
+      } else {
+        setCompact(true)
+
+        if (!menuOpen) {
+          if (delta > HIDE_DELTA && currentY > HIDE_START_OFFSET) {
+            setHidden(true)
+          } else if (delta < -REVEAL_DELTA) {
+            setHidden(false)
+          }
+        }
+      }
+
+      const nextActiveId = getActiveSectionId(ids, currentY + ACTIVE_OFFSET)
+      setActiveId((current) =>
+        current === nextActiveId ? current : nextActiveId
+      )
+
+      lastScrollYRef.current = currentY
+    }
+
+    let frame = 0
+
+    const requestSync = () => {
+      if (frame) return
+
+      frame = window.requestAnimationFrame(() => {
+        frame = 0
+        syncFromScroll()
+      })
+    }
+
+    lastScrollYRef.current = window.scrollY
+    syncFromScroll()
+
+    window.addEventListener('scroll', requestSync, { passive: true })
+    window.addEventListener('resize', requestSync)
+
+    return () => {
+      window.removeEventListener('scroll', requestSync)
+      window.removeEventListener('resize', requestSync)
+
+      if (frame) {
+        window.cancelAnimationFrame(frame)
+      }
+    }
+  }, [ids, menuOpen])
+
+  useEffect(() => {
     if (!menuOpen) return
 
+    setHidden(false)
+
+    const root = document.documentElement
     const previousOverflow = root.style.overflow
     root.style.overflow = 'hidden'
 
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        getClientLogger()
-          .withContext({
-            cat: 'navigation',
-            phase: 'state',
-          })
-          .info('header_mobile_menu_closed', {
-            source: 'escape',
-          })
+      if (event.key !== 'Escape') return
 
-        setMenuOpen(false)
-      }
+      getClientLogger()
+        .withContext({
+          cat: 'navigation',
+          phase: 'state',
+        })
+        .info('header_mobile_menu_closed', {
+          source: 'escape',
+        })
+
+      setMenuOpen(false)
     }
 
     window.addEventListener('keydown', onKeyDown)
@@ -143,74 +237,34 @@ export default function AppHeader() {
   }, [menuOpen])
 
   useEffect(() => {
-    const elements = ids
-      .map((id) => document.getElementById(id))
-      .filter(Boolean) as HTMLElement[]
+    if (compactLoggedRef.current === compact) return
 
-    if (!elements.length) {
-      getClientLogger()
-        .withContext({
-          cat: 'navigation',
-          phase: 'fail',
-        })
-        .warn('header_observed_sections_missing', {
-          observedIds: ids,
-        })
-      return
-    }
-
-    const offset = HEADER_HEIGHT + 20
-
-    elements.forEach((element) => {
-      element.style.scrollMarginTop = `${offset}px`
-
-      if (!element.hasAttribute('tabindex')) {
-        element.setAttribute('tabindex', '-1')
-      }
-    })
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)
-
-        if (visible[0]?.target?.id) {
-          setActiveId(visible[0].target.id as SiteSectionId)
-          return
-        }
-
-        const past = entries
-          .filter((entry) => entry.boundingClientRect.top < 0)
-          .sort((a, b) => b.boundingClientRect.top - a.boundingClientRect.top)
-
-        if (past[0]?.target?.id) {
-          setActiveId(past[0].target.id as SiteSectionId)
-        }
-      },
-      {
-        root: null,
-        rootMargin: `-${offset}px 0px -45% 0px`,
-        threshold: [0, 0.1, 0.25, 0.5, 0.75, 1],
-      }
-    )
-
-    elements.forEach((element) => observer.observe(element))
+    compactLoggedRef.current = compact
 
     getClientLogger()
       .withContext({
-        cat: 'navigation',
-        phase: 'observe',
+        cat: 'ui',
+        phase: 'state',
       })
-      .info('header_section_observer_ready', {
-        observedIds: elements.map((element) => element.id),
-        offset,
+      .info('header_compact_state_changed', {
+        compact,
       })
+  }, [compact])
 
-    return () => {
-      observer.disconnect()
-    }
-  }, [ids])
+  useEffect(() => {
+    if (hiddenLoggedRef.current === hidden) return
+
+    hiddenLoggedRef.current = hidden
+
+    getClientLogger()
+      .withContext({
+        cat: 'ui',
+        phase: 'state',
+      })
+      .info('header_visibility_changed', {
+        hidden,
+      })
+  }, [hidden])
 
   useEffect(() => {
     if (activeLoggedRef.current === activeId) return
@@ -249,6 +303,7 @@ export default function AppHeader() {
     <HeaderShell
       ref={shellRef}
       $compact={compact}
+      $hidden={hidden && !menuOpen}
       role="banner"
       aria-label="Seitenkopf"
     >
@@ -279,7 +334,7 @@ export default function AppHeader() {
             </BrandWrap>
 
             <DesktopNav aria-label="Hauptnavigation">
-              <Inline gap={0.25} wrap={false} justify="end">
+              <Inline gap={0.35} wrap={false} justify="end">
                 {HEADER_SECTIONS.map((section) => (
                   <NavLink
                     key={section.id}
@@ -352,26 +407,22 @@ export default function AppHeader() {
   )
 }
 
-const HeaderShell = styled.header<{ $compact: boolean }>`
+const HeaderShell = styled.header<{ $compact: boolean; $hidden: boolean }>`
   position: sticky;
   top: 0;
   z-index: 1000;
   width: 100%;
+  background: ${({ theme }) => theme.roles.surface.canvas};
   border-bottom: 1px solid
     ${({ theme, $compact }) =>
       $compact ? theme.roles.border.strong : theme.roles.border.subtle};
-  background: ${({ theme }) => theme.roles.surface.canvas};
-  box-shadow: none;
-  transition:
-    border-color 0.18s ease,
-    background-color 0.18s ease;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 
   &::after {
     content: '';
     position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: auto 0 0;
     height: 1px;
     background: ${({ theme, $compact }) =>
       $compact ? theme.roles.border.strong : 'transparent'};
@@ -436,21 +487,22 @@ const navLinkStyles = css<{ $active: boolean }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: ${({ theme }) => theme.spacing(3.25)};
-  padding-inline: ${({ theme }) => theme.spacing(0.8)};
+  min-height: ${({ theme }) => theme.spacing(3.35)};
+  padding-inline: ${({ theme }) => theme.spacing(0.95)};
   border-radius: ${({ theme }) => theme.borderRadius.pill};
-  border: 1px solid transparent;
   text-decoration: none;
+  border: 1px solid
+    ${({ theme, $active }) =>
+      $active ? theme.getEnergyRole('density').border : 'transparent'};
+  background: ${({ theme, $active }) =>
+    $active ? theme.getSurfaceTone('soft', 'density').bg : 'transparent'};
+  color: ${({ theme, $active }) =>
+    $active ? theme.getEnergyRole('density').text : theme.roles.text.secondary};
   font-size: ${({ theme }) => theme.typography.fontSize.small};
   font-weight: ${({ theme, $active }) =>
     $active
-      ? theme.typography.fontWeight.medium
-      : theme.typography.fontWeight.regular};
-  color: ${({ theme, $active }) =>
-    $active
-      ? theme.getAxisRole('axisClarity').text
-      : theme.roles.text.secondary};
-  background: transparent;
+      ? theme.typography.fontWeight.bold
+      : theme.typography.fontWeight.medium};
   box-shadow: none;
   transition:
     color 0.18s ease,
@@ -461,8 +513,14 @@ const navLinkStyles = css<{ $active: boolean }>`
   &:focus-visible {
     text-decoration: none;
     color: ${({ theme }) => theme.roles.text.primary};
-    border-color: ${({ theme }) => theme.roles.border.subtle};
-    background: ${({ theme }) => theme.roles.surface.chrome};
+    border-color: ${({ theme, $active }) =>
+      $active
+        ? theme.getEnergyRole('density').border
+        : theme.roles.border.subtle};
+    background: ${({ theme, $active }) =>
+      $active
+        ? theme.getSurfaceTone('soft', 'density').bg
+        : theme.roles.surface.chrome};
   }
 `
 
@@ -511,14 +569,14 @@ const MenuButton = styled.button`
   &:focus-visible {
     background: ${({ theme }) => theme.roles.surface.chrome};
     border-color: ${({ theme }) => theme.roles.border.strong};
-    color: ${({ theme }) => theme.getAxisRole('axisClarity').text};
+    color: ${({ theme }) => theme.getEnergyRole('density').text};
   }
 `
 
 const MobilePanel = styled.nav`
   display: none;
   margin-top: ${({ theme }) => theme.spacing(0.7)};
-  padding-top: ${({ theme }) => theme.spacing(0.25)};
+  padding-top: ${({ theme }) => theme.spacing(0.35)};
   border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
@@ -529,7 +587,7 @@ const MobilePanel = styled.nav`
 const MobileList = styled.ol`
   list-style: none;
   margin: 0;
-  padding: ${({ theme }) => `${theme.spacing(0.35)} 0 0`};
+  padding: ${({ theme }) => `${theme.spacing(0.25)} 0 0`};
   display: grid;
   gap: ${({ theme }) => theme.spacingHalf(0.55)};
 `

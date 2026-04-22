@@ -10,7 +10,6 @@ type Size = 'sm' | 'md'
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: Variant
   size?: Size
-  customBackground?: string
   fullWidth?: boolean
 }
 
@@ -56,33 +55,8 @@ const baseStyles = css`
   }
 `
 
-const roleStyles = css<{ $variant: Variant; $customBg?: string }>`
-  ${({ theme, $variant, $customBg }) => {
-    if ($customBg) {
-      return css`
-        color: ${theme.roles.text.inverse};
-        background: ${$customBg};
-        border-color: ${$customBg};
-        box-shadow: none;
-
-        &:hover {
-          transform: translateY(-1px);
-        }
-
-        &:active {
-          transform: translateY(0);
-        }
-
-        &:disabled,
-        &[aria-disabled='true'] {
-          color: ${theme.roles.text.subtle};
-          background: ${theme.roles.surface.panelAlt};
-          border-color: ${theme.roles.border.subtle};
-          box-shadow: none;
-        }
-      `
-    }
-
+const roleStyles = css<{ $variant: Variant }>`
+  ${({ theme, $variant }) => {
     const role = theme.roles.interactive.button[$variant]
 
     return css`
@@ -156,7 +130,6 @@ const widthStyles = css<{ $fullWidth: boolean; $variant: Variant }>`
 const StyledButton = styled.button<{
   $variant: Variant
   $size: Size
-  $customBg?: string
   $fullWidth: boolean
 }>`
   ${baseStyles};
@@ -167,14 +140,7 @@ const StyledButton = styled.button<{
 `
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-  {
-    variant = 'primary',
-    size = 'md',
-    customBackground,
-    fullWidth = false,
-    children,
-    ...rest
-  },
+  { variant = 'primary', size = 'md', fullWidth = false, children, ...rest },
   ref
 ) {
   return (
@@ -182,7 +148,6 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
       ref={ref}
       $variant={variant}
       $size={size}
-      $customBg={customBackground}
       $fullWidth={fullWidth}
       type={rest.type ?? 'button'}
       {...rest}

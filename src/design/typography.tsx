@@ -20,7 +20,7 @@ type TypographyProps = {
   variant?: Variant
   align?: Align
   color?: SemanticColor
-  accent?: AxisKey | 'neutral'
+  accent?: AxisKey
   tone?: Tone
   measure?: Measure
   cadence?: Cadence
@@ -128,18 +128,8 @@ const cadenceCSS = (cadence: Cadence, variant: Variant) => {
   return ''
 }
 
-const accentCSS = (
-  accent: AxisKey | 'neutral',
-  variant: Variant,
-  theme: DefaultTheme
-) => {
+const accentCSS = (accent: AxisKey, variant: Variant, theme: DefaultTheme) => {
   const axis = theme.getAxisRole(accent)
-
-  if (accent === 'neutral') {
-    return css`
-      color: ${theme.roles.text.primary};
-    `
-  }
 
   if (variant === 'caption') {
     return css`
@@ -157,7 +147,7 @@ type StyledProps = {
   $align: Align
   $gutter: boolean
   $semanticColor?: SemanticColor
-  $accent?: AxisKey | 'neutral'
+  $accent?: AxisKey
   $tone: Tone
   $measure: Measure
   $cadence: Cadence
@@ -207,10 +197,7 @@ const StyledTypography = styled.span<StyledProps>`
   }}
 
   ${({ $variant, $measure, $accent, theme }) =>
-    ($variant === 'h1' || $variant === 'h2') &&
-    $measure === 'title' &&
-    $accent &&
-    $accent !== 'neutral'
+    ($variant === 'h1' || $variant === 'h2') && $measure === 'title' && $accent
       ? css`
           max-width: ${theme.typography.measure.title};
 
@@ -223,11 +210,11 @@ const StyledTypography = styled.span<StyledProps>`
   a {
     color: ${({ theme }) => theme.roles.text.link};
     text-decoration-color: ${({ theme }) => theme.roles.text.link};
+  }
 
-    &:hover {
-      color: ${({ theme }) => theme.roles.text.linkHover};
-      text-decoration-color: ${({ theme }) => theme.roles.text.linkHover};
-    }
+  a:hover {
+    color: ${({ theme }) => theme.roles.text.linkHover};
+    text-decoration-color: ${({ theme }) => theme.roles.text.linkHover};
   }
 
   strong {

@@ -170,7 +170,7 @@ const Track = styled.span<{
         `}
 
   ${({ theme, $checked }) => {
-    const accent = theme.getAxisRole('axisEnergy')
+    const accent = theme.getAxisRole('axisOpening')
 
     return css`
       background: ${$checked ? accent.surface : theme.roles.surface.panelAlt};
@@ -205,7 +205,7 @@ const Thumb = styled.span<{
         `}
 
   ${({ theme, $checked, $variant }) => {
-    const accent = theme.getAxisRole('axisEnergy')
+    const accent = theme.getAxisRole('axisOpening')
     const inset = theme.spacingHalf(1)
 
     const compactTravel = `calc(${theme.spacing(5.5)} - ${theme.spacing(2.5)} - ${theme.spacingHalf(2)})`

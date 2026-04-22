@@ -55,12 +55,12 @@ const Control = styled.input`
     border-radius: 0.18rem;
     transform: scale(0);
     transition: transform 0.12s ease;
-    background: ${({ theme }) => theme.getAxisRole('axisClarity').fill};
+    background: ${({ theme }) => theme.getAxisRole('axisDensity').fill};
   }
 
   &:checked {
-    border-color: ${({ theme }) => theme.getAxisRole('axisClarity').border};
-    background: ${({ theme }) => theme.getAxisRole('axisClarity').surface};
+    border-color: ${({ theme }) => theme.getAxisRole('axisDensity').border};
+    background: ${({ theme }) => theme.getAxisRole('axisDensity').surface};
   }
 
   &:checked::after {

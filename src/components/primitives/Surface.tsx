@@ -7,21 +7,20 @@ import {
   type ReactNode,
 } from 'react'
 import styled, { css } from 'styled-components'
-import type { AxisKey, SurfaceToneKey } from '@/design/theme'
+import type { EnergyInput, EnergyMix, SurfaceToneKey } from '@/design/theme'
 
 type SurfacePadding = 'none' | 'sm' | 'md' | 'lg'
 type SurfaceRadius = 'none' | 'small' | 'medium' | 'large' | 'pill'
-type SurfaceDensity = 'relaxed' | 'balanced' | 'dense'
-type SurfaceEmphasis = 'quiet' | 'steady' | 'strong'
+type SurfaceWeight = 'quiet' | 'steady' | 'strong'
 
 type Props = {
   tone?: SurfaceToneKey
-  accent?: AxisKey | 'neutral'
+  energy?: EnergyInput
+  mix?: EnergyMix
   radius?: SurfaceRadius
   padding?: SurfacePadding
   bordered?: boolean
-  density?: SurfaceDensity
-  emphasis?: SurfaceEmphasis
+  weight?: SurfaceWeight
   children?: ReactNode
 } & Omit<ComponentPropsWithoutRef<'div'>, 'color'>
 
@@ -30,30 +29,23 @@ type StyledProps = {
   $padding: SurfacePadding
   $bordered: boolean
   $tone: SurfaceToneKey
-  $accent: AxisKey | 'neutral'
-  $density: SurfaceDensity
-  $emphasis: SurfaceEmphasis
+  $energy?: EnergyInput
+  $mix?: EnergyMix
+  $weight: SurfaceWeight
 }
 
-const densityScaleMap: Record<SurfaceDensity, number> = {
-  relaxed: 1.08,
-  balanced: 1,
-  dense: 0.9,
-}
-
-const emphasisStyle = (
-  emphasis: SurfaceEmphasis,
-  theme: import('styled-components').DefaultTheme,
+const resolveWeightStyles = (
+  weight: SurfaceWeight,
   border: string,
   bordered: boolean
 ) => {
-  if (emphasis === 'quiet') {
+  if (weight === 'quiet') {
     return css`
       box-shadow: none;
     `
   }
 
-  if (emphasis === 'strong') {
+  if (weight === 'strong') {
     return css`
       box-shadow:
         inset 0 1px 0 ${bordered ? border : 'transparent'},
@@ -72,18 +64,14 @@ const Base = styled.div<StyledProps>`
   border-radius: ${({ theme, $radius }) => theme.borderRadius[$radius]};
   overflow: clip;
 
-  ${({ theme, $padding, $density }) => {
-    const scale = densityScaleMap[$density]
+  ${({ theme, $padding }) => css`
+    padding: ${$padding === 'none'
+      ? '0'
+      : theme.layout.surfacePadding[$padding]};
+  `}
 
-    return css`
-      padding: ${$padding === 'none'
-        ? '0'
-        : `calc(${theme.layout.surfacePadding[$padding]} * ${scale})`};
-    `
-  }}
-
-  ${({ theme, $tone, $accent, $bordered, $emphasis }) => {
-    const resolved = theme.getSurfaceTone($tone, $accent)
+  ${({ theme, $tone, $energy, $mix, $bordered, $weight }) => {
+    const resolved = theme.getSurfaceTone($tone, $energy, $mix)
 
     return css`
       background: ${resolved.bg};
@@ -93,56 +81,20 @@ const Base = styled.div<StyledProps>`
         : 'none'};
       backdrop-filter: ${resolved.backdrop};
       -webkit-backdrop-filter: ${resolved.backdrop};
-      ${emphasisStyle($emphasis, theme, resolved.border, $bordered)}
+      ${resolveWeightStyles($weight, resolved.border, $bordered)}
     `
   }}
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    ${({ $padding, $density }) => {
-      const scale = densityScaleMap[$density]
-      const base =
-        $padding === 'none'
-          ? '0'
-          : $padding === 'sm'
-            ? 'clamp(0.58rem, 1.4vw, 0.76rem)'
-            : $padding === 'lg'
-              ? 'clamp(0.82rem, 1.9vw, 1.18rem)'
-              : 'clamp(0.68rem, 1.6vw, 0.94rem)'
-
-      return css`
-        padding: ${$padding === 'none' ? '0' : `calc(${base} * ${scale})`};
-      `
-    }}
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
-    ${({ $padding, $density }) => {
-      const scale = densityScaleMap[$density]
-      const base =
-        $padding === 'none'
-          ? '0'
-          : $padding === 'sm'
-            ? 'clamp(0.56rem, 1.8vw, 0.72rem)'
-            : $padding === 'lg'
-              ? 'clamp(0.74rem, 2vw, 1rem)'
-              : 'clamp(0.64rem, 1.9vw, 0.86rem)'
-
-      return css`
-        padding: ${$padding === 'none' ? '0' : `calc(${base} * ${scale})`};
-      `
-    }}
-  }
 `
 
 const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
   {
     tone = 'panel',
-    accent = 'neutral',
+    energy,
+    mix,
     radius = 'large',
-    padding = 'none',
-    bordered = false,
-    density = 'balanced',
-    emphasis = 'quiet',
+    padding = 'md',
+    bordered = true,
+    weight = 'quiet',
     children,
     ...rest
   },
@@ -152,12 +104,12 @@ const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
     <Base
       ref={ref}
       $tone={tone}
-      $accent={accent}
+      $energy={energy}
+      $mix={mix}
       $radius={radius}
       $padding={padding}
       $bordered={bordered}
-      $density={density}
-      $emphasis={emphasis}
+      $weight={weight}
       {...rest}
     >
       {children}

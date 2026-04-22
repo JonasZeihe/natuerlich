@@ -47,23 +47,23 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
       variant="body"
       rhythm="default"
       tone="threshold"
+      mix={['opening', 'flow']}
     >
       <SectionStack>
         <Surface
           tone="panel"
-          accent="axisClarity"
+          energy="density"
           radius="large"
           bordered
           padding="lg"
-          density="dense"
-          emphasis="strong"
+          weight="strong"
         >
           <Stack gap={0.82}>
             <Typography
               as="p"
               variant="caption"
               gutter={false}
-              accent="axisClarity"
+              accent="axisDensity"
               measure="wide"
             >
               Rahmen
@@ -73,7 +73,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
               as="h2"
               variant="h2"
               gutter={false}
-              accent="axisClarity"
+              accent="axisDensity"
               cadence="dense"
               measure="title"
               id="rahmen-title"
@@ -114,7 +114,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
         <GroupGrid>
           <Card
             tone="soft"
-            axis="axisEnergy"
+            energy="opening"
             radius="large"
             bordered
             padding="md"
@@ -124,7 +124,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 as="p"
                 variant="caption"
                 gutter={false}
-                accent="axisEnergy"
+                accent="axisOpening"
                 measure="wide"
               >
                 Einstieg und Basis
@@ -134,7 +134,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 as="h3"
                 variant="h3"
                 gutter={false}
-                accent="axisEnergy"
+                accent="axisOpening"
                 measure="title"
               >
                 Meta-Placeholder: Hier später niederschwellige Formate, über die
@@ -164,7 +164,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
 
           <Card
             tone="panel"
-            axis="axisClarity"
+            energy="density"
             radius="large"
             bordered
             padding="md"
@@ -174,7 +174,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 as="p"
                 variant="caption"
                 gutter={false}
-                accent="axisClarity"
+                accent="axisDensity"
                 measure="wide"
               >
                 Regelmäßige Praxis
@@ -184,7 +184,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 as="h3"
                 variant="h3"
                 gutter={false}
-                accent="axisClarity"
+                accent="axisDensity"
                 measure="title"
               >
                 Meta-Placeholder: Hier später Kurs- und Klassenformate für
@@ -213,19 +213,13 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
             </Stack>
           </Card>
 
-          <Card
-            tone="panel"
-            axis="axisResonance"
-            radius="large"
-            bordered
-            padding="md"
-          >
+          <Card tone="panel" energy="flow" radius="large" bordered padding="md">
             <Stack gap={0.82}>
               <Typography
                 as="p"
                 variant="caption"
                 gutter={false}
-                accent="axisResonance"
+                accent="axisFlow"
                 measure="wide"
               >
                 Individuelle Wege
@@ -235,7 +229,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 as="h3"
                 variant="h3"
                 gutter={false}
-                accent="axisResonance"
+                accent="axisFlow"
                 measure="title"
               >
                 Meta-Placeholder: Hier später Einzelsettings und persönliche
@@ -265,7 +259,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
 
           <Card
             tone="soft"
-            axis="axisEnergy"
+            energy="opening"
             radius="large"
             bordered
             padding="md"
@@ -275,7 +269,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 as="p"
                 variant="caption"
                 gutter={false}
-                accent="axisEnergy"
+                accent="axisOpening"
                 measure="wide"
               >
                 Professionell und extern
@@ -285,7 +279,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 as="h3"
                 variant="h3"
                 gutter={false}
-                accent="axisEnergy"
+                accent="axisOpening"
                 measure="title"
               >
                 Meta-Placeholder: Hier später Firmen-, Team- oder andere
@@ -315,19 +309,18 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
 
         <Surface
           tone="soft"
-          accent="axisClarity"
+          energy="density"
           radius="large"
           bordered
           padding="md"
-          density="balanced"
-          emphasis="steady"
+          weight="steady"
         >
           <Stack gap={0.78}>
             <Typography
               as="p"
               variant="caption"
               gutter={false}
-              accent="axisClarity"
+              accent="axisDensity"
               measure="wide"
             >
               Funktionslogik
@@ -337,7 +330,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
               as="h3"
               variant="h3"
               gutter={false}
-              accent="axisClarity"
+              accent="axisDensity"
               measure="title"
             >
               Meta-Placeholder: Hier später die innere Ordnung des Angebots
@@ -368,7 +361,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
         <FaqGrid>
           <Card
             tone="soft"
-            axis="axisClarity"
+            energy="density"
             radius="large"
             bordered
             padding="md"
@@ -378,7 +371,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 as="p"
                 variant="caption"
                 gutter={false}
-                accent="axisClarity"
+                accent="axisDensity"
                 measure="wide"
               >
                 FAQ
@@ -388,7 +381,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 as="h3"
                 variant="h3"
                 gutter={false}
-                accent="axisClarity"
+                accent="axisDensity"
                 measure="title"
               >
                 Meta-Placeholder: Welche Form ist für einen Einstieg sinnvoll?
@@ -410,7 +403,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
 
           <Card
             tone="soft"
-            axis="axisClarity"
+            energy="density"
             radius="large"
             bordered
             padding="md"
@@ -420,7 +413,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 as="p"
                 variant="caption"
                 gutter={false}
-                accent="axisClarity"
+                accent="axisDensity"
                 measure="wide"
               >
                 FAQ
@@ -430,7 +423,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 as="h3"
                 variant="h3"
                 gutter={false}
-                accent="axisClarity"
+                accent="axisDensity"
                 measure="title"
               >
                 Meta-Placeholder: Brauche ich Vorerfahrung oder bestimmte
@@ -453,7 +446,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
 
           <Card
             tone="soft"
-            axis="axisClarity"
+            energy="density"
             radius="large"
             bordered
             padding="md"
@@ -463,7 +456,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 as="p"
                 variant="caption"
                 gutter={false}
-                accent="axisClarity"
+                accent="axisDensity"
                 measure="wide"
               >
                 FAQ
@@ -473,7 +466,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 as="h3"
                 variant="h3"
                 gutter={false}
-                accent="axisClarity"
+                accent="axisDensity"
                 measure="title"
               >
                 Meta-Placeholder: Was ist online, vor Ort, mobil oder im
@@ -496,7 +489,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
 
           <Card
             tone="soft"
-            axis="axisClarity"
+            energy="density"
             radius="large"
             bordered
             padding="md"
@@ -506,7 +499,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 as="p"
                 variant="caption"
                 gutter={false}
-                accent="axisClarity"
+                accent="axisDensity"
                 measure="wide"
               >
                 FAQ
@@ -516,7 +509,7 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
                 as="h3"
                 variant="h3"
                 gutter={false}
-                accent="axisClarity"
+                accent="axisDensity"
                 measure="title"
               >
                 Meta-Placeholder: Wie transparent sind Preise, Laufzeiten und
@@ -540,19 +533,18 @@ export default function PracticalFrameSection({ onGoToContact }: Props) {
 
         <Surface
           tone="panel"
-          accent="axisResonance"
+          energy="flow"
           radius="large"
           bordered
           padding="md"
-          density="balanced"
-          emphasis="steady"
+          weight="steady"
         >
           <Stack gap={0.78}>
             <Typography
               as="p"
               variant="caption"
               gutter={false}
-              accent="axisResonance"
+              accent="axisFlow"
               measure="wide"
             >
               Nächster Schritt
