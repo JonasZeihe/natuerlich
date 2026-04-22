@@ -6,20 +6,27 @@ export type LogCategory =
   | 'theme'
   | 'ui'
   | 'navigation'
-  | 'modal'
   | 'runtime'
+  | 'boundary'
+  | 'flow'
+  | 'modal'
   | 'performance'
 
 export type LogPhase =
   | 'init'
+  | 'intent'
+  | 'state'
+  | 'sync'
+  | 'observe'
+  | 'success'
+  | 'fail'
+  | 'note'
   | 'enter'
   | 'toggle'
   | 'open'
   | 'close'
   | 'scroll'
-  | 'fail'
   | 'done'
-  | 'note'
 
 export type JsonValue =
   | string
@@ -31,8 +38,20 @@ export type JsonValue =
 
 export type LogFields = Record<string, JsonValue | undefined>
 
+export type LogCauseCode =
+  | 'TYPE_ERROR'
+  | 'RANGE_ERROR'
+  | 'SECURITY_ERROR'
+  | 'NAVIGATION_ERROR'
+  | 'RUNTIME_ERROR'
+  | 'RENDER_ERROR'
+  | 'BOUNDARY_ERROR'
+  | 'INTEGRITY_ERROR'
+  | 'CONTEXT_ERROR'
+  | 'UNKNOWN_ERROR'
+
 export type LogCause = {
-  code: 'TYPE_ERROR' | 'RANGE_ERROR' | 'SECURITY_ERROR' | 'UNKNOWN_ERROR'
+  code: LogCauseCode
   name?: string
   message?: string
   hint?: string

@@ -3,8 +3,9 @@
 
 import React from 'react'
 import styled from 'styled-components'
-import AppHeader from '@/layouts/AppHeader'
+import { AppErrorBoundary } from '@/errorhandling/errorBoundary'
 import AppFooter from '@/layouts/AppFooter'
+import AppHeader from '@/layouts/AppHeader'
 
 type Props = { children: React.ReactNode }
 
@@ -12,9 +13,21 @@ export default function Shell({ children }: Props) {
   return (
     <Outer>
       <AppHeader />
-      <Main id="main" role="main" tabIndex={-1}>
-        {children}
-      </Main>
+      <MainShell>
+        <AppErrorBoundary
+          context={{
+            cat: 'boundary',
+            phase: 'fail',
+            fields: {
+              area: 'shell',
+            },
+          }}
+        >
+          <Main id="main" role="main" tabIndex={-1}>
+            {children}
+          </Main>
+        </AppErrorBoundary>
+      </MainShell>
       <AppFooter />
     </Outer>
   )
@@ -25,14 +38,19 @@ const Outer = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100dvh;
-  color: ${({ theme }) => theme.roles.text.primary};
-  isolation: isolate;
+  width: 100%;
+  background: ${({ theme }) => theme.roles.surface.canvas};
+`
+
+const MainShell = styled.div`
+  position: relative;
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
 `
 
 const Main = styled.main`
   position: relative;
-  z-index: 1;
-  flex: 1 1 auto;
   width: 100%;
   max-width: 100vw;
   min-width: 0;

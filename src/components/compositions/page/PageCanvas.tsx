@@ -1,20 +1,20 @@
-// src/components/patterns/wrapper/PageWrapper.tsx
+// src/components/compositions/page/PageCanvas.tsx
 'use client'
 
-import { ReactNode } from 'react'
-import styled from 'styled-components'
+import { type ReactNode } from 'react'
+import styled, { css } from 'styled-components'
 
-type PageWrapperVariant = 'default' | 'landing' | 'article'
+type PageCanvasVariant = 'default' | 'landing' | 'article'
 
-type PageWrapperProps = React.ComponentPropsWithoutRef<'div'> & {
-  variant?: PageWrapperVariant
+type PageCanvasProps = React.ComponentPropsWithoutRef<'div'> & {
+  variant?: PageCanvasVariant
   introOffset?: boolean
   noFooterGap?: boolean
   children: ReactNode
 }
 
 const Root = styled.div<{
-  $variant: PageWrapperVariant
+  $variant: PageCanvasVariant
   $introOffset: boolean
   $noFooterGap: boolean
 }>`
@@ -26,13 +26,25 @@ const Root = styled.div<{
   min-width: 0;
   position: relative;
   box-sizing: border-box;
+  overflow: clip;
   color: ${({ theme }) => theme.roles.text.primary};
-  background: ${({ theme, $variant }) =>
-    $variant === 'article' ? theme.roles.surface.panelAlt : 'transparent'};
   padding-top: ${({ theme, $introOffset }) =>
     $introOffset ? `calc(${theme.layout.section.default.pad} * 0.82)` : 0};
   padding-bottom: ${({ theme, $noFooterGap }) =>
     $noFooterGap ? 0 : `calc(${theme.layout.section.default.pad} * 0.8)`};
+
+  ${({ theme, $variant }) =>
+    $variant === 'article'
+      ? css`
+          background: ${theme.roles.surface.panelAlt};
+        `
+      : $variant === 'landing'
+        ? css`
+            background: ${theme.roles.surface.canvas};
+          `
+        : css`
+            background: transparent;
+          `}
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     padding-top: ${({ theme, $introOffset }) =>
@@ -49,13 +61,13 @@ const Root = styled.div<{
   }
 `
 
-export default function PageWrapper({
+export default function PageCanvas({
   variant = 'default',
   introOffset = false,
   noFooterGap = false,
   children,
   ...rest
-}: PageWrapperProps) {
+}: PageCanvasProps) {
   return (
     <Root
       $variant={variant}

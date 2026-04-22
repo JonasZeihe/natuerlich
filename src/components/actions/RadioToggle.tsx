@@ -122,9 +122,7 @@ const SwitchButton = styled.button<{
   cursor: pointer;
   border-radius: ${({ theme }) => theme.borderRadius.pill};
   -webkit-tap-highlight-color: transparent;
-  transition:
-    opacity 0.18s ease,
-    transform 0.06s ease;
+  transition: ${({ theme }) => theme.motion.css.interactive.toggleButton};
 
   &:focus {
     outline: none;
@@ -142,6 +140,10 @@ const SwitchButton = styled.button<{
     pointer-events: none;
     transform: none;
   }
+
+  @media ${({ theme }) => theme.motion.reduced.media} {
+    transition: none;
+  }
 `
 
 const Track = styled.span<{
@@ -153,10 +155,7 @@ const Track = styled.span<{
   flex: 0 0 auto;
   border-radius: ${({ theme }) => theme.borderRadius.pill};
   border: 1px solid;
-  transition:
-    background-color 0.18s ease,
-    border-color 0.18s ease,
-    box-shadow 0.18s ease;
+  transition: ${({ theme }) => theme.motion.css.interactive.toggleTrack};
 
   ${({ $variant, theme }) =>
     $variant === 'compact'
@@ -170,7 +169,7 @@ const Track = styled.span<{
         `}
 
   ${({ theme, $checked }) => {
-    const accent = theme.getAxisRole('axisEnergy')
+    const accent = theme.getAxisRole('axisOpening')
 
     return css`
       background: ${$checked ? accent.surface : theme.roles.surface.panelAlt};
@@ -178,6 +177,10 @@ const Track = styled.span<{
       box-shadow: ${theme.boxShadow.xs};
     `
   }}
+
+  @media ${({ theme }) => theme.motion.reduced.media} {
+    transition: none;
+  }
 `
 
 const Thumb = styled.span<{
@@ -188,10 +191,7 @@ const Thumb = styled.span<{
   top: 50%;
   left: 0;
   border-radius: 50%;
-  transition:
-    transform 0.2s ease,
-    background-color 0.18s ease,
-    box-shadow 0.18s ease;
+  transition: ${({ theme }) => theme.motion.css.interactive.toggleThumb};
 
   ${({ $variant, theme }) =>
     $variant === 'compact'
@@ -205,7 +205,7 @@ const Thumb = styled.span<{
         `}
 
   ${({ theme, $checked, $variant }) => {
-    const accent = theme.getAxisRole('axisEnergy')
+    const accent = theme.getAxisRole('axisOpening')
     const inset = theme.spacingHalf(1)
 
     const compactTravel = `calc(${theme.spacing(5.5)} - ${theme.spacing(2.5)} - ${theme.spacingHalf(2)})`
@@ -218,4 +218,8 @@ const Thumb = styled.span<{
       transform: translate(calc(${inset} + ${$checked ? travel : '0px'}), -50%);
     `
   }}
+
+  @media ${({ theme }) => theme.motion.reduced.media} {
+    transition: none;
+  }
 `

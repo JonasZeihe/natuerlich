@@ -3,12 +3,12 @@ export const SITE_SECTIONS = [
   {
     id: 'einstieg',
     label: 'Start',
-    showInHeader: false,
+    showInHeader: true,
   },
   {
     id: 'einordnung',
-    label: 'Haltung',
-    showInHeader: false,
+    label: 'Einordnung',
+    showInHeader: true,
   },
   {
     id: 'praxis',

@@ -3,6 +3,7 @@
 
 import type { ComponentPropsWithoutRef, ReactNode } from 'react'
 import styled, { css } from 'styled-components'
+import type { EnergyInput, EnergyMix, SectionToneKey } from '@/design/theme'
 import Container from './Container'
 
 type ContainerSize = 'narrow' | 'default' | 'wide' | 'full'
@@ -18,6 +19,10 @@ type Props = {
   titleId?: string
   rhythm?: RhythmKey
   variant?: SectionVariant
+  tone?: SectionToneKey
+  energy?: EnergyInput
+  mix?: EnergyMix
+  bleed?: boolean
   children?: ReactNode
 } & Omit<ComponentPropsWithoutRef<'section'>, 'children'>
 
@@ -32,37 +37,88 @@ const resolveRhythm = (
   override?: RhythmKey
 ): RhythmKey => override ?? RHYTHM_BY_VARIANT[variant]
 
-const Outer = styled.section<{ $rhythm: RhythmKey }>`
+const Outer = styled.section<{
+  $tone: SectionToneKey
+  $energy?: EnergyInput
+  $mix?: EnergyMix
+  $bleed: boolean
+}>`
+  position: relative;
   width: 100%;
-  ${({ theme, $rhythm }) => css`
-    margin-block: ${theme.layout.section[$rhythm].gap};
+  isolation: isolate;
 
-    @media (max-width: ${theme.breakpoints.md}) {
-      margin-block: calc(${theme.layout.section[$rhythm].gap} * 0.84);
-    }
+  ${({ theme, $tone, $energy, $mix, $bleed }) => {
+    const tone = theme.getSectionTone($tone, $energy, $mix)
 
-    @media (max-width: ${theme.breakpoints.sm}) {
-      margin-block: calc(${theme.layout.section[$rhythm].gap} * 0.72);
-    }
-  `}
+    return css`
+      ${$bleed
+        ? css`
+            margin-inline: calc(${theme.layout.containerInset} * -1);
+          `
+        : ''}
+
+      background: ${tone.base};
+
+      ${tone.overlayOpacity > 0 && tone.edge !== 'transparent'
+        ? css`
+            box-shadow: inset 0 1px 0 ${tone.edge};
+          `
+        : ''}
+
+      ${tone.lineOpacity > 0
+        ? css`
+            border-bottom: 1px solid ${tone.line};
+          `
+        : ''}
+
+      &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 0;
+        opacity: ${tone.washOpacity * 0.72};
+        background: linear-gradient(
+          180deg,
+          ${tone.wash} 0%,
+          transparent 22%,
+          transparent 78%,
+          ${tone.wash} 100%
+        );
+      }
+    `
+  }}
 `
 
-const Inner = styled.div<{ $padY: boolean; $rhythm: RhythmKey }>`
+const Inner = styled.div<{
+  $padY: boolean
+  $rhythm: RhythmKey
+  $tone: SectionToneKey
+  $energy?: EnergyInput
+  $mix?: EnergyMix
+}>`
+  position: relative;
+  z-index: 1;
   width: 100%;
-  ${({ theme, $padY, $rhythm }) =>
-    $padY
+
+  ${({ theme, $padY, $rhythm, $tone, $energy, $mix }) => {
+    const rhythm = theme.layout.section[$rhythm]
+    const tone = theme.getSectionTone($tone, $energy, $mix)
+
+    return $padY
       ? css`
-          padding-block: ${theme.layout.section[$rhythm].pad};
+          padding-block: calc(${rhythm.pad} * ${tone.padScale});
 
           @media (max-width: ${theme.breakpoints.md}) {
-            padding-block: calc(${theme.layout.section[$rhythm].pad} * 0.86);
+            padding-block: calc(${rhythm.pad} * ${tone.padScale} * 0.86);
           }
 
           @media (max-width: ${theme.breakpoints.sm}) {
-            padding-block: calc(${theme.layout.section[$rhythm].pad} * 0.74);
+            padding-block: calc(${rhythm.pad} * ${tone.padScale} * 0.74);
           }
         `
-      : ''}
+      : ''
+  }}
 `
 
 export default function Section({
@@ -74,6 +130,10 @@ export default function Section({
   titleId,
   rhythm,
   variant = 'body',
+  tone = 'default',
+  energy,
+  mix,
+  bleed = false,
   children,
   ...rest
 }: Props) {
@@ -81,16 +141,28 @@ export default function Section({
   const labelledBy = titleId ?? rest['aria-labelledby']
   const accessibleLabel = ariaLabel ?? rest['aria-label']
   const sectionAriaProps =
-    accessibleLabel || labelledBy
-      ? {
-          'aria-label': accessibleLabel,
-          'aria-labelledby': labelledBy,
-        }
-      : {}
+    accessibleLabel && !labelledBy
+      ? { 'aria-label': accessibleLabel }
+      : labelledBy
+        ? { 'aria-labelledby': labelledBy }
+        : {}
 
   return (
-    <Outer $rhythm={resolvedRhythm} {...rest} {...sectionAriaProps}>
-      <Inner $padY={padY} $rhythm={resolvedRhythm}>
+    <Outer
+      $tone={tone}
+      $energy={energy}
+      $mix={mix}
+      $bleed={bleed}
+      {...rest}
+      {...sectionAriaProps}
+    >
+      <Inner
+        $padY={padY}
+        $rhythm={resolvedRhythm}
+        $tone={tone}
+        $energy={energy}
+        $mix={mix}
+      >
         <Container max={container}>
           {header}
           {children}

@@ -1,6 +1,6 @@
 // src/design/tokens.ts
 export const clampRem = (min: number, max: number) =>
-  `clamp(${min}rem, calc(${min}rem + (${max - min}) * ((100vw - 350px) / 1000)), ${max}rem)`
+  `clamp(${min}rem, calc(${min}rem + (${max - min}) * ((100vw - 360px) / 1040)), ${max}rem)`
 
 export const TYPOGRAPHY = {
   fontFamily: {
@@ -30,9 +30,16 @@ export const TYPOGRAPHY = {
     relaxed: 1.72,
   },
   letterSpacing: {
+    tighter: '-0.026em',
     tight: '-0.018em',
     normal: '0',
     wide: '0.024em',
+  },
+  measure: {
+    compact: '18ch',
+    title: '22ch',
+    prose: '64ch',
+    wide: '72ch',
   },
 } as const
 
@@ -49,23 +56,23 @@ export const RADIUS = {
 
 export const SHADOWS = {
   light: {
-    xs: '0 1px 2px rgba(16, 18, 22, 0.05)',
-    sm: '0 3px 10px rgba(16, 18, 22, 0.08)',
-    md: '0 8px 24px rgba(16, 18, 22, 0.12)',
-    lg: '0 16px 44px rgba(16, 18, 22, 0.16)',
-    glow: '0 0 0 2px rgba(72, 91, 106, 0.16), 0 10px 30px rgba(72, 91, 106, 0.16)',
+    xs: '0 1px 2px rgba(14, 18, 21, 0.05)',
+    sm: '0 10px 24px rgba(14, 18, 21, 0.08)',
+    md: '0 18px 40px rgba(14, 18, 21, 0.14)',
+    lg: '0 28px 64px rgba(14, 18, 21, 0.18)',
+    glow: '0 0 0 2px rgba(96, 72, 31, 0.14), 0 18px 40px rgba(14, 18, 21, 0.08)',
   },
   dark: {
-    xs: '0 1px 3px rgba(0, 0, 0, 0.28)',
-    sm: '0 3px 10px rgba(0, 0, 0, 0.36)',
-    md: '0 8px 24px rgba(0, 0, 0, 0.44)',
-    lg: '0 16px 44px rgba(0, 0, 0, 0.56)',
-    glow: '0 0 0 2px rgba(127, 146, 160, 0.2), 0 10px 30px rgba(127, 146, 160, 0.2)',
+    xs: '0 1px 3px rgba(0, 0, 0, 0.26)',
+    sm: '0 10px 22px rgba(0, 0, 0, 0.34)',
+    md: '0 18px 38px rgba(0, 0, 0, 0.46)',
+    lg: '0 28px 58px rgba(0, 0, 0, 0.58)',
+    glow: '0 0 0 2px rgba(174, 132, 68, 0.18), 0 16px 34px rgba(0, 0, 0, 0.24)',
   },
 } as const
 
 export const BREAKPOINTS = {
-  xs: '350px',
+  xs: '360px',
   sm: '600px',
   md: '900px',
   lg: '1200px',
@@ -92,313 +99,226 @@ export const LAYOUT = {
     md: 'clamp(0.78rem, 1.7vw, 1.08rem)',
     lg: 'clamp(0.94rem, 2.2vw, 1.4rem)',
   },
+  containerInset: 'clamp(0.75rem, 3vw, 1.5rem)',
 } as const
 
-export const PALETTE = {
+export const FOUNDATION_STATUS = {
   light: {
-    axisClarity: {
-      base: '#485B6A',
-      hover: '#394A57',
-      active: '#2B3944',
-      disabled: '#B8C1C9',
-      border: '#91A1AE',
-      surface: '#EEF3F6',
-      contrast: '#F9FBFC',
-      0: '#F4F7F9',
-      1: '#E7EDF1',
-      2: '#D2DDE5',
-      3: '#A4B6C3',
-      main: '#485B6A',
-      4: '#394A57',
-      5: '#2B3944',
-      6: '#1D2831',
-    },
-    axisEnergy: {
-      base: '#A24A1E',
-      hover: '#853A16',
-      active: '#682B10',
-      disabled: '#D1B4A6',
-      border: '#BF7751',
-      surface: '#FBEEE8',
-      contrast: '#FFF8F5',
-      0: '#FCF4F0',
-      1: '#F7DDD0',
-      2: '#EDB69B',
-      3: '#D87B4E',
-      main: '#A24A1E',
-      4: '#853A16',
-      5: '#682B10',
-      6: '#4C1F0C',
-    },
-    axisResonance: {
-      base: '#2F4E50',
-      hover: '#243E40',
-      active: '#1A2F30',
-      disabled: '#AABABC',
-      border: '#6F8C8F',
-      surface: '#EEF4F3',
-      contrast: '#F8FBFB',
-      0: '#F3F8F7',
-      1: '#E2ECEA',
-      2: '#C3D5D3',
-      3: '#7F9A97',
-      main: '#2F4E50',
-      4: '#243E40',
-      5: '#1A2F30',
-      6: '#122223',
-    },
     success: {
-      base: '#2F6B4D',
-      hover: '#25573E',
-      active: '#1C432F',
-      disabled: '#B6CBC0',
-      border: '#79A08B',
-      surface: '#F1F7F3',
-      contrast: '#F7FCF8',
-      0: '#EEF6F1',
-      1: '#DBEBE1',
-      2: '#B5D4C1',
-      3: '#7EAD93',
-      main: '#2F6B4D',
-      4: '#25573E',
-      5: '#1C432F',
-      6: '#122E21',
+      soft: '#E7F1EB',
+      main: '#4E7A64',
+      strong: '#214231',
     },
     warning: {
-      base: '#9B5E18',
-      hover: '#7F4B10',
-      active: '#62390B',
-      disabled: '#D7C0A6',
-      border: '#C08A49',
-      surface: '#FBF3E8',
-      contrast: '#FFF9F2',
-      0: '#FCF5EC',
-      1: '#F4E2C4',
-      2: '#E5BF84',
-      3: '#CA8A37',
-      main: '#9B5E18',
-      4: '#7F4B10',
-      5: '#62390B',
-      6: '#472907',
+      soft: '#F6EEDC',
+      main: '#9B7440',
+      strong: '#5E421A',
     },
     danger: {
-      base: '#8A3138',
-      hover: '#70262C',
-      active: '#561B20',
-      disabled: '#D7B6BA',
-      border: '#B77279',
-      surface: '#FBF1F2',
-      contrast: '#FFF8F8',
-      0: '#FAEEEF',
-      1: '#F0D7DA',
-      2: '#DDA7AD',
-      3: '#BE6670',
-      main: '#8A3138',
-      4: '#70262C',
-      5: '#561B20',
-      6: '#3D1216',
-    },
-    neutral: {
-      background: '#F2EEE7',
-      surface: '#FBF8F2',
-      border: '#CEC5B8',
-      text: '#14171B',
-      textSubtle: '#4F5963',
-      inverse: '#0C1014',
-      backdrop: 'rgba(12, 16, 20, 0.46)',
-    },
-    surface: {
-      0: '#FEFBF6',
-      1: '#FBF8F2',
-      2: '#F3EEE5',
-      main: '#E9E2D6',
-      4: '#D8CDBD',
-      5: '#C1B29E',
-      6: '#A8957E',
-      card: '#FCF8F1',
-      hover: '#F0E8DC',
-      backdrop: 'rgba(242, 238, 231, 0.86)',
-    },
-    depth: {
-      0: '#F7F2EA',
-      1: '#E7DED1',
-      2: '#D0C3B1',
-      3: '#AE9D87',
-      main: '#7F7467',
-      5: '#564F48',
-      6: '#2F3136',
-      ultraLight: '#FFFCF8',
-      dark: '#14171B',
-    },
-    text: {
-      main: '#14171B',
-      inverse: '#FAFBFC',
-      subtle: '#4F5963',
+      soft: '#F4E6E6',
+      main: '#9C5B61',
+      strong: '#5C282D',
     },
   },
   dark: {
-    axisClarity: {
-      base: '#8EA3B3',
-      hover: '#A4B7C5',
-      active: '#728798',
-      disabled: '#5B6671',
-      border: '#506170',
-      surface: '#182128',
-      contrast: '#081016',
-      0: '#EAF1F5',
-      1: '#D1DDE5',
-      2: '#AFC0CC',
-      3: '#7890A1',
-      main: '#8EA3B3',
-      4: '#607789',
-      5: '#425663',
-      6: '#293842',
-    },
-    axisEnergy: {
-      base: '#D1662C',
-      hover: '#E47C3F',
-      active: '#AC4E1F',
-      disabled: '#7A655B',
-      border: '#945638',
-      surface: '#281911',
-      contrast: '#170D08',
-      0: '#FFF0E7',
-      1: '#F3C9B3',
-      2: '#E59668',
-      3: '#D1662C',
-      main: '#D1662C',
-      4: '#AC4E1F',
-      5: '#813917',
-      6: '#5B270F',
-    },
-    axisResonance: {
-      base: '#5F8786',
-      hover: '#75A09E',
-      active: '#486B6A',
-      disabled: '#5C6F70',
-      border: '#436060',
-      surface: '#131B1B',
-      contrast: '#071010',
-      0: '#E8F5F3',
-      1: '#C5DEDB',
-      2: '#94BCB8',
-      3: '#5F8786',
-      main: '#5F8786',
-      4: '#486B6A',
-      5: '#32504F',
-      6: '#203736',
-    },
     success: {
-      base: '#63AE85',
-      hover: '#79C39A',
-      active: '#4A8E69',
-      disabled: '#56695E',
-      border: '#456B56',
-      surface: '#101915',
-      contrast: '#08100C',
-      0: '#E7F7EE',
-      1: '#C4E7D2',
-      2: '#91C9A8',
-      3: '#63AE85',
-      main: '#63AE85',
-      4: '#4A8E69',
-      5: '#33664A',
-      6: '#214332',
+      soft: '#17211B',
+      main: '#88B098',
+      strong: '#D8E7DE',
     },
     warning: {
-      base: '#D28A33',
-      hover: '#E3A34F',
-      active: '#AE6D23',
-      disabled: '#7E6854',
-      border: '#916433',
-      surface: '#281C11',
-      contrast: '#150E07',
-      0: '#FFF2E1',
-      1: '#F5D6A9',
-      2: '#E7B56D',
-      3: '#D28A33',
-      main: '#D28A33',
-      4: '#AE6D23',
-      5: '#84511A',
-      6: '#5D3811',
+      soft: '#241D15',
+      main: '#C9A26D',
+      strong: '#F0DFC0',
     },
     danger: {
-      base: '#C96872',
-      hover: '#DA8089',
-      active: '#A94F58',
-      disabled: '#786164',
-      border: '#8B5258',
-      surface: '#221315',
-      contrast: '#12080A',
-      0: '#FBECEE',
-      1: '#F0C8CD',
-      2: '#DC969E',
-      3: '#C96872',
-      main: '#C96872',
-      4: '#A94F58',
-      5: '#7C3941',
-      6: '#54252B',
-    },
-    neutral: {
-      background: '#101317',
-      surface: '#161A1F',
-      border: '#2B333C',
-      text: '#ECE5D9',
-      textSubtle: '#A6AFB8',
-      inverse: '#101317',
-      backdrop: 'rgba(6, 8, 10, 0.76)',
-    },
-    surface: {
-      0: '#12161A',
-      1: '#161A1F',
-      2: '#1C2228',
-      main: '#232A31',
-      4: '#2E3842',
-      5: '#394551',
-      6: '#495867',
-      card: '#181D22',
-      hover: '#20262D',
-      backdrop: 'rgba(16, 19, 23, 0.9)',
-    },
-    depth: {
-      0: '#14181D',
-      1: '#1B2128',
-      2: '#252D36',
-      3: '#333D48',
-      main: '#4C5A67',
-      5: '#7E8B97',
-      6: '#C0C9D2',
-      ultraLight: '#EFF3F6',
-      dark: '#090C10',
-    },
-    text: {
-      main: '#ECE5D9',
-      inverse: '#101317',
-      subtle: '#A6AFB8',
+      soft: '#241718',
+      main: '#CB8B92',
+      strong: '#F1DCDD',
     },
   },
 } as const
 
-export const AXIS_META = {
-  axisClarity: {
-    role: 'structure',
-    primaryUsage: 'clarity',
-    tone: 'sharpness',
+export const NEUTRAL = {
+  light: {
+    background: '#F4EFE7',
+    surface: '#FBF7F0',
+    surfaceAlt: '#F2EBE1',
+    elevated: '#FEFBF7',
+    inset: '#ECE3D7',
+    text: '#171818',
+    textSoft: '#606567',
+    textStrong: '#111315',
+    borderSoft: '#D7CCBE',
+    borderStrong: '#B7A997',
+    inverse: '#FCFAF7',
+    backdrop: '#0F1315',
   },
-  axisEnergy: {
-    role: 'action',
-    primaryUsage: 'opening',
-    tone: 'heat',
+  dark: {
+    background: '#101416',
+    surface: '#181D1F',
+    surfaceAlt: '#20272A',
+    elevated: '#1B2023',
+    inset: '#14191B',
+    text: '#ECE3D8',
+    textSoft: '#A89D90',
+    textStrong: '#F8F3EC',
+    borderSoft: '#30393D',
+    borderStrong: '#48545B',
+    inverse: '#111416',
+    backdrop: '#07090A',
   },
-  axisResonance: {
-    role: 'depth',
-    primaryUsage: 'resonance',
-    tone: 'gravity',
+} as const
+
+export const PROJECT_ENERGY = {
+  light: {
+    axisOpening: {
+      soft: '#F5E2CC',
+      main: '#C16A1F',
+      strong: '#7C3500',
+    },
+    axisTension: {
+      soft: '#E8DDD7',
+      main: '#7E4B43',
+      strong: '#4A211C',
+    },
+    axisDensity: {
+      soft: '#E6EDF4',
+      main: '#2D5B8A',
+      strong: '#12314F',
+    },
+    axisFlow: {
+      soft: '#DDEEE8',
+      main: '#2D7A62',
+      strong: '#114B3C',
+    },
   },
+  dark: {
+    axisOpening: {
+      soft: '#2A180B',
+      main: '#E39A4D',
+      strong: '#FFE1BE',
+    },
+    axisTension: {
+      soft: '#241715',
+      main: '#C28479',
+      strong: '#F4D7D1',
+    },
+    axisDensity: {
+      soft: '#13212E',
+      main: '#76AEDD',
+      strong: '#D8ECFF',
+    },
+    axisFlow: {
+      soft: '#10211C',
+      main: '#67B597',
+      strong: '#D8F4EA',
+    },
+  },
+} as const
+
+export const PROTO_STATES = {
+  approachable: {
+    rhythm: 'spacious',
+    edge: 0.18,
+    line: 0,
+    wash: 0.52,
+  },
+  resonance: {
+    rhythm: 'default',
+    edge: 0.32,
+    line: 0.24,
+    wash: 0.66,
+  },
+  density: {
+    rhythm: 'default',
+    edge: 0.46,
+    line: 0.36,
+    wash: 0.74,
+  },
+  proof: {
+    rhythm: 'compact',
+    edge: 0.58,
+    line: 0.46,
+    wash: 0.68,
+  },
+  pressure: {
+    rhythm: 'compact',
+    edge: 0.68,
+    line: 0.56,
+    wash: 0.78,
+  },
+  reopen: {
+    rhythm: 'default',
+    edge: 0.26,
+    line: 0.18,
+    wash: 0.24,
+  },
+  flow: {
+    rhythm: 'compact',
+    edge: 0.34,
+    line: 0.24,
+    wash: 0.46,
+  },
+} as const
+
+export const SECTION_TONE_MAP = {
+  default: 'approachable',
+  opening: 'approachable',
+  clarify: 'resonance',
+  expand: 'resonance',
+  deepen: 'density',
+  threshold: 'proof',
+  pressure: 'pressure',
+  relief: 'reopen',
+  arrival: 'flow',
 } as const
 
 export type Mode = 'light' | 'dark'
-export type AxisKey = 'axisClarity' | 'axisEnergy' | 'axisResonance'
-export type Palette = typeof PALETTE
-export type PaletteMode = Palette[Mode]
-export type AxisMeta = typeof AXIS_META
+export type AxisKey = 'axisOpening' | 'axisTension' | 'axisDensity' | 'axisFlow'
+export type EnergyKey = 'opening' | 'tension' | 'density' | 'flow'
+export type EnergyInput = AxisKey | EnergyKey
+export type EnergyMix = readonly [EnergyInput, EnergyInput]
+export type ProtoStateKey =
+  | 'approachable'
+  | 'resonance'
+  | 'density'
+  | 'proof'
+  | 'pressure'
+  | 'reopen'
+  | 'flow'
+export type SurfaceToneKey =
+  | 'open'
+  | 'soft'
+  | 'panel'
+  | 'elevated'
+  | 'inset'
+  | 'band'
+  | 'accent'
+  | 'neutral'
+  | 'subtle'
+  | 'none'
+  | 'intense'
+export type SectionToneKey =
+  | 'default'
+  | 'opening'
+  | 'clarify'
+  | 'expand'
+  | 'deepen'
+  | 'threshold'
+  | 'pressure'
+  | 'relief'
+  | 'arrival'
+
+export type PaletteMode = {
+  neutral: (typeof NEUTRAL)[Mode]
+  energy: (typeof PROJECT_ENERGY)[Mode]
+  status: (typeof FOUNDATION_STATUS)[Mode]
+}
+
+export const ENERGY_ALIASES: Record<EnergyKey, AxisKey> = {
+  opening: 'axisOpening',
+  tension: 'axisTension',
+  density: 'axisDensity',
+  flow: 'axisFlow',
+} as const

@@ -3,8 +3,8 @@
 
 import React, { useEffect, useMemo, useRef } from 'react'
 import styled from 'styled-components'
-import Surface from '@/components/primitives/Surface'
 import Button from '@/components/actions/Button'
+import Surface from '@/components/primitives/Surface'
 
 export type SegmentedOptionId = string
 
@@ -79,9 +79,11 @@ export default function SegmentedControl<T extends string = string>({
       aria-label={ariaLabel}
       aria-disabled={disabled ? 'true' : undefined}
       tone="elevated"
+      energy="density"
       radius="pill"
       bordered
       padding="none"
+      weight="quiet"
     >
       {options.map((o) => {
         const active = o.id === value
@@ -140,7 +142,7 @@ const Item = styled(Button)<{
       $active ? theme.roles.surface.panelAlt : 'transparent'};
     color: ${({ $active, theme }) =>
       $active
-        ? theme.getAxisRole('axisClarity').text
+        ? theme.getAxisRole('axisDensity').text
         : theme.roles.text.primary};
 
     padding: ${({ $variant, theme }) =>
@@ -158,10 +160,7 @@ const Item = styled(Button)<{
     min-height: ${({ $variant, theme }) =>
       $variant === 'compact' ? theme.spacing(3.5) : theme.spacing(4)};
 
-    transition:
-      background-color 0.16s ease,
-      color 0.16s ease,
-      box-shadow 0.16s ease;
+    transition: ${({ theme }) => theme.motion.css.interactive.segmented};
 
     &:hover {
       background: ${({ theme }) => theme.roles.surface.interactive};
@@ -194,6 +193,10 @@ const Item = styled(Button)<{
 
     @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
       width: auto !important;
+    }
+
+    @media ${({ theme }) => theme.motion.reduced.media} {
+      transition: none;
     }
   }
 `

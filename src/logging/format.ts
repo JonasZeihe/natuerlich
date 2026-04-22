@@ -44,8 +44,17 @@ export const canonicalFormatter: LogFormatter = {
     if (event.causes?.length) {
       event.causes.forEach((cause, index) => {
         parts.push(`cause${index}=${cause.code}`)
+
+        if (cause.name) {
+          parts.push(
+            `cause${index}Name=${cause.name.includes(' ') ? JSON.stringify(cause.name) : cause.name}`
+          )
+        }
+
         if (cause.hint) {
-          parts.push(`hint${index}=${cause.hint}`)
+          parts.push(
+            `cause${index}Hint=${cause.hint.includes(' ') ? JSON.stringify(cause.hint) : cause.hint}`
+          )
         }
       })
     }

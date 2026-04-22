@@ -1,8 +1,8 @@
 // src/components/primitives/Grid.tsx
 'use client'
 
-import { ReactNode } from 'react'
-import styled, { css, DefaultTheme } from 'styled-components'
+import { type ComponentPropsWithoutRef, type ReactNode } from 'react'
+import styled, { css, type DefaultTheme } from 'styled-components'
 
 type Columns = number | 'auto'
 type BreakpointKey = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
@@ -14,13 +14,15 @@ type Props = {
   dense?: boolean
   switchAt?: BreakpointKey | string
   children?: ReactNode
-} & Omit<React.ComponentPropsWithoutRef<'div'>, 'children'>
+} & Omit<ComponentPropsWithoutRef<'div'>, 'children'>
+
+const DEFAULT_GRID_MIN = '18rem'
+const DEFAULT_GRID_GAP = 2
 
 const toGap = (theme: DefaultTheme, gap?: number | string) => {
   if (typeof gap === 'number') return theme.spacing(gap)
   if (typeof gap === 'string') return gap
-  const base = theme.grid.defaults.gap
-  return typeof base === 'number' ? theme.spacing(base) : theme.spacing(2)
+  return theme.spacing(DEFAULT_GRID_GAP)
 }
 
 const GridBox = styled.div<{
@@ -36,9 +38,9 @@ const GridBox = styled.div<{
   `}
   grid-auto-flow: ${({ $dense }) => ($dense ? 'row dense' : 'row')};
 
-  ${({ theme, $columns, $min }) => {
-    const cols = ($columns ?? theme.grid.defaults.columns) as Columns
-    const minWidth = ($min as string | undefined) ?? theme.grid.defaults.min
+  ${({ $columns, $min }) => {
+    const cols = $columns ?? 'auto'
+    const minWidth = $min ?? DEFAULT_GRID_MIN
 
     if (cols === 'auto') {
       return css`
@@ -64,7 +66,7 @@ const GridBox = styled.div<{
 `
 
 export default function Grid({
-  columns,
+  columns = 'auto',
   min,
   gap,
   dense = false,

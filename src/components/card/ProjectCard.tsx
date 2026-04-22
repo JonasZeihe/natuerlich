@@ -45,10 +45,13 @@ export function ProjectCard({ id, project, onOpen }: ProjectCardProps) {
     <ProjectAnchor id={id}>
       <CardShell onMouseEnter={clearHighlight}>
         <StyledProjectCard
-          tone="neutral"
+          tone="panel"
+          energy="opening"
           radius="large"
           bordered
           interactive
+          padding="md"
+          weight="steady"
           onClick={() => {
             clearHighlight()
             onOpen()
@@ -68,7 +71,7 @@ export function ProjectCard({ id, project, onOpen }: ProjectCardProps) {
             <Typography
               as="h2"
               variant="h2"
-              accent="axisClarity"
+              accent="axisDensity"
               align="center"
               gutter={false}
             >
@@ -98,6 +101,27 @@ const CardShell = styled.div`
   cursor: pointer;
 `
 
+const OpenCue = styled.span`
+  position: absolute;
+  right: ${({ theme }) => theme.spacing(0.9)};
+  bottom: ${({ theme }) => theme.spacing(0.8)};
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: ${({ theme }) => theme.roles.text.subtle};
+  opacity: 0.72;
+  transform: translateY(1px);
+  transition:
+    color 0.16s ease,
+    opacity 0.16s ease,
+    transform 0.16s ease;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    right: ${({ theme }) => theme.spacing(0.8)};
+    bottom: ${({ theme }) => theme.spacing(0.72)};
+  }
+`
+
 const StyledProjectCard = styled(Card)<{ $highlighted: boolean }>`
   height: 100%;
   position: relative;
@@ -106,7 +130,7 @@ const StyledProjectCard = styled(Card)<{ $highlighted: boolean }>`
 
   border-color: ${({ theme, $highlighted }) =>
     $highlighted
-      ? theme.getAxisRole('axisEnergy').border
+      ? theme.getAxisRole('axisOpening').border
       : theme.roles.border.subtle};
 
   box-shadow: ${({ theme, $highlighted }) =>
@@ -124,13 +148,13 @@ const StyledProjectCard = styled(Card)<{ $highlighted: boolean }>`
   &:hover,
   &:focus-within {
     background: ${({ theme }) => theme.roles.surface.panel};
-    border-color: ${({ theme }) => theme.getAxisRole('axisEnergy').border};
+    border-color: ${({ theme }) => theme.getAxisRole('axisOpening').border};
     box-shadow: ${({ theme }) => theme.boxShadow.md};
     transform: translateY(-2px);
   }
 
-  &:hover ${''}span, &:focus-within ${''}span {
-    color: ${({ theme }) => theme.getAxisRole('axisEnergy').text};
+  &:hover ${OpenCue}, &:focus-within ${OpenCue} {
+    color: ${({ theme }) => theme.getAxisRole('axisOpening').text};
     opacity: 1;
     transform: translateY(0);
   }
@@ -155,25 +179,4 @@ const ContentArea = styled.div`
   gap: ${({ theme }) => theme.spacing(3)};
   padding: ${({ theme }) => theme.spacing(3)};
   text-align: center;
-`
-
-const OpenCue = styled.span`
-  position: absolute;
-  right: ${({ theme }) => theme.spacing(0.9)};
-  bottom: ${({ theme }) => theme.spacing(0.8)};
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: ${({ theme }) => theme.roles.text.subtle};
-  opacity: 0.72;
-  transform: translateY(1px);
-  transition:
-    color 0.16s ease,
-    opacity 0.16s ease,
-    transform 0.16s ease;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
-    right: ${({ theme }) => theme.spacing(0.8)};
-    bottom: ${({ theme }) => theme.spacing(0.72)};
-  }
 `

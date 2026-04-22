@@ -6,19 +6,21 @@ import {
   type ComponentPropsWithoutRef,
   type ReactNode,
 } from 'react'
-import styled, { css, type DefaultTheme } from 'styled-components'
-import type { AxisKey } from '@/design/theme'
+import styled, { css } from 'styled-components'
+import type { EnergyInput, EnergyMix, SurfaceToneKey } from '@/design/theme'
 
-type SurfaceTone = 'neutral' | 'elevated' | 'accent' | 'subtle' | 'inset'
 type SurfacePadding = 'none' | 'sm' | 'md' | 'lg'
 type SurfaceRadius = 'none' | 'small' | 'medium' | 'large' | 'pill'
+type SurfaceWeight = 'quiet' | 'steady' | 'strong'
 
 type Props = {
-  tone?: SurfaceTone
-  accent?: AxisKey | 'neutral'
+  tone?: SurfaceToneKey
+  energy?: EnergyInput
+  mix?: EnergyMix
   radius?: SurfaceRadius
   padding?: SurfacePadding
   bordered?: boolean
+  weight?: SurfaceWeight
   children?: ReactNode
 } & Omit<ComponentPropsWithoutRef<'div'>, 'color'>
 
@@ -26,114 +28,73 @@ type StyledProps = {
   $radius: SurfaceRadius
   $padding: SurfacePadding
   $bordered: boolean
-  $tone: SurfaceTone
-  $accent: AxisKey | 'neutral'
+  $tone: SurfaceToneKey
+  $energy?: EnergyInput
+  $mix?: EnergyMix
+  $weight: SurfaceWeight
 }
 
-type ResolvedSurface = {
-  bg: string
-  fg: string
-  border: string
-  shadow: string
-}
-
-const resolveSurface = (
-  tone: SurfaceTone,
-  accent: AxisKey | 'neutral',
-  theme: DefaultTheme
-): ResolvedSurface => {
-  const neutral = theme.getIntentRole('neutral')
-
-  if (tone === 'accent') {
-    const axis = theme.getAxisRole(accent)
-    return {
-      bg: axis.surface,
-      fg: axis.contrast,
-      border: axis.border,
-      shadow: theme.boxShadow.sm,
-    }
+const resolveWeightStyles = (
+  weight: SurfaceWeight,
+  border: string,
+  bordered: boolean
+) => {
+  if (weight === 'quiet') {
+    return css`
+      box-shadow: none;
+    `
   }
 
-  if (tone === 'elevated') {
-    return {
-      bg: theme.roles.surface.elevated,
-      fg: theme.roles.text.primary,
-      border: theme.roles.border.strong,
-      shadow: theme.boxShadow.xs,
-    }
+  if (weight === 'strong') {
+    return css`
+      box-shadow:
+        inset 0 1px 0 ${bordered ? border : 'transparent'},
+        0 0 0 1px ${bordered ? border : 'transparent'};
+    `
   }
 
-  if (tone === 'subtle') {
-    return {
-      bg: theme.roles.surface.panelSubtle,
-      fg: theme.roles.text.primary,
-      border: theme.roles.border.subtle,
-      shadow: 'none',
-    }
-  }
-
-  if (tone === 'inset') {
-    return {
-      bg: theme.roles.surface.inset,
-      fg: theme.roles.text.primary,
-      border: theme.roles.border.subtle,
-      shadow: 'none',
-    }
-  }
-
-  return {
-    bg: theme.roles.surface.panel,
-    fg: neutral.contrast,
-    border: theme.roles.border.subtle,
-    shadow: 'none',
-  }
+  return css`
+    box-shadow: ${bordered ? `inset 0 1px 0 ${border}` : 'none'};
+  `
 }
 
 const Base = styled.div<StyledProps>`
   position: relative;
+  min-width: 0;
   border-radius: ${({ theme, $radius }) => theme.borderRadius[$radius]};
-  padding: ${({ theme, $padding }) => theme.layout.surfacePadding[$padding]};
-  ${({ theme, $tone, $accent, $bordered }) => {
-    const resolved = resolveSurface($tone, $accent, theme)
+  overflow: clip;
+
+  ${({ theme, $padding }) => css`
+    padding: ${$padding === 'none'
+      ? '0'
+      : theme.layout.surfacePadding[$padding]};
+  `}
+
+  ${({ theme, $tone, $energy, $mix, $bordered, $weight }) => {
+    const resolved = theme.getSurfaceTone($tone, $energy, $mix)
 
     return css`
       background: ${resolved.bg};
       color: ${resolved.fg};
-      border: ${$bordered ? `1px solid ${resolved.border}` : 'none'};
-      box-shadow: ${resolved.shadow};
+      border: ${$bordered && resolved.border !== 'transparent'
+        ? `1px solid ${resolved.border}`
+        : 'none'};
+      backdrop-filter: ${resolved.backdrop};
+      -webkit-backdrop-filter: ${resolved.backdrop};
+      ${resolveWeightStyles($weight, resolved.border, $bordered)}
     `
   }}
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    padding: ${({ theme, $padding }) =>
-      $padding === 'none'
-        ? '0'
-        : $padding === 'sm'
-          ? 'clamp(0.58rem, 1.4vw, 0.76rem)'
-          : $padding === 'lg'
-            ? 'clamp(0.82rem, 1.9vw, 1.18rem)'
-            : 'clamp(0.68rem, 1.6vw, 0.94rem)'};
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
-    padding: ${({ theme, $padding }) =>
-      $padding === 'none'
-        ? '0'
-        : $padding === 'sm'
-          ? 'clamp(0.56rem, 1.8vw, 0.72rem)'
-          : $padding === 'lg'
-            ? 'clamp(0.74rem, 2vw, 1rem)'
-            : 'clamp(0.64rem, 1.9vw, 0.86rem)'};
-  }
 `
 
-export default forwardRef<HTMLDivElement, Props>(function Surface(
+const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
   {
-    tone = 'neutral',
-    accent = 'neutral',
+    tone = 'panel',
+    energy,
+    mix,
     radius = 'large',
-    padding = 'none',
-    bordered = false,
+    padding = 'md',
+    bordered = true,
+    weight = 'quiet',
     children,
     ...rest
   },
@@ -143,13 +104,17 @@ export default forwardRef<HTMLDivElement, Props>(function Surface(
     <Base
       ref={ref}
       $tone={tone}
-      $accent={accent}
+      $energy={energy}
+      $mix={mix}
       $radius={radius}
       $padding={padding}
       $bordered={bordered}
+      $weight={weight}
       {...rest}
     >
       {children}
     </Base>
   )
 })
+
+export default Surface

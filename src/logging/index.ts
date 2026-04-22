@@ -2,9 +2,10 @@
 import { canonicalFormatter } from './format'
 import {
   createLogger,
+  type LogCause,
+  type LogEvent,
   type LogLevel,
   type Logger,
-  type LogEvent,
 } from './logger'
 import { getOrCreateBrowserSessionId } from './context/ids'
 import { createConsoleSink } from './sinks/consoleSink'
@@ -32,6 +33,85 @@ const noop: Logger = {
   event: () => {},
 }
 
+const toRuntimeCauses = (
+  error: unknown,
+  detail?: Record<string, unknown>
+): LogCause[] => {
+  const fields =
+    detail &&
+    Object.fromEntries(
+      Object.entries(detail).map(([key, value]) => [
+        key,
+        value === undefined
+          ? undefined
+          : value === null ||
+              typeof value === 'string' ||
+              typeof value === 'number' ||
+              typeof value === 'boolean'
+            ? value
+            : String(value),
+      ])
+    )
+
+  if (error instanceof Error) {
+    if (error.name === 'SecurityError') {
+      return [
+        {
+          code: 'SECURITY_ERROR',
+          name: error.name,
+          message: error.message,
+          hint: 'check browser security context',
+          detail: fields,
+        },
+      ]
+    }
+
+    if (error.name === 'TypeError') {
+      return [
+        {
+          code: 'RUNTIME_ERROR',
+          name: error.name,
+          message: error.message,
+          hint: 'inspect runtime state and failing callsite',
+          detail: fields,
+        },
+      ]
+    }
+
+    if (error.name === 'RangeError') {
+      return [
+        {
+          code: 'RUNTIME_ERROR',
+          name: error.name,
+          message: error.message,
+          hint: 'inspect runtime bounds and derived values',
+          detail: fields,
+        },
+      ]
+    }
+
+    return [
+      {
+        code: 'RUNTIME_ERROR',
+        name: error.name,
+        message: error.message,
+        hint: 'inspect stack and runtime context',
+        detail: fields,
+      },
+    ]
+  }
+
+  return [
+    {
+      code: 'RUNTIME_ERROR',
+      name: 'NonError',
+      message: String(error),
+      hint: 'inspect rejection payload or thrown runtime value',
+      detail: fields,
+    },
+  ]
+}
+
 export const initClientLogging = (options: {
   app: string
   minLevel?: LogLevel
@@ -52,7 +132,7 @@ export const initClientLogging = (options: {
     sessionId,
     minLevel:
       options.minLevel ??
-      (process.env.NODE_ENV === 'production' ? 'info' : 'debug'),
+      (process.env.NODE_ENV === 'production' ? 'error' : 'debug'),
     formatter: canonicalFormatter,
     sinks: [createConsoleSink()],
     baseContext: {
@@ -68,23 +148,49 @@ export const initClientLogging = (options: {
 
     const runtimeLogger = logger.withContext({
       cat: 'runtime',
+      phase: 'fail',
     })
 
     const onError = (event: ErrorEvent) => {
-      runtimeLogger.error('window_error', event.error ?? event.message, {
-        filename: event.filename,
-        lineno: event.lineno,
-        colno: event.colno,
-      })
+      const runtimeError = event.error ?? event.message
+
+      runtimeLogger.error(
+        'runtime_window_error',
+        runtimeError,
+        {
+          source: 'window.error',
+          filename: event.filename,
+          lineno: event.lineno,
+          colno: event.colno,
+        },
+        toRuntimeCauses(runtimeError, {
+          source: 'window.error',
+          filename: event.filename,
+          lineno: event.lineno,
+          colno: event.colno,
+        })
+      )
     }
 
     const onUnhandledRejection = (event: PromiseRejectionEvent) => {
-      runtimeLogger.error('unhandled_rejection', event.reason, {
-        reasonType:
-          event.reason !== null && typeof event.reason === 'object'
-            ? 'object'
-            : typeof event.reason,
-      })
+      runtimeLogger.error(
+        'runtime_unhandled_rejection',
+        event.reason,
+        {
+          source: 'window.unhandledrejection',
+          reasonType:
+            event.reason !== null && typeof event.reason === 'object'
+              ? 'object'
+              : typeof event.reason,
+        },
+        toRuntimeCauses(event.reason, {
+          source: 'window.unhandledrejection',
+          reasonType:
+            event.reason !== null && typeof event.reason === 'object'
+              ? 'object'
+              : typeof event.reason,
+        })
+      )
     }
 
     window.addEventListener('error', onError)
@@ -102,7 +208,12 @@ export const initClientLogging = (options: {
     }
   }
 
-  logger.info('logging_ready', { sessionId })
+  logger.info('client_logging_ready', {
+    sessionId,
+    minLevel:
+      options.minLevel ??
+      (process.env.NODE_ENV === 'production' ? 'error' : 'debug'),
+  })
 
   return client
 }

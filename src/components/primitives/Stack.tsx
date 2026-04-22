@@ -1,8 +1,8 @@
 // src/components/primitives/Stack.tsx
 'use client'
 
-import { Children, ReactNode } from 'react'
-import styled, { DefaultTheme } from 'styled-components'
+import { Children, type ComponentPropsWithoutRef, type ReactNode } from 'react'
+import styled, { type DefaultTheme } from 'styled-components'
 
 type Align = 'start' | 'center' | 'end' | 'stretch'
 
@@ -11,7 +11,7 @@ type Props = {
   align?: Align
   splitAfter?: number
   children?: ReactNode
-} & Omit<React.ComponentPropsWithoutRef<'div'>, 'children'>
+} & Omit<ComponentPropsWithoutRef<'div'>, 'children'>
 
 const toGap = (theme: DefaultTheme, gap?: number | string) => {
   if (typeof gap === 'number') return theme.spacing(gap)
