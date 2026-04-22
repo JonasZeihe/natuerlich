@@ -1,0 +1,24 @@
+name: Deploy Jonas Zeihe to Render
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: render-deploy-jonas-zeihe
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Render deploy (Jonas Zeihe)
+        env:
+          HOOK: ${{ secrets.RENDER_DEPLOY_HOOK_JONAS_ZEIHE }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "Missing secret: RENDER_DEPLOY_HOOK_JONAS_ZEIHE"
+            exit 1
+          fi
+          curl -fsSL -X POST "$HOOK"

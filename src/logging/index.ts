@@ -132,7 +132,7 @@ export const initClientLogging = (options: {
     sessionId,
     minLevel:
       options.minLevel ??
-      (process.env.NODE_ENV === 'production' ? 'info' : 'debug'),
+      (process.env.NODE_ENV === 'production' ? 'error' : 'debug'),
     formatter: canonicalFormatter,
     sinks: [createConsoleSink()],
     baseContext: {
@@ -212,7 +212,7 @@ export const initClientLogging = (options: {
     sessionId,
     minLevel:
       options.minLevel ??
-      (process.env.NODE_ENV === 'production' ? 'info' : 'debug'),
+      (process.env.NODE_ENV === 'production' ? 'error' : 'debug'),
   })
 
   return client
