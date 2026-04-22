@@ -29,18 +29,16 @@ const ToggleButtonRoot = styled.button`
   background-color: ${({ theme }) => theme.roles.interactive.toggle.bg};
   border-color: ${({ theme }) => theme.roles.interactive.toggle.border};
   box-shadow: ${({ theme }) => theme.boxShadow.xs};
-  transition:
-    background-color 0.18s ease,
-    border-color 0.18s ease,
-    box-shadow 0.18s ease,
-    transform 0.08s ease,
-    filter 0.18s ease;
+  transition: ${({ theme }) => theme.motion.css.interactive.control};
 
   &:hover {
     background-color: ${({ theme }) => theme.roles.interactive.toggle.hoverBg};
     border-color: ${({ theme }) => theme.roles.interactive.toggle.hoverBorder};
     box-shadow: ${({ theme }) => theme.boxShadow.sm};
     filter: brightness(1.02);
+    transform: translateY(
+      calc(${({ theme }) => theme.motion.foundations.distances.nudge} * -1)
+    );
   }
 
   &:active {
@@ -63,6 +61,10 @@ const ToggleButtonRoot = styled.button`
 
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     width: auto;
+  }
+
+  @media ${({ theme }) => theme.motion.reduced.media} {
+    transition: none;
   }
 `
 

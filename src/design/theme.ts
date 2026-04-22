@@ -17,6 +17,7 @@ import {
   type SectionToneKey,
   type SurfaceToneKey,
 } from './tokens'
+import motion from './motion'
 import {
   buildSemantic,
   resolveAxisKey,
@@ -214,7 +215,7 @@ const createTheme = (mode: Mode) => {
     breakpoints: BREAKPOINTS,
     boxShadow,
     layout: LAYOUT,
-    motionSafe: true,
+    motion,
     resolveAxisKey,
     getAxisRole,
     getMixedAxisRole,

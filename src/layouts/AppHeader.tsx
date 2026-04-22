@@ -8,6 +8,7 @@ import ThemeToggleButton from '@/components/actions/ThemeToggleButton'
 import Container from '@/components/primitives/Container'
 import Inline from '@/components/primitives/Inline'
 import SmoothScroller from '@/components/utilities/SmoothScroller'
+import { scrollToTarget } from '@/components/utilities/SmoothScroller'
 import Typography from '@/design/typography'
 import { getClientLogger } from '@/logging'
 import {
@@ -22,6 +23,7 @@ const HIDE_START_OFFSET = 120
 const HIDE_DELTA = 10
 const REVEAL_DELTA = 8
 const ACTIVE_OFFSET = HEADER_HEIGHT + 40
+const NAV_SCROLL_LOCK_ATTR = 'data-nav-scroll-lock'
 
 const HEADER_SECTIONS: SiteSection[] = SITE_SECTIONS.filter(
   (section) => section.showInHeader
@@ -52,13 +54,28 @@ const getActiveSectionId = (
   return active
 }
 
+type ActiveIndicatorState = {
+  left: number
+  width: number
+  visible: boolean
+}
+
 export default function AppHeader() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [activeId, setActiveId] = useState<SiteSectionId>('einstieg')
   const [compact, setCompact] = useState(false)
   const [hidden, setHidden] = useState(false)
+  const [indicator, setIndicator] = useState<ActiveIndicatorState>({
+    left: 0,
+    width: 0,
+    visible: false,
+  })
 
   const shellRef = useRef<HTMLElement | null>(null)
+  const desktopNavRef = useRef<HTMLDivElement | null>(null)
+  const navItemRefs = useRef<
+    Partial<Record<SiteSectionId, HTMLAnchorElement | null>>
+  >({})
   const ids = useMemo(() => OBSERVED_SECTION_IDS, [])
   const compactLoggedRef = useRef<boolean | null>(null)
   const activeLoggedRef = useRef<SiteSectionId | null>(null)
@@ -125,6 +142,8 @@ export default function AppHeader() {
     const syncFromScroll = () => {
       const currentY = window.scrollY
       const delta = currentY - lastScrollYRef.current
+      const navScrollLocked =
+        document.documentElement.hasAttribute(NAV_SCROLL_LOCK_ATTR)
 
       if (currentY <= TOP_LOCK_OFFSET) {
         setCompact(false)
@@ -132,7 +151,7 @@ export default function AppHeader() {
       } else {
         setCompact(true)
 
-        if (!menuOpen) {
+        if (!menuOpen && !navScrollLocked) {
           if (delta > HIDE_DELTA && currentY > HIDE_START_OFFSET) {
             setHidden(true)
           } else if (delta < -REVEAL_DELTA) {
@@ -281,6 +300,45 @@ export default function AppHeader() {
       })
   }, [activeId])
 
+  useEffect(() => {
+    const updateIndicator = () => {
+      const navRoot = desktopNavRef.current
+      const activeElement = navItemRefs.current[activeId]
+
+      if (!navRoot || !activeElement) {
+        setIndicator((current) =>
+          current.visible
+            ? { left: current.left, width: current.width, visible: false }
+            : current
+        )
+        return
+      }
+
+      const navRect = navRoot.getBoundingClientRect()
+      const itemRect = activeElement.getBoundingClientRect()
+
+      setIndicator({
+        left: itemRect.left - navRect.left,
+        width: itemRect.width,
+        visible: itemRect.width > 0,
+      })
+    }
+
+    let frame = window.requestAnimationFrame(updateIndicator)
+
+    const onResize = () => {
+      window.cancelAnimationFrame(frame)
+      frame = window.requestAnimationFrame(updateIndicator)
+    }
+
+    window.addEventListener('resize', onResize)
+
+    return () => {
+      window.cancelAnimationFrame(frame)
+      window.removeEventListener('resize', onResize)
+    }
+  }, [activeId])
+
   const handleMenuToggle = () => {
     setMenuOpen((current) => {
       const next = !current
@@ -311,7 +369,11 @@ export default function AppHeader() {
         <HeaderInner>
           <TopRow>
             <BrandWrap>
-              <BrandLink targetId="einstieg" aria-label="Zum Einstieg springen">
+              <BrandLink
+                targetId="einstieg"
+                offset={HEADER_HEIGHT}
+                aria-label="Zum Einstieg springen"
+              >
                 <BrandStack>
                   <Typography
                     as="span"
@@ -334,18 +396,32 @@ export default function AppHeader() {
             </BrandWrap>
 
             <DesktopNav aria-label="Hauptnavigation">
-              <Inline gap={0.35} wrap={false} justify="end">
-                {HEADER_SECTIONS.map((section) => (
-                  <NavLink
-                    key={section.id}
-                    targetId={section.id}
-                    $active={activeId === section.id}
-                    aria-current={activeId === section.id ? 'true' : undefined}
-                  >
-                    {section.label}
-                  </NavLink>
-                ))}
-              </Inline>
+              <DesktopNavTrack ref={desktopNavRef}>
+                <ActivePill
+                  $left={indicator.left}
+                  $width={indicator.width}
+                  $visible={indicator.visible}
+                  aria-hidden="true"
+                />
+                <Inline gap={0.35} wrap={false} justify="end">
+                  {HEADER_SECTIONS.map((section) => (
+                    <NavLink
+                      key={section.id}
+                      ref={(node: HTMLAnchorElement | null) => {
+                        navItemRefs.current[section.id] = node
+                      }}
+                      targetId={section.id}
+                      offset={HEADER_HEIGHT}
+                      $active={activeId === section.id}
+                      aria-current={
+                        activeId === section.id ? 'true' : undefined
+                      }
+                    >
+                      {section.label}
+                    </NavLink>
+                  ))}
+                </Inline>
+              </DesktopNavTrack>
             </DesktopNav>
 
             <DesktopActions>
@@ -378,11 +454,14 @@ export default function AppHeader() {
                   <MobileItem key={section.id}>
                     <MobileLink
                       targetId={section.id}
+                      offset={HEADER_HEIGHT}
                       $active={activeId === section.id}
                       aria-current={
                         activeId === section.id ? 'true' : undefined
                       }
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.preventDefault()
+
                         getClientLogger()
                           .withContext({
                             cat: 'navigation',
@@ -391,7 +470,22 @@ export default function AppHeader() {
                           .info('header_mobile_navigation_intent', {
                             targetId: section.id,
                           })
+
                         setMenuOpen(false)
+
+                        window.requestAnimationFrame(() => {
+                          window.requestAnimationFrame(() => {
+                            void scrollToTarget(section.id, {
+                              offset: HEADER_HEIGHT,
+                            }).then((ok) => {
+                              if (!ok) return
+
+                              try {
+                                history.replaceState(null, '', `#${section.id}`)
+                              } catch {}
+                            })
+                          })
+                        })
                       }}
                     >
                       {section.label}
@@ -418,6 +512,13 @@ const HeaderShell = styled.header<{ $compact: boolean; $hidden: boolean }>`
       $compact ? theme.roles.border.strong : theme.roles.border.subtle};
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  opacity: ${({ $hidden }) => ($hidden ? 0 : 1)};
+  transform: ${({ theme, $hidden }) =>
+    $hidden
+      ? `translateY(${theme.motion.foundations.distances.headerHide})`
+      : 'translateY(0)'};
+  pointer-events: ${({ $hidden }) => ($hidden ? 'none' : 'auto')};
+  transition: ${({ theme }) => theme.motion.css.navigation.headerShell};
 
   &::after {
     content: '';
@@ -426,7 +527,7 @@ const HeaderShell = styled.header<{ $compact: boolean; $hidden: boolean }>`
     height: 1px;
     background: ${({ theme, $compact }) =>
       $compact ? theme.roles.border.strong : 'transparent'};
-    transition: background-color 0.18s ease;
+    transition: ${({ theme }) => theme.motion.css.navigation.headerChrome};
     pointer-events: none;
   }
 `
@@ -483,7 +584,40 @@ const DesktopNav = styled.nav`
   }
 `
 
+const DesktopNavTrack = styled.div`
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: ${({ theme }) => theme.spacingHalf(0.2)};
+  border-radius: ${({ theme }) => theme.borderRadius.pill};
+`
+
+const ActivePill = styled.span<{
+  $left: number
+  $width: number
+  $visible: boolean
+}>`
+  position: absolute;
+  top: ${({ theme }) => theme.spacingHalf(0.2)};
+  bottom: ${({ theme }) => theme.spacingHalf(0.2)};
+  left: 0;
+  width: ${({ $width }) => `${$width}px`};
+  border-radius: ${({ theme }) => theme.borderRadius.pill};
+  background: ${({ theme }) => theme.getSurfaceTone('soft', 'density').bg};
+  border: 1px solid ${({ theme }) => theme.getEnergyRole('density').border};
+  box-shadow: none;
+  opacity: ${({ $visible }) => ($visible ? 1 : 0)};
+  transform: translateX(${({ $left }) => `${$left}px`});
+  transition:
+    transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    width 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.18s cubic-bezier(0.2, 0, 0, 1);
+  pointer-events: none;
+`
+
 const navLinkStyles = css<{ $active: boolean }>`
+  position: relative;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -491,11 +625,8 @@ const navLinkStyles = css<{ $active: boolean }>`
   padding-inline: ${({ theme }) => theme.spacing(0.95)};
   border-radius: ${({ theme }) => theme.borderRadius.pill};
   text-decoration: none;
-  border: 1px solid
-    ${({ theme, $active }) =>
-      $active ? theme.getEnergyRole('density').border : 'transparent'};
-  background: ${({ theme, $active }) =>
-    $active ? theme.getSurfaceTone('soft', 'density').bg : 'transparent'};
+  border: 1px solid transparent;
+  background: transparent;
   color: ${({ theme, $active }) =>
     $active ? theme.getEnergyRole('density').text : theme.roles.text.secondary};
   font-size: ${({ theme }) => theme.typography.fontSize.small};
@@ -504,23 +635,15 @@ const navLinkStyles = css<{ $active: boolean }>`
       ? theme.typography.fontWeight.bold
       : theme.typography.fontWeight.medium};
   box-shadow: none;
-  transition:
-    color 0.18s ease,
-    border-color 0.18s ease,
-    background-color 0.18s ease;
+  transition: ${({ theme }) => theme.motion.css.navigation.link};
 
   &:hover,
   &:focus-visible {
     text-decoration: none;
-    color: ${({ theme }) => theme.roles.text.primary};
-    border-color: ${({ theme, $active }) =>
-      $active
-        ? theme.getEnergyRole('density').border
-        : theme.roles.border.subtle};
+    color: ${({ theme, $active }) =>
+      $active ? theme.getEnergyRole('density').text : theme.roles.text.primary};
     background: ${({ theme, $active }) =>
-      $active
-        ? theme.getSurfaceTone('soft', 'density').bg
-        : theme.roles.surface.chrome};
+      $active ? 'transparent' : theme.roles.surface.chrome};
   }
 `
 
@@ -560,16 +683,20 @@ const MenuButton = styled.button`
   border: 1px solid ${({ theme }) => theme.roles.border.subtle};
   box-shadow: none;
   cursor: pointer;
-  transition:
-    background-color 0.18s ease,
-    border-color 0.18s ease,
-    color 0.18s ease;
+  transition: ${({ theme }) => theme.motion.css.navigation.menuButton};
 
   &:hover,
   &:focus-visible {
     background: ${({ theme }) => theme.roles.surface.chrome};
     border-color: ${({ theme }) => theme.roles.border.strong};
     color: ${({ theme }) => theme.getEnergyRole('density').text};
+    transform: translateY(
+      calc(${({ theme }) => theme.motion.foundations.distances.nudge} * -1)
+    );
+  }
+
+  &:active {
+    transform: translateY(0);
   }
 `
 

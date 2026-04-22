@@ -32,11 +32,7 @@ const baseStyles = css`
   -webkit-tap-highlight-color: transparent;
   border-width: 1px;
   border-style: solid;
-  transition:
-    background-color 0.18s ease,
-    border-color 0.18s ease,
-    color 0.18s ease,
-    transform 0.12s ease;
+  transition: ${({ theme }) => theme.motion.css.interactive.control};
 
   &:focus-visible {
     outline: 2px solid transparent;
@@ -50,7 +46,7 @@ const baseStyles = css`
     transform: none;
   }
 
-  @media (prefers-reduced-motion: reduce) {
+  @media ${({ theme }) => theme.motion.reduced.media} {
     transition: none;
   }
 `
@@ -69,7 +65,9 @@ const roleStyles = css<{ $variant: Variant }>`
         color: ${role.hoverFg};
         background-color: ${role.hoverBg};
         border-color: ${role.hoverBorder};
-        transform: ${$variant === 'link' ? 'none' : 'translateY(-1px)'};
+        transform: ${$variant === 'link'
+          ? 'none'
+          : `translateY(calc(${theme.motion.foundations.distances.nudge} * -1))`};
         text-decoration: ${$variant === 'link' ? 'underline' : 'none'};
         text-underline-offset: ${$variant === 'link' ? '0.16em' : 'initial'};
         text-decoration-thickness: ${$variant === 'link'

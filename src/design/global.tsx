@@ -19,7 +19,7 @@ const GlobalStyles = createGlobalStyle`
     -webkit-text-size-adjust: 100%;
     color-scheme: ${({ theme }) => theme.mode};
     text-rendering: optimizeLegibility;
-    scroll-behavior: smooth;
+    scroll-behavior: ${({ theme }) => theme.motion.scroll.behavior};
     background: ${({ theme }) => theme.roles.surface.canvas};
   }
 
@@ -39,9 +39,7 @@ const GlobalStyles = createGlobalStyle`
     text-underline-offset: 0.16em;
     text-decoration-thickness: 0.06em;
     text-decoration-color: ${({ theme }) => theme.roles.text.link};
-    transition:
-      color 0.18s ease,
-      text-decoration-color 0.18s ease;
+    transition: ${({ theme }) => theme.motion.css.link};
   }
 
   a:hover,
@@ -93,16 +91,10 @@ const GlobalStyles = createGlobalStyle`
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-
+  @media ${({ theme }) => theme.motion.reduced.media} {
     *, *::before, *::after {
-      animation-duration: 0.001ms !important;
+      animation-duration: ${({ theme }) => theme.motion.reduced.duration} !important;
       animation-iteration-count: 1 !important;
-      transition-duration: 0.001ms !important;
-      scroll-behavior: auto !important;
     }
   }
 `

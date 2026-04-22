@@ -134,12 +134,16 @@ const FooterLink = styled(Link)`
   border: none;
   color: ${({ theme }) => theme.roles.text.secondary};
   background: transparent;
-  transition: color 0.18s ease;
+  transition: ${({ theme }) => theme.motion.css.link};
 
   &:hover,
   &:focus-visible {
     color: ${({ theme }) => theme.roles.text.primary};
     text-decoration: none;
+  }
+
+  @media ${({ theme }) => theme.motion.reduced.media} {
+    transition: none;
   }
 `
 
@@ -177,19 +181,27 @@ const ToTop = styled.button`
   box-shadow: none;
   font-size: 0.92rem;
   cursor: pointer;
-  transition:
-    color 0.18s ease,
-    border-color 0.18s ease,
-    background-color 0.18s ease;
+  transition: ${({ theme }) => theme.motion.css.interactive.control};
 
   &:hover,
   &:focus-visible {
     background: ${({ theme }) => theme.roles.surface.chrome};
     border-color: ${({ theme }) => theme.roles.border.strong};
     color: ${({ theme }) => theme.roles.text.primary};
+    transform: translateY(
+      calc(${({ theme }) => theme.motion.foundations.distances.nudge} * -1)
+    );
+  }
+
+  &:active {
+    transform: translateY(0);
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     align-self: flex-start;
+  }
+
+  @media ${({ theme }) => theme.motion.reduced.media} {
+    transition: none;
   }
 `

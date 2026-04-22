@@ -3,6 +3,7 @@
 
 import styled from 'styled-components'
 import PageCanvas from '@/components/compositions/page/PageCanvas'
+import { scrollToTarget } from '@/components/utilities/SmoothScroller'
 import { getClientLogger } from '@/logging'
 import { type SiteSectionId } from '@/features/site/model/sections'
 import ContactSection from '@/features/site/sections/ContactSection'
@@ -12,7 +13,7 @@ import PracticeSection from '@/features/site/sections/PracticeSection'
 import PracticalFrameSection from '@/features/site/sections/PracticalFrameSection'
 import TeacherSection from '@/features/site/sections/TeacherSection'
 
-const scrollToSection = (
+const scrollToSection = async (
   targetId: SiteSectionId,
   source: 'entry_practice' | 'entry_frame' | 'practice_frame' | 'frame_contact'
 ) => {
@@ -26,8 +27,9 @@ const scrollToSection = (
     source,
   })
 
-  const element = document.getElementById(targetId)
-  if (!element) {
+  const ok = await scrollToTarget(targetId)
+
+  if (!ok) {
     getClientLogger()
       .withContext({
         cat: 'flow',
@@ -39,17 +41,6 @@ const scrollToSection = (
       })
     return
   }
-
-  const reduce =
-    window.matchMedia &&
-    window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-  const behavior: ScrollBehavior = reduce ? 'auto' : 'smooth'
-
-  element.scrollIntoView({
-    behavior,
-    block: 'start',
-  })
 
   try {
     history.replaceState(null, '', `#${targetId}`)
@@ -89,7 +80,6 @@ const scrollToSection = (
     .info('flow_section_completed', {
       targetId,
       source,
-      behavior,
     })
 }
 
@@ -98,20 +88,28 @@ export default function HomePage() {
     <PageCanvas variant="landing" introOffset={false} noFooterGap>
       <Content>
         <EntrySection
-          onGoToPractice={() => scrollToSection('praxis', 'entry_practice')}
-          onGoToFrame={() => scrollToSection('rahmen', 'entry_frame')}
+          onGoToPractice={() => {
+            void scrollToSection('praxis', 'entry_practice')
+          }}
+          onGoToFrame={() => {
+            void scrollToSection('rahmen', 'entry_frame')
+          }}
         />
 
         <OrientationSection />
 
         <PracticeSection
-          onGoToFrame={() => scrollToSection('rahmen', 'practice_frame')}
+          onGoToFrame={() => {
+            void scrollToSection('rahmen', 'practice_frame')
+          }}
         />
 
         <TeacherSection />
 
         <PracticalFrameSection
-          onGoToContact={() => scrollToSection('kontakt', 'frame_contact')}
+          onGoToContact={() => {
+            void scrollToSection('kontakt', 'frame_contact')
+          }}
         />
 
         <ContactSection />
