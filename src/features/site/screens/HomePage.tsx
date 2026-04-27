@@ -9,6 +9,7 @@ import { type SiteSectionId } from '@/features/site/model/sections'
 import ContactSection from '@/features/site/sections/ContactSection'
 import EntrySection from '@/features/site/sections/EntrySection'
 import OrientationSection from '@/features/site/sections/OrientationSection'
+import OrnamentBenchmarkSection from '@/features/site/sections/OrnamentBenchmarkSection'
 import PracticeSection from '@/features/site/sections/PracticeSection'
 import PracticalFrameSection from '@/features/site/sections/PracticalFrameSection'
 import TeacherSection from '@/features/site/sections/TeacherSection'
@@ -113,6 +114,8 @@ export default function HomePage() {
         />
 
         <ContactSection />
+
+        <OrnamentBenchmarkSection />
       </Content>
     </PageCanvas>
   )

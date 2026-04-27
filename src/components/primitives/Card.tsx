@@ -8,6 +8,7 @@ import {
 } from 'react'
 import styled, { css } from 'styled-components'
 import type { EnergyInput, EnergyMix, SurfaceToneKey } from '@/design/theme'
+import type { OrnamentConsumerSpec } from '@/components/ornaments/registry'
 import Surface from './Surface'
 
 type Padding = 'sm' | 'md' | 'lg'
@@ -23,6 +24,7 @@ type Props = {
   weight?: Weight
   radius?: Radius
   bordered?: boolean
+  ornament?: OrnamentConsumerSpec | null
   children?: ReactNode
 } & Omit<ComponentPropsWithoutRef<'div'>, 'color'>
 
@@ -80,6 +82,7 @@ const Card = forwardRef<HTMLDivElement, Props>(function Card(
     weight = 'steady',
     radius = 'large',
     bordered = true,
+    ornament,
     children,
     ...rest
   },
@@ -95,6 +98,7 @@ const Card = forwardRef<HTMLDivElement, Props>(function Card(
       padding={padding}
       bordered={bordered}
       weight={weight}
+      ornament={ornament}
       $interactive={interactive}
       {...rest}
     >

@@ -4,6 +4,8 @@
 import type { ComponentPropsWithoutRef, ReactNode } from 'react'
 import styled, { css } from 'styled-components'
 import type { EnergyInput, EnergyMix, SectionToneKey } from '@/design/theme'
+import Ornament from '@/components/ornaments/Ornament'
+import type { OrnamentConsumerSpec } from '@/components/ornaments/registry'
 import Container from './Container'
 
 type ContainerSize = 'narrow' | 'default' | 'wide' | 'full'
@@ -23,6 +25,7 @@ type Props = {
   energy?: EnergyInput
   mix?: EnergyMix
   bleed?: boolean
+  ornament?: OrnamentConsumerSpec | null
   children?: ReactNode
 } & Omit<ComponentPropsWithoutRef<'section'>, 'children'>
 
@@ -134,6 +137,7 @@ export default function Section({
   energy,
   mix,
   bleed = false,
+  ornament,
   children,
   ...rest
 }: Props) {
@@ -147,6 +151,25 @@ export default function Section({
         ? { 'aria-labelledby': labelledBy }
         : {}
 
+  const resolvedOrnament =
+    ornament &&
+    ({
+      ...ornament,
+      placement: 'section' as const,
+      energy: ornament.energy ?? energy,
+      mix: ornament.mix ?? mix,
+    } satisfies {
+      placement: 'section'
+      name: OrnamentConsumerSpec['name']
+      anchor?: OrnamentConsumerSpec['anchor']
+      size?: OrnamentConsumerSpec['size']
+      presence?: OrnamentConsumerSpec['presence']
+      energy?: EnergyInput
+      mix?: EnergyMix
+      mirrorX?: boolean
+      mirrorY?: boolean
+    })
+
   return (
     <Outer
       $tone={tone}
@@ -156,6 +179,8 @@ export default function Section({
       {...rest}
       {...sectionAriaProps}
     >
+      {resolvedOrnament ? <Ornament {...resolvedOrnament} /> : null}
+
       <Inner
         $padY={padY}
         $rhythm={resolvedRhythm}

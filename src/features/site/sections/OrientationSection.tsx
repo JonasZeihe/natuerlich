@@ -37,6 +37,13 @@ export default function OrientationSection() {
       rhythm="default"
       tone="clarify"
       energy="opening"
+      ornament={{
+        name: 'rootTrace',
+        anchor: 'bottom-right',
+        size: 'lg',
+        presence: 'default',
+        mix: ['opening', 'tension'],
+      }}
     >
       <SectionStack>
         <IntroSurface

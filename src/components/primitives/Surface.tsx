@@ -8,6 +8,8 @@ import {
 } from 'react'
 import styled, { css } from 'styled-components'
 import type { EnergyInput, EnergyMix, SurfaceToneKey } from '@/design/theme'
+import Ornament from '@/components/ornaments/Ornament'
+import type { OrnamentConsumerSpec } from '@/components/ornaments/registry'
 
 type SurfacePadding = 'none' | 'sm' | 'md' | 'lg'
 type SurfaceRadius = 'none' | 'small' | 'medium' | 'large' | 'pill'
@@ -21,6 +23,7 @@ type Props = {
   padding?: SurfacePadding
   bordered?: boolean
   weight?: SurfaceWeight
+  ornament?: OrnamentConsumerSpec | null
   children?: ReactNode
 } & Omit<ComponentPropsWithoutRef<'div'>, 'color'>
 
@@ -86,6 +89,12 @@ const Base = styled.div<StyledProps>`
   }}
 `
 
+const Content = styled.div`
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+`
+
 const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
   {
     tone = 'panel',
@@ -95,11 +104,31 @@ const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
     padding = 'md',
     bordered = true,
     weight = 'quiet',
+    ornament,
     children,
     ...rest
   },
   ref
 ) {
+  const resolvedOrnament =
+    ornament &&
+    ({
+      ...ornament,
+      placement: 'surface' as const,
+      energy: ornament.energy ?? energy,
+      mix: ornament.mix ?? mix,
+    } satisfies {
+      placement: 'surface'
+      name: OrnamentConsumerSpec['name']
+      anchor?: OrnamentConsumerSpec['anchor']
+      size?: OrnamentConsumerSpec['size']
+      presence?: OrnamentConsumerSpec['presence']
+      energy?: EnergyInput
+      mix?: EnergyMix
+      mirrorX?: boolean
+      mirrorY?: boolean
+    })
+
   return (
     <Base
       ref={ref}
@@ -112,7 +141,8 @@ const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
       $weight={weight}
       {...rest}
     >
-      {children}
+      {resolvedOrnament ? <Ornament {...resolvedOrnament} /> : null}
+      <Content>{children}</Content>
     </Base>
   )
 })
