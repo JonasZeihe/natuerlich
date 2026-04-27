@@ -1,0 +1,134 @@
+.root {
+  background:
+    radial-gradient(
+      ellipse at 18% 24%,
+      color-mix(in srgb, var(--ornament-start) 24%, transparent) 0%,
+      transparent 28%
+    ),
+    radial-gradient(
+      ellipse at 74% 28%,
+      color-mix(in srgb, var(--ornament-end) 18%, transparent) 0%,
+      transparent 30%
+    ),
+    radial-gradient(
+      ellipse at 42% 78%,
+      color-mix(in srgb, var(--ornament-soft) 44%, transparent) 0%,
+      transparent 36%
+    ),
+    linear-gradient(
+      135deg,
+      transparent,
+      color-mix(in srgb, var(--ornament-start) 8%, transparent),
+      transparent
+    );
+}
+
+.root::before,
+.root::after {
+  content: '';
+  position: absolute;
+  inset: -12%;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.root::before {
+  background:
+    radial-gradient(
+      ellipse at 16% 22%,
+      transparent 0 20%,
+      color-mix(in srgb, var(--ornament-start) 38%, transparent) 20.5% 21.4%,
+      transparent 22% 100%
+    ),
+    radial-gradient(
+      ellipse at 44% 32%,
+      transparent 0 24%,
+      color-mix(in srgb, var(--ornament-end) 32%, transparent) 24.5% 25.4%,
+      transparent 26% 100%
+    ),
+    radial-gradient(
+      ellipse at 74% 24%,
+      transparent 0 20%,
+      color-mix(in srgb, var(--ornament-start) 28%, transparent) 20.5% 21.2%,
+      transparent 22% 100%
+    ),
+    radial-gradient(
+      ellipse at 28% 68%,
+      transparent 0 23%,
+      color-mix(in srgb, var(--ornament-end) 28%, transparent) 23.5% 24.4%,
+      transparent 25% 100%
+    ),
+    radial-gradient(
+      ellipse at 64% 72%,
+      transparent 0 25%,
+      color-mix(in srgb, var(--ornament-start) 24%, transparent) 25.5% 26.3%,
+      transparent 27% 100%
+    );
+  background-size:
+    28rem 20rem,
+    30rem 22rem,
+    26rem 19rem,
+    31rem 22rem,
+    34rem 24rem;
+  background-position:
+    -4rem -2rem,
+    7rem 0,
+    17rem -3rem,
+    -2rem 10rem,
+    14rem 11rem;
+  background-repeat: repeat;
+  filter: saturate(1.04);
+  mask-image: radial-gradient(
+    ellipse at 52% 50%,
+    black 0%,
+    black 76%,
+    transparent 98%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse at 52% 50%,
+    black 0%,
+    black 76%,
+    transparent 98%
+  );
+}
+
+.root::after {
+  inset: 0;
+  background:
+    linear-gradient(
+      26deg,
+      transparent 0 26%,
+      color-mix(in srgb, var(--ornament-edge) 20%, transparent) 26.2% 26.7%,
+      transparent 27% 100%
+    ),
+    linear-gradient(
+      94deg,
+      transparent 0 41%,
+      color-mix(in srgb, var(--ornament-start) 17%, transparent) 41.2% 41.7%,
+      transparent 42% 100%
+    ),
+    linear-gradient(
+      151deg,
+      transparent 0 58%,
+      color-mix(in srgb, var(--ornament-end) 16%, transparent) 58.2% 58.7%,
+      transparent 59% 100%
+    ),
+    radial-gradient(
+      ellipse at 50% 52%,
+      transparent 0%,
+      color-mix(in srgb, var(--ornament-surface) 26%, transparent) 74%,
+      transparent 100%
+    );
+  background-size:
+    22rem 17rem,
+    25rem 19rem,
+    27rem 20rem,
+    100% 100%;
+  background-position:
+    -2rem 1rem,
+    9rem -3rem,
+    16rem 9rem,
+    center;
+  background-repeat: repeat;
+  mix-blend-mode: multiply;
+}

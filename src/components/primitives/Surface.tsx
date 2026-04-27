@@ -1,4 +1,3 @@
-// src/components/primitives/Surface.tsx
 'use client'
 
 import {
@@ -9,9 +8,11 @@ import {
 import styled, { css } from 'styled-components'
 import type { EnergyInput, EnergyMix, SurfaceToneKey } from '@/design/theme'
 import Ornament from '@/components/ornaments/Ornament'
+import OrnamentCss from '@/components/ornaments/OrnamentCss'
 import OrnamentField from '@/components/ornaments/OrnamentField'
 import type {
   OrnamentConsumerSpec,
+  OrnamentCssConsumerSpec,
   OrnamentFieldConsumerSpec,
 } from '@/components/ornaments/registry'
 
@@ -29,6 +30,7 @@ type Props = {
   weight?: SurfaceWeight
   ornament?: OrnamentConsumerSpec | null
   ornamentField?: OrnamentFieldConsumerSpec | null
+  cssOrnament?: OrnamentCssConsumerSpec | null
   children?: ReactNode
 } & Omit<ComponentPropsWithoutRef<'div'>, 'color'>
 
@@ -112,11 +114,28 @@ const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
     weight = 'quiet',
     ornament,
     ornamentField,
+    cssOrnament,
     children,
     ...rest
   },
   ref
 ) {
+  const resolvedCssOrnament =
+    cssOrnament &&
+    ({
+      ...cssOrnament,
+      placement: 'surface' as const,
+      energy: cssOrnament.energy ?? energy,
+      mix: cssOrnament.mix ?? mix,
+    } satisfies {
+      placement: 'surface'
+      name: OrnamentCssConsumerSpec['name']
+      presence?: OrnamentCssConsumerSpec['presence']
+      boundary?: OrnamentCssConsumerSpec['boundary']
+      energy?: EnergyInput
+      mix?: EnergyMix
+    })
+
   const resolvedOrnament =
     ornament &&
     ({
@@ -154,6 +173,7 @@ const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
     })
 
   const ornamentBleeds =
+    resolvedCssOrnament?.boundary === 'bleed' ||
     resolvedOrnament?.boundary === 'bleed' ||
     resolvedOrnamentField?.boundary === 'bleed'
 
@@ -170,6 +190,7 @@ const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
       $ornamentBleeds={ornamentBleeds}
       {...rest}
     >
+      {resolvedCssOrnament ? <OrnamentCss {...resolvedCssOrnament} /> : null}
       {resolvedOrnamentField ? (
         <OrnamentField {...resolvedOrnamentField} />
       ) : null}

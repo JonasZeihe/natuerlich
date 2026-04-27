@@ -1,0 +1,99 @@
+.root {
+  background:
+    linear-gradient(
+      112deg,
+      transparent 0%,
+      transparent 41%,
+      color-mix(in srgb, var(--ornament-start) 18%, transparent) 43%,
+      color-mix(in srgb, var(--ornament-soft) 42%, transparent) 48%,
+      color-mix(in srgb, var(--ornament-end) 16%, transparent) 56%,
+      transparent 64%,
+      transparent 100%
+    ),
+    radial-gradient(
+      ellipse at 68% 44%,
+      color-mix(in srgb, var(--ornament-end) 18%, transparent) 0%,
+      transparent 44%
+    ),
+    radial-gradient(
+      ellipse at 28% 62%,
+      color-mix(in srgb, var(--ornament-start) 16%, transparent) 0%,
+      transparent 38%
+    );
+}
+
+.root::before,
+.root::after {
+  content: '';
+  position: absolute;
+  inset: -12%;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.root::before {
+  background:
+    linear-gradient(
+      112deg,
+      transparent 0%,
+      transparent 45.4%,
+      color-mix(in srgb, var(--ornament-surface) 62%, transparent) 45.8%,
+      color-mix(in srgb, var(--ornament-start) 66%, transparent) 46.4%,
+      color-mix(in srgb, var(--ornament-end) 48%, transparent) 47.2%,
+      color-mix(in srgb, var(--ornament-surface) 38%, transparent) 48.2%,
+      transparent 49.4%,
+      transparent 100%
+    ),
+    linear-gradient(
+      112deg,
+      transparent 0%,
+      transparent 56%,
+      color-mix(in srgb, var(--ornament-edge) 22%, transparent) 56.2% 56.8%,
+      transparent 57.2% 100%
+    );
+  filter: saturate(1.08);
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    black 10%,
+    black 94%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    black 10%,
+    black 94%,
+    transparent 100%
+  );
+}
+
+.root::after {
+  background:
+    repeating-linear-gradient(
+      112deg,
+      transparent 0 2.4rem,
+      color-mix(in srgb, var(--ornament-start) 12%, transparent) 2.4rem 2.48rem,
+      transparent 2.48rem 5.4rem
+    ),
+    radial-gradient(
+      ellipse at 48% 50%,
+      color-mix(in srgb, var(--ornament-soft) 28%, transparent) 0%,
+      transparent 52%
+    );
+  mix-blend-mode: multiply;
+  mask-image: linear-gradient(
+    112deg,
+    transparent 0%,
+    black 36%,
+    black 65%,
+    transparent 82%
+  );
+  -webkit-mask-image: linear-gradient(
+    112deg,
+    transparent 0%,
+    black 36%,
+    black 65%,
+    transparent 82%
+  );
+}

@@ -1,4 +1,3 @@
-// src/features/site/sections/OrnamentBenchmarkSection.tsx
 'use client'
 
 import styled from 'styled-components'
@@ -8,6 +7,7 @@ import Surface from '@/components/primitives/Surface'
 import type {
   OrnamentAnchor,
   OrnamentBoundary,
+  OrnamentCssName,
   OrnamentName,
   OrnamentPresence,
   OrnamentSize,
@@ -26,6 +26,16 @@ type ShapeExample = {
   mix?: EnergyMix
   mirrorX?: boolean
   mirrorY?: boolean
+}
+
+type CssExample = {
+  name: OrnamentCssName
+  label: string
+  feeling: string
+  use: string
+  presence: OrnamentPresence
+  energy?: EnergyInput
+  mix?: EnergyMix
 }
 
 type FieldExample = {
@@ -96,6 +106,41 @@ type AssetProofExample = {
   }
   copy: string
 }
+
+const cssExamples: readonly CssExample[] = [
+  {
+    name: 'paperWash',
+    label: 'Paper Wash',
+    feeling: 'Leichte Oberfläche. Körnung, Wärme, ruhige Tiefe.',
+    use: 'Basisflächen, Intro-Cards, leise Bühnen.',
+    mix: ['opening', 'density'],
+    presence: 'default',
+  },
+  {
+    name: 'cellularWash',
+    label: 'Cellular Wash',
+    feeling: 'Kammern ohne Labor. Membran, Nachbarschaft, Atem.',
+    use: 'Systemflächen, Panels, strukturierte Räume.',
+    mix: ['density', 'flow'],
+    presence: 'default',
+  },
+  {
+    name: 'wovenVeil',
+    label: 'Woven Veil',
+    feeling: 'Gelegte Beziehung. Breite Bänder, kein Strichmuster.',
+    use: 'Beziehungsräume, Karten, ruhige Übergänge.',
+    mix: ['flow', 'density'],
+    presence: 'strong',
+  },
+  {
+    name: 'edgeWeather',
+    label: 'Edge Weather',
+    feeling: 'Rand, Patina, Schwelle. Druck ohne Effektpose.',
+    use: 'Abschnittswechsel, Fokusflächen, Abschlüsse.',
+    mix: ['tension', 'opening'],
+    presence: 'default',
+  },
+]
 
 const energyExamples: readonly {
   label: string
@@ -434,6 +479,11 @@ export default function OrnamentBenchmarkSection() {
       rhythm="spacious"
       tone="arrival"
       mix={['density', 'flow']}
+      cssOrnament={{
+        name: 'paperWash',
+        presence: 'subtle',
+        mix: ['density', 'flow'],
+      }}
       ornament={{
         name: 'partitionField',
         anchor: 'bottom-right',
@@ -457,6 +507,11 @@ export default function OrnamentBenchmarkSection() {
           padding="lg"
           radius="large"
           mix={['opening', 'density']}
+          cssOrnament={{
+            name: 'paperWash',
+            presence: 'default',
+            mix: ['opening', 'density'],
+          }}
           ornament={{
             name: 'gyroidChannel',
             anchor: 'center',
@@ -470,10 +525,65 @@ export default function OrnamentBenchmarkSection() {
           <IntroText>
             Diese Section testet die Ornament-Schicht bewusst direkt: als
             Section-Hintergrund, Surface-Background, Card-Akzent, Halo, Field,
-            Markierung und Farbträger. Wenn eine Form hier nicht trägt, trägt
-            sie im echten Layout auch nicht.
+            Markierung, Farbträger und CSS-Material. Wenn eine Form hier nicht
+            trägt, trägt sie im echten Layout auch nicht.
           </IntroText>
         </IntroSurface>
+
+        <Block>
+          <BlockHeader>
+            <BlockKicker>CSS</BlockKicker>
+            <BlockTitle>CSS-Ornaments als eigene Materialflächen</BlockTitle>
+          </BlockHeader>
+
+          <CssGrid>
+            {cssExamples.map((item) => (
+              <CssSurface
+                key={item.name}
+                tone="soft"
+                energy={item.energy}
+                mix={item.mix}
+                padding="lg"
+                radius="large"
+                bordered
+                weight="strong"
+                cssOrnament={{
+                  name: item.name,
+                  presence: item.presence,
+                  energy: item.energy,
+                  mix: item.mix,
+                }}
+              >
+                <CardTitle>{item.label}</CardTitle>
+                <CardText>{item.feeling}</CardText>
+                <UseText>{item.use}</UseText>
+              </CssSurface>
+            ))}
+          </CssGrid>
+        </Block>
+
+        <SectionTest
+          tone="deepen"
+          mix={['density', 'flow']}
+          variant="body"
+          rhythm="spacious"
+          cssOrnament={{
+            name: 'cellularWash',
+            presence: 'default',
+            boundary: 'bleed',
+            mix: ['density', 'flow'],
+          }}
+        >
+          <SectionTestInner>
+            <BlockKicker>CSS Section</BlockKicker>
+            <FieldLabel>Material als Bühnenraum</FieldLabel>
+            <FieldText>
+              CSS wird hier nicht als Effekt eingesetzt, sondern als Oberfläche:
+              Körnung, Membran, Gewebe und Randdruck. Der Inhalt bleibt vorne,
+              die Fläche bekommt Körper.
+            </FieldText>
+          </SectionTestInner>
+        </SectionTest>
 
         <Block>
           <BlockHeader>
@@ -533,6 +643,12 @@ export default function OrnamentBenchmarkSection() {
                 radius="large"
                 bordered
                 weight="strong"
+                cssOrnament={{
+                  name: 'paperWash',
+                  presence: 'subtle',
+                  energy: item.energy,
+                  mix: item.mix,
+                }}
                 ornament={{
                   ...item.ornament,
                   energy: item.energy,
@@ -563,6 +679,12 @@ export default function OrnamentBenchmarkSection() {
                 radius="large"
                 bordered
                 weight="strong"
+                cssOrnament={{
+                  name: 'paperWash',
+                  presence: 'subtle',
+                  energy: item.energy,
+                  mix: item.mix,
+                }}
                 ornamentField={{
                   name: item.name,
                   presence: item.presence,
@@ -583,6 +705,12 @@ export default function OrnamentBenchmarkSection() {
           mix={['density', 'flow']}
           variant="body"
           rhythm="spacious"
+          cssOrnament={{
+            name: 'cellularWash',
+            presence: 'subtle',
+            boundary: 'bleed',
+            mix: ['density', 'flow'],
+          }}
           ornamentField={{
             name: 'partitionField',
             presence: 'subtle',
@@ -596,7 +724,7 @@ export default function OrnamentBenchmarkSection() {
             <FieldText>
               Hier trägt kein einzelnes Ornament die Fläche. Mehrere leise
               Setzungen erzeugen Ordnung im Hintergrund, ohne Pattern-Tapete zu
-              werden.
+              werden. CSS liefert Material, das Field liefert Struktur.
             </FieldText>
           </SectionTestInner>
         </SectionTest>
@@ -606,6 +734,12 @@ export default function OrnamentBenchmarkSection() {
           mix={['tension', 'flow']}
           variant="body"
           rhythm="spacious"
+          cssOrnament={{
+            name: 'edgeWeather',
+            presence: 'subtle',
+            boundary: 'bleed',
+            mix: ['tension', 'flow'],
+          }}
           ornament={{
             name: 'dreamCatcher',
             anchor: 'right',
@@ -621,7 +755,8 @@ export default function OrnamentBenchmarkSection() {
             <FieldText>
               Diese SVG liegt als echte Datei im Ornament-Modul. Sie wird nicht
               als buntes Bild gerendert, sondern als Maske in die bestehende
-              Energielogik gezwungen.
+              Energielogik gezwungen. CSS darf die Fläche tragen, nicht die
+              Fremdform entschuldigen.
             </FieldText>
           </SectionTestInner>
         </SectionTest>
@@ -642,6 +777,11 @@ export default function OrnamentBenchmarkSection() {
                 radius="large"
                 bordered
                 weight="steady"
+                cssOrnament={{
+                  name: 'paperWash',
+                  presence: 'subtle',
+                  energy: item.energy,
+                }}
                 ornament={{
                   name: 'rippleOrigin',
                   anchor: 'bottom-right',
@@ -673,6 +813,11 @@ export default function OrnamentBenchmarkSection() {
                 radius="large"
                 bordered
                 weight="steady"
+                cssOrnament={{
+                  name: 'paperWash',
+                  presence: 'subtle',
+                  mix: item.mix,
+                }}
                 ornament={{
                   name: 'traceFan',
                   anchor: 'top-right',
@@ -706,6 +851,11 @@ export default function OrnamentBenchmarkSection() {
                 radius="large"
                 bordered
                 weight="steady"
+                cssOrnament={{
+                  name: 'cellularWash',
+                  presence: item.presence,
+                  mix: ['density', 'flow'],
+                }}
                 ornament={{
                   name: 'partitionField',
                   anchor: 'bottom-right',
@@ -739,6 +889,11 @@ export default function OrnamentBenchmarkSection() {
                 radius="large"
                 bordered
                 weight="steady"
+                cssOrnament={{
+                  name: 'edgeWeather',
+                  presence: 'subtle',
+                  mix: ['tension', 'opening'],
+                }}
                 ornament={{
                   name: 'crownWound',
                   anchor: 'center',
@@ -801,6 +956,11 @@ export default function OrnamentBenchmarkSection() {
                 radius="large"
                 bordered
                 weight="steady"
+                cssOrnament={{
+                  name: 'paperWash',
+                  presence: 'subtle',
+                  mix: ['opening', 'flow'],
+                }}
                 ornament={{
                   name: 'traceFan',
                   anchor: 'center',
@@ -837,6 +997,12 @@ export default function OrnamentBenchmarkSection() {
                 radius="large"
                 bordered
                 weight="strong"
+                cssOrnament={{
+                  name: 'edgeWeather',
+                  presence: 'default',
+                  boundary: item.boundary,
+                  mix: ['tension', 'opening'],
+                }}
                 ornament={{
                   name: 'crownWound',
                   anchor: 'right',
@@ -870,6 +1036,18 @@ export default function OrnamentBenchmarkSection() {
                 radius="large"
                 bordered
                 weight="strong"
+                cssOrnament={{
+                  name:
+                    item.name === 'crownWound'
+                      ? 'edgeWeather'
+                      : item.name === 'rippleOrigin'
+                        ? 'paperWash'
+                        : 'cellularWash',
+                  presence: 'subtle',
+                  boundary: item.boundary,
+                  energy: item.energy,
+                  mix: item.mix,
+                }}
                 ornament={{
                   name: item.name,
                   anchor: item.anchor,
@@ -894,6 +1072,12 @@ export default function OrnamentBenchmarkSection() {
           mix={['tension', 'density']}
           variant="body"
           rhythm="compact"
+          cssOrnament={{
+            name: 'edgeWeather',
+            presence: 'default',
+            boundary: 'bleed',
+            mix: ['tension', 'density'],
+          }}
           ornament={{
             name: 'crownWound',
             anchor: 'left',
@@ -917,7 +1101,7 @@ export default function OrnamentBenchmarkSection() {
         <Block>
           <BlockHeader>
             <BlockKicker>Surface</BlockKicker>
-            <BlockTitle>Einzelornament gegen OrnamentField</BlockTitle>
+            <BlockTitle>Einzelornament, Field und CSS-Material</BlockTitle>
           </BlockHeader>
 
           <CompareGrid>
@@ -964,6 +1148,27 @@ export default function OrnamentBenchmarkSection() {
                 ruhiger Hintergrund.
               </FieldText>
             </CompareSurface>
+
+            <CompareSurface
+              tone="panel"
+              mix={['density', 'flow']}
+              padding="lg"
+              radius="large"
+              bordered
+              weight="strong"
+              cssOrnament={{
+                name: 'cellularWash',
+                presence: 'default',
+                boundary: 'bleed',
+                mix: ['density', 'flow'],
+              }}
+            >
+              <FieldLabel>CSS-Ornament</FieldLabel>
+              <FieldText>
+                Keine SVG-Form. Nur Material, Körnung, Membran und Flächendruck.
+                Gut als leise Grundierung.
+              </FieldText>
+            </CompareSurface>
           </CompareGrid>
         </Block>
 
@@ -981,6 +1186,11 @@ export default function OrnamentBenchmarkSection() {
               radius="large"
               bordered
               weight="strong"
+              cssOrnament={{
+                name: 'edgeWeather',
+                presence: 'default',
+                mix: ['tension', 'opening'],
+              }}
               ornament={{
                 name: 'crownWound',
                 anchor: 'right',
@@ -1010,6 +1220,11 @@ export default function OrnamentBenchmarkSection() {
               radius="large"
               bordered
               weight="steady"
+              cssOrnament={{
+                name: 'cellularWash',
+                presence: 'default',
+                mix: ['density', 'flow'],
+              }}
               ornament={{
                 name: 'partitionField',
                 anchor: 'bottom-right',
@@ -1044,6 +1259,11 @@ export default function OrnamentBenchmarkSection() {
               radius="large"
               bordered
               weight="steady"
+              cssOrnament={{
+                name: 'wovenVeil',
+                presence: 'default',
+                energy: 'density',
+              }}
               ornament={{
                 name: 'gyroidChannel',
                 anchor: 'center',
@@ -1147,6 +1367,27 @@ const BlockTitle = styled.h3`
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   line-height: ${({ theme }) => theme.typography.lineHeight.tight};
   letter-spacing: ${({ theme }) => theme.typography.letterSpacing.tight};
+`
+
+const CssGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: ${({ theme }) => theme.spacing(1)};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    grid-template-columns: 1fr;
+  }
+`
+
+const CssSurface = styled(Surface)`
+  min-height: clamp(16rem, 26vw, 24rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 `
 
 const ShapeGrid = styled.div`
@@ -1376,10 +1617,10 @@ const FieldSurface = styled(Surface)`
 
 const CompareGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: ${({ theme }) => theme.spacing(1)};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
     grid-template-columns: 1fr;
   }
 `
@@ -1446,6 +1687,13 @@ const CardText = styled.p`
   color: ${({ theme }) => theme.roles.text.secondary};
   font-size: ${({ theme }) => theme.typography.fontSize.small};
   line-height: ${({ theme }) => theme.typography.lineHeight.relaxed};
+`
+
+const UseText = styled.p`
+  margin: ${({ theme }) => theme.spacing(0.75)} 0 0;
+  color: ${({ theme }) => theme.roles.text.subtle};
+  font-size: ${({ theme }) => theme.typography.fontSize.caption};
+  line-height: ${({ theme }) => theme.typography.lineHeight.normal};
 `
 
 const BadgeRow = styled.div`

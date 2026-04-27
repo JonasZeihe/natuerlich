@@ -1,4 +1,3 @@
-// src/components/primitives/Card.tsx
 'use client'
 
 import {
@@ -10,6 +9,7 @@ import styled, { css } from 'styled-components'
 import type { EnergyInput, EnergyMix, SurfaceToneKey } from '@/design/theme'
 import type {
   OrnamentConsumerSpec,
+  OrnamentCssConsumerSpec,
   OrnamentFieldConsumerSpec,
 } from '@/components/ornaments/registry'
 import Surface from './Surface'
@@ -29,12 +29,12 @@ type Props = {
   bordered?: boolean
   ornament?: OrnamentConsumerSpec | null
   ornamentField?: OrnamentFieldConsumerSpec | null
+  cssOrnament?: OrnamentCssConsumerSpec | null
   children?: ReactNode
 } & Omit<ComponentPropsWithoutRef<'div'>, 'color'>
 
 type StyledProps = {
   $interactive: boolean
-  $ornamentBleeds: boolean
 }
 
 const StyledCard = styled(Surface)<StyledProps>`
@@ -42,8 +42,7 @@ const StyledCard = styled(Surface)<StyledProps>`
   flex-direction: column;
   width: 100%;
   min-width: 0;
-  overflow: ${({ $ornamentBleeds }) =>
-    $ornamentBleeds ? 'visible' : 'hidden'};
+  overflow: hidden;
   cursor: ${({ $interactive }) => ($interactive ? 'pointer' : 'default')};
   transition:
     border-color 0.18s ease,
@@ -90,14 +89,12 @@ const Card = forwardRef<HTMLDivElement, Props>(function Card(
     bordered = true,
     ornament,
     ornamentField,
+    cssOrnament,
     children,
     ...rest
   },
   ref
 ) {
-  const ornamentBleeds =
-    ornament?.boundary === 'bleed' || ornamentField?.boundary === 'bleed'
-
   return (
     <StyledCard
       ref={ref}
@@ -110,8 +107,8 @@ const Card = forwardRef<HTMLDivElement, Props>(function Card(
       weight={weight}
       ornament={ornament}
       ornamentField={ornamentField}
+      cssOrnament={cssOrnament}
       $interactive={interactive}
-      $ornamentBleeds={ornamentBleeds}
       {...rest}
     >
       {children}

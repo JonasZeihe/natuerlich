@@ -1,0 +1,115 @@
+.root {
+  background:
+    radial-gradient(
+      ellipse at 22% 42%,
+      color-mix(in srgb, var(--ornament-start) 34%, transparent) 0%,
+      transparent 34%
+    ),
+    radial-gradient(
+      ellipse at 74% 52%,
+      color-mix(in srgb, var(--ornament-end) 30%, transparent) 0%,
+      transparent 38%
+    ),
+    linear-gradient(
+      118deg,
+      transparent 0%,
+      color-mix(in srgb, var(--ornament-start) 16%, transparent) 24%,
+      color-mix(in srgb, var(--ornament-soft) 36%, transparent) 48%,
+      color-mix(in srgb, var(--ornament-end) 20%, transparent) 68%,
+      transparent 100%
+    );
+  background-blend-mode: screen, multiply, normal;
+}
+
+.root::before,
+.root::after {
+  content: '';
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.root::before {
+  background:
+    radial-gradient(
+      circle at 12% 38%,
+      color-mix(in srgb, var(--ornament-start) 88%, transparent) 0 0.07rem,
+      transparent 0.09rem
+    ),
+    radial-gradient(
+      circle at 31% 64%,
+      color-mix(in srgb, var(--ornament-end) 72%, transparent) 0 0.06rem,
+      transparent 0.08rem
+    ),
+    radial-gradient(
+      circle at 56% 32%,
+      color-mix(in srgb, var(--ornament-start) 68%, transparent) 0 0.055rem,
+      transparent 0.075rem
+    ),
+    radial-gradient(
+      circle at 82% 58%,
+      color-mix(in srgb, var(--ornament-end) 64%, transparent) 0 0.065rem,
+      transparent 0.085rem
+    ),
+    radial-gradient(
+      ellipse at 44% 52%,
+      color-mix(in srgb, var(--ornament-start) 24%, transparent) 0%,
+      transparent 35%
+    ),
+    radial-gradient(
+      ellipse at 62% 46%,
+      color-mix(in srgb, var(--ornament-end) 20%, transparent) 0%,
+      transparent 36%
+    );
+  background-size:
+    4.1rem 3.7rem,
+    5.6rem 4.9rem,
+    7.2rem 5.8rem,
+    6.4rem 5.2rem,
+    100% 100%,
+    100% 100%;
+  background-position:
+    0.4rem 0.6rem,
+    2.1rem 1.7rem,
+    3.4rem 0.9rem,
+    1.2rem 2.6rem,
+    center,
+    center;
+  filter: saturate(1.16);
+  transform: rotate(-8deg) scale(1.08);
+  mask-image: linear-gradient(
+    118deg,
+    transparent 0%,
+    black 22%,
+    black 74%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    118deg,
+    transparent 0%,
+    black 22%,
+    black 74%,
+    transparent 100%
+  );
+}
+
+.root::after {
+  inset: -34%;
+  background:
+    radial-gradient(
+      ellipse at 50% 50%,
+      color-mix(in srgb, var(--ornament-soft) 38%, transparent) 0%,
+      transparent 34%
+    ),
+    linear-gradient(
+      116deg,
+      transparent 0%,
+      color-mix(in srgb, var(--ornament-start) 18%, transparent) 42%,
+      color-mix(in srgb, var(--ornament-end) 14%, transparent) 56%,
+      transparent 100%
+    );
+  filter: blur(1.65rem);
+  transform: rotate(-11deg);
+  mix-blend-mode: screen;
+}

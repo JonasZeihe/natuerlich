@@ -1,4 +1,3 @@
-// src/components/ornaments/registry.ts
 'use client'
 
 import type { ComponentType } from 'react'
@@ -31,6 +30,12 @@ export type OrnamentName =
   | 'rippleOrigin'
   | 'traceFan'
   | 'dreamCatcher'
+
+export type OrnamentCssName =
+  | 'paperWash'
+  | 'cellularWash'
+  | 'wovenVeil'
+  | 'edgeWeather'
 
 export type OrnamentPlacement = 'section' | 'surface'
 
@@ -75,9 +80,20 @@ export type OrnamentFieldSpec = {
   mix?: EnergyMix
 }
 
+export type OrnamentCssSpec = {
+  name: OrnamentCssName
+  placement: OrnamentPlacement
+  presence?: OrnamentPresence
+  boundary?: OrnamentBoundary
+  energy?: EnergyInput
+  mix?: EnergyMix
+}
+
 export type OrnamentConsumerSpec = Omit<OrnamentSpec, 'placement'>
 
 export type OrnamentFieldConsumerSpec = Omit<OrnamentFieldSpec, 'placement'>
+
+export type OrnamentCssConsumerSpec = Omit<OrnamentCssSpec, 'placement'>
 
 export type OrnamentComponentRegistryEntry = {
   kind: 'component'
@@ -98,6 +114,10 @@ export type OrnamentAssetRegistryEntry = {
 export type OrnamentRegistryEntry =
   | OrnamentComponentRegistryEntry
   | OrnamentAssetRegistryEntry
+
+export type OrnamentCssRegistryEntry = {
+  placements: readonly OrnamentPlacement[]
+}
 
 export const ORNAMENT_REGISTRY: Record<OrnamentName, OrnamentRegistryEntry> = {
   rootTrace: {
@@ -169,5 +189,23 @@ export const ORNAMENT_REGISTRY: Record<OrnamentName, OrnamentRegistryEntry> = {
     placements: ['section', 'surface'],
     viewBox: '0 0 512 512',
     scale: 'gesture',
+  },
+}
+
+export const ORNAMENT_CSS_REGISTRY: Record<
+  OrnamentCssName,
+  OrnamentCssRegistryEntry
+> = {
+  paperWash: {
+    placements: ['section', 'surface'],
+  },
+  cellularWash: {
+    placements: ['section', 'surface'],
+  },
+  wovenVeil: {
+    placements: ['section', 'surface'],
+  },
+  edgeWeather: {
+    placements: ['section', 'surface'],
   },
 }

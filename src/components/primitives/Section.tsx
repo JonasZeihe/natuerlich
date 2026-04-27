@@ -1,13 +1,14 @@
-// src/components/primitives/Section.tsx
 'use client'
 
 import type { ComponentPropsWithoutRef, ReactNode } from 'react'
 import styled, { css } from 'styled-components'
 import type { EnergyInput, EnergyMix, SectionToneKey } from '@/design/theme'
 import Ornament from '@/components/ornaments/Ornament'
+import OrnamentCss from '@/components/ornaments/OrnamentCss'
 import OrnamentField from '@/components/ornaments/OrnamentField'
 import type {
   OrnamentConsumerSpec,
+  OrnamentCssConsumerSpec,
   OrnamentFieldConsumerSpec,
 } from '@/components/ornaments/registry'
 import Container from './Container'
@@ -31,6 +32,7 @@ type Props = {
   bleed?: boolean
   ornament?: OrnamentConsumerSpec | null
   ornamentField?: OrnamentFieldConsumerSpec | null
+  cssOrnament?: OrnamentCssConsumerSpec | null
   children?: ReactNode
 } & Omit<ComponentPropsWithoutRef<'section'>, 'children'>
 
@@ -144,6 +146,7 @@ export default function Section({
   bleed = false,
   ornament,
   ornamentField,
+  cssOrnament,
   children,
   ...rest
 }: Props) {
@@ -156,6 +159,22 @@ export default function Section({
       : labelledBy
         ? { 'aria-labelledby': labelledBy }
         : {}
+
+  const resolvedCssOrnament =
+    cssOrnament &&
+    ({
+      ...cssOrnament,
+      placement: 'section' as const,
+      energy: cssOrnament.energy ?? energy,
+      mix: cssOrnament.mix ?? mix,
+    } satisfies {
+      placement: 'section'
+      name: OrnamentCssConsumerSpec['name']
+      presence?: OrnamentCssConsumerSpec['presence']
+      boundary?: OrnamentCssConsumerSpec['boundary']
+      energy?: EnergyInput
+      mix?: EnergyMix
+    })
 
   const resolvedOrnament =
     ornament &&
@@ -202,6 +221,7 @@ export default function Section({
       {...rest}
       {...sectionAriaProps}
     >
+      {resolvedCssOrnament ? <OrnamentCss {...resolvedCssOrnament} /> : null}
       {resolvedOrnamentField ? (
         <OrnamentField {...resolvedOrnamentField} />
       ) : null}
