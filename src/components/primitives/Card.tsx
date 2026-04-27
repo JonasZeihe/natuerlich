@@ -30,6 +30,7 @@ type Props = {
 
 type StyledProps = {
   $interactive: boolean
+  $ornamentBleeds: boolean
 }
 
 const StyledCard = styled(Surface)<StyledProps>`
@@ -37,7 +38,8 @@ const StyledCard = styled(Surface)<StyledProps>`
   flex-direction: column;
   width: 100%;
   min-width: 0;
-  overflow: hidden;
+  overflow: ${({ $ornamentBleeds }) =>
+    $ornamentBleeds ? 'visible' : 'hidden'};
   cursor: ${({ $interactive }) => ($interactive ? 'pointer' : 'default')};
   transition:
     border-color 0.18s ease,
@@ -100,6 +102,7 @@ const Card = forwardRef<HTMLDivElement, Props>(function Card(
       weight={weight}
       ornament={ornament}
       $interactive={interactive}
+      $ornamentBleeds={ornament?.boundary === 'bleed'}
       {...rest}
     >
       {children}

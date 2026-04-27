@@ -164,6 +164,7 @@ export default function Section({
       anchor?: OrnamentConsumerSpec['anchor']
       size?: OrnamentConsumerSpec['size']
       presence?: OrnamentConsumerSpec['presence']
+      boundary?: OrnamentConsumerSpec['boundary']
       energy?: EnergyInput
       mix?: EnergyMix
       mirrorX?: boolean

@@ -7,8 +7,10 @@ import type { EnergyInput, EnergyMix } from '@/design/theme'
 import {
   ORNAMENT_REGISTRY,
   type OrnamentAnchor,
+  type OrnamentBoundary,
   type OrnamentPlacement,
   type OrnamentPresence,
+  type OrnamentScale,
   type OrnamentSize,
   type OrnamentSpec,
 } from './registry'
@@ -18,6 +20,8 @@ type WrapperProps = {
   $anchor: OrnamentAnchor
   $size: OrnamentSize
   $presence: OrnamentPresence
+  $scale: OrnamentScale
+  $boundary: OrnamentBoundary
   $mirrorX: boolean
   $mirrorY: boolean
 }
@@ -37,27 +41,89 @@ const resolvePresenceOpacity = (
   return 0.62
 }
 
-const resolveVisualSize = (
-  placement: OrnamentPlacement,
+const resolveSectionSize = (
+  scale: OrnamentScale,
   size: OrnamentSize
-) => {
-  if (placement === 'section') {
-    if (size === 'sm') return 'clamp(10rem, 24vw, 16rem)'
-    if (size === 'lg') return 'clamp(20rem, 42vw, 32rem)'
-    return 'clamp(14rem, 30vw, 22rem)'
+): string => {
+  if (scale === 'mark') {
+    if (size === 'sm') return 'clamp(5rem, 11vw, 7rem)'
+    if (size === 'lg') return 'clamp(8rem, 16vw, 11rem)'
+    return 'clamp(6.5rem, 14vw, 9rem)'
   }
 
-  if (size === 'sm') return 'clamp(3.25rem, 7vw, 4.75rem)'
-  if (size === 'lg') return 'clamp(5.4rem, 11vw, 7.25rem)'
-  return 'clamp(4.2rem, 9vw, 5.9rem)'
+  if (scale === 'gesture') {
+    if (size === 'sm') return 'clamp(11rem, 22vw, 16rem)'
+    if (size === 'lg') return 'clamp(20rem, 40vw, 32rem)'
+    return 'clamp(15rem, 30vw, 23rem)'
+  }
+
+  if (scale === 'structure') {
+    if (size === 'sm') return 'clamp(13rem, 26vw, 19rem)'
+    if (size === 'lg') return 'clamp(24rem, 48vw, 40rem)'
+    return 'clamp(18rem, 38vw, 30rem)'
+  }
+
+  if (size === 'sm') return 'clamp(16rem, 32vw, 24rem)'
+  if (size === 'lg') return 'clamp(32rem, 62vw, 56rem)'
+  return 'clamp(24rem, 48vw, 42rem)'
 }
 
-const resolveSectionAnchorStyles = (anchor: OrnamentAnchor, inset: string) => {
+const resolveSurfaceSize = (
+  scale: OrnamentScale,
+  size: OrnamentSize
+): string => {
+  if (scale === 'mark') {
+    if (size === 'sm') return 'clamp(3.25rem, 7vw, 4.75rem)'
+    if (size === 'lg') return 'clamp(5.4rem, 11vw, 7.25rem)'
+    return 'clamp(4.2rem, 9vw, 5.9rem)'
+  }
+
+  if (scale === 'gesture') {
+    if (size === 'sm') return 'clamp(5rem, 10vw, 7rem)'
+    if (size === 'lg') return 'clamp(9rem, 18vw, 13rem)'
+    return 'clamp(6.8rem, 14vw, 9.5rem)'
+  }
+
+  if (scale === 'structure') {
+    if (size === 'sm') return 'clamp(6rem, 13vw, 8.5rem)'
+    if (size === 'lg') return 'clamp(13rem, 26vw, 20rem)'
+    return 'clamp(9rem, 19vw, 14rem)'
+  }
+
+  if (size === 'sm') return 'clamp(8rem, 17vw, 12rem)'
+  if (size === 'lg') return 'clamp(18rem, 36vw, 30rem)'
+  return 'clamp(12rem, 26vw, 22rem)'
+}
+
+const resolveVisualSize = (
+  placement: OrnamentPlacement,
+  size: OrnamentSize,
+  scale: OrnamentScale
+) =>
+  placement === 'section'
+    ? resolveSectionSize(scale, size)
+    : resolveSurfaceSize(scale, size)
+
+const resolveBleedOffset = (scale: OrnamentScale): string => {
+  if (scale === 'mark') return '18%'
+  if (scale === 'gesture') return '26%'
+  if (scale === 'structure') return '34%'
+  return '42%'
+}
+
+const resolveSectionAnchorStyles = (
+  anchor: OrnamentAnchor,
+  inset: string,
+  boundary: OrnamentBoundary,
+  scale: OrnamentScale
+) => {
+  const bleed = boundary === 'bleed' ? resolveBleedOffset(scale) : '0%'
+
   if (anchor === 'top-left') {
     return css`
       top: 0;
       left: ${inset};
-      transform: translateY(-18%);
+      transform: translate(-${bleed}, calc(-18% - ${bleed}));
     `
   }
 
@@ -65,7 +131,7 @@ const resolveSectionAnchorStyles = (anchor: OrnamentAnchor, inset: string) => {
     return css`
       top: 0;
       left: 50%;
-      transform: translate(-50%, -18%);
+      transform: translate(-50%, calc(-18% - ${bleed}));
     `
   }
 
@@ -73,7 +139,7 @@ const resolveSectionAnchorStyles = (anchor: OrnamentAnchor, inset: string) => {
     return css`
       top: 0;
       right: ${inset};
-      transform: translateY(-18%);
+      transform: translate(${bleed}, calc(-18% - ${bleed}));
     `
   }
 
@@ -81,7 +147,7 @@ const resolveSectionAnchorStyles = (anchor: OrnamentAnchor, inset: string) => {
     return css`
       bottom: 0;
       left: ${inset};
-      transform: translateY(42%);
+      transform: translate(-${bleed}, calc(42% + ${bleed}));
     `
   }
 
@@ -89,7 +155,7 @@ const resolveSectionAnchorStyles = (anchor: OrnamentAnchor, inset: string) => {
     return css`
       bottom: 0;
       left: 50%;
-      transform: translate(-50%, 42%);
+      transform: translate(-50%, calc(42% + ${bleed}));
     `
   }
 
@@ -97,7 +163,7 @@ const resolveSectionAnchorStyles = (anchor: OrnamentAnchor, inset: string) => {
     return css`
       bottom: 0;
       right: ${inset};
-      transform: translateY(42%);
+      transform: translate(${bleed}, calc(42% + ${bleed}));
     `
   }
 
@@ -105,7 +171,7 @@ const resolveSectionAnchorStyles = (anchor: OrnamentAnchor, inset: string) => {
     return css`
       top: 50%;
       left: ${inset};
-      transform: translateY(-50%);
+      transform: translate(calc(-1 * ${bleed}), -50%);
     `
   }
 
@@ -120,15 +186,23 @@ const resolveSectionAnchorStyles = (anchor: OrnamentAnchor, inset: string) => {
   return css`
     top: 50%;
     right: ${inset};
-    transform: translateY(-50%);
+    transform: translate(${bleed}, -50%);
   `
 }
 
-const resolveSurfaceAnchorStyles = (anchor: OrnamentAnchor, inset: string) => {
+const resolveSurfaceAnchorStyles = (
+  anchor: OrnamentAnchor,
+  inset: string,
+  boundary: OrnamentBoundary,
+  scale: OrnamentScale
+) => {
+  const bleed = boundary === 'bleed' ? resolveBleedOffset(scale) : '0%'
+
   if (anchor === 'top-left') {
     return css`
       top: ${inset};
       left: ${inset};
+      transform: translate(-${bleed}, -${bleed});
     `
   }
 
@@ -136,7 +210,7 @@ const resolveSurfaceAnchorStyles = (anchor: OrnamentAnchor, inset: string) => {
     return css`
       top: ${inset};
       left: 50%;
-      transform: translateX(-50%);
+      transform: translate(-50%, -${bleed});
     `
   }
 
@@ -144,6 +218,7 @@ const resolveSurfaceAnchorStyles = (anchor: OrnamentAnchor, inset: string) => {
     return css`
       top: ${inset};
       right: ${inset};
+      transform: translate(${bleed}, -${bleed});
     `
   }
 
@@ -151,6 +226,7 @@ const resolveSurfaceAnchorStyles = (anchor: OrnamentAnchor, inset: string) => {
     return css`
       bottom: ${inset};
       left: ${inset};
+      transform: translate(-${bleed}, ${bleed});
     `
   }
 
@@ -158,7 +234,7 @@ const resolveSurfaceAnchorStyles = (anchor: OrnamentAnchor, inset: string) => {
     return css`
       bottom: ${inset};
       left: 50%;
-      transform: translateX(-50%);
+      transform: translate(-50%, ${bleed});
     `
   }
 
@@ -166,6 +242,7 @@ const resolveSurfaceAnchorStyles = (anchor: OrnamentAnchor, inset: string) => {
     return css`
       bottom: ${inset};
       right: ${inset};
+      transform: translate(${bleed}, ${bleed});
     `
   }
 
@@ -173,7 +250,7 @@ const resolveSurfaceAnchorStyles = (anchor: OrnamentAnchor, inset: string) => {
     return css`
       top: 50%;
       left: ${inset};
-      transform: translateY(-50%);
+      transform: translate(calc(-1 * ${bleed}), -50%);
     `
   }
 
@@ -188,7 +265,7 @@ const resolveSurfaceAnchorStyles = (anchor: OrnamentAnchor, inset: string) => {
   return css`
     top: 50%;
     right: ${inset};
-    transform: translateY(-50%);
+    transform: translate(${bleed}, -50%);
   `
 }
 
@@ -200,18 +277,27 @@ const Wrapper = styled.div<WrapperProps>`
   opacity: ${({ $placement, $presence }) =>
     resolvePresenceOpacity($placement, $presence)};
 
-  ${({ theme, $placement, $anchor, $size, $mirrorX, $mirrorY }) => {
+  ${({
+    theme,
+    $placement,
+    $anchor,
+    $size,
+    $scale,
+    $boundary,
+    $mirrorX,
+    $mirrorY,
+  }) => {
     const inset =
       $placement === 'section' ? theme.spacing(1.15) : theme.spacing(0.75)
 
     return css`
       ${$placement === 'section'
-        ? resolveSectionAnchorStyles($anchor, inset)
-        : resolveSurfaceAnchorStyles($anchor, inset)}
+        ? resolveSectionAnchorStyles($anchor, inset, $boundary, $scale)
+        : resolveSurfaceAnchorStyles($anchor, inset, $boundary, $scale)}
 
       & > svg {
-        width: ${resolveVisualSize($placement, $size)};
-        max-width: 100%;
+        width: ${resolveVisualSize($placement, $size, $scale)};
+        max-width: none;
         height: auto;
         overflow: visible;
         transform: scaleX(${$mirrorX ? -1 : 1}) scaleY(${$mirrorY ? -1 : 1});
@@ -257,6 +343,7 @@ export default function Ornament({
   anchor = placement === 'section' ? 'bottom-right' : 'top-right',
   size = placement === 'section' ? 'md' : 'sm',
   presence = 'default',
+  boundary = 'contained',
   energy,
   mix,
   mirrorX = false,
@@ -280,6 +367,8 @@ export default function Ornament({
       $anchor={anchor}
       $size={size}
       $presence={presence}
+      $scale={entry.scale}
+      $boundary={boundary}
       $mirrorX={mirrorX}
       $mirrorY={mirrorY}
     >

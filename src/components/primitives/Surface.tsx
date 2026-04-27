@@ -35,6 +35,7 @@ type StyledProps = {
   $energy?: EnergyInput
   $mix?: EnergyMix
   $weight: SurfaceWeight
+  $ornamentBleeds: boolean
 }
 
 const resolveWeightStyles = (
@@ -65,7 +66,7 @@ const Base = styled.div<StyledProps>`
   position: relative;
   min-width: 0;
   border-radius: ${({ theme, $radius }) => theme.borderRadius[$radius]};
-  overflow: clip;
+  overflow: ${({ $ornamentBleeds }) => ($ornamentBleeds ? 'visible' : 'clip')};
 
   ${({ theme, $padding }) => css`
     padding: ${$padding === 'none'
@@ -123,6 +124,7 @@ const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
       anchor?: OrnamentConsumerSpec['anchor']
       size?: OrnamentConsumerSpec['size']
       presence?: OrnamentConsumerSpec['presence']
+      boundary?: OrnamentConsumerSpec['boundary']
       energy?: EnergyInput
       mix?: EnergyMix
       mirrorX?: boolean
@@ -139,6 +141,7 @@ const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
       $padding={padding}
       $bordered={bordered}
       $weight={weight}
+      $ornamentBleeds={resolvedOrnament?.boundary === 'bleed'}
       {...rest}
     >
       {resolvedOrnament ? <Ornament {...resolvedOrnament} /> : null}
