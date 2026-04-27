@@ -1,3 +1,4 @@
+// src/components/ornaments/OrnamentField.tsx
 'use client'
 
 import { useId } from 'react'
@@ -11,6 +12,7 @@ import {
   type OrnamentPlacement,
   type OrnamentPresence,
 } from './registry'
+import OrnamentAsset from './OrnamentAsset'
 
 type FieldItemSize = 'sm' | 'md' | 'lg'
 
@@ -215,6 +217,24 @@ const rippleOriginItems: readonly FieldItem[] = [
   },
 ]
 
+const dreamCatcherItems: readonly FieldItem[] = [
+  {
+    left: '78%',
+    top: '34%',
+    size: 'sm',
+    opacity: 0.11,
+    rotate: -8,
+  },
+  {
+    left: '28%',
+    top: '70%',
+    size: 'sm',
+    opacity: 0.08,
+    rotate: 13,
+    mirrorX: true,
+  },
+]
+
 const defaultItems: readonly FieldItem[] = [
   {
     left: '78%',
@@ -246,6 +266,7 @@ const resolveItems = (name: OrnamentName): readonly FieldItem[] => {
   if (name === 'gyroidChannel') return gyroidChannelItems
   if (name === 'crownWound') return crownWoundItems
   if (name === 'rippleOrigin') return rippleOriginItems
+  if (name === 'dreamCatcher') return dreamCatcherItems
   return defaultItems
 }
 
@@ -272,7 +293,8 @@ const Item = styled.div<ItemProps>`
     scaleY(${({ $mirrorY }) => ($mirrorY ? -1 : 1)});
   transform-origin: center;
 
-  & > svg {
+  & > svg,
+  & > [data-ornament-asset] {
     width: 100%;
     max-width: none;
     height: auto;
@@ -296,7 +318,6 @@ export default function OrnamentField({
     return null
   }
 
-  const Shape = entry.component
   const items = resolveItems(name)
   const { startColor, endColor } = resolveFallbackColors(theme, energy, mix)
 
@@ -313,11 +334,20 @@ export default function OrnamentField({
           $mirrorX={item.mirrorX ?? false}
           $mirrorY={item.mirrorY ?? false}
         >
-          <Shape
-            gradientId={`ornament-field-${name}-${idSeed}-${index}`}
-            startColor={startColor}
-            endColor={endColor}
-          />
+          {entry.kind === 'component' ? (
+            <entry.component
+              gradientId={`ornament-field-${name}-${idSeed}-${index}`}
+              startColor={startColor}
+              endColor={endColor}
+            />
+          ) : (
+            <OrnamentAsset
+              src={entry.src}
+              viewBox={entry.viewBox}
+              startColor={startColor}
+              endColor={endColor}
+            />
+          )}
         </Item>
       ))}
     </Layer>

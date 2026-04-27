@@ -1,3 +1,4 @@
+// src/components/primitives/Section.tsx
 'use client'
 
 import type { ComponentPropsWithoutRef, ReactNode } from 'react'

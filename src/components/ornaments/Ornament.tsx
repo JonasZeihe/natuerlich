@@ -14,6 +14,7 @@ import {
   type OrnamentSize,
   type OrnamentSpec,
 } from './registry'
+import OrnamentAsset from './OrnamentAsset'
 
 type WrapperProps = {
   $placement: OrnamentPlacement
@@ -295,7 +296,8 @@ const Wrapper = styled.div<WrapperProps>`
         ? resolveSectionAnchorStyles($anchor, inset, $boundary, $scale)
         : resolveSurfaceAnchorStyles($anchor, inset, $boundary, $scale)}
 
-      & > svg {
+      & > svg,
+      & > [data-ornament-asset] {
         width: ${resolveVisualSize($placement, $size, $scale)};
         max-width: none;
         height: auto;
@@ -358,7 +360,6 @@ export default function Ornament({
   }
 
   const { startColor, endColor } = resolveFallbackColors(theme, energy, mix)
-  const Shape = entry.component
 
   return (
     <Wrapper
@@ -372,11 +373,20 @@ export default function Ornament({
       $mirrorX={mirrorX}
       $mirrorY={mirrorY}
     >
-      <Shape
-        gradientId={`ornament-${name}-${gradientSeed}`}
-        startColor={startColor}
-        endColor={endColor}
-      />
+      {entry.kind === 'component' ? (
+        <entry.component
+          gradientId={`ornament-${name}-${gradientSeed}`}
+          startColor={startColor}
+          endColor={endColor}
+        />
+      ) : (
+        <OrnamentAsset
+          src={entry.src}
+          viewBox={entry.viewBox}
+          startColor={startColor}
+          endColor={endColor}
+        />
+      )}
     </Wrapper>
   )
 }

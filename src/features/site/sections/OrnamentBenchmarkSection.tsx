@@ -1,3 +1,4 @@
+// src/features/site/sections/OrnamentBenchmarkSection.tsx
 'use client'
 
 import styled from 'styled-components'
@@ -77,6 +78,22 @@ type OrnamentFieldExample = {
   mix?: EnergyMix
   presence: OrnamentPresence
   boundary?: OrnamentBoundary
+  copy: string
+}
+
+type AssetProofExample = {
+  label: string
+  energy?: EnergyInput
+  mix?: EnergyMix
+  ornament: {
+    name: OrnamentName
+    anchor: OrnamentAnchor
+    size: OrnamentSize
+    presence: OrnamentPresence
+    boundary?: OrnamentBoundary
+    mirrorX?: boolean
+    mirrorY?: boolean
+  }
   copy: string
 }
 
@@ -224,6 +241,32 @@ const shapeExamples: readonly ShapeExample[] = [
     presence: 'strong',
     anchor: 'top-right',
     energy: 'tension',
+  },
+]
+
+const assetProofExamples: readonly AssetProofExample[] = [
+  {
+    label: 'Single Asset Mask',
+    mix: ['tension', 'flow'],
+    ornament: {
+      name: 'dreamCatcher',
+      anchor: 'center',
+      size: 'lg',
+      presence: 'strong',
+    },
+    copy: 'Eine echte SVG-Datei aus dem Ornament-Modul. Sie wird als Maske gerendert und in die Theme-Farbe gezwungen.',
+  },
+  {
+    label: 'Bleed Asset Mask',
+    mix: ['density', 'flow'],
+    ornament: {
+      name: 'dreamCatcher',
+      anchor: 'right',
+      size: 'lg',
+      presence: 'subtle',
+      boundary: 'bleed',
+    },
+    copy: 'Der Asset-Test darf über die Kante greifen, bleibt aber Proof und wird nicht zur Ornament-Familie erklärt.',
   },
 ]
 
@@ -435,7 +478,7 @@ export default function OrnamentBenchmarkSection() {
         <Block>
           <BlockHeader>
             <BlockKicker>Shapes</BlockKicker>
-            <BlockTitle>Alle Ornamente als Surface-Test</BlockTitle>
+            <BlockTitle>Native Ornament-Shapes als Surface-Test</BlockTitle>
           </BlockHeader>
 
           <ShapeGrid>
@@ -469,6 +512,38 @@ export default function OrnamentBenchmarkSection() {
               </ShapeCard>
             ))}
           </ShapeGrid>
+        </Block>
+
+        <Block>
+          <BlockHeader>
+            <BlockKicker>SVG Asset Proof</BlockKicker>
+            <BlockTitle>
+              Echte SVG-Datei, aber nicht automatisch gute Form
+            </BlockTitle>
+          </BlockHeader>
+
+          <AssetProofGrid>
+            {assetProofExamples.map((item) => (
+              <AssetProofSurface
+                key={item.label}
+                tone="soft"
+                energy={item.energy}
+                mix={item.mix}
+                padding="lg"
+                radius="large"
+                bordered
+                weight="strong"
+                ornament={{
+                  ...item.ornament,
+                  energy: item.energy,
+                  mix: item.mix,
+                }}
+              >
+                <FieldLabel>{item.label}</FieldLabel>
+                <FieldText>{item.copy}</FieldText>
+              </AssetProofSurface>
+            ))}
+          </AssetProofGrid>
         </Block>
 
         <Block>
@@ -522,6 +597,31 @@ export default function OrnamentBenchmarkSection() {
               Hier trägt kein einzelnes Ornament die Fläche. Mehrere leise
               Setzungen erzeugen Ordnung im Hintergrund, ohne Pattern-Tapete zu
               werden.
+            </FieldText>
+          </SectionTestInner>
+        </SectionTest>
+
+        <SectionTest
+          tone="threshold"
+          mix={['tension', 'flow']}
+          variant="body"
+          rhythm="spacious"
+          ornament={{
+            name: 'dreamCatcher',
+            anchor: 'right',
+            size: 'lg',
+            presence: 'subtle',
+            boundary: 'bleed',
+            mix: ['tension', 'flow'],
+          }}
+        >
+          <SectionTestInner>
+            <BlockKicker>SVG Asset</BlockKicker>
+            <FieldLabel>Fremdform, gebändigt</FieldLabel>
+            <FieldText>
+              Diese SVG liegt als echte Datei im Ornament-Modul. Sie wird nicht
+              als buntes Bild gerendert, sondern als Maske in die bestehende
+              Energielogik gezwungen.
             </FieldText>
           </SectionTestInner>
         </SectionTest>
@@ -1104,6 +1204,23 @@ const ShapeUse = styled.p`
   color: ${({ theme }) => theme.roles.text.subtle};
   font-size: ${({ theme }) => theme.typography.fontSize.caption};
   line-height: ${({ theme }) => theme.typography.lineHeight.normal};
+`
+
+const AssetProofGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: ${({ theme }) => theme.spacing(1)};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    grid-template-columns: 1fr;
+  }
+`
+
+const AssetProofSurface = styled(Surface)`
+  min-height: clamp(18rem, 32vw, 28rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 `
 
 const ToneGrid = styled.div`

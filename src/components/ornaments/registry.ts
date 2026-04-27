@@ -1,3 +1,4 @@
+// src/components/ornaments/registry.ts
 'use client'
 
 import type { ComponentType } from 'react'
@@ -14,6 +15,11 @@ import RootTraceOrnament, {
 } from './shapes/RootTraceOrnament'
 import TraceFanOrnament from './shapes/TraceFanOrnament'
 
+const dreamCatcherSvg = new URL(
+  './svg/dream-catcher-svgrepo-com.svg',
+  import.meta.url
+).toString()
+
 export type OrnamentName =
   | 'rootTrace'
   | 'braidTrace'
@@ -24,6 +30,7 @@ export type OrnamentName =
   | 'gyroidChannel'
   | 'rippleOrigin'
   | 'traceFan'
+  | 'dreamCatcher'
 
 export type OrnamentPlacement = 'section' | 'surface'
 
@@ -72,66 +79,95 @@ export type OrnamentConsumerSpec = Omit<OrnamentSpec, 'placement'>
 
 export type OrnamentFieldConsumerSpec = Omit<OrnamentFieldSpec, 'placement'>
 
-export type OrnamentRegistryEntry = {
+export type OrnamentComponentRegistryEntry = {
+  kind: 'component'
   component: ComponentType<RootTraceOrnamentProps>
   placements: readonly OrnamentPlacement[]
   viewBox: string
   scale: OrnamentScale
 }
 
+export type OrnamentAssetRegistryEntry = {
+  kind: 'asset'
+  src: string
+  placements: readonly OrnamentPlacement[]
+  viewBox: string
+  scale: OrnamentScale
+}
+
+export type OrnamentRegistryEntry =
+  | OrnamentComponentRegistryEntry
+  | OrnamentAssetRegistryEntry
+
 export const ORNAMENT_REGISTRY: Record<OrnamentName, OrnamentRegistryEntry> = {
   rootTrace: {
+    kind: 'component',
     component: RootTraceOrnament,
     placements: ['section', 'surface'],
     viewBox: '0 0 420 120',
     scale: 'gesture',
   },
   braidTrace: {
+    kind: 'component',
     component: BraidTraceOrnament,
     placements: ['section', 'surface'],
     viewBox: '0 0 420 120',
     scale: 'gesture',
   },
   lineFlare: {
+    kind: 'component',
     component: LineFlareOrnament,
     placements: ['section', 'surface'],
     viewBox: '0 0 420 120',
     scale: 'gesture',
   },
   cornerMark: {
+    kind: 'component',
     component: CornerMarkOrnament,
     placements: ['section', 'surface'],
     viewBox: '0 0 120 120',
     scale: 'mark',
   },
   crownWound: {
+    kind: 'component',
     component: CrownWoundOrnament,
     placements: ['section', 'surface'],
     viewBox: '0 0 360 360',
     scale: 'structure',
   },
   partitionField: {
+    kind: 'component',
     component: PartitionFieldOrnament,
     placements: ['section', 'surface'],
     viewBox: '0 0 520 320',
     scale: 'field',
   },
   gyroidChannel: {
+    kind: 'component',
     component: GyroidChannelOrnament,
     placements: ['section', 'surface'],
     viewBox: '0 0 560 360',
     scale: 'field',
   },
   rippleOrigin: {
+    kind: 'component',
     component: RippleOriginOrnament,
     placements: ['section', 'surface'],
     viewBox: '0 0 280 280',
     scale: 'structure',
   },
   traceFan: {
+    kind: 'component',
     component: TraceFanOrnament,
     placements: ['section', 'surface'],
     viewBox: '0 0 420 160',
+    scale: 'gesture',
+  },
+  dreamCatcher: {
+    kind: 'asset',
+    src: dreamCatcherSvg,
+    placements: ['section', 'surface'],
+    viewBox: '0 0 512 512',
     scale: 'gesture',
   },
 }
