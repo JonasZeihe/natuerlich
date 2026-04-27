@@ -1,4 +1,3 @@
-// src/components/primitives/Surface.tsx
 'use client'
 
 import {
@@ -9,7 +8,11 @@ import {
 import styled, { css } from 'styled-components'
 import type { EnergyInput, EnergyMix, SurfaceToneKey } from '@/design/theme'
 import Ornament from '@/components/ornaments/Ornament'
-import type { OrnamentConsumerSpec } from '@/components/ornaments/registry'
+import OrnamentField from '@/components/ornaments/OrnamentField'
+import type {
+  OrnamentConsumerSpec,
+  OrnamentFieldConsumerSpec,
+} from '@/components/ornaments/registry'
 
 type SurfacePadding = 'none' | 'sm' | 'md' | 'lg'
 type SurfaceRadius = 'none' | 'small' | 'medium' | 'large' | 'pill'
@@ -24,6 +27,7 @@ type Props = {
   bordered?: boolean
   weight?: SurfaceWeight
   ornament?: OrnamentConsumerSpec | null
+  ornamentField?: OrnamentFieldConsumerSpec | null
   children?: ReactNode
 } & Omit<ComponentPropsWithoutRef<'div'>, 'color'>
 
@@ -106,6 +110,7 @@ const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
     bordered = true,
     weight = 'quiet',
     ornament,
+    ornamentField,
     children,
     ...rest
   },
@@ -131,6 +136,26 @@ const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
       mirrorY?: boolean
     })
 
+  const resolvedOrnamentField =
+    ornamentField &&
+    ({
+      ...ornamentField,
+      placement: 'surface' as const,
+      energy: ornamentField.energy ?? energy,
+      mix: ornamentField.mix ?? mix,
+    } satisfies {
+      placement: 'surface'
+      name: OrnamentFieldConsumerSpec['name']
+      presence?: OrnamentFieldConsumerSpec['presence']
+      boundary?: OrnamentFieldConsumerSpec['boundary']
+      energy?: EnergyInput
+      mix?: EnergyMix
+    })
+
+  const ornamentBleeds =
+    resolvedOrnament?.boundary === 'bleed' ||
+    resolvedOrnamentField?.boundary === 'bleed'
+
   return (
     <Base
       ref={ref}
@@ -141,9 +166,12 @@ const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
       $padding={padding}
       $bordered={bordered}
       $weight={weight}
-      $ornamentBleeds={resolvedOrnament?.boundary === 'bleed'}
+      $ornamentBleeds={ornamentBleeds}
       {...rest}
     >
+      {resolvedOrnamentField ? (
+        <OrnamentField {...resolvedOrnamentField} />
+      ) : null}
       {resolvedOrnament ? <Ornament {...resolvedOrnament} /> : null}
       <Content>{children}</Content>
     </Base>

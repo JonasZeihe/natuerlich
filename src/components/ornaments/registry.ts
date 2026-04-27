@@ -1,4 +1,3 @@
-// src/components/ornaments/registry.ts
 'use client'
 
 import type { ComponentType } from 'react'
@@ -60,7 +59,18 @@ export type OrnamentSpec = {
   mirrorY?: boolean
 }
 
+export type OrnamentFieldSpec = {
+  name: OrnamentName
+  placement: OrnamentPlacement
+  presence?: OrnamentPresence
+  boundary?: OrnamentBoundary
+  energy?: EnergyInput
+  mix?: EnergyMix
+}
+
 export type OrnamentConsumerSpec = Omit<OrnamentSpec, 'placement'>
+
+export type OrnamentFieldConsumerSpec = Omit<OrnamentFieldSpec, 'placement'>
 
 export type OrnamentRegistryEntry = {
   component: ComponentType<RootTraceOrnamentProps>

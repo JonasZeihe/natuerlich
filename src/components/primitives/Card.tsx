@@ -1,4 +1,3 @@
-// src/components/primitives/Card.tsx
 'use client'
 
 import {
@@ -8,7 +7,10 @@ import {
 } from 'react'
 import styled, { css } from 'styled-components'
 import type { EnergyInput, EnergyMix, SurfaceToneKey } from '@/design/theme'
-import type { OrnamentConsumerSpec } from '@/components/ornaments/registry'
+import type {
+  OrnamentConsumerSpec,
+  OrnamentFieldConsumerSpec,
+} from '@/components/ornaments/registry'
 import Surface from './Surface'
 
 type Padding = 'sm' | 'md' | 'lg'
@@ -25,6 +27,7 @@ type Props = {
   radius?: Radius
   bordered?: boolean
   ornament?: OrnamentConsumerSpec | null
+  ornamentField?: OrnamentFieldConsumerSpec | null
   children?: ReactNode
 } & Omit<ComponentPropsWithoutRef<'div'>, 'color'>
 
@@ -85,11 +88,15 @@ const Card = forwardRef<HTMLDivElement, Props>(function Card(
     radius = 'large',
     bordered = true,
     ornament,
+    ornamentField,
     children,
     ...rest
   },
   ref
 ) {
+  const ornamentBleeds =
+    ornament?.boundary === 'bleed' || ornamentField?.boundary === 'bleed'
+
   return (
     <StyledCard
       ref={ref}
@@ -101,8 +108,9 @@ const Card = forwardRef<HTMLDivElement, Props>(function Card(
       bordered={bordered}
       weight={weight}
       ornament={ornament}
+      ornamentField={ornamentField}
       $interactive={interactive}
-      $ornamentBleeds={ornament?.boundary === 'bleed'}
+      $ornamentBleeds={ornamentBleeds}
       {...rest}
     >
       {children}

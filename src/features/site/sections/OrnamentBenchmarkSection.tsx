@@ -1,4 +1,3 @@
-// src/features/site/sections/OrnamentBenchmarkSection.tsx
 'use client'
 
 import styled from 'styled-components'
@@ -68,6 +67,16 @@ type MirrorExample = {
 type BoundaryExample = {
   label: string
   boundary: OrnamentBoundary
+  copy: string
+}
+
+type OrnamentFieldExample = {
+  name: OrnamentName
+  label: string
+  energy?: EnergyInput
+  mix?: EnergyMix
+  presence: OrnamentPresence
+  boundary?: OrnamentBoundary
   copy: string
 }
 
@@ -260,6 +269,40 @@ const fieldExamples: readonly FieldExample[] = [
   },
 ]
 
+const ornamentFieldExamples: readonly OrnamentFieldExample[] = [
+  {
+    name: 'partitionField',
+    label: 'Partition Field',
+    mix: ['density', 'flow'],
+    presence: 'default',
+    boundary: 'bleed',
+    copy: 'Mehrere gesetzte Kammerfragmente. Kein Tile, kein Zufall, kein Pattern-Bullshit.',
+  },
+  {
+    name: 'gyroidChannel',
+    label: 'Gyroid Channel',
+    mix: ['opening', 'density'],
+    presence: 'subtle',
+    boundary: 'bleed',
+    copy: 'Mehrere leise Raumzüge. Tiefe entsteht durch Wiederkehr, nicht durch Lautstärke.',
+  },
+  {
+    name: 'rippleOrigin',
+    label: 'Ripple Origin',
+    energy: 'flow',
+    presence: 'default',
+    copy: 'Resonanzpunkte als Feld. Ruhig, offen, nachwirkend.',
+  },
+  {
+    name: 'crownWound',
+    label: 'Crown Wound',
+    mix: ['tension', 'opening'],
+    presence: 'subtle',
+    boundary: 'bleed',
+    copy: 'Nur als seltenes Echo. Würde bleibt, Wiederholung wird nicht zur Tapete.',
+  },
+]
+
 const presenceExamples: readonly PresenceExample[] = [
   {
     label: 'Subtle',
@@ -356,6 +399,12 @@ export default function OrnamentBenchmarkSection() {
         boundary: 'bleed',
         mix: ['density', 'flow'],
       }}
+      ornamentField={{
+        name: 'partitionField',
+        presence: 'subtle',
+        boundary: 'bleed',
+        mix: ['density', 'flow'],
+      }}
     >
       <BenchmarkStack>
         <IntroSurface
@@ -421,6 +470,61 @@ export default function OrnamentBenchmarkSection() {
             ))}
           </ShapeGrid>
         </Block>
+
+        <Block>
+          <BlockHeader>
+            <BlockKicker>Ornament Field</BlockKicker>
+            <BlockTitle>Gebrochene Wiederholung ohne Reglerzirkus</BlockTitle>
+          </BlockHeader>
+
+          <FieldLayerGrid>
+            {ornamentFieldExamples.map((item) => (
+              <FieldLayerSurface
+                key={item.name}
+                tone="soft"
+                energy={item.energy}
+                mix={item.mix}
+                padding="lg"
+                radius="large"
+                bordered
+                weight="strong"
+                ornamentField={{
+                  name: item.name,
+                  presence: item.presence,
+                  boundary: item.boundary,
+                  energy: item.energy,
+                  mix: item.mix,
+                }}
+              >
+                <FieldLabel>{item.label}</FieldLabel>
+                <FieldText>{item.copy}</FieldText>
+              </FieldLayerSurface>
+            ))}
+          </FieldLayerGrid>
+        </Block>
+
+        <SectionTest
+          tone="deepen"
+          mix={['density', 'flow']}
+          variant="body"
+          rhythm="spacious"
+          ornamentField={{
+            name: 'partitionField',
+            presence: 'subtle',
+            boundary: 'bleed',
+            mix: ['density', 'flow'],
+          }}
+        >
+          <SectionTestInner>
+            <BlockKicker>Field Section</BlockKicker>
+            <FieldLabel>Feld als Bühnenraum</FieldLabel>
+            <FieldText>
+              Hier trägt kein einzelnes Ornament die Fläche. Mehrere leise
+              Setzungen erzeugen Ordnung im Hintergrund, ohne Pattern-Tapete zu
+              werden.
+            </FieldText>
+          </SectionTestInner>
+        </SectionTest>
 
         <Block>
           <BlockHeader>
@@ -712,6 +816,59 @@ export default function OrnamentBenchmarkSection() {
 
         <Block>
           <BlockHeader>
+            <BlockKicker>Surface</BlockKicker>
+            <BlockTitle>Einzelornament gegen OrnamentField</BlockTitle>
+          </BlockHeader>
+
+          <CompareGrid>
+            <CompareSurface
+              tone="panel"
+              mix={['density', 'flow']}
+              padding="lg"
+              radius="large"
+              bordered
+              weight="strong"
+              ornament={{
+                name: 'partitionField',
+                anchor: 'bottom-right',
+                size: 'lg',
+                presence: 'subtle',
+                boundary: 'bleed',
+                mix: ['density', 'flow'],
+              }}
+            >
+              <FieldLabel>Einzelnes Ornament</FieldLabel>
+              <FieldText>
+                Eine große gesetzte Form. Gut als Signal, Schwelle oder
+                strukturierter Akzent.
+              </FieldText>
+            </CompareSurface>
+
+            <CompareSurface
+              tone="panel"
+              mix={['density', 'flow']}
+              padding="lg"
+              radius="large"
+              bordered
+              weight="strong"
+              ornamentField={{
+                name: 'partitionField',
+                presence: 'subtle',
+                boundary: 'bleed',
+                mix: ['density', 'flow'],
+              }}
+            >
+              <FieldLabel>OrnamentField</FieldLabel>
+              <FieldText>
+                Mehrere gesetzte Formen. Gut als Atmosphäre, Raumstruktur und
+                ruhiger Hintergrund.
+              </FieldText>
+            </CompareSurface>
+          </CompareGrid>
+        </Block>
+
+        <Block>
+          <BlockHeader>
             <BlockKicker>Composed</BlockKicker>
             <BlockTitle>Realistische Card-Komposition</BlockTitle>
           </BlockHeader>
@@ -761,6 +918,12 @@ export default function OrnamentBenchmarkSection() {
                 boundary: 'bleed',
                 mix: ['density', 'flow'],
               }}
+              ornamentField={{
+                name: 'partitionField',
+                presence: 'subtle',
+                boundary: 'bleed',
+                mix: ['density', 'flow'],
+              }}
             >
               <CardTitle>Grenzen, die verbinden</CardTitle>
               <CardText>
@@ -785,6 +948,11 @@ export default function OrnamentBenchmarkSection() {
                 name: 'gyroidChannel',
                 anchor: 'center',
                 size: 'lg',
+                presence: 'subtle',
+                energy: 'density',
+              }}
+              ornamentField={{
+                name: 'gyroidChannel',
                 presence: 'subtle',
                 energy: 'density',
               }}
@@ -974,6 +1142,23 @@ const ToneText = styled.p`
   line-height: ${({ theme }) => theme.typography.lineHeight.normal};
 `
 
+const FieldLayerGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: ${({ theme }) => theme.spacing(1)};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    grid-template-columns: 1fr;
+  }
+`
+
+const FieldLayerSurface = styled(Surface)`
+  min-height: clamp(22rem, 40vw, 34rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+`
+
 const MatrixGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1067,6 +1252,23 @@ const FieldGrid = styled.div`
 
 const FieldSurface = styled(Surface)`
   min-height: clamp(18rem, 30vw, 26rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+`
+
+const CompareGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: ${({ theme }) => theme.spacing(1)};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    grid-template-columns: 1fr;
+  }
+`
+
+const CompareSurface = styled(Surface)`
+  min-height: clamp(18rem, 32vw, 28rem);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
