@@ -7,7 +7,12 @@ import {
   type ReactNode,
 } from 'react'
 import styled, { css } from 'styled-components'
-import type { EnergyInput, EnergyMix, SurfaceToneKey } from '@/design/theme'
+import AnchoredAsset from '@/components/assets/AnchoredAsset'
+import type {
+  AssetConsumerSpec,
+  PositionedAssetSpec,
+} from '@/components/assets/registry'
+import type { MovementKey, SurfaceToneKey } from '@/design/theme'
 
 type SurfacePadding = 'none' | 'sm' | 'md' | 'lg'
 type SurfaceRadius = 'none' | 'small' | 'medium' | 'large' | 'pill'
@@ -15,12 +20,13 @@ type SurfaceWeight = 'quiet' | 'steady' | 'strong'
 
 type Props = {
   tone?: SurfaceToneKey
-  energy?: EnergyInput
-  mix?: EnergyMix
+  movement?: MovementKey
   radius?: SurfaceRadius
   padding?: SurfacePadding
   bordered?: boolean
   weight?: SurfaceWeight
+  asset?: AssetConsumerSpec | null
+  assets?: readonly PositionedAssetSpec[] | null
   children?: ReactNode
 } & Omit<ComponentPropsWithoutRef<'div'>, 'color'>
 
@@ -29,9 +35,9 @@ type StyledProps = {
   $padding: SurfacePadding
   $bordered: boolean
   $tone: SurfaceToneKey
-  $energy?: EnergyInput
-  $mix?: EnergyMix
+  $movement: MovementKey
   $weight: SurfaceWeight
+  $assetBleeds: boolean
 }
 
 const resolveWeightStyles = (
@@ -62,7 +68,7 @@ const Base = styled.div<StyledProps>`
   position: relative;
   min-width: 0;
   border-radius: ${({ theme, $radius }) => theme.borderRadius[$radius]};
-  overflow: clip;
+  overflow: ${({ $assetBleeds }) => ($assetBleeds ? 'visible' : 'clip')};
 
   ${({ theme, $padding }) => css`
     padding: ${$padding === 'none'
@@ -70,8 +76,8 @@ const Base = styled.div<StyledProps>`
       : theme.layout.surfacePadding[$padding]};
   `}
 
-  ${({ theme, $tone, $energy, $mix, $bordered, $weight }) => {
-    const resolved = theme.getSurfaceTone($tone, $energy, $mix)
+  ${({ theme, $tone, $movement, $bordered, $weight }) => {
+    const resolved = theme.getSurfaceTone($tone, $movement)
 
     return css`
       background: ${resolved.bg};
@@ -86,15 +92,40 @@ const Base = styled.div<StyledProps>`
   }}
 `
 
+const Content = styled.div`
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+`
+
+const hasBleedingAsset = (
+  asset: AssetConsumerSpec | null | undefined,
+  assets: readonly PositionedAssetSpec[] | null | undefined
+) =>
+  asset?.boundary === 'bleed' ||
+  Boolean(assets?.some((item) => item.boundary === 'bleed'))
+
+const renderAssets = (
+  assets: readonly PositionedAssetSpec[] | null | undefined
+) =>
+  assets?.map((item, index) => (
+    <AnchoredAsset
+      key={`${item.name}-${index}`}
+      {...item}
+      placement="surface"
+    />
+  )) ?? null
+
 const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
   {
-    tone = 'panel',
-    energy,
-    mix,
+    tone = 'card',
+    movement = 'arrival',
     radius = 'large',
     padding = 'md',
     bordered = true,
     weight = 'quiet',
+    asset,
+    assets,
     children,
     ...rest
   },
@@ -104,15 +135,17 @@ const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
     <Base
       ref={ref}
       $tone={tone}
-      $energy={energy}
-      $mix={mix}
+      $movement={movement}
       $radius={radius}
       $padding={padding}
       $bordered={bordered}
       $weight={weight}
+      $assetBleeds={hasBleedingAsset(asset, assets)}
       {...rest}
     >
-      {children}
+      {asset ? <AnchoredAsset {...asset} placement="surface" /> : null}
+      {renderAssets(assets)}
+      <Content>{children}</Content>
     </Base>
   )
 })

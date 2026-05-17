@@ -6,17 +6,22 @@ import PageCanvas from '@/components/compositions/page/PageCanvas'
 import { scrollToTarget } from '@/components/utilities/SmoothScroller'
 import { getClientLogger } from '@/logging'
 import { type SiteSectionId } from '@/features/site/model/sections'
-import ContactSection from '@/features/site/sections/ContactSection'
-import EntrySection from '@/features/site/sections/EntrySection'
-import OrientationSection from '@/features/site/sections/OrientationSection'
-import PracticeSection from '@/features/site/sections/PracticeSection'
-import PracticalFrameSection from '@/features/site/sections/PracticalFrameSection'
-import TeacherSection from '@/features/site/sections/TeacherSection'
+import ActivationSection from '@/features/site/sections/ActivationSection'
+import ArrivalSection from '@/features/site/sections/ArrivalSection'
+import GroundingSection from '@/features/site/sections/GroundingSection'
+import IntegrationSection from '@/features/site/sections/IntegrationSection'
+import NextStepSection from '@/features/site/sections/NextStepSection'
+import PracticeFieldSection from '@/features/site/sections/PracticeFieldSection'
+import RecognitionSection from '@/features/site/sections/RecognitionSection'
 
-const scrollToSection = async (
-  targetId: SiteSectionId,
-  source: 'entry_practice' | 'entry_frame' | 'practice_frame' | 'frame_contact'
-) => {
+type FlowSource =
+  | 'arrival_activation'
+  | 'arrival_integration'
+  | 'activation_practice'
+  | 'practice_integration'
+  | 'integration_next'
+
+const scrollToSection = async (targetId: SiteSectionId, source: FlowSource) => {
   const logger = getClientLogger().withContext({
     cat: 'flow',
     phase: 'intent',
@@ -83,40 +88,44 @@ const scrollToSection = async (
     })
 }
 
-export default function HomePage() {
-  return (
-    <PageCanvas variant="landing" introOffset={false} noFooterGap>
-      <Content>
-        <EntrySection
-          onGoToPractice={() => {
-            void scrollToSection('praxis', 'entry_practice')
-          }}
-          onGoToFrame={() => {
-            void scrollToSection('rahmen', 'entry_frame')
-          }}
-        />
+const HomePage = () => (
+  <PageCanvas variant="landing" introOffset={false} noFooterGap>
+    <Content>
+      <ArrivalSection
+        onGoToActivation={() => {
+          void scrollToSection('aktivieren', 'arrival_activation')
+        }}
+        onGoToIntegration={() => {
+          void scrollToSection('integrieren', 'arrival_integration')
+        }}
+      />
 
-        <OrientationSection />
+      <GroundingSection />
 
-        <PracticeSection
-          onGoToFrame={() => {
-            void scrollToSection('rahmen', 'practice_frame')
-          }}
-        />
+      <ActivationSection
+        onGoToPracticeField={() => {
+          void scrollToSection('arbeiten', 'activation_practice')
+        }}
+      />
 
-        <TeacherSection />
+      <PracticeFieldSection
+        onGoToIntegration={() => {
+          void scrollToSection('integrieren', 'practice_integration')
+        }}
+      />
 
-        <PracticalFrameSection
-          onGoToContact={() => {
-            void scrollToSection('kontakt', 'frame_contact')
-          }}
-        />
+      <RecognitionSection />
 
-        <ContactSection />
-      </Content>
-    </PageCanvas>
-  )
-}
+      <IntegrationSection
+        onGoToNextStep={() => {
+          void scrollToSection('anschluss', 'integration_next')
+        }}
+      />
+
+      <NextStepSection />
+    </Content>
+  </PageCanvas>
+)
 
 const Content = styled.div`
   position: relative;
@@ -125,3 +134,5 @@ const Content = styled.div`
   flex-direction: column;
   min-width: 0;
 `
+
+export default HomePage

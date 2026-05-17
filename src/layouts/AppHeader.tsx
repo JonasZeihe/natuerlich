@@ -4,7 +4,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import styled, { css } from 'styled-components'
 import { FiMenu, FiX } from 'react-icons/fi'
-import ThemeToggleButton from '@/components/actions/ThemeToggleButton'
 import Container from '@/components/primitives/Container'
 import Inline from '@/components/primitives/Inline'
 import SmoothScroller from '@/components/utilities/SmoothScroller'
@@ -24,20 +23,21 @@ const HIDE_DELTA = 10
 const REVEAL_DELTA = 8
 const ACTIVE_OFFSET = HEADER_HEIGHT + 40
 const NAV_SCROLL_LOCK_ATTR = 'data-nav-scroll-lock'
+const START_SECTION_ID: SiteSectionId = 'ankommen'
 
 const HEADER_SECTIONS: SiteSection[] = SITE_SECTIONS.filter(
   (section) => section.showInHeader
 )
 
 const OBSERVED_SECTION_IDS: SiteSectionId[] = SITE_SECTIONS.filter(
-  (section) => section.id !== 'einstieg'
+  (section) => section.id !== START_SECTION_ID
 ).map((section) => section.id)
 
 const getActiveSectionId = (
   ids: readonly SiteSectionId[],
   offset: number
 ): SiteSectionId => {
-  let active: SiteSectionId = 'einstieg'
+  let active: SiteSectionId = START_SECTION_ID
 
   for (const id of ids) {
     const element = document.getElementById(id)
@@ -62,7 +62,7 @@ type ActiveIndicatorState = {
 
 export default function AppHeader() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [activeId, setActiveId] = useState<SiteSectionId>('einstieg')
+  const [activeId, setActiveId] = useState<SiteSectionId>(START_SECTION_ID)
   const [compact, setCompact] = useState(false)
   const [hidden, setHidden] = useState(false)
   const [indicator, setIndicator] = useState<ActiveIndicatorState>({
@@ -370,9 +370,9 @@ export default function AppHeader() {
           <TopRow>
             <BrandWrap>
               <BrandLink
-                targetId="einstieg"
+                targetId={START_SECTION_ID}
                 offset={HEADER_HEIGHT}
-                aria-label="Zum Einstieg springen"
+                aria-label="Zum Anfang springen"
               >
                 <BrandStack>
                   <Typography
@@ -424,12 +424,7 @@ export default function AppHeader() {
               </DesktopNavTrack>
             </DesktopNav>
 
-            <DesktopActions>
-              <ThemeToggleButton />
-            </DesktopActions>
-
             <MobileActions>
-              <ThemeToggleButton />
               <MenuButton
                 type="button"
                 onClick={handleMenuToggle}
@@ -459,8 +454,8 @@ export default function AppHeader() {
                       aria-current={
                         activeId === section.id ? 'true' : undefined
                       }
-                      onClick={(e) => {
-                        e.preventDefault()
+                      onClick={(event) => {
+                        event.preventDefault()
 
                         getClientLogger()
                           .withContext({
@@ -603,8 +598,8 @@ const ActivePill = styled.span<{
   left: 0;
   width: ${({ $width }) => `${$width}px`};
   border-radius: ${({ theme }) => theme.borderRadius.pill};
-  background: ${({ theme }) => theme.getSurfaceTone('soft', 'density').bg};
-  border: 1px solid ${({ theme }) => theme.getEnergyRole('density').border};
+  background: ${({ theme }) => theme.getSurfaceTone('quiet', 'arrival').bg};
+  border: 1px solid ${({ theme }) => theme.roles.border.subtle};
   box-shadow: none;
   opacity: ${({ $visible }) => ($visible ? 1 : 0)};
   transform: translateX(${({ $left }) => `${$left}px`});
@@ -649,16 +644,6 @@ const navLinkStyles = css<{ $active: boolean }>`
 
 const NavLink = styled(SmoothScroller)<{ $active: boolean }>`
   ${navLinkStyles}
-`
-
-const DesktopActions = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    display: none;
-  }
 `
 
 const MobileActions = styled.div`

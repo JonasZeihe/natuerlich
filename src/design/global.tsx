@@ -17,7 +17,7 @@ const GlobalStyles = createGlobalStyle`
   html {
     font-size: 16px;
     -webkit-text-size-adjust: 100%;
-    color-scheme: ${({ theme }) => theme.mode};
+    color-scheme: light;
     text-rendering: optimizeLegibility;
     scroll-behavior: ${({ theme }) => theme.motion.scroll.behavior};
     background: ${({ theme }) => theme.roles.surface.canvas};
@@ -70,7 +70,7 @@ const GlobalStyles = createGlobalStyle`
   }
 
   input, select, textarea {
-    background: ${({ theme }) => theme.roles.surface.panel};
+    background: ${({ theme }) => theme.roles.surface.field};
     border: 1px solid ${({ theme }) => theme.roles.border.subtle};
     border-radius: ${({ theme }) => theme.borderRadius.small};
     color: ${({ theme }) => theme.roles.text.primary};

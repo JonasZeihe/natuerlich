@@ -1,33 +1,38 @@
 // src/features/site/model/sections.ts
 export const SITE_SECTIONS = [
   {
-    id: 'einstieg',
-    label: 'Start',
+    id: 'ankommen',
+    label: 'Ankommen',
     showInHeader: true,
   },
   {
-    id: 'einordnung',
-    label: 'Einordnung',
+    id: 'sammeln',
+    label: 'Sammeln',
     showInHeader: true,
   },
   {
-    id: 'praxis',
-    label: 'Praxis',
+    id: 'aktivieren',
+    label: 'Aktivieren',
     showInHeader: true,
   },
   {
-    id: 'lehrer',
-    label: 'Jonas',
+    id: 'arbeiten',
+    label: 'Arbeiten',
     showInHeader: true,
   },
   {
-    id: 'rahmen',
-    label: 'Rahmen',
+    id: 'erkennen',
+    label: 'Erkennen',
     showInHeader: true,
   },
   {
-    id: 'kontakt',
-    label: 'Kontakt',
+    id: 'integrieren',
+    label: 'Integrieren',
+    showInHeader: true,
+  },
+  {
+    id: 'anschluss',
+    label: 'Anschluss',
     showInHeader: true,
   },
 ] as const

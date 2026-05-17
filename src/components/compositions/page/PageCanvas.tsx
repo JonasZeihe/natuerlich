@@ -36,7 +36,7 @@ const Root = styled.div<{
   ${({ theme, $variant }) =>
     $variant === 'article'
       ? css`
-          background: ${theme.roles.surface.panelAlt};
+          background: ${theme.roles.surface.field};
         `
       : $variant === 'landing'
         ? css`

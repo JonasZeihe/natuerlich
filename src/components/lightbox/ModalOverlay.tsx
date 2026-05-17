@@ -57,7 +57,7 @@ const Content = styled.div`
   min-width: 0;
   max-height: min(90vh, 980px);
   padding: ${({ theme }) => theme.spacing(3)};
-  background: ${({ theme }) => theme.roles.surface.panel};
+  background: ${({ theme }) => theme.roles.surface.card};
   border: 1px solid ${({ theme }) => theme.roles.border.subtle};
   border-radius: ${({ theme }) => theme.borderRadius.large};
   box-shadow: ${({ theme }) => theme.boxShadow.lg};
@@ -67,7 +67,7 @@ const Content = styled.div`
   animation: ${popIn} 0.22s cubic-bezier(0.61, 0.13, 0.38, 1.15);
   scrollbar-width: thin;
   scrollbar-color: ${({ theme }) =>
-    `${theme.roles.focus.ring} ${theme.roles.surface.panelAlt}`};
+    `${theme.roles.focus.ring} ${theme.roles.surface.field}`};
   overscroll-behavior: contain;
 
   &::-webkit-scrollbar {
@@ -75,14 +75,14 @@ const Content = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    background: ${({ theme }) => theme.roles.surface.panelAlt};
+    background: ${({ theme }) => theme.roles.surface.field};
     border-radius: ${({ theme }) => theme.borderRadius.large};
   }
 
   &::-webkit-scrollbar-thumb {
     background-color: ${({ theme }) => theme.roles.focus.ring};
     border-radius: ${({ theme }) => theme.borderRadius.large};
-    border: 2px solid ${({ theme }) => theme.roles.surface.panelAlt};
+    border: 2px solid ${({ theme }) => theme.roles.surface.field};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
@@ -124,7 +124,7 @@ const Close = styled.button`
 
   &:hover,
   &:focus-visible {
-    background: ${({ theme }) => theme.roles.surface.panelAlt};
+    background: ${({ theme }) => theme.roles.surface.note};
     color: ${({ theme }) => theme.roles.text.primary};
     border-color: ${({ theme }) => theme.roles.border.strong};
     outline: none;
