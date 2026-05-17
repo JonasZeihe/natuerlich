@@ -1,3 +1,4 @@
+// src/components/primitives/Surface.tsx
 'use client'
 
 import {
@@ -6,15 +7,9 @@ import {
   type ReactNode,
 } from 'react'
 import styled, { css } from 'styled-components'
+import AnchoredAsset from '@/components/assets/AnchoredAsset'
+import type { AssetConsumerSpec } from '@/components/assets/registry'
 import type { EnergyInput, EnergyMix, SurfaceToneKey } from '@/design/theme'
-import Ornament from '@/components/ornaments/Ornament'
-import OrnamentCss from '@/components/ornaments/OrnamentCss'
-import OrnamentField from '@/components/ornaments/OrnamentField'
-import type {
-  OrnamentConsumerSpec,
-  OrnamentCssConsumerSpec,
-  OrnamentFieldConsumerSpec,
-} from '@/components/ornaments/registry'
 
 type SurfacePadding = 'none' | 'sm' | 'md' | 'lg'
 type SurfaceRadius = 'none' | 'small' | 'medium' | 'large' | 'pill'
@@ -28,9 +23,7 @@ type Props = {
   padding?: SurfacePadding
   bordered?: boolean
   weight?: SurfaceWeight
-  ornament?: OrnamentConsumerSpec | null
-  ornamentField?: OrnamentFieldConsumerSpec | null
-  cssOrnament?: OrnamentCssConsumerSpec | null
+  asset?: AssetConsumerSpec | null
   children?: ReactNode
 } & Omit<ComponentPropsWithoutRef<'div'>, 'color'>
 
@@ -42,7 +35,7 @@ type StyledProps = {
   $energy?: EnergyInput
   $mix?: EnergyMix
   $weight: SurfaceWeight
-  $ornamentBleeds: boolean
+  $assetBleeds: boolean
 }
 
 const resolveWeightStyles = (
@@ -73,7 +66,7 @@ const Base = styled.div<StyledProps>`
   position: relative;
   min-width: 0;
   border-radius: ${({ theme, $radius }) => theme.borderRadius[$radius]};
-  overflow: ${({ $ornamentBleeds }) => ($ornamentBleeds ? 'visible' : 'clip')};
+  overflow: ${({ $assetBleeds }) => ($assetBleeds ? 'visible' : 'clip')};
 
   ${({ theme, $padding }) => css`
     padding: ${$padding === 'none'
@@ -112,71 +105,12 @@ const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
     padding = 'md',
     bordered = true,
     weight = 'quiet',
-    ornament,
-    ornamentField,
-    cssOrnament,
+    asset,
     children,
     ...rest
   },
   ref
 ) {
-  const resolvedCssOrnament =
-    cssOrnament &&
-    ({
-      ...cssOrnament,
-      placement: 'surface' as const,
-      energy: cssOrnament.energy ?? energy,
-      mix: cssOrnament.mix ?? mix,
-    } satisfies {
-      placement: 'surface'
-      name: OrnamentCssConsumerSpec['name']
-      presence?: OrnamentCssConsumerSpec['presence']
-      boundary?: OrnamentCssConsumerSpec['boundary']
-      energy?: EnergyInput
-      mix?: EnergyMix
-    })
-
-  const resolvedOrnament =
-    ornament &&
-    ({
-      ...ornament,
-      placement: 'surface' as const,
-      energy: ornament.energy ?? energy,
-      mix: ornament.mix ?? mix,
-    } satisfies {
-      placement: 'surface'
-      name: OrnamentConsumerSpec['name']
-      anchor?: OrnamentConsumerSpec['anchor']
-      size?: OrnamentConsumerSpec['size']
-      presence?: OrnamentConsumerSpec['presence']
-      boundary?: OrnamentConsumerSpec['boundary']
-      energy?: EnergyInput
-      mix?: EnergyMix
-      mirrorX?: boolean
-      mirrorY?: boolean
-    })
-
-  const resolvedOrnamentField =
-    ornamentField &&
-    ({
-      ...ornamentField,
-      placement: 'surface' as const,
-      energy: ornamentField.energy ?? energy,
-      mix: ornamentField.mix ?? mix,
-    } satisfies {
-      placement: 'surface'
-      name: OrnamentFieldConsumerSpec['name']
-      presence?: OrnamentFieldConsumerSpec['presence']
-      boundary?: OrnamentFieldConsumerSpec['boundary']
-      energy?: EnergyInput
-      mix?: EnergyMix
-    })
-
-  const ornamentBleeds =
-    resolvedCssOrnament?.boundary === 'bleed' ||
-    resolvedOrnament?.boundary === 'bleed' ||
-    resolvedOrnamentField?.boundary === 'bleed'
-
   return (
     <Base
       ref={ref}
@@ -187,14 +121,10 @@ const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
       $padding={padding}
       $bordered={bordered}
       $weight={weight}
-      $ornamentBleeds={ornamentBleeds}
+      $assetBleeds={asset?.boundary === 'bleed'}
       {...rest}
     >
-      {resolvedCssOrnament ? <OrnamentCss {...resolvedCssOrnament} /> : null}
-      {resolvedOrnamentField ? (
-        <OrnamentField {...resolvedOrnamentField} />
-      ) : null}
-      {resolvedOrnament ? <Ornament {...resolvedOrnament} /> : null}
+      {asset ? <AnchoredAsset {...asset} placement="surface" /> : null}
       <Content>{children}</Content>
     </Base>
   )

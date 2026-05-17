@@ -4,12 +4,12 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 ROOT_DIR="$(cd ../.. && pwd)"
-VENV_DIR="$ROOT_DIR/.venv-image-optimizer"
-PYTHON_SCRIPT="$ROOT_DIR/scripts/logic/convert_images.py"
+VENV_DIR="$ROOT_DIR/.venv-asset-grid"
+PYTHON_SCRIPT="$ROOT_DIR/scripts/logic/make_asset_grid.py"
 
 echo
 echo "==============================="
-echo "  Image Optimizer · WebP tool"
+echo "  Asset Grid Maker"
 echo "==============================="
 echo
 

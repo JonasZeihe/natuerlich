@@ -1,3 +1,4 @@
+// src/components/primitives/Card.tsx
 'use client'
 
 import {
@@ -6,12 +7,8 @@ import {
   type ReactNode,
 } from 'react'
 import styled, { css } from 'styled-components'
+import type { AssetConsumerSpec } from '@/components/assets/registry'
 import type { EnergyInput, EnergyMix, SurfaceToneKey } from '@/design/theme'
-import type {
-  OrnamentConsumerSpec,
-  OrnamentCssConsumerSpec,
-  OrnamentFieldConsumerSpec,
-} from '@/components/ornaments/registry'
 import Surface from './Surface'
 
 type Padding = 'sm' | 'md' | 'lg'
@@ -27,9 +24,7 @@ type Props = {
   weight?: Weight
   radius?: Radius
   bordered?: boolean
-  ornament?: OrnamentConsumerSpec | null
-  ornamentField?: OrnamentFieldConsumerSpec | null
-  cssOrnament?: OrnamentCssConsumerSpec | null
+  asset?: AssetConsumerSpec | null
   children?: ReactNode
 } & Omit<ComponentPropsWithoutRef<'div'>, 'color'>
 
@@ -87,9 +82,7 @@ const Card = forwardRef<HTMLDivElement, Props>(function Card(
     weight = 'steady',
     radius = 'large',
     bordered = true,
-    ornament,
-    ornamentField,
-    cssOrnament,
+    asset,
     children,
     ...rest
   },
@@ -105,9 +98,7 @@ const Card = forwardRef<HTMLDivElement, Props>(function Card(
       padding={padding}
       bordered={bordered}
       weight={weight}
-      ornament={ornament}
-      ornamentField={ornamentField}
-      cssOrnament={cssOrnament}
+      asset={asset}
       $interactive={interactive}
       {...rest}
     >

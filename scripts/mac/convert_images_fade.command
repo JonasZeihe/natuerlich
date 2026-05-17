@@ -5,11 +5,11 @@ cd "$(dirname "$0")"
 
 ROOT_DIR="$(cd ../.. && pwd)"
 VENV_DIR="$ROOT_DIR/.venv-image-optimizer"
-PYTHON_SCRIPT="$ROOT_DIR/scripts/logic/convert_images.py"
+PYTHON_SCRIPT="$ROOT_DIR/scripts/logic/convert_images_fade.py"
 
 echo
 echo "==============================="
-echo "  Image Optimizer · WebP tool"
+echo "  Image Extender · Fade tool"
 echo "==============================="
 echo
 

@@ -3,8 +3,8 @@
 
 import styled from 'styled-components'
 import Section from '@/components/primitives/Section'
-import Surface from '@/components/primitives/Surface'
 import Stack from '@/components/primitives/Stack'
+import Surface from '@/components/primitives/Surface'
 import Typography from '@/design/typography'
 
 const SectionStack = styled(Stack)`
@@ -37,13 +37,6 @@ export default function OrientationSection() {
       rhythm="default"
       tone="clarify"
       energy="opening"
-      ornament={{
-        name: 'rootTrace',
-        anchor: 'bottom-right',
-        size: 'lg',
-        presence: 'default',
-        mix: ['opening', 'tension'],
-      }}
     >
       <SectionStack>
         <IntroSurface
