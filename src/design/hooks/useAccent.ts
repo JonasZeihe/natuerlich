@@ -2,10 +2,17 @@
 'use client'
 
 import { useTheme } from 'styled-components'
-import type { AppTheme, AxisKey, EnergyInput, EnergyMix } from '@/design/theme'
+import type {
+  AppTheme,
+  AxisKey,
+  EnergyInput,
+  EnergyMix,
+  MovementKey,
+} from '@/design/theme'
 
 export type AccentKey = AxisKey
 export type AccentInfo = ReturnType<AppTheme['getAxisRole']>
+export type MovementInfo = ReturnType<AppTheme['getMovementRole']>
 
 export type AccentStyles = {
   background: string
@@ -22,6 +29,11 @@ export default function useAccent(key: AccentKey): AccentInfo {
 export function useEnergy(input?: EnergyInput, mix?: EnergyMix) {
   const theme = useTheme() as AppTheme
   return theme.getEnergyRole(input, mix)
+}
+
+export function useMovement(key: MovementKey): MovementInfo {
+  const theme = useTheme() as AppTheme
+  return theme.getMovementRole(key)
 }
 
 export function useAccentStyles(key: AccentKey): AccentStyles {

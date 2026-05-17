@@ -8,7 +8,7 @@ import {
 } from 'react'
 import styled, { css } from 'styled-components'
 import type { AssetConsumerSpec } from '@/components/assets/registry'
-import type { EnergyInput, EnergyMix, SurfaceToneKey } from '@/design/theme'
+import type { MovementKey, SurfaceToneKey } from '@/design/theme'
 import Surface from './Surface'
 
 type Padding = 'sm' | 'md' | 'lg'
@@ -18,8 +18,7 @@ type Weight = 'quiet' | 'steady' | 'strong'
 type Props = {
   padding?: Padding
   tone?: SurfaceToneKey
-  energy?: EnergyInput
-  mix?: EnergyMix
+  movement?: MovementKey
   interactive?: boolean
   weight?: Weight
   radius?: Radius
@@ -62,22 +61,11 @@ const StyledCard = styled(Surface)<StyledProps>`
       : ''}
 `
 
-const resolveCardTone = (
-  tone: SurfaceToneKey,
-  interactive: boolean
-): SurfaceToneKey => {
-  if (tone === 'open') return 'soft'
-  if (tone === 'band') return 'panel'
-  if (tone === 'panel' && interactive) return 'elevated'
-  return tone
-}
-
 const Card = forwardRef<HTMLDivElement, Props>(function Card(
   {
     padding = 'md',
-    tone = 'panel',
-    energy,
-    mix,
+    tone = 'card',
+    movement = 'arrival',
     interactive = false,
     weight = 'steady',
     radius = 'large',
@@ -91,9 +79,8 @@ const Card = forwardRef<HTMLDivElement, Props>(function Card(
   return (
     <StyledCard
       ref={ref}
-      tone={resolveCardTone(tone, interactive)}
-      energy={energy}
-      mix={mix}
+      tone={tone}
+      movement={movement}
       radius={radius}
       padding={padding}
       bordered={bordered}

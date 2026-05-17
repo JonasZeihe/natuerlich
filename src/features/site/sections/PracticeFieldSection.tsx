@@ -1,4 +1,4 @@
-// src/features/site/screens/PracticeFieldSection.tsx
+// src/features/site/sections/PracticeFieldSection.tsx
 'use client'
 
 import styled from 'styled-components'
@@ -44,8 +44,8 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
   >
     <SectionStack>
       <HeaderSurface
-        tone="panel"
-        mix={['density', 'tension']}
+        tone="deep"
+        movement="practice"
         radius="large"
         bordered
         padding="lg"
@@ -82,8 +82,8 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
 
       <PairGrid>
         <Surface
-          tone="panel"
-          energy="opening"
+          tone="card"
+          movement="practice"
           radius="large"
           bordered
           padding="lg"
@@ -117,7 +117,13 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
           </Stack>
         </Surface>
 
-        <Surface tone="soft" energy="flow" radius="large" bordered padding="lg">
+        <Surface
+          tone="field"
+          movement="practice"
+          radius="large"
+          bordered
+          padding="lg"
+        >
           <Stack gap={0.82}>
             <Typography
               as="p"
@@ -143,8 +149,8 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
       </PairGrid>
 
       <Surface
-        tone="panel"
-        energy="density"
+        tone="card"
+        movement="practice"
         radius="large"
         bordered
         padding="lg"

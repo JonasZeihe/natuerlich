@@ -9,7 +9,7 @@ import {
 import styled, { css } from 'styled-components'
 import AnchoredAsset from '@/components/assets/AnchoredAsset'
 import type { AssetConsumerSpec } from '@/components/assets/registry'
-import type { EnergyInput, EnergyMix, SurfaceToneKey } from '@/design/theme'
+import type { MovementKey, SurfaceToneKey } from '@/design/theme'
 
 type SurfacePadding = 'none' | 'sm' | 'md' | 'lg'
 type SurfaceRadius = 'none' | 'small' | 'medium' | 'large' | 'pill'
@@ -17,8 +17,7 @@ type SurfaceWeight = 'quiet' | 'steady' | 'strong'
 
 type Props = {
   tone?: SurfaceToneKey
-  energy?: EnergyInput
-  mix?: EnergyMix
+  movement?: MovementKey
   radius?: SurfaceRadius
   padding?: SurfacePadding
   bordered?: boolean
@@ -32,8 +31,7 @@ type StyledProps = {
   $padding: SurfacePadding
   $bordered: boolean
   $tone: SurfaceToneKey
-  $energy?: EnergyInput
-  $mix?: EnergyMix
+  $movement: MovementKey
   $weight: SurfaceWeight
   $assetBleeds: boolean
 }
@@ -74,8 +72,8 @@ const Base = styled.div<StyledProps>`
       : theme.layout.surfacePadding[$padding]};
   `}
 
-  ${({ theme, $tone, $energy, $mix, $bordered, $weight }) => {
-    const resolved = theme.getSurfaceTone($tone, $energy, $mix)
+  ${({ theme, $tone, $movement, $bordered, $weight }) => {
+    const resolved = theme.getSurfaceTone($tone, $movement)
 
     return css`
       background: ${resolved.bg};
@@ -98,9 +96,8 @@ const Content = styled.div`
 
 const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
   {
-    tone = 'panel',
-    energy,
-    mix,
+    tone = 'card',
+    movement = 'arrival',
     radius = 'large',
     padding = 'md',
     bordered = true,
@@ -115,8 +112,7 @@ const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
     <Base
       ref={ref}
       $tone={tone}
-      $energy={energy}
-      $mix={mix}
+      $movement={movement}
       $radius={radius}
       $padding={padding}
       $bordered={bordered}

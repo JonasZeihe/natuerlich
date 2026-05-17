@@ -41,7 +41,7 @@ const Frame = styled.div`
   justify-content: center;
   padding: ${({ theme }) => theme.spacing(0.5)};
   border-radius: ${({ theme }) => theme.borderRadius.large};
-  background: ${({ theme }) => theme.roles.surface.panel};
+  background: ${({ theme }) => theme.roles.surface.card};
   box-shadow: ${({ theme }) => theme.boxShadow.lg};
   border: 1px solid ${({ theme }) => theme.roles.border.subtle};
 `
@@ -52,7 +52,7 @@ const StyledVideo = styled.video`
   display: block;
   object-fit: contain;
   border-radius: ${({ theme }) => theme.borderRadius.medium};
-  background: ${({ theme }) => theme.roles.surface.panelAlt};
+  background: ${({ theme }) => theme.roles.surface.deep};
 `
 
 const ControlBase = styled.button`
@@ -66,7 +66,7 @@ const ControlBase = styled.button`
   justify-content: center;
   border-radius: ${({ theme }) => theme.borderRadius.pill};
   border: 1px solid ${({ theme }) => theme.roles.border.subtle};
-  background: ${({ theme }) => theme.roles.surface.panel};
+  background: ${({ theme }) => theme.roles.surface.card};
   color: ${({ theme }) => theme.roles.text.primary};
   box-shadow: ${({ theme }) => theme.boxShadow.sm};
   cursor: pointer;
@@ -76,7 +76,7 @@ const ControlBase = styled.button`
     border-color 0.16s ease;
 
   &:hover {
-    background: ${({ theme }) => theme.roles.surface.interactive};
+    background: ${({ theme }) => theme.roles.surface.note};
     box-shadow: ${({ theme }) => theme.boxShadow.md};
   }
 

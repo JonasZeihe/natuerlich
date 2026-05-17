@@ -1,4 +1,4 @@
-// src/features/site/screens/ArrivalSection.tsx
+// src/features/site/sections/ArrivalSection.tsx
 'use client'
 
 import styled from 'styled-components'
@@ -13,34 +13,83 @@ type Props = {
   onGoToIntegration: () => void
 }
 
-const ArrivalGrid = styled.div`
-  display: grid;
-  grid-template-columns: minmax(0, 1.06fr) minmax(0, 0.94fr);
-  gap: ${({ theme }) => theme.spacing(1.5)};
-  align-items: stretch;
+const ArrivalStage = styled.div`
+  position: relative;
+  min-height: min(44rem, calc(100svh - 8rem));
+  display: flex;
+  align-items: center;
+  padding-block: clamp(1rem, 3vw, 2.5rem);
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    grid-template-columns: 1fr;
-    gap: ${({ theme }) => theme.spacing(1.05)};
+    min-height: auto;
+    padding-block: 0;
+  }
+`
+
+const BreathIn = styled.img`
+  position: absolute;
+  z-index: 0;
+  left: clamp(-5rem, -11vw, -6rem);
+  bottom: clamp(15rem, 9vw, 8rem);
+  width: clamp(28rem, 44vw, 50rem);
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    left: clamp(-13rem, -35vw, -7rem);
+    bottom: clamp(4rem, 18vw, 8rem);
+    width: clamp(24rem, 86vw, 38rem);
+  }
+`
+
+const BreathOut = styled.img`
+  position: absolute;
+  z-index: 0;
+  right: clamp(5rem, -4vw, -1.5rem);
+  bottom: clamp(0rem, -5vw, -2rem);
+  width: clamp(18rem, 27vw, 32rem);
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    right: clamp(-6rem, -20vw, -3rem);
+    bottom: clamp(-5rem, -16vw, -2rem);
+    width: clamp(17rem, 60vw, 28rem);
+  }
+`
+
+const ContentWrap = styled.div`
+  position: relative;
+  z-index: 1;
+  width: min(100%, 48rem);
+  margin-left: clamp(1rem, 7vw, 7rem);
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    width: min(100%, 42rem);
+    margin-left: 0;
   }
 `
 
 const HeadSurface = styled(Surface)`
-  height: 100%;
+  background: color-mix(
+    in srgb,
+    ${({ theme }) => theme.getMovementRole('arrival').card} 88%,
+    transparent
+  );
 `
 
 const HeadStack = styled(Stack)`
   min-width: 0;
-  min-height: 100%;
-  justify-content: center;
 `
 
 const ActionsRow = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: ${({ theme }) => theme.spacing(0.8)};
-  margin-top: ${({ theme }) => theme.spacingHalf(0.6)};
+  gap: ${({ theme }) => theme.spacing(0.75)};
+  margin-top: ${({ theme }) => theme.spacingHalf(0.4)};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     width: 100%;
@@ -52,43 +101,8 @@ const ActionsRow = styled.div`
   }
 `
 
-const MediaSurface = styled(Surface)`
-  height: 100%;
-`
-
-const MediaFrame = styled.div`
-  width: 100%;
-  min-height: 100%;
-  height: 100%;
-  border-radius: inherit;
-
-  .inner {
-    position: relative;
-    width: 100%;
-    min-height: 100%;
-    height: 100%;
-    overflow: hidden;
-    border-radius: inherit;
-    display: flex;
-    align-items: stretch;
-    aspect-ratio: 4 / 5;
-
-    > * {
-      width: 100%;
-      min-height: 100%;
-    }
-  }
-`
-
-const MediaShell = styled(Stack)`
-  height: 100%;
-  justify-content: space-between;
-  min-height: 0;
-  padding: clamp(1rem, 2vw, 1.35rem);
-`
-
-const MediaBand = styled(Surface)`
-  margin-top: auto;
+const ArrivalNote = styled.div`
+  max-width: 35rem;
 `
 
 const ArrivalSection = ({ onGoToActivation, onGoToIntegration }: Props) => (
@@ -98,130 +112,108 @@ const ArrivalSection = ({ onGoToActivation, onGoToIntegration }: Props) => (
     padY
     variant="intro"
     tone="opening"
-    mix={['opening', 'tension']}
+    mix={['opening', 'flow']}
     ariaLabel="Ankommen"
     titleId="ankommen-title"
   >
-    <ArrivalGrid>
-      <HeadSurface
-        tone="soft"
-        mix={['opening', 'tension']}
-        radius="large"
-        bordered
-        padding="lg"
-        weight="steady"
-      >
-        <HeadStack gap={1}>
-          <Typography
-            as="p"
-            variant="caption"
-            gutter={false}
-            tone="soft"
-            measure="wide"
-          >
-            Ankommen
-          </Typography>
-
-          <Stack gap={0.7}>
-            <Typography
-              as="h1"
-              variant="h1"
-              id="ankommen-title"
-              cadence="dense"
-              measure="title"
-              gutter={false}
-              tone="strong"
-            >
-              Meta-Placeholder: Diese Bewegung lässt den Besucher landen, bevor
-              irgendetwas erklärt, verkauft oder eingeordnet wird.
-            </Typography>
-
+    <BreathIn
+      src="/bewegungen/001_Atembogen.webp"
+      width={1024}
+      height={1024}
+      alt=""
+      aria-hidden="true"
+      decoding="async"
+      fetchPriority="high"
+    />
+    <ArrivalStage>
+      <ContentWrap>
+        <HeadSurface
+          tone="quiet"
+          movement="arrival"
+          radius="large"
+          bordered={false}
+          padding="lg"
+          weight="quiet"
+        >
+          <HeadStack gap={1}>
             <Typography
               as="p"
-              variant="body"
+              variant="caption"
               gutter={false}
               tone="soft"
-              cadence="open"
-              measure="prose"
+              measure="wide"
             >
-              Meta-Placeholder: Hier später die erste ruhige Setzung. Jonas wird
-              als Lehrer spürbar, ohne Methode, Angebot oder Biografie nach vorn
-              zu schieben.
+              Ankommen
             </Typography>
-          </Stack>
 
-          <ActionsRow>
-            <Button variant="primary" onClick={onGoToActivation}>
-              Meta-Placeholder: In Bewegung kommen
-            </Button>
-            <Button variant="ghost" onClick={onGoToIntegration}>
-              Meta-Placeholder: Rahmen finden
-            </Button>
-          </ActionsRow>
-        </HeadStack>
-      </HeadSurface>
+            <Stack gap={0.7}>
+              <Typography
+                as="h1"
+                variant="h1"
+                id="ankommen-title"
+                cadence="dense"
+                measure="title"
+                gutter={false}
+                tone="strong"
+              >
+                Meta-Placeholder: Diese erste Bewegung öffnet den Raum wie eine
+                Einatmung: hell, ruhig, einladend, ohne schon erklären zu
+                müssen.
+              </Typography>
 
-      <MediaSurface
-        tone="panel"
-        mix={['opening', 'tension']}
-        radius="large"
-        bordered
-        padding="none"
-        weight="steady"
-      >
-        <MediaFrame>
-          <div className="inner">
-            <MediaShell gap={1}>
-              <Stack gap={0.78}>
-                <Typography
-                  as="p"
-                  variant="caption"
-                  gutter={false}
-                  accent="axisTension"
-                >
-                  Präsenzfläche
-                </Typography>
+              <Typography
+                as="p"
+                variant="body"
+                gutter={false}
+                tone="soft"
+                cadence="open"
+                measure="prose"
+              >
+                Meta-Placeholder: Hier später das herzliche Willkommen und die
+                erste Setzung. Jonas wird als Lehrer spürbar, bevor Methode,
+                Angebot oder Biografie nach vorn treten.
+              </Typography>
+            </Stack>
 
+            <ActionsRow>
+              <Button variant="ghost" onClick={onGoToActivation}>
+                Meta-Placeholder: In Bewegung kommen
+              </Button>
+              <Button variant="ghost" onClick={onGoToIntegration}>
+                Meta-Placeholder: Rahmen finden
+              </Button>
+            </ActionsRow>
+
+            <ArrivalNote>
+              <Stack gap={0.44}>
                 <Typography
                   as="p"
                   variant="body"
                   gutter={false}
-                  accent="axisTension"
+                  accent="axisFlow"
                 >
-                  Meta-Placeholder: Bild oder Assetfläche für Ankunft,
-                  Körperlichkeit und echte Lehrerpräsenz. Kein Hero-Klischee.
+                  Meta-Placeholder: Einatmen öffnet. Ausatmen lässt sinken.
+                  Dazwischen entsteht der erste Raum dieser Seite.
+                </Typography>
+
+                <Typography as="p" variant="body" gutter={false} tone="soft">
+                  Kein Hero-Klischee. Kein Symbolbild. Auftakt als Bewegung.
                 </Typography>
               </Stack>
-
-              <MediaBand
-                tone="soft"
-                mix={['opening', 'tension']}
-                radius="large"
-                bordered
-                padding="md"
-                weight="steady"
-              >
-                <Stack gap={0.48}>
-                  <Typography
-                    as="p"
-                    variant="body"
-                    gutter={false}
-                    accent="axisTension"
-                  >
-                    Meta-Placeholder: Diese Medienfläche trägt den ersten Raum,
-                    nicht Dekoration.
-                  </Typography>
-
-                  <Typography as="p" variant="body" gutter={false} tone="soft">
-                    Keine Naturtapete. Keine Symbolik. Keine Wellness-Anmutung.
-                  </Typography>
-                </Stack>
-              </MediaBand>
-            </MediaShell>
-          </div>
-        </MediaFrame>
-      </MediaSurface>
-    </ArrivalGrid>
+            </ArrivalNote>
+          </HeadStack>
+        </HeadSurface>
+      </ContentWrap>
+    </ArrivalStage>
+    <BreathOut
+      src="/bewegungen/002_Ausatembogen.webp"
+      width={1024}
+      height={1024}
+      alt=""
+      aria-hidden="true"
+      decoding="async"
+      loading="lazy"
+    />
   </Section>
 )
 

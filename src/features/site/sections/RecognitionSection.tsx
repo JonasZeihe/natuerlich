@@ -1,4 +1,4 @@
-// src/features/site/screens/RecognitionSection.tsx
+// src/features/site/sections/RecognitionSection.tsx
 'use client'
 
 import styled from 'styled-components'
@@ -35,9 +35,10 @@ const SideColumn = styled.div`
 
 const MediaPlaceholder = styled.div`
   min-height: 18rem;
-  border: 1px dashed ${({ theme }) => theme.getAxisRole('axisDensity').border};
+  border: 1px dashed
+    ${({ theme }) => theme.getMovementRole('recognition').border};
   border-radius: ${({ theme }) => theme.borderRadius.medium};
-  background: ${({ theme }) => theme.roles.surface.inset};
+  background: ${({ theme }) => theme.roles.surface.field};
   display: flex;
   align-items: flex-end;
   padding: ${({ theme }) => theme.spacing(1.05)};
@@ -56,8 +57,8 @@ const RecognitionSection = () => (
   >
     <SectionStack>
       <TopSurface
-        tone="panel"
-        mix={['density', 'tension']}
+        tone="field"
+        movement="recognition"
         radius="large"
         bordered
         padding="lg"
@@ -114,8 +115,8 @@ const RecognitionSection = () => (
 
       <MiddleLayout>
         <Surface
-          tone="accent"
-          energy="tension"
+          tone="threshold"
+          movement="recognition"
           radius="large"
           bordered
           padding="lg"
@@ -171,8 +172,8 @@ const RecognitionSection = () => (
 
         <SideColumn>
           <Surface
-            tone="panel"
-            energy="density"
+            tone="card"
+            movement="recognition"
             radius="large"
             bordered
             padding="md"
@@ -209,8 +210,8 @@ const RecognitionSection = () => (
           </Surface>
 
           <Surface
-            tone="inset"
-            energy="density"
+            tone="note"
+            movement="recognition"
             radius="large"
             bordered
             padding="sm"
@@ -233,8 +234,8 @@ const RecognitionSection = () => (
       </MiddleLayout>
 
       <Surface
-        tone="soft"
-        energy="density"
+        tone="card"
+        movement="recognition"
         radius="large"
         bordered
         padding="md"

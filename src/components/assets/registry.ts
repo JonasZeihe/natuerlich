@@ -27,7 +27,20 @@ export type RegisteredAsset = {
   fit?: AssetFit
 }
 
-export const ASSET_REGISTRY: Record<string, RegisteredAsset> = {}
+export const ASSET_REGISTRY = {
+  '001_Atembogen': {
+    src: '/bewegungen/001_Atembogen.webp',
+    width: 1024,
+    height: 1024,
+    fit: 'contain',
+  },
+  '002_Ausatembogen': {
+    src: '/bewegungen/002_Ausatembogen.webp',
+    width: 1024,
+    height: 1024,
+    fit: 'contain',
+  },
+} as const satisfies Record<string, RegisteredAsset>
 
 export type AssetName = keyof typeof ASSET_REGISTRY
 

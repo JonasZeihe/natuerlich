@@ -1,4 +1,4 @@
-// src/features/site/screens/ActivationSection.tsx
+// src/features/site/sections/ActivationSection.tsx
 'use client'
 
 import styled from 'styled-components'
@@ -44,8 +44,8 @@ const ActivationSection = ({ onGoToPracticeField }: Props) => (
   >
     <SectionStack>
       <HeaderSurface
-        tone="soft"
-        energy="opening"
+        tone="field"
+        movement="activation"
         radius="large"
         bordered
         padding="lg"
@@ -77,8 +77,8 @@ const ActivationSection = ({ onGoToPracticeField }: Props) => (
 
       <ActivationGrid>
         <Surface
-          tone="accent"
-          energy="flow"
+          tone="threshold"
+          movement="activation"
           radius="large"
           bordered
           padding="lg"
@@ -113,8 +113,8 @@ const ActivationSection = ({ onGoToPracticeField }: Props) => (
         </Surface>
 
         <Surface
-          tone="panel"
-          energy="opening"
+          tone="card"
+          movement="activation"
           radius="large"
           bordered
           padding="lg"

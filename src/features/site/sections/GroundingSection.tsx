@@ -1,4 +1,4 @@
-// src/features/site/screens/GroundingSection.tsx
+// src/features/site/sections/GroundingSection.tsx
 'use client'
 
 import styled from 'styled-components'
@@ -39,8 +39,8 @@ const GroundingSection = () => (
   >
     <SectionStack>
       <IntroSurface
-        tone="panel"
-        energy="opening"
+        tone="field"
+        movement="grounding"
         radius="large"
         bordered
         padding="lg"
@@ -77,8 +77,8 @@ const GroundingSection = () => (
 
       <ContrastGrid>
         <Surface
-          tone="panel"
-          energy="flow"
+          tone="card"
+          movement="grounding"
           radius="large"
           bordered
           padding="lg"
@@ -111,8 +111,8 @@ const GroundingSection = () => (
         </Surface>
 
         <Surface
-          tone="accent"
-          energy="tension"
+          tone="threshold"
+          movement="grounding"
           radius="large"
           bordered
           padding="lg"
@@ -153,8 +153,8 @@ const GroundingSection = () => (
       </ContrastGrid>
 
       <Surface
-        tone="soft"
-        energy="density"
+        tone="note"
+        movement="grounding"
         radius="large"
         bordered
         padding="md"

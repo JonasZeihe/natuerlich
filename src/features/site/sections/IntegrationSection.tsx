@@ -1,4 +1,4 @@
-// src/features/site/screens/IntegrationSection.tsx
+// src/features/site/sections/IntegrationSection.tsx
 'use client'
 
 import styled from 'styled-components'
@@ -50,8 +50,8 @@ const IntegrationSection = ({ onGoToNextStep }: Props) => (
   >
     <SectionStack>
       <Surface
-        tone="panel"
-        energy="density"
+        tone="field"
+        movement="integration"
         radius="large"
         bordered
         padding="lg"
@@ -107,29 +107,31 @@ const IntegrationSection = ({ onGoToNextStep }: Props) => (
       </Surface>
 
       <GroupGrid>
-        <Card tone="soft" energy="opening" radius="large" bordered padding="md">
+        <Card
+          tone="card"
+          movement="integration"
+          radius="large"
+          bordered
+          padding="md"
+        >
           <Stack gap={0.82}>
             <Typography
               as="p"
               variant="caption"
               gutter={false}
               accent="axisOpening"
-              measure="wide"
             >
               Einstieg
             </Typography>
-
             <Typography
               as="h3"
               variant="h3"
               gutter={false}
               accent="axisOpening"
-              measure="title"
             >
               Meta-Placeholder: Hier später niederschwellige Formate für den
               ersten sinnvollen Zugang.
             </Typography>
-
             <Typography as="p" variant="body" gutter={false} measure="prose">
               Meta-Placeholder: Auftaktkurs, Baseline, kompakte Grundpraxis,
               Einführungsformate oder andere erste Schwellen.
@@ -138,8 +140,8 @@ const IntegrationSection = ({ onGoToNextStep }: Props) => (
         </Card>
 
         <Card
-          tone="panel"
-          energy="density"
+          tone="card"
+          movement="integration"
           radius="large"
           bordered
           padding="md"
@@ -150,22 +152,18 @@ const IntegrationSection = ({ onGoToNextStep }: Props) => (
               variant="caption"
               gutter={false}
               accent="axisDensity"
-              measure="wide"
             >
               Regelmäßigkeit
             </Typography>
-
             <Typography
               as="h3"
               variant="h3"
               gutter={false}
               accent="axisDensity"
-              measure="title"
             >
               Meta-Placeholder: Hier später Kurs- und Klassenformate für
               Menschen, die kontinuierlicher üben wollen.
             </Typography>
-
             <Typography as="p" variant="body" gutter={false} measure="prose">
               Meta-Placeholder: Rhythmus, Verbindlichkeit, Aufbau und Funktion
               der wiederkehrenden Praxis.
@@ -173,29 +171,26 @@ const IntegrationSection = ({ onGoToNextStep }: Props) => (
           </Stack>
         </Card>
 
-        <Card tone="panel" energy="flow" radius="large" bordered padding="md">
+        <Card
+          tone="field"
+          movement="integration"
+          radius="large"
+          bordered
+          padding="md"
+        >
           <Stack gap={0.82}>
             <Typography
               as="p"
               variant="caption"
               gutter={false}
               accent="axisFlow"
-              measure="wide"
             >
               Individuell
             </Typography>
-
-            <Typography
-              as="h3"
-              variant="h3"
-              gutter={false}
-              accent="axisFlow"
-              measure="title"
-            >
+            <Typography as="h3" variant="h3" gutter={false} accent="axisFlow">
               Meta-Placeholder: Hier später Einzelsettings und persönliche
               Praxisbegleitung.
             </Typography>
-
             <Typography as="p" variant="body" gutter={false} measure="prose">
               Meta-Placeholder: Wann Einzelunterricht sinnvoll ist, für wen das
               passt und wie sich das von Gruppenformaten unterscheidet.
@@ -203,29 +198,31 @@ const IntegrationSection = ({ onGoToNextStep }: Props) => (
           </Stack>
         </Card>
 
-        <Card tone="soft" energy="opening" radius="large" bordered padding="md">
+        <Card
+          tone="note"
+          movement="integration"
+          radius="large"
+          bordered
+          padding="md"
+        >
           <Stack gap={0.82}>
             <Typography
               as="p"
               variant="caption"
               gutter={false}
               accent="axisOpening"
-              measure="wide"
             >
               Professionell
             </Typography>
-
             <Typography
               as="h3"
               variant="h3"
               gutter={false}
               accent="axisOpening"
-              measure="title"
             >
               Meta-Placeholder: Hier später Firmen-, Team- oder andere externe
               Formate.
             </Typography>
-
             <Typography as="p" variant="body" gutter={false} measure="prose">
               Meta-Placeholder: Bewegte Pause, Reset-Formate, Workshops,
               Gesundheits- oder Teamkontexte.
@@ -235,28 +232,30 @@ const IntegrationSection = ({ onGoToNextStep }: Props) => (
       </GroupGrid>
 
       <FaqGrid>
-        <Card tone="soft" energy="density" radius="large" bordered padding="md">
+        <Card
+          tone="note"
+          movement="integration"
+          radius="large"
+          bordered
+          padding="md"
+        >
           <Stack gap={0.72}>
             <Typography
               as="p"
               variant="caption"
               gutter={false}
               accent="axisDensity"
-              measure="wide"
             >
               Orientierung
             </Typography>
-
             <Typography
               as="h3"
               variant="h3"
               gutter={false}
               accent="axisDensity"
-              measure="title"
             >
               Meta-Placeholder: Welche Form ist für einen Einstieg sinnvoll?
             </Typography>
-
             <Typography
               as="p"
               variant="body"
@@ -270,29 +269,31 @@ const IntegrationSection = ({ onGoToNextStep }: Props) => (
           </Stack>
         </Card>
 
-        <Card tone="soft" energy="density" radius="large" bordered padding="md">
+        <Card
+          tone="note"
+          movement="integration"
+          radius="large"
+          bordered
+          padding="md"
+        >
           <Stack gap={0.72}>
             <Typography
               as="p"
               variant="caption"
               gutter={false}
               accent="axisDensity"
-              measure="wide"
             >
               Rahmen
             </Typography>
-
             <Typography
               as="h3"
               variant="h3"
               gutter={false}
               accent="axisDensity"
-              measure="title"
             >
               Meta-Placeholder: Wie transparent sind Preise, Laufzeiten und
               Verbindlichkeit?
             </Typography>
-
             <Typography
               as="p"
               variant="body"
@@ -308,21 +309,15 @@ const IntegrationSection = ({ onGoToNextStep }: Props) => (
       </FaqGrid>
 
       <Surface
-        tone="panel"
-        energy="flow"
+        tone="field"
+        movement="integration"
         radius="large"
         bordered
         padding="md"
         weight="steady"
       >
         <Stack gap={0.78}>
-          <Typography
-            as="p"
-            variant="caption"
-            gutter={false}
-            accent="axisFlow"
-            measure="wide"
-          >
+          <Typography as="p" variant="caption" gutter={false} accent="axisFlow">
             Übergang
           </Typography>
 

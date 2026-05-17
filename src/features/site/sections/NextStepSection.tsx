@@ -1,4 +1,4 @@
-// src/features/site/screens/NextStepSection.tsx
+// src/features/site/sections/NextStepSection.tsx
 'use client'
 
 import styled from 'styled-components'
@@ -39,8 +39,8 @@ const NextStepSection = () => (
   >
     <SectionStack>
       <IntroSurface
-        tone="panel"
-        energy="flow"
+        tone="field"
+        movement="nextStep"
         radius="large"
         bordered
         padding="lg"
@@ -77,8 +77,8 @@ const NextStepSection = () => (
 
       <DetailGrid>
         <Surface
-          tone="soft"
-          energy="density"
+          tone="card"
+          movement="nextStep"
           radius="large"
           bordered
           padding="md"
@@ -115,7 +115,13 @@ const NextStepSection = () => (
           </Stack>
         </Surface>
 
-        <Surface tone="soft" energy="flow" radius="large" bordered padding="md">
+        <Surface
+          tone="note"
+          movement="nextStep"
+          radius="large"
+          bordered
+          padding="md"
+        >
           <Stack gap={0.78}>
             <Typography
               as="p"
@@ -146,8 +152,8 @@ const NextStepSection = () => (
       </DetailGrid>
 
       <Surface
-        tone="panel"
-        energy="density"
+        tone="card"
+        movement="nextStep"
         radius="large"
         bordered
         padding="md"
