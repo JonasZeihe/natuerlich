@@ -44,7 +44,18 @@ export const ASSET_REGISTRY = {
 
 export type AssetName = keyof typeof ASSET_REGISTRY
 
-export type AnchoredAssetSpec = {
+export type AssetPosition = {
+  left?: string
+  right?: string
+  top?: string
+  bottom?: string
+  width?: string
+  height?: string
+  zIndex?: number
+  opacity?: number
+}
+
+export type AnchoredAssetSpec = AssetPosition & {
   name: AssetName
   placement?: AssetPlacement
   anchor?: AssetAnchor
@@ -55,20 +66,9 @@ export type AnchoredAssetSpec = {
   mirrorX?: boolean
   mirrorY?: boolean
   priority?: boolean
+  mobile?: AssetPosition
 }
 
 export type AssetConsumerSpec = Omit<AnchoredAssetSpec, 'placement'>
 
-export type AssetFieldItem = AssetConsumerSpec & {
-  left: string
-  top: string
-  rotate?: number
-  opacity?: number
-}
-
-export type AssetFieldSpec = {
-  placement?: AssetPlacement
-  boundary?: AssetBoundary
-  presence?: AssetPresence
-  items: readonly AssetFieldItem[]
-}
+export type PositionedAssetSpec = AssetConsumerSpec

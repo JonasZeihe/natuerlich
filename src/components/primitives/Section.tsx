@@ -4,16 +4,28 @@
 import type { ComponentPropsWithoutRef, ReactNode } from 'react'
 import styled, { css } from 'styled-components'
 import AnchoredAsset from '@/components/assets/AnchoredAsset'
-import type { AssetConsumerSpec } from '@/components/assets/registry'
-import type { EnergyInput, EnergyMix, SectionToneKey } from '@/design/theme'
+import type {
+  AssetConsumerSpec,
+  PositionedAssetSpec,
+} from '@/components/assets/registry'
+import type {
+  EnergyInput,
+  EnergyMix,
+  MovementKey,
+  SectionToneKey,
+} from '@/design/theme'
 import Container from './Container'
 
 type ContainerSize = 'narrow' | 'default' | 'wide' | 'full'
 type RhythmKey = 'compact' | 'default' | 'spacious'
 type SectionVariant = 'intro' | 'body' | 'outro'
+type SectionContent = 'default' | 'left' | 'center' | 'right'
+type SectionFrame = 'content' | 'screen'
 
 type Props = {
   container?: ContainerSize
+  content?: SectionContent
+  frame?: SectionFrame
   padY?: boolean
   header?: ReactNode
   footer?: ReactNode
@@ -22,10 +34,12 @@ type Props = {
   rhythm?: RhythmKey
   variant?: SectionVariant
   tone?: SectionToneKey
+  movement?: MovementKey
   energy?: EnergyInput
   mix?: EnergyMix
   bleed?: boolean
   asset?: AssetConsumerSpec | null
+  assets?: readonly PositionedAssetSpec[] | null
   children?: ReactNode
 } & Omit<ComponentPropsWithoutRef<'section'>, 'children'>
 
@@ -99,33 +113,107 @@ const Inner = styled.div<{
   $tone: SectionToneKey
   $energy?: EnergyInput
   $mix?: EnergyMix
+  $frame: SectionFrame
 }>`
   position: relative;
   z-index: 1;
   width: 100%;
 
-  ${({ theme, $padY, $rhythm, $tone, $energy, $mix }) => {
+  ${({ theme, $padY, $rhythm, $tone, $energy, $mix, $frame }) => {
     const rhythm = theme.layout.section[$rhythm]
     const tone = theme.getSectionTone($tone, $energy, $mix)
 
-    return $padY
-      ? css`
-          padding-block: calc(${rhythm.pad} * ${tone.padScale});
+    return css`
+      ${$frame === 'screen'
+        ? css`
+            min-height: calc(100svh - var(--site-header-height, 0px));
+            display: grid;
+            align-items: center;
+          `
+        : ''}
 
-          @media (max-width: ${theme.breakpoints.md}) {
-            padding-block: calc(${rhythm.pad} * ${tone.padScale} * 0.86);
-          }
+      ${$padY
+        ? css`
+            padding-block: calc(${rhythm.pad} * ${tone.padScale});
 
-          @media (max-width: ${theme.breakpoints.sm}) {
-            padding-block: calc(${rhythm.pad} * ${tone.padScale} * 0.74);
-          }
-        `
-      : ''
+            @media (max-width: ${theme.breakpoints.md}) {
+              padding-block: calc(${rhythm.pad} * ${tone.padScale} * 0.86);
+            }
+
+            @media (max-width: ${theme.breakpoints.sm}) {
+              padding-block: calc(${rhythm.pad} * ${tone.padScale} * 0.74);
+            }
+          `
+        : ''}
+    `
+  }}
+
+  > * {
+    width: 100%;
+  }
+`
+
+const Content = styled.div<{ $content: SectionContent }>`
+  width: 100%;
+  min-width: 0;
+
+  ${({ theme, $content }) => {
+    if ($content === 'left') {
+      return css`
+        max-width: 48rem;
+        margin-right: auto;
+        margin-left: clamp(1rem, 7vw, 7rem);
+
+        @media (max-width: ${theme.breakpoints.md}) {
+          max-width: 42rem;
+          margin-left: 0;
+        }
+      `
+    }
+
+    if ($content === 'center') {
+      return css`
+        max-width: 48rem;
+        margin-inline: auto;
+
+        @media (max-width: ${theme.breakpoints.md}) {
+          max-width: 42rem;
+        }
+      `
+    }
+
+    if ($content === 'right') {
+      return css`
+        max-width: 48rem;
+        margin-left: auto;
+        margin-right: clamp(1rem, 7vw, 7rem);
+
+        @media (max-width: ${theme.breakpoints.md}) {
+          max-width: 42rem;
+          margin-right: 0;
+        }
+      `
+    }
+
+    return ''
   }}
 `
 
+const renderAssets = (
+  assets: readonly PositionedAssetSpec[] | null | undefined
+) =>
+  assets?.map((item, index) => (
+    <AnchoredAsset
+      key={`${item.name}-${index}`}
+      {...item}
+      placement="section"
+    />
+  )) ?? null
+
 export default function Section({
   container = 'default',
+  content = 'default',
+  frame = 'content',
   padY = true,
   header,
   footer,
@@ -138,6 +226,7 @@ export default function Section({
   mix,
   bleed = false,
   asset,
+  assets,
   children,
   ...rest
 }: Props) {
@@ -161,6 +250,7 @@ export default function Section({
       {...sectionAriaProps}
     >
       {asset ? <AnchoredAsset {...asset} placement="section" /> : null}
+      {renderAssets(assets)}
 
       <Inner
         $padY={padY}
@@ -168,11 +258,14 @@ export default function Section({
         $tone={tone}
         $energy={energy}
         $mix={mix}
+        $frame={frame}
       >
         <Container max={container}>
-          {header}
-          {children}
-          {footer}
+          <Content $content={content}>
+            {header}
+            {children}
+            {footer}
+          </Content>
         </Container>
       </Inner>
     </Outer>

@@ -11,6 +11,7 @@ type Props = {
   columns?: Columns
   min?: string
   gap?: number | string
+  offset?: number | string
   dense?: boolean
   switchAt?: BreakpointKey | string
   children?: ReactNode
@@ -19,23 +20,28 @@ type Props = {
 const DEFAULT_GRID_MIN = '18rem'
 const DEFAULT_GRID_GAP = 2
 
-const toGap = (theme: DefaultTheme, gap?: number | string) => {
-  if (typeof gap === 'number') return theme.spacing(gap)
-  if (typeof gap === 'string') return gap
-  return theme.spacing(DEFAULT_GRID_GAP)
+const toSpace = (
+  theme: DefaultTheme,
+  value: number | string | undefined,
+  fallback?: number
+) => {
+  if (typeof value === 'number') return theme.spacing(value)
+  if (typeof value === 'string') return value
+  if (typeof fallback === 'number') return theme.spacing(fallback)
+  return undefined
 }
 
 const GridBox = styled.div<{
   $columns?: Columns
   $min?: string
   $gap?: number | string
+  $offset?: number | string
   $dense?: boolean
   $switch?: string
 }>`
   display: grid;
-  ${({ theme, $gap }) => css`
-    gap: ${toGap(theme, $gap)};
-  `}
+  margin: ${({ theme, $offset }) => toSpace(theme, $offset) ?? 0};
+  gap: ${({ theme, $gap }) => toSpace(theme, $gap, DEFAULT_GRID_GAP)};
   grid-auto-flow: ${({ $dense }) => ($dense ? 'row dense' : 'row')};
 
   ${({ $columns, $min }) => {
@@ -69,6 +75,7 @@ export default function Grid({
   columns = 'auto',
   min,
   gap,
+  offset,
   dense = false,
   switchAt = 'md',
   children,
@@ -79,6 +86,7 @@ export default function Grid({
       $columns={columns}
       $min={min}
       $gap={gap}
+      $offset={offset}
       $dense={dense}
       $switch={switchAt}
       {...rest}

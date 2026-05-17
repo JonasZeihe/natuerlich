@@ -8,7 +8,10 @@ import {
 } from 'react'
 import styled, { css } from 'styled-components'
 import AnchoredAsset from '@/components/assets/AnchoredAsset'
-import type { AssetConsumerSpec } from '@/components/assets/registry'
+import type {
+  AssetConsumerSpec,
+  PositionedAssetSpec,
+} from '@/components/assets/registry'
 import type { MovementKey, SurfaceToneKey } from '@/design/theme'
 
 type SurfacePadding = 'none' | 'sm' | 'md' | 'lg'
@@ -23,6 +26,7 @@ type Props = {
   bordered?: boolean
   weight?: SurfaceWeight
   asset?: AssetConsumerSpec | null
+  assets?: readonly PositionedAssetSpec[] | null
   children?: ReactNode
 } & Omit<ComponentPropsWithoutRef<'div'>, 'color'>
 
@@ -94,6 +98,24 @@ const Content = styled.div`
   min-width: 0;
 `
 
+const hasBleedingAsset = (
+  asset: AssetConsumerSpec | null | undefined,
+  assets: readonly PositionedAssetSpec[] | null | undefined
+) =>
+  asset?.boundary === 'bleed' ||
+  Boolean(assets?.some((item) => item.boundary === 'bleed'))
+
+const renderAssets = (
+  assets: readonly PositionedAssetSpec[] | null | undefined
+) =>
+  assets?.map((item, index) => (
+    <AnchoredAsset
+      key={`${item.name}-${index}`}
+      {...item}
+      placement="surface"
+    />
+  )) ?? null
+
 const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
   {
     tone = 'card',
@@ -103,6 +125,7 @@ const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
     bordered = true,
     weight = 'quiet',
     asset,
+    assets,
     children,
     ...rest
   },
@@ -117,10 +140,11 @@ const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
       $padding={padding}
       $bordered={bordered}
       $weight={weight}
-      $assetBleeds={asset?.boundary === 'bleed'}
+      $assetBleeds={hasBleedingAsset(asset, assets)}
       {...rest}
     >
       {asset ? <AnchoredAsset {...asset} placement="surface" /> : null}
+      {renderAssets(assets)}
       <Content>{children}</Content>
     </Base>
   )

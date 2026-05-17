@@ -9,6 +9,7 @@ import {
   type AssetBoundary,
   type AssetFit,
   type AssetPlacement,
+  type AssetPosition,
   type AssetPresence,
   type AssetSize,
 } from './registry'
@@ -21,12 +22,22 @@ type LayerProps = {
   $size: AssetSize
   $presence: AssetPresence
   $boundary: AssetBoundary
+  $left?: string
+  $right?: string
+  $top?: string
+  $bottom?: string
+  $width?: string
+  $height?: string
+  $zIndex?: number
+  $opacity?: number
+  $mobile?: AssetPosition
 }
 
 type ImageProps = {
   $fit: AssetFit
   $mirrorX: boolean
   $mirrorY: boolean
+  $fillSpace: boolean
 }
 
 const resolvePresenceOpacity = (presence: AssetPresence) => {
@@ -130,23 +141,68 @@ const resolveSize = (placement: AssetPlacement, size: AssetSize) => {
   return 'clamp(12rem, 30vw, 28rem)'
 }
 
+const hasPosition = ({
+  $left,
+  $right,
+  $top,
+  $bottom,
+  $width,
+  $height,
+}: LayerProps) =>
+  Boolean($left || $right || $top || $bottom || $width || $height)
+
+const positionStyles = ({
+  left,
+  right,
+  top,
+  bottom,
+  width,
+  height,
+  zIndex,
+  opacity,
+}: AssetPosition) => css`
+  ${left ? `left: ${left};` : ''}
+  ${right ? `right: ${right};` : ''}
+  ${top ? `top: ${top};` : ''}
+  ${bottom ? `bottom: ${bottom};` : ''}
+  ${width ? `width: ${width};` : ''}
+  ${height ? `height: ${height};` : ''}
+  ${typeof zIndex === 'number' ? `z-index: ${zIndex};` : ''}
+  ${typeof opacity === 'number' ? `opacity: ${opacity};` : ''}
+`
+
 const Layer = styled.div<LayerProps>`
   position: absolute;
-  z-index: 0;
+  z-index: ${({ $zIndex }) => $zIndex ?? 0};
   pointer-events: none;
   user-select: none;
   overflow: hidden;
-  opacity: ${({ $presence }) => resolvePresenceOpacity($presence)};
+  opacity: ${({ $presence, $opacity }) =>
+    $opacity ?? resolvePresenceOpacity($presence)};
 
-  ${({ $anchor }) => resolveAnchor($anchor)}
+  ${({ $left }) => ($left ? `left: ${$left};` : '')}
+  ${({ $right }) => ($right ? `right: ${$right};` : '')}
+  ${({ $top }) => ($top ? `top: ${$top};` : '')}
+  ${({ $bottom }) => ($bottom ? `bottom: ${$bottom};` : '')}
 
-  ${({ $placement, $size }) =>
-    $size === 'fill'
-      ? resolveSize($placement, $size)
-      : css`
-          width: ${resolveSize($placement, $size)};
-          height: auto;
-        `}
+  ${({ $placement, $anchor, $size, $width, $height, ...props }) => {
+    if ($size === 'fill') return resolveSize($placement, $size)
+
+    if (
+      hasPosition({ $placement, $anchor, $size, $width, $height, ...props })
+    ) {
+      return css`
+        width: ${$width ?? resolveSize($placement, $size)};
+        height: ${$height ?? 'auto'};
+      `
+    }
+
+    return css`
+      ${resolveAnchor($anchor)}
+      width: ${resolveSize($placement, $size)};
+      height: auto;
+    `
+  }}
 
   ${({ $boundary }) =>
     $boundary === 'contained'
@@ -155,12 +211,25 @@ const Layer = styled.div<LayerProps>`
           max-height: 100%;
         `
       : ''}
+
+  ${({ theme, $mobile }) =>
+    $mobile
+      ? css`
+          @media (max-width: ${theme.breakpoints.md}) {
+            left: auto;
+            right: auto;
+            top: auto;
+            bottom: auto;
+            ${positionStyles($mobile)}
+          }
+        `
+      : ''}
 `
 
 const Image = styled.img<ImageProps>`
   display: block;
   width: 100%;
-  height: 100%;
+  height: ${({ $fillSpace }) => ($fillSpace ? '100%' : 'auto')};
   object-fit: ${({ $fit }) => $fit};
   transform: scaleX(${({ $mirrorX }) => ($mirrorX ? -1 : 1)})
     scaleY(${({ $mirrorY }) => ($mirrorY ? -1 : 1)});
@@ -178,6 +247,15 @@ export default function AnchoredAsset({
   mirrorX = false,
   mirrorY = false,
   priority = false,
+  left,
+  right,
+  top,
+  bottom,
+  width,
+  height,
+  zIndex,
+  opacity,
+  mobile,
 }: Props) {
   const asset = ASSET_REGISTRY[name]
 
@@ -194,6 +272,15 @@ export default function AnchoredAsset({
       $size={size}
       $presence={presence}
       $boundary={boundary}
+      $left={left}
+      $right={right}
+      $top={top}
+      $bottom={bottom}
+      $width={width}
+      $height={height}
+      $zIndex={zIndex}
+      $opacity={opacity}
+      $mobile={mobile}
     >
       <Image
         src={asset.src}
@@ -205,6 +292,7 @@ export default function AnchoredAsset({
         $fit={fit ?? asset.fit ?? 'contain'}
         $mirrorX={mirrorX}
         $mirrorY={mirrorY}
+        $fillSpace={size === 'fill' || Boolean(height)}
       />
     </Layer>
   )
