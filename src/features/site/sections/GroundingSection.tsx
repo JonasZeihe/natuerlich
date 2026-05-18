@@ -75,13 +75,16 @@ const GroundingSection = () => (
       <SectionIntro
         label="Sammeln"
         titleId="sammeln-title"
-        title="Bevor Praxis wirkt, muss klarer werden, von wo aus du überhaupt beginnst."
+        title="Bevor Praxis beginnt, lohnt sich ein kurzer Blick nach innen."
         accent="axisDensity"
         max="54rem"
       >
-        Diese Bewegung stellt die Motivationsachse in den Raum. Bin ich hier, um
-        wieder besser zu funktionieren? Oder bin ich hier, weil ich mich selbst
-        wieder spüren will?
+        Vielleicht bist du hier, weil du weniger Stress willst. Vielleicht, weil
+        du wieder in Bewegung kommen möchtest. Vielleicht auch nur, weil du
+        merkst, dass etwas so nicht weiterlaufen soll. Das alles ist ein Anfang.
+        Aber gute Praxis beginnt für mich nicht damit, sofort die richtige
+        Methode zu wählen. Sie beginnt dort, wo spürbar wird, was gerade
+        wirklich los ist.
       </SectionIntro>
 
       <StepArea>
@@ -89,15 +92,15 @@ const GroundingSection = () => (
           movement="grounding"
           items={[
             {
-              label: 'Grund',
+              label: 'Nicht sofort entscheiden',
               children:
-                'Nicht zuerst: Welche Technik passt? Sondern: Warum bin ich hier? Was sucht in mir eigentlich nach Form?',
+                'Du musst nicht direkt wissen, ob Yoga, Qigong, Taijiquan, Meditation oder Einzelarbeit richtig ist. Erst einmal geht es darum, wieder wahrzunehmen, wo du überhaupt stehst.',
             },
             {
-              label: 'Achse',
+              label: 'Den Widerstand ernst nehmen',
               tone: 'field',
               title:
-                'Wenn die Achse verrutscht, wird selbst Entspannung zur Wartungspause.',
+                'Wenn etwas in dir keine Lust hat, ist das nicht automatisch Faulheit.',
               asset: {
                 name: '008_Sammelpunkt',
                 right: '-5rem',
@@ -108,13 +111,13 @@ const GroundingSection = () => (
                 opacity: 0.22,
               },
               children:
-                'Sammlung heißt: den Punkt wiederfinden, von dem aus Praxis wirklich meine wird.',
+                'Vielleicht stimmt nur die Form noch nicht. Vielleicht ist zu viel Druck drin, zu wenig Sinn, zu wenig Spielraum. Manchmal zeigt Widerstand ziemlich genau, wo die Achse verrutscht ist.',
             },
             {
-              label: 'Zustimmung',
+              label: 'Die eigene Achse finden',
               accent: 'axisFlow',
               children:
-                'Es geht nicht darum, den inneren Widerstand niederzudrücken. Vielleicht zeigt er nur, dass Form, Maß oder Richtung noch nicht stimmen.',
+                'Praxis trägt anders, wenn sie nicht gegen dich arbeitet. Nicht aus Zwang, nicht aus Selbstoptimierung, sondern aus innerer Zustimmung.',
             },
           ]}
         />
@@ -151,13 +154,14 @@ const GroundingSection = () => (
               gutter={false}
               accent="axisFlow"
             >
-              Übergang
+              Von hier aus
             </Typography>
 
             <Typography as="p" variant="body" gutter={false}>
-              Diese Section beruhigt nicht, um passiv zu werden. Sie sammelt
-              genug innere Zustimmung, damit die nächste Bewegung wacher, klarer
-              und körperlicher einsetzen kann.
+              Manchmal ist Stress nur die Oberfläche. Darunter liegt etwas
+              Einfacheres und zugleich Tieferes: der Wunsch, wieder bei sich
+              anzukommen — körperlich, ruhig, ehrlich und ohne diesen ganzen
+              Film von höher, schneller, besser.
             </Typography>
           </Stack>
         </Surface>

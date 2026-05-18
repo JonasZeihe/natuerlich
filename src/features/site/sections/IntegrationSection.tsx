@@ -3,9 +3,8 @@
 
 import styled from 'styled-components'
 import Button from '@/components/actions/Button'
-import PathCards from '@/components/content/PathCards'
+import PathCards, { type PathCardItem } from '@/components/content/PathCards'
 import SectionIntro from '@/components/content/SectionIntro'
-import Grid from '@/components/primitives/Grid'
 import Section from '@/components/primitives/Section'
 import Stack from '@/components/primitives/Stack'
 import Surface from '@/components/primitives/Surface'
@@ -19,11 +18,111 @@ const PathwayShell = styled.div`
   margin-top: ${({ theme }) => theme.spacing(3)};
 `
 
+const Footnote = styled.div`
+  max-width: 60rem;
+`
+
+const offerItems: readonly PathCardItem[] = [
+  {
+    label: 'Für dich',
+    title: 'Wenn du selbst üben möchtest.',
+    accent: 'axisDensity',
+    children:
+      'Für Einzelpersonen, die Yoga, Qigong, Taijiquan oder einen klar geführten Einzelunterricht suchen.',
+    details: [
+      {
+        title: 'Yoga',
+        text: 'Klar geführte Praxis mit Bewegung, Atem und Ruhe. Geeignet für Einsteiger, Wiedereinsteiger und alle, die regelmäßig üben wollen.',
+        facts: [
+          { label: 'Kursblock', value: 'ab 129 €' },
+          { label: 'Einzelunterricht', value: 'ab 70 € pro Einheit' },
+        ],
+      },
+      {
+        title: 'Qigong',
+        text: 'Ruhige, konzentrierte Bewegung für Sammlung, Aufrichtung und Fluss. Geeignet für regelmäßige Praxis und einen klaren Einstieg.',
+        facts: [
+          { label: 'Kursblock', value: 'ab 129 €' },
+          { label: 'Einzelunterricht', value: 'ab 70 € pro Einheit' },
+        ],
+      },
+      {
+        title: 'Taijiquan',
+        text: 'Präzise Bewegung mit Stand, Übergängen und Formprinzipien. Für Menschen, die ruhig und gleichzeitig klar arbeiten wollen.',
+        facts: [
+          { label: 'Kursblock', value: 'ab 129 €' },
+          { label: 'Einzelunterricht', value: 'ab 70 € pro Einheit' },
+        ],
+      },
+      {
+        title: 'Einzelunterricht',
+        text: 'Wenn du ein persönliches Format suchst, das genau auf deinen Stand, dein Thema oder dein Ziel abgestimmt ist.',
+        facts: [
+          { label: 'Einzeltermin', value: 'ab 70 € pro Einheit' },
+          { label: 'Begleitung', value: 'ab 250 € als Paket' },
+        ],
+      },
+    ],
+  },
+  {
+    label: 'Für Gruppen',
+    title: 'Wenn ihr als Gruppe etwas buchen möchtet.',
+    tone: 'note',
+    children:
+      'Für private Gruppen, kleine Teams oder bestehende Kreise mit eigenen Räumlichkeiten oder einem passenden Ort vor Ort.',
+    details: [
+      {
+        title: 'Gruppenkurs vor Ort',
+        text: 'Yoga, Qigong oder Taijiquan für kleine Gruppen in vorhandenen Räumen, zuhause oder an einem passenden Ort.',
+        facts: [
+          { label: 'Gruppentermin', value: 'ab 95 € pro Einheit' },
+          { label: 'Kursblock', value: 'auf Anfrage' },
+        ],
+      },
+      {
+        title: 'Workshop',
+        text: 'Ein kompaktes Format für Gruppen, die einen klaren thematischen Rahmen möchten: Bewegung, Atem, Präsenz und Spannungsregulation.',
+        facts: [{ label: 'Workshop', value: 'ab 240 €' }],
+      },
+      {
+        title: 'Outdoor-Format',
+        text: 'Einfach, direkt und gut geeignet für Gruppen, die draußen üben oder einen offenen Zugang wählen möchten.',
+        facts: [{ label: 'Format', value: 'auf Anfrage' }],
+      },
+    ],
+  },
+  {
+    label: 'Für Unternehmen',
+    title: 'Wenn ein Team oder eine Einrichtung ein gutes Format braucht.',
+    tone: 'field',
+    accent: 'axisFlow',
+    children:
+      'Für Unternehmen, Einrichtungen und Teams, die ein professionelles Angebot für Bewegung, Regulation und Präsenz suchen.',
+    details: [
+      {
+        title: 'Firmenmodul',
+        text: 'Ein kompaktes Format für Fokus, Regulation und alltagstaugliche Praxis. Klar, direkt und ohne unnötigen Überbau.',
+        facts: [{ label: 'Format', value: 'ab 160 €' }],
+      },
+      {
+        title: 'Team-Workshop',
+        text: 'Ein verdichtetes Format für Bewegung, Atem, Präsenz und Spannungsregulation in einem professionellen Rahmen.',
+        facts: [{ label: 'Workshop', value: 'ab 240 €' }],
+      },
+      {
+        title: 'Gesundheitstag',
+        text: 'Ein klarer Rahmen für halbe oder ganze Tage mit Praxisblöcken, Workshops und einem stimmigen Ablauf.',
+        facts: [{ label: 'Tagesformat', value: 'ab 550 €' }],
+      },
+    ],
+  },
+]
+
 const IntegrationSection = ({ onGoToNextStep }: Props) => (
   <Section
     id="integrieren"
     titleId="integrieren-title"
-    ariaLabel="Integrieren"
+    ariaLabel="Angebote"
     container="wide"
     content="default"
     variant="body"
@@ -39,12 +138,10 @@ const IntegrationSection = ({ onGoToNextStep }: Props) => (
         width: 'clamp(22rem, 38vw, 48rem)',
         presence: 'subtle',
         boundary: 'bleed',
-        opacity: 0.22,
         mobile: {
           right: '-14rem',
           top: '3rem',
           width: '34rem',
-          opacity: 0.14,
         },
       },
       {
@@ -54,12 +151,10 @@ const IntegrationSection = ({ onGoToNextStep }: Props) => (
         width: 'clamp(18rem, 31vw, 38rem)',
         presence: 'subtle',
         boundary: 'bleed',
-        opacity: 0.2,
         mobile: {
           left: '-12rem',
           bottom: '-7rem',
           width: '30rem',
-          opacity: 0.12,
         },
       },
     ]}
@@ -73,189 +168,25 @@ const IntegrationSection = ({ onGoToNextStep }: Props) => (
       weight="quiet"
     >
       <SectionIntro
-        label="Integrieren"
+        label="Angebote"
         titleId="integrieren-title"
-        title="Jetzt wird aus Erfahrung ein möglicher Einstieg."
+        title="Einfach, klar und direkt buchbar."
         accent="axisDensity"
-        max="60rem"
+        max="56rem"
       >
-        Hier darf die Angebotslogik erscheinen, aber nicht als Katalog. Der
-        Leser soll sich nicht durch Produkte wühlen, sondern erkennen: Welche
-        Form passt zu meiner Lage, meinem Körper, meiner Gruppe, meinem Alltag?
+        Ob für dich selbst, für eine Gruppe oder für ein Unternehmen: Hier
+        findest du die wichtigsten Formate auf einen Blick.
       </SectionIntro>
 
       <PathwayShell>
-        <PathCards
-          movement="integration"
-          mobileAriaLabel="Einstiegswege auswählen"
-          items={[
-            {
-              label: 'Einstieg',
-              title: 'Wenn du erst einmal herausfinden willst, was passt.',
-              accent: 'axisOpening',
-              asset: {
-                name: '016_Schwelle',
-                right: '-4rem',
-                bottom: '-5rem',
-                width: '11rem',
-                presence: 'subtle',
-                boundary: 'bleed',
-                opacity: 0.18,
-              },
-              children:
-                'Auftaktkurs, Baseline, Einführungsworkshop oder Grundpraxis. Nicht „kleiner Kurs“, sondern sinnvolle Schwelle.',
-            },
-            {
-              label: 'Regelmäßigkeit',
-              title: 'Wenn Wiederholung und Rhythmus tragen sollen.',
-              accent: 'axisDensity',
-              asset: {
-                name: '019_Trägerform',
-                right: '-5rem',
-                bottom: '-5rem',
-                width: '12rem',
-                presence: 'subtle',
-                boundary: 'bleed',
-                opacity: 0.16,
-              },
-              children:
-                'Kurs, Klasse, Aufbau, Vertiefung. Hier wird später sichtbar, wie Praxis wiederkehrend und lebendig werden kann.',
-            },
-            {
-              label: 'Individuell',
-              title: 'Wenn die Form genauer zu dir passen muss.',
-              tone: 'field',
-              accent: 'axisFlow',
-              asset: {
-                name: '028_Dialogform',
-                right: '-5rem',
-                top: '-5rem',
-                width: '12rem',
-                presence: 'subtle',
-                boundary: 'bleed',
-                opacity: 0.18,
-              },
-              children:
-                'Einzelunterricht und Praxisbegleitung. Nicht Premium-Gehabe, sondern präziser Rahmen, wenn Gruppe oder Standard nicht reichen.',
-            },
-            {
-              label: 'Gruppen und Firmen',
-              title: 'Wenn ein Raum, Team oder Alltag einen Reset braucht.',
-              tone: 'note',
-              accent: 'axisOpening',
-              asset: {
-                name: '026_Neuöffnung',
-                right: '-5rem',
-                bottom: '-5rem',
-                width: '12rem',
-                presence: 'subtle',
-                boundary: 'bleed',
-                opacity: 0.18,
-              },
-              children:
-                'Bewegte Pause, Workshop, Firmenmodul, private Gruppe. Klar professionell, aber ohne Corporate-Gesundheitsblabla.',
-            },
-          ]}
-        />
-
-        <Grid columns={2} gap={2} offset={2} switchAt="md">
-          <Surface
-            tone="note"
+        <Stack>
+          <PathCards
             movement="integration"
-            radius="large"
-            bordered
-            padding="md"
-          >
-            <Stack gap={4}>
-              <Typography
-                as="p"
-                variant="caption"
-                gutter={false}
-                accent="axisDensity"
-              >
-                Orientierung
-              </Typography>
-
-              <Typography
-                as="h3"
-                variant="h3"
-                gutter={false}
-                accent="axisDensity"
-              >
-                Du musst nicht wissen, welches Format richtig ist.
-              </Typography>
-
-              <Typography as="p" variant="body" gutter={false} tone="soft">
-                Später kurze Antwortlogik: Einstiegslage, Erfahrung, Ziel,
-                Gruppe, Ort, Preisrahmen. Hier entsteht die Entscheidungshilfe.
-              </Typography>
-            </Stack>
-          </Surface>
-
-          <Surface
-            tone="note"
-            movement="integration"
-            radius="large"
-            bordered
-            padding="md"
-          >
-            <Stack gap={4}>
-              <Typography
-                as="p"
-                variant="caption"
-                gutter={false}
-                accent="axisDensity"
-              >
-                Transparenz
-              </Typography>
-
-              <Typography
-                as="h3"
-                variant="h3"
-                gutter={false}
-                accent="axisDensity"
-              >
-                Preise und Rahmen gehören zur Glaubwürdigkeit.
-              </Typography>
-
-              <Typography as="p" variant="body" gutter={false} tone="soft">
-                Später muss sichtbar werden, was ungefähr auf Menschen zukommt.
-                Nicht verstecken, nicht überfrachten, nicht Tabellenästhetik als
-                erstes Erlebnis.
-              </Typography>
-            </Stack>
-          </Surface>
-        </Grid>
-
-        <Surface
-          tone="field"
-          movement="integration"
-          radius="large"
-          bordered
-          padding="md"
-          weight="steady"
-        >
-          <Stack gap={4}>
-            <Typography
-              as="p"
-              variant="caption"
-              gutter={false}
-              accent="axisFlow"
-            >
-              Übergang
-            </Typography>
-
-            <Typography as="p" variant="body" gutter={false} measure="prose">
-              Diese Section muss später den Sprung schaffen: genug Klarheit, um
-              nicht im Nebel zu bleiben; genug Ruhe, um nicht wie ein Verkauf zu
-              wirken.
-            </Typography>
-
-            <Button variant="ghost" onClick={onGoToNextStep}>
-              Nächsten Schritt klären
-            </Button>
-          </Stack>
-        </Surface>
+            mobileAriaLabel="Angebotswege"
+            columns={3}
+            items={offerItems}
+          />
+        </Stack>
       </PathwayShell>
     </Surface>
   </Section>

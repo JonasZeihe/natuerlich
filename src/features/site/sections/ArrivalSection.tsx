@@ -84,7 +84,6 @@ const ArrivalSection = ({ onGoToActivation, onGoToIntegration }: Props) => (
       padding="lg"
       weight="quiet"
     >
-      {/* Experience contract: first contact, not a hero pitch. The visitor should feel room, warmth, and direction before products appear. */}
       <Stack gap={5}>
         <Typography
           as="h1"
@@ -107,14 +106,12 @@ const ArrivalSection = ({ onGoToActivation, onGoToIntegration }: Props) => (
           cadence="open"
           measure="prose"
         >
-          Mid-Fidelity: Jonas wird hier als Mensch und Lehrer spürbar, bevor
-          Methoden, Preise oder Lebenslauf auftauchen. Die erste Begegnung soll
-          offen sein, aber nicht beliebig: willkommen, ruhig, klar, mit
-          Richtung.
+          Du musst noch nicht wissen, ob Yoga, Qigong, Taijiquan, Meditation
+          oder Einzelarbeit zu dir passt. Komm erst einmal an. Atme. Spür, wo du
+          gerade stehst. Von dort aus wird klarer, was dich wirklich trägt.
         </Typography>
       </Stack>
 
-      {/* Component placeholder: later this becomes a mobile-first entry control, not a generic button row. */}
       <Grid gap={3} offset={3}>
         <Button variant="ghost" onClick={onGoToActivation}>
           In Bewegung kommen
@@ -127,15 +124,15 @@ const ArrivalSection = ({ onGoToActivation, onGoToIntegration }: Props) => (
       <ArrivalNote>
         <Stack gap={5}>
           <Typography as="p" variant="body" gutter={false} accent="axisFlow">
-            Mid-Fidelity: Der Einstieg muss entlasten. Man muss noch nicht
-            wissen, ob Yoga, Qigong, Taijiquan, Meditation oder Einzelarbeit
-            passt. Der erste Schritt ist Orientierung.
+            Hier geht es nicht darum, dich in eine Methode zu drücken. Es geht
+            darum, eine Praxis zu finden, die aus dir heraus Sinn ergibt: ruhig,
+            klar, körperlich und ehrlich genug, um im Alltag zu tragen.
           </Typography>
 
           <Typography as="p" variant="body" gutter={false} tone="soft">
-            Designvertrag: Einatmen öffnet, Ausatmen lässt sinken. Desktop darf
-            weit sein. Mobile darf sich wie ein ruhiger App-Startscreen
-            anfühlen.
+            Manchmal beginnt Veränderung nicht mit mehr Anstrengung, sondern mit
+            einem Moment, in dem du merkst: So wie bisher muss es nicht
+            weiterlaufen.
           </Typography>
         </Stack>
       </ArrivalNote>

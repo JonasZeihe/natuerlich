@@ -72,22 +72,23 @@ const ActivationSection = ({ onGoToPracticeField }: Props) => (
       <SectionIntro
         label="Aktivieren"
         titleId="aktivieren-title"
-        title="Aus Sammlung wird Wachheit. Der Körper wird nicht optimiert, sondern wieder ansprechbar."
+        title="Wenn etwas stimmig wird, kommt Bewegung fast von selbst."
         accent="axisOpening"
         max="56rem"
       >
-        Hier beginnt Praxis als Beziehung. Atem, Körper und Aufmerksamkeit
-        greifen ineinander. Nicht als Trick, nicht als Entspannungsritual,
-        sondern als erster lebendiger Kontakt zum eigenen System.
+        Nach dem Ankommen und Sammeln muss nichts erzwungen werden. Manchmal
+        reicht ein kleiner Impuls: ein Atemzug, der weiter wird, ein Körper, der
+        sich aufrichtet, eine Bewegung, die wieder Lust macht. Praxis beginnt
+        dort, wo etwas in dir antwortet.
       </SectionIntro>
 
       <SplitArea>
         <SplitPanel
           movement="activation"
           primary={{
-            label: 'Atem und Wahrnehmung',
+            label: 'Freude als Anfang',
             title:
-              'Nicht runterfahren, um wieder zu funktionieren. Sondern spüren, wo das System gerade steht.',
+              'Nicht erst leisten, damit es sich irgendwann gut anfühlen darf.',
             accent: 'axisFlow',
             tone: 'field',
             asset: {
@@ -100,11 +101,12 @@ const ActivationSection = ({ onGoToPracticeField }: Props) => (
               opacity: 0.25,
             },
             children:
-              'Diese Fläche bereitet später Meditation, Atemarbeit, Achtsamkeit und Entspannung vor. Noch nicht als Angebotsliste, sondern als aktivierende Grundlage.',
+              'Freude ist nicht die Belohnung am Ende der Praxis. Sie kann der Grund sein, aus dem Bewegung überhaupt entsteht: neugierig, wach, körperlich, ohne diesen ganzen Film von höher, schneller, besser.',
           }}
           secondary={{
-            label: 'Erste Tatkraft',
-            title: 'Die Form darf sich verändern, bis sie wieder passt.',
+            label: 'Eigenes Maß',
+            title:
+              'Eine Übung darf sich verändern, bis sie wirklich zu dir passt.',
             accent: 'axisOpening',
             tone: 'threshold',
             asset: {
@@ -117,10 +119,10 @@ const ActivationSection = ({ onGoToPracticeField }: Props) => (
               opacity: 0.3,
             },
             children:
-              'Hier entsteht später der Übergang vom Verstehen ins Tun. Nicht Disziplin als Selbstzwang, sondern der Moment, in dem innere Zustimmung eine erste Bewegung möglich macht.',
+              'Wenn etwas zu viel ist, wird es reduziert. Wenn etwas zu wenig ist, darf es tiefer werden. Nicht, um beliebig zu werden, sondern damit die Praxis aus innerer Zustimmung geschieht und nicht gegen dich arbeitet.',
             action: (
               <Button variant="ghost" onClick={onGoToPracticeField}>
-                Zur eigentlichen Arbeit
+                Zur Praxis finden
               </Button>
             ),
           }}

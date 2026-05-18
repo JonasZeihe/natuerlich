@@ -26,12 +26,12 @@ const NextStepSection = () => (
         width: 'clamp(20rem, 33vw, 40rem)',
         presence: 'subtle',
         boundary: 'bleed',
-        opacity: 0.24,
+        opacity: 0.2,
         mobile: {
           right: '-13rem',
           top: '2rem',
           width: '31rem',
-          opacity: 0.16,
+          opacity: 0.12,
         },
       },
       {
@@ -41,12 +41,12 @@ const NextStepSection = () => (
         width: 'clamp(18rem, 30vw, 36rem)',
         presence: 'subtle',
         boundary: 'bleed',
-        opacity: 0.18,
+        opacity: 0.14,
         mobile: {
           left: '-12rem',
           bottom: '-7rem',
           width: '29rem',
-          opacity: 0.12,
+          opacity: 0.08,
         },
       },
     ]}
@@ -62,65 +62,33 @@ const NextStepSection = () => (
       <SectionIntro
         label="Anschluss"
         titleId="anschluss-title"
-        title="Du musst noch nicht alles wissen. Aber der nächste Schritt darf klar sein."
+        title="Wenn du wissen möchtest, ob das passt, schreib mir."
         accent="axisFlow"
         max="58rem"
       >
-        Das Ende der Seite ist kein CTA-Gebrüll. Es ist ein sauberer Ausgang.
-        Wer Kontakt aufnehmen will, soll wissen, wie. Wer noch unsicher ist,
-        soll merken: Genau damit darf man kommen.
+        Du musst noch nicht genau wissen, welches Format richtig ist. Ein paar
+        Sätze reichen: wo du gerade stehst, was dich interessiert und ob es um
+        Kurs, Einzelarbeit, eine Gruppe, ein Firmenformat oder erstmal
+        Orientierung geht.
       </SectionIntro>
 
       <ContactPanel
         movement="nextStep"
-        items={[
-          {
-            label: 'Kontaktweg',
-            title: 'Schreib kurz, wer du bist und was du suchst.',
-            accent: 'axisDensity',
-            asset: {
-              name: '027_Flusskörper',
-              right: '-5rem',
-              bottom: '-6rem',
-              width: 'clamp(12rem, 23vw, 18rem)',
-              presence: 'subtle',
-              boundary: 'bleed',
-              opacity: 0.2,
-            },
-            children:
-              'Später hier E-Mail, Telefon, Kontaktzeiten oder Formular. Konkret genug, dass kein Rätsel bleibt. Ruhig genug, dass es nicht nach Formularmaschine wirkt.',
-          },
-          {
-            label: 'Erster Schritt',
-            title:
-              'Wenn die passende Form noch nicht klar ist, ist das kein Problem.',
-            tone: 'note',
-            accent: 'axisFlow',
-            asset: {
-              name: '030_Schutzfeld',
-              right: '-6rem',
-              top: '-6rem',
-              width: 'clamp(12rem, 24vw, 19rem)',
-              presence: 'subtle',
-              boundary: 'bleed',
-              opacity: 0.2,
-            },
-            children:
-              'Hier wird später entlastet, ohne beliebig zu werden. Man darf mit Unklarheit kommen — aber am Ende soll daraus ein konkreter Rahmen entstehen.',
-          },
-        ]}
-        footerLabel="Was dann geschieht"
-        footerAccent="axisDensity"
-        footerAsset={{
-          name: '024_Feine_Restenergie',
-          right: '-6rem',
-          bottom: '-6rem',
-          width: 'clamp(11rem, 22vw, 18rem)',
-          presence: 'subtle',
-          boundary: 'bleed',
-          opacity: 0.2,
+        mail={{
+          local: 'jonaszeihe',
+          domain: 'gmail.com',
         }}
-        footer="Hier später kurz und würdig erklären, was nach einer Anfrage passiert: einordnen, passenden Rahmen finden, transparent bleiben. Kein Druck. Keine künstliche Dringlichkeit."
+        subject="Anfrage zur Praxis"
+        primaryLabel="E-Mail schreiben"
+        copyLabel="Mailadresse kopieren"
+        copiedLabel="Adresse kopiert"
+        accent="axisFlow"
+        prompt={{
+          label: 'Kontakt',
+          title: 'Schreib mir direkt.',
+          children:
+            'Schreib kurz, wer du bist, was dich hierher geführt hat und welche Form von Praxis dich interessiert. Unklarheit ist kein Problem: Wenn Kurs, Klasse, Einzelarbeit, Gruppe oder Firmenformat noch nicht klar sind, ordnen wir es gemeinsam.',
+        }}
       />
     </Surface>
   </Section>
