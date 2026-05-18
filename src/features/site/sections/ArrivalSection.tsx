@@ -3,11 +3,11 @@
 
 import styled from 'styled-components'
 import Button from '@/components/actions/Button'
+import Grid from '@/components/primitives/Grid'
 import Section from '@/components/primitives/Section'
 import Stack from '@/components/primitives/Stack'
 import Surface from '@/components/primitives/Surface'
 import Typography from '@/design/typography'
-import Grid from '@/components/primitives/Grid'
 
 type Props = {
   onGoToActivation: () => void
@@ -59,6 +59,21 @@ const ArrivalSection = ({ onGoToActivation, onGoToIntegration }: Props) => (
           width: 'clamp(18rem, 72vw, 28rem)',
         },
       },
+      {
+        name: '029_Präsenzfeld',
+        right: 'clamp(-10rem, -8vw, -4rem)',
+        top: 'clamp(5rem, 12vw, 12rem)',
+        width: 'clamp(18rem, 28vw, 34rem)',
+        presence: 'subtle',
+        boundary: 'bleed',
+        opacity: 0.22,
+        mobile: {
+          right: '-10rem',
+          top: '35%',
+          width: '26rem',
+          opacity: 0.14,
+        },
+      },
     ]}
   >
     <Surface
@@ -79,8 +94,8 @@ const ArrivalSection = ({ onGoToActivation, onGoToIntegration }: Props) => (
           gutter={false}
           tone="strong"
         >
-          Meta-Placeholder: Auftakt der Seite. Erst landen, dann Orientierung
-          finden: offen, warm, ruhig und ohne Verkaufsdruck.
+          Praxis beginnt nicht bei der Technik. Sie beginnt bei der Frage, warum
+          du überhaupt da bist.
         </Typography>
 
         <Typography
@@ -91,32 +106,33 @@ const ArrivalSection = ({ onGoToActivation, onGoToIntegration }: Props) => (
           cadence="open"
           measure="prose"
         >
-          Meta-Placeholder: Hier später die erste echte Setzung. Jonas wird als
-          Lehrer spürbar, bevor Methode, Angebot oder Biografie nach vorn
-          treten. Willkommen, aber mit Richtung.
+          Du musst noch nicht wissen, ob Yoga, Qigong, Taijiquan, Meditation
+          oder Einzelarbeit zu dir passt. Komm erst einmal an. Atme. Spür, wo du
+          gerade stehst. Von dort aus wird klarer, was dich wirklich trägt.
         </Typography>
       </Stack>
 
       <Grid gap={3} offset={3}>
         <Button variant="ghost" onClick={onGoToActivation}>
-          Placeholder: Aktivierung
+          In Bewegung kommen
         </Button>
         <Button variant="ghost" onClick={onGoToIntegration}>
-          Placeholder: Rahmen
+          Passenden Rahmen finden
         </Button>
       </Grid>
 
       <ArrivalNote>
         <Stack gap={5}>
           <Typography as="p" variant="body" gutter={false} accent="axisFlow">
-            Meta-Placeholder: Die Note entlastet den Einstieg. Man muss noch
-            nicht wissen, welches Format passt. Der erste Schritt ist
-            Orientierung.
+            Hier geht es nicht darum, dich in eine Methode zu drücken. Es geht
+            darum, eine Praxis zu finden, die aus dir heraus Sinn ergibt: ruhig,
+            klar, körperlich und ehrlich genug, um im Alltag zu tragen.
           </Typography>
 
           <Typography as="p" variant="body" gutter={false} tone="soft">
-            Meta-Placeholder: Einatmen öffnet, Ausatmen lässt sinken. Die
-            nächste Bewegung darf aus dieser Ruhe entstehen.
+            Manchmal beginnt Veränderung nicht mit mehr Anstrengung, sondern mit
+            einem Moment, in dem du merkst: So wie bisher muss es nicht
+            weiterlaufen.
           </Typography>
         </Stack>
       </ArrivalNote>

@@ -1,186 +1,96 @@
 // src/features/site/sections/NextStepSection.tsx
 'use client'
 
-import styled from 'styled-components'
+import ContactPanel from '@/components/content/ContactPanel'
+import SectionIntro from '@/components/content/SectionIntro'
 import Section from '@/components/primitives/Section'
-import Stack from '@/components/primitives/Stack'
 import Surface from '@/components/primitives/Surface'
-import Typography from '@/design/typography'
-
-const SectionStack = styled(Stack)`
-  gap: ${({ theme }) => theme.spacing(1.2)};
-`
-
-const DetailGrid = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(1.05)};
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: ${({ theme }) => theme.spacing(1.15)};
-    align-items: stretch;
-  }
-`
-
-const IntroSurface = styled(Surface)`
-  max-width: 58rem;
-`
 
 const NextStepSection = () => (
   <Section
     id="anschluss"
     titleId="anschluss-title"
     ariaLabel="Anschluss"
-    container="default"
+    container="wide"
+    content="default"
     variant="outro"
     rhythm="compact"
     tone="arrival"
+    movement="nextStep"
     energy="flow"
+    assets={[
+      {
+        name: '021_Ruhige_Wärme',
+        right: 'clamp(-8rem, -5vw, -2rem)',
+        top: 'clamp(1rem, 5vw, 6rem)',
+        width: 'clamp(20rem, 33vw, 40rem)',
+        presence: 'subtle',
+        boundary: 'bleed',
+        opacity: 0.2,
+        mobile: {
+          right: '-13rem',
+          top: '2rem',
+          width: '31rem',
+          opacity: 0.12,
+        },
+      },
+      {
+        name: '030_Schutzfeld',
+        left: 'clamp(-9rem, -6vw, -3rem)',
+        bottom: 'clamp(-9rem, -7vw, -3rem)',
+        width: 'clamp(18rem, 30vw, 36rem)',
+        presence: 'subtle',
+        boundary: 'bleed',
+        opacity: 0.14,
+        mobile: {
+          left: '-12rem',
+          bottom: '-7rem',
+          width: '29rem',
+          opacity: 0.08,
+        },
+      },
+    ]}
   >
-    <SectionStack>
-      <IntroSurface
-        tone="field"
-        movement="nextStep"
-        radius="large"
-        bordered
-        padding="lg"
-        weight="steady"
+    <Surface
+      tone="bare"
+      movement="nextStep"
+      radius="none"
+      bordered={false}
+      padding="lg"
+      weight="quiet"
+    >
+      <SectionIntro
+        label="Anschluss"
+        titleId="anschluss-title"
+        title="Wenn du wissen möchtest, ob das passt, schreib mir."
+        accent="axisFlow"
+        max="58rem"
       >
-        <Stack gap={0.82}>
-          <Typography as="p" variant="caption" gutter={false} accent="axisFlow">
-            Anschluss
-          </Typography>
+        Du musst noch nicht genau wissen, welches Format richtig ist. Ein paar
+        Sätze reichen: wo du gerade stehst, was dich interessiert und ob es um
+        Kurs, Einzelarbeit, eine Gruppe, ein Firmenformat oder erstmal
+        Orientierung geht.
+      </SectionIntro>
 
-          <Typography
-            as="h2"
-            variant="h2"
-            gutter={false}
-            accent="axisFlow"
-            id="anschluss-title"
-          >
-            Meta-Placeholder: Diese Bewegung öffnet den realen nächsten Schritt,
-            ohne die vorherige Ruhe wieder zu verlieren.
-          </Typography>
-
-          <Typography as="p" variant="body" gutter={false}>
-            Meta-Placeholder: Nach allem davor soll ein Mensch nicht weiter
-            suchen müssen, sondern verstehen, wie ein erster passender Schritt
-            konkret aussehen kann.
-          </Typography>
-
-          <Typography as="p" variant="body" gutter={false} tone="soft">
-            Meta-Placeholder: Kein Verkaufsdruck. Keine künstliche
-            Dringlichkeit. Keine Schlussromantik. Nur klare Anschlussfähigkeit.
-          </Typography>
-        </Stack>
-      </IntroSurface>
-
-      <DetailGrid>
-        <Surface
-          tone="card"
-          movement="nextStep"
-          radius="large"
-          bordered
-          padding="md"
-        >
-          <Stack gap={0.78}>
-            <Typography
-              as="p"
-              variant="caption"
-              gutter={false}
-              accent="axisDensity"
-            >
-              Kontaktweg
-            </Typography>
-
-            <Typography
-              as="h3"
-              variant="h3"
-              gutter={false}
-              accent="axisDensity"
-            >
-              Meta-Placeholder: Hier später der konkrete Weg der
-              Kontaktaufnahme.
-            </Typography>
-
-            <Typography as="p" variant="body" gutter={false}>
-              Meta-Placeholder: Später hier klar benennen, wie Jonas erreichbar
-              ist und welcher Kontaktweg für einen ersten Schritt gedacht ist.
-            </Typography>
-
-            <Typography as="p" variant="body" gutter={false} tone="soft">
-              Meta-Placeholder: Konkret genug, dass kein Rätsel bleibt. Ruhig
-              genug, dass keine Formularästhetik entsteht.
-            </Typography>
-          </Stack>
-        </Surface>
-
-        <Surface
-          tone="note"
-          movement="nextStep"
-          radius="large"
-          bordered
-          padding="md"
-        >
-          <Stack gap={0.78}>
-            <Typography
-              as="p"
-              variant="caption"
-              gutter={false}
-              accent="axisFlow"
-            >
-              Erster Schritt
-            </Typography>
-
-            <Typography as="h3" variant="h3" gutter={false} accent="axisFlow">
-              Meta-Placeholder: Hier später Orientierung für Menschen, die noch
-              nicht genau wissen, welches Format passt.
-            </Typography>
-
-            <Typography as="p" variant="body" gutter={false}>
-              Meta-Placeholder: Man kann sich auch dann melden, wenn die
-              passende Form noch nicht ganz klar ist und erst gemeinsam
-              eingeordnet werden muss.
-            </Typography>
-
-            <Typography as="p" variant="body" gutter={false} tone="soft">
-              Meta-Placeholder: Diese Passage entlastet. Sie nimmt Unsicherheit
-              ernst, ohne alles weich oder beliebig zu machen.
-            </Typography>
-          </Stack>
-        </Surface>
-      </DetailGrid>
-
-      <Surface
-        tone="card"
+      <ContactPanel
         movement="nextStep"
-        radius="large"
-        bordered
-        padding="md"
-        weight="steady"
-      >
-        <Stack gap={0.75}>
-          <Typography
-            as="p"
-            variant="caption"
-            gutter={false}
-            accent="axisDensity"
-          >
-            Was dann geschieht
-          </Typography>
-
-          <Typography as="p" variant="body" gutter={false}>
-            Meta-Placeholder: Hier später kurz und ruhig beschreiben, wie es
-            nach einer Nachricht oder Anfrage weitergeht.
-          </Typography>
-
-          <Typography as="p" variant="body" gutter={false} tone="soft">
-            Meta-Placeholder: Kein Bild-Placeholder nötig. Diese Schlussfläche
-            trägt aus Klarheit, Ruhe und Würde.
-          </Typography>
-        </Stack>
-      </Surface>
-    </SectionStack>
+        mail={{
+          local: 'jonaszeihe',
+          domain: 'gmail.com',
+        }}
+        subject="Anfrage zur Praxis"
+        primaryLabel="E-Mail schreiben"
+        copyLabel="Mailadresse kopieren"
+        copiedLabel="Adresse kopiert"
+        accent="axisFlow"
+        prompt={{
+          label: 'Kontakt',
+          title: 'Schreib mir direkt.',
+          children:
+            'Schreib kurz, wer du bist, was dich hierher geführt hat und welche Form von Praxis dich interessiert. Unklarheit ist kein Problem: Wenn Kurs, Klasse, Einzelarbeit, Gruppe oder Firmenformat noch nicht klar sind, ordnen wir es gemeinsam.',
+        }}
+      />
+    </Surface>
   </Section>
 )
 

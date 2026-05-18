@@ -3,7 +3,8 @@
 
 import styled from 'styled-components'
 import Button from '@/components/actions/Button'
-import Card from '@/components/primitives/Card'
+import PathCards, { type PathCardItem } from '@/components/content/PathCards'
+import SectionIntro from '@/components/content/SectionIntro'
 import Section from '@/components/primitives/Section'
 import Stack from '@/components/primitives/Stack'
 import Surface from '@/components/primitives/Surface'
@@ -13,325 +14,181 @@ type Props = {
   onGoToNextStep: () => void
 }
 
-const SectionStack = styled(Stack)`
-  gap: ${({ theme }) => theme.spacing(1.35)};
+const PathwayShell = styled.div`
+  margin-top: ${({ theme }) => theme.spacing(3)};
 `
 
-const GroupGrid = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(1.05)};
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: ${({ theme }) => theme.spacing(1.2)};
-  }
+const Footnote = styled.div`
+  max-width: 60rem;
 `
 
-const FaqGrid = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(0.95)};
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: ${({ theme }) => theme.spacing(1.05)};
-  }
-`
+const offerItems: readonly PathCardItem[] = [
+  {
+    label: 'Für dich',
+    title: 'Wenn du selbst üben möchtest.',
+    accent: 'axisDensity',
+    children:
+      'Für Einzelpersonen, die Yoga, Qigong, Taijiquan oder einen klar geführten Einzelunterricht suchen.',
+    details: [
+      {
+        title: 'Yoga',
+        text: 'Klar geführte Praxis mit Bewegung, Atem und Ruhe. Geeignet für Einsteiger, Wiedereinsteiger und alle, die regelmäßig üben wollen.',
+        facts: [
+          { label: 'Kursblock', value: 'ab 129 €' },
+          { label: 'Einzelunterricht', value: 'ab 70 € pro Einheit' },
+        ],
+      },
+      {
+        title: 'Qigong',
+        text: 'Ruhige, konzentrierte Bewegung für Sammlung, Aufrichtung und Fluss. Geeignet für regelmäßige Praxis und einen klaren Einstieg.',
+        facts: [
+          { label: 'Kursblock', value: 'ab 129 €' },
+          { label: 'Einzelunterricht', value: 'ab 70 € pro Einheit' },
+        ],
+      },
+      {
+        title: 'Taijiquan',
+        text: 'Präzise Bewegung mit Stand, Übergängen und Formprinzipien. Für Menschen, die ruhig und gleichzeitig klar arbeiten wollen.',
+        facts: [
+          { label: 'Kursblock', value: 'ab 129 €' },
+          { label: 'Einzelunterricht', value: 'ab 70 € pro Einheit' },
+        ],
+      },
+      {
+        title: 'Einzelunterricht',
+        text: 'Wenn du ein persönliches Format suchst, das genau auf deinen Stand, dein Thema oder dein Ziel abgestimmt ist.',
+        facts: [
+          { label: 'Einzeltermin', value: 'ab 70 € pro Einheit' },
+          { label: 'Begleitung', value: 'ab 250 € als Paket' },
+        ],
+      },
+    ],
+  },
+  {
+    label: 'Für Gruppen',
+    title: 'Wenn ihr als Gruppe etwas buchen möchtet.',
+    tone: 'note',
+    children:
+      'Für private Gruppen, kleine Teams oder bestehende Kreise mit eigenen Räumlichkeiten oder einem passenden Ort vor Ort.',
+    details: [
+      {
+        title: 'Gruppenkurs vor Ort',
+        text: 'Yoga, Qigong oder Taijiquan für kleine Gruppen in vorhandenen Räumen, zuhause oder an einem passenden Ort.',
+        facts: [
+          { label: 'Gruppentermin', value: 'ab 95 € pro Einheit' },
+          { label: 'Kursblock', value: 'auf Anfrage' },
+        ],
+      },
+      {
+        title: 'Workshop',
+        text: 'Ein kompaktes Format für Gruppen, die einen klaren thematischen Rahmen möchten: Bewegung, Atem, Präsenz und Spannungsregulation.',
+        facts: [{ label: 'Workshop', value: 'ab 240 €' }],
+      },
+      {
+        title: 'Outdoor-Format',
+        text: 'Einfach, direkt und gut geeignet für Gruppen, die draußen üben oder einen offenen Zugang wählen möchten.',
+        facts: [{ label: 'Format', value: 'auf Anfrage' }],
+      },
+    ],
+  },
+  {
+    label: 'Für Unternehmen',
+    title: 'Wenn ein Team oder eine Einrichtung ein gutes Format braucht.',
+    tone: 'field',
+    accent: 'axisFlow',
+    children:
+      'Für Unternehmen, Einrichtungen und Teams, die ein professionelles Angebot für Bewegung, Regulation und Präsenz suchen.',
+    details: [
+      {
+        title: 'Firmenmodul',
+        text: 'Ein kompaktes Format für Fokus, Regulation und alltagstaugliche Praxis. Klar, direkt und ohne unnötigen Überbau.',
+        facts: [{ label: 'Format', value: 'ab 160 €' }],
+      },
+      {
+        title: 'Team-Workshop',
+        text: 'Ein verdichtetes Format für Bewegung, Atem, Präsenz und Spannungsregulation in einem professionellen Rahmen.',
+        facts: [{ label: 'Workshop', value: 'ab 240 €' }],
+      },
+      {
+        title: 'Gesundheitstag',
+        text: 'Ein klarer Rahmen für halbe oder ganze Tage mit Praxisblöcken, Workshops und einem stimmigen Ablauf.',
+        facts: [{ label: 'Tagesformat', value: 'ab 550 €' }],
+      },
+    ],
+  },
+]
 
 const IntegrationSection = ({ onGoToNextStep }: Props) => (
   <Section
     id="integrieren"
     titleId="integrieren-title"
-    ariaLabel="Integrieren"
-    container="default"
+    ariaLabel="Angebote"
+    container="wide"
+    content="default"
     variant="body"
     rhythm="default"
     tone="relief"
+    movement="integration"
     mix={['opening', 'flow']}
+    assets={[
+      {
+        name: '019_Trägerform',
+        right: 'clamp(-9rem, -6vw, -3rem)',
+        top: 'clamp(2rem, 5vw, 7rem)',
+        width: 'clamp(22rem, 38vw, 48rem)',
+        presence: 'subtle',
+        boundary: 'bleed',
+        mobile: {
+          right: '-14rem',
+          top: '3rem',
+          width: '34rem',
+        },
+      },
+      {
+        name: '028_Dialogform',
+        left: 'clamp(-10rem, -6vw, -3rem)',
+        bottom: 'clamp(-9rem, -7vw, -3rem)',
+        width: 'clamp(18rem, 31vw, 38rem)',
+        presence: 'subtle',
+        boundary: 'bleed',
+        mobile: {
+          left: '-12rem',
+          bottom: '-7rem',
+          width: '30rem',
+        },
+      },
+    ]}
   >
-    <SectionStack>
-      <Surface
-        tone="field"
-        movement="integration"
-        radius="large"
-        bordered
-        padding="lg"
-        weight="strong"
+    <Surface
+      tone="bare"
+      movement="integration"
+      radius="none"
+      bordered={false}
+      padding="lg"
+      weight="quiet"
+    >
+      <SectionIntro
+        label="Angebote"
+        titleId="integrieren-title"
+        title="Einfach, klar und direkt buchbar."
+        accent="axisDensity"
+        max="56rem"
       >
-        <Stack gap={0.82}>
-          <Typography
-            as="p"
-            variant="caption"
-            gutter={false}
-            accent="axisDensity"
-            measure="wide"
-          >
-            Integrieren
-          </Typography>
+        Ob für dich selbst, für eine Gruppe oder für ein Unternehmen: Hier
+        findest du die wichtigsten Formate auf einen Blick.
+      </SectionIntro>
 
-          <Typography
-            as="h2"
-            variant="h2"
-            gutter={false}
-            accent="axisDensity"
-            cadence="dense"
-            measure="title"
-            id="integrieren-title"
-          >
-            Meta-Placeholder: Diese Bewegung ordnet die Formen, ohne den Raum
-            wieder in Produktkatalog und Website-Logik zurückfallen zu lassen.
-          </Typography>
-
-          <Typography
-            as="p"
-            variant="body"
-            gutter={false}
-            measure="prose"
-            cadence="dense"
-          >
-            Meta-Placeholder: Hier später Formate, Preise, Rahmen und typische
-            Einstiegslagen so ordnen, dass ein Mensch Anschluss findet.
-          </Typography>
-
-          <Typography
-            as="p"
-            variant="body"
-            gutter={false}
-            tone="soft"
-            measure="prose"
-          >
-            Meta-Placeholder: Das Angebot wird nach Funktion lesbar: Einstieg,
-            regelmäßige Praxis, individuelle Begleitung, professionelle Formate
-            und Vertiefung.
-          </Typography>
+      <PathwayShell>
+        <Stack>
+          <PathCards
+            movement="integration"
+            mobileAriaLabel="Angebotswege"
+            columns={3}
+            items={offerItems}
+          />
         </Stack>
-      </Surface>
-
-      <GroupGrid>
-        <Card
-          tone="card"
-          movement="integration"
-          radius="large"
-          bordered
-          padding="md"
-        >
-          <Stack gap={0.82}>
-            <Typography
-              as="p"
-              variant="caption"
-              gutter={false}
-              accent="axisOpening"
-            >
-              Einstieg
-            </Typography>
-            <Typography
-              as="h3"
-              variant="h3"
-              gutter={false}
-              accent="axisOpening"
-            >
-              Meta-Placeholder: Hier später niederschwellige Formate für den
-              ersten sinnvollen Zugang.
-            </Typography>
-            <Typography as="p" variant="body" gutter={false} measure="prose">
-              Meta-Placeholder: Auftaktkurs, Baseline, kompakte Grundpraxis,
-              Einführungsformate oder andere erste Schwellen.
-            </Typography>
-          </Stack>
-        </Card>
-
-        <Card
-          tone="card"
-          movement="integration"
-          radius="large"
-          bordered
-          padding="md"
-        >
-          <Stack gap={0.82}>
-            <Typography
-              as="p"
-              variant="caption"
-              gutter={false}
-              accent="axisDensity"
-            >
-              Regelmäßigkeit
-            </Typography>
-            <Typography
-              as="h3"
-              variant="h3"
-              gutter={false}
-              accent="axisDensity"
-            >
-              Meta-Placeholder: Hier später Kurs- und Klassenformate für
-              Menschen, die kontinuierlicher üben wollen.
-            </Typography>
-            <Typography as="p" variant="body" gutter={false} measure="prose">
-              Meta-Placeholder: Rhythmus, Verbindlichkeit, Aufbau und Funktion
-              der wiederkehrenden Praxis.
-            </Typography>
-          </Stack>
-        </Card>
-
-        <Card
-          tone="field"
-          movement="integration"
-          radius="large"
-          bordered
-          padding="md"
-        >
-          <Stack gap={0.82}>
-            <Typography
-              as="p"
-              variant="caption"
-              gutter={false}
-              accent="axisFlow"
-            >
-              Individuell
-            </Typography>
-            <Typography as="h3" variant="h3" gutter={false} accent="axisFlow">
-              Meta-Placeholder: Hier später Einzelsettings und persönliche
-              Praxisbegleitung.
-            </Typography>
-            <Typography as="p" variant="body" gutter={false} measure="prose">
-              Meta-Placeholder: Wann Einzelunterricht sinnvoll ist, für wen das
-              passt und wie sich das von Gruppenformaten unterscheidet.
-            </Typography>
-          </Stack>
-        </Card>
-
-        <Card
-          tone="note"
-          movement="integration"
-          radius="large"
-          bordered
-          padding="md"
-        >
-          <Stack gap={0.82}>
-            <Typography
-              as="p"
-              variant="caption"
-              gutter={false}
-              accent="axisOpening"
-            >
-              Professionell
-            </Typography>
-            <Typography
-              as="h3"
-              variant="h3"
-              gutter={false}
-              accent="axisOpening"
-            >
-              Meta-Placeholder: Hier später Firmen-, Team- oder andere externe
-              Formate.
-            </Typography>
-            <Typography as="p" variant="body" gutter={false} measure="prose">
-              Meta-Placeholder: Bewegte Pause, Reset-Formate, Workshops,
-              Gesundheits- oder Teamkontexte.
-            </Typography>
-          </Stack>
-        </Card>
-      </GroupGrid>
-
-      <FaqGrid>
-        <Card
-          tone="note"
-          movement="integration"
-          radius="large"
-          bordered
-          padding="md"
-        >
-          <Stack gap={0.72}>
-            <Typography
-              as="p"
-              variant="caption"
-              gutter={false}
-              accent="axisDensity"
-            >
-              Orientierung
-            </Typography>
-            <Typography
-              as="h3"
-              variant="h3"
-              gutter={false}
-              accent="axisDensity"
-            >
-              Meta-Placeholder: Welche Form ist für einen Einstieg sinnvoll?
-            </Typography>
-            <Typography
-              as="p"
-              variant="body"
-              gutter={false}
-              tone="soft"
-              measure="prose"
-            >
-              Meta-Placeholder: Später hier eine entlastende Antwort mit Bezug
-              auf unterschiedliche Einstiegslagen.
-            </Typography>
-          </Stack>
-        </Card>
-
-        <Card
-          tone="note"
-          movement="integration"
-          radius="large"
-          bordered
-          padding="md"
-        >
-          <Stack gap={0.72}>
-            <Typography
-              as="p"
-              variant="caption"
-              gutter={false}
-              accent="axisDensity"
-            >
-              Rahmen
-            </Typography>
-            <Typography
-              as="h3"
-              variant="h3"
-              gutter={false}
-              accent="axisDensity"
-            >
-              Meta-Placeholder: Wie transparent sind Preise, Laufzeiten und
-              Verbindlichkeit?
-            </Typography>
-            <Typography
-              as="p"
-              variant="body"
-              gutter={false}
-              tone="soft"
-              measure="prose"
-            >
-              Meta-Placeholder: Preise, Formate und Laufzeiten bleiben nicht im
-              Nebel, sondern gehören zur Glaubwürdigkeit.
-            </Typography>
-          </Stack>
-        </Card>
-      </FaqGrid>
-
-      <Surface
-        tone="field"
-        movement="integration"
-        radius="large"
-        bordered
-        padding="md"
-        weight="steady"
-      >
-        <Stack gap={0.78}>
-          <Typography as="p" variant="caption" gutter={false} accent="axisFlow">
-            Übergang
-          </Typography>
-
-          <Typography as="p" variant="body" gutter={false} measure="prose">
-            Meta-Placeholder: Diese Schlussbewegung trägt in den nächsten
-            Schritt, ohne Druck zu erzeugen.
-          </Typography>
-
-          <Button variant="ghost" onClick={onGoToNextStep}>
-            Meta-Placeholder: Anschluss finden
-          </Button>
-        </Stack>
-      </Surface>
-    </SectionStack>
+      </PathwayShell>
+    </Surface>
   </Section>
 )
 
