@@ -2,46 +2,13 @@
 'use client'
 
 import styled from 'styled-components'
+import SectionIntro from '@/components/content/SectionIntro'
+import ProofGrid from '@/components/content/ProofGrid'
 import Section from '@/components/primitives/Section'
-import Stack from '@/components/primitives/Stack'
 import Surface from '@/components/primitives/Surface'
-import Typography from '@/design/typography'
 
-const SectionStack = styled(Stack)`
-  gap: ${({ theme }) => theme.spacing(1.2)};
-`
-
-const TopSurface = styled(Surface)`
-  max-width: 58rem;
-`
-
-const MiddleLayout = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(1.15)};
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    grid-template-columns: minmax(0, 1.36fr) minmax(18rem, 0.9fr);
-    gap: ${({ theme }) => theme.spacing(1.3)};
-    align-items: stretch;
-  }
-`
-
-const SideColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(1.1)};
-  min-width: 0;
-`
-
-const MediaPlaceholder = styled.div`
-  min-height: 18rem;
-  border: 1px dashed
-    ${({ theme }) => theme.getMovementRole('recognition').border};
-  border-radius: ${({ theme }) => theme.borderRadius.medium};
-  background: ${({ theme }) => theme.roles.surface.field};
-  display: flex;
-  align-items: flex-end;
-  padding: ${({ theme }) => theme.spacing(1.05)};
+const ProofArea = styled.div`
+  margin-top: ${({ theme }) => theme.spacing(3)};
 `
 
 const RecognitionSection = () => (
@@ -49,237 +16,126 @@ const RecognitionSection = () => (
     id="erkennen"
     titleId="erkennen-title"
     ariaLabel="Erkennen"
-    container="default"
+    container="wide"
+    content="default"
     variant="body"
     rhythm="default"
     tone="threshold"
+    movement="recognition"
     mix={['density', 'tension']}
+    assets={[
+      {
+        name: '018_Fokusfeld',
+        right: 'clamp(0rem, 7vw, 10rem)',
+        top: 'clamp(1rem, 5vw, 6rem)',
+        width: 'clamp(16rem, 28vw, 34rem)',
+        presence: 'default',
+        boundary: 'bleed',
+        opacity: 0.28,
+        mobile: {
+          right: '-9rem',
+          top: '1rem',
+          width: '28rem',
+          opacity: 0.16,
+        },
+      },
+      {
+        name: '022_Kühle_Präzision',
+        left: 'clamp(-12rem, -7vw, -4rem)',
+        bottom: 'clamp(-10rem, -8vw, -4rem)',
+        width: 'clamp(20rem, 34vw, 42rem)',
+        presence: 'subtle',
+        boundary: 'bleed',
+        opacity: 0.18,
+        mobile: {
+          left: '-12rem',
+          bottom: '-7rem',
+          width: '30rem',
+          opacity: 0.12,
+        },
+      },
+    ]}
   >
-    <SectionStack>
-      <TopSurface
-        tone="field"
-        movement="recognition"
-        radius="large"
-        bordered
-        padding="lg"
-        weight="strong"
+    <Surface
+      tone="bare"
+      movement="recognition"
+      radius="none"
+      bordered={false}
+      padding="lg"
+      weight="quiet"
+    >
+      <SectionIntro
+        label="Erkennen"
+        titleId="erkennen-title"
+        title="Vertrauen entsteht nicht durch perfekte Oberfläche. Es entsteht, wenn sichtbar wird, was wirklich trägt."
+        accent="axisTension"
+        max="58rem"
       >
-        <Stack gap={0.82}>
-          <Typography
-            as="p"
-            variant="caption"
-            gutter={false}
-            accent="axisTension"
-            measure="wide"
-          >
-            Erkennen
-          </Typography>
+        Diese Section ist nicht „Über mich“. Sie zeigt später, warum Jonas diese
+        Arbeit verantworten kann: Erfahrung, Brüche, Unterrichtsfreude,
+        Ausbildung, Kritikfähigkeit und der Anspruch, nicht bei Oberfläche
+        stehenzubleiben.
+      </SectionIntro>
 
-          <Typography
-            as="h2"
-            variant="h2"
-            gutter={false}
-            accent="axisTension"
-            cadence="dense"
-            measure="title"
-            id="erkennen-title"
-          >
-            Meta-Placeholder: Diese Bewegung macht sichtbar, warum diese Arbeit
-            trägt und wer sie verantwortet.
-          </Typography>
-
-          <Typography
-            as="p"
-            variant="body"
-            gutter={false}
-            measure="prose"
-            cadence="dense"
-          >
-            Meta-Placeholder: Hier später Lehrerhaltung, Erfahrung,
-            Unterrichtsverständnis und fachliche Grundlage. Nicht als
-            Über-mich-Block, sondern als Erkenntnisschicht nach der Arbeit.
-          </Typography>
-
-          <Typography
-            as="p"
-            variant="body"
-            gutter={false}
-            tone="soft"
-            measure="prose"
-          >
-            Meta-Placeholder: Diese Passage eröffnet Vertrauen. Sie behauptet
-            nichts, sie trägt.
-          </Typography>
-        </Stack>
-      </TopSurface>
-
-      <MiddleLayout>
-        <Surface
-          tone="threshold"
+      <ProofArea>
+        <ProofGrid
           movement="recognition"
-          radius="large"
-          bordered
-          padding="lg"
-          weight="strong"
-        >
-          <Stack gap={0.9}>
-            <Typography
-              as="p"
-              variant="caption"
-              gutter={false}
-              accent="axisTension"
-              measure="wide"
-            >
-              Weg und Reibung
-            </Typography>
-
-            <Typography
-              as="h3"
-              variant="h3"
-              gutter={false}
-              accent="axisTension"
-              cadence="dense"
-              measure="title"
-            >
-              Meta-Placeholder: Hier später die eigene Erfahrung, Reibung und
-              der Weg in die Praxis.
-            </Typography>
-
-            <Typography
-              as="p"
-              variant="body"
-              gutter={false}
-              measure="prose"
-              cadence="dense"
-            >
-              Meta-Placeholder: Später muss hier sichtbar werden, welche
-              Erfahrungen, Bruchstellen oder Wiederannäherungen diese Arbeit
-              glaubwürdig gemacht haben.
-            </Typography>
-
-            <Typography
-              as="p"
-              variant="body"
-              gutter={false}
-              tone="soft"
-              measure="prose"
-            >
-              Meta-Placeholder: Nicht dramatisieren. Nicht pathologisieren.
-              Nicht biografisch ausufern.
-            </Typography>
-          </Stack>
-        </Surface>
-
-        <SideColumn>
-          <Surface
-            tone="card"
-            movement="recognition"
-            radius="large"
-            bordered
-            padding="md"
-            weight="steady"
-          >
-            <Stack gap={0.8}>
-              <Typography
-                as="p"
-                variant="caption"
-                gutter={false}
-                accent="axisDensity"
-                measure="wide"
-              >
-                Unterricht
-              </Typography>
-
-              <Typography
-                as="h3"
-                variant="h3"
-                gutter={false}
-                accent="axisDensity"
-                cadence="dense"
-                measure="title"
-              >
-                Meta-Placeholder: Hier später lesbar machen, wie Jonas lehrt und
-                warum das im Alltag trägt.
-              </Typography>
-
-              <Typography as="p" variant="body" gutter={false} measure="prose">
-                Meta-Placeholder: Systemisch, pragmatisch, alltagstauglich,
-                nicht dogmatisch. Methoden erscheinen als Werkzeuge.
-              </Typography>
-            </Stack>
-          </Surface>
-
-          <Surface
-            tone="note"
-            movement="recognition"
-            radius="large"
-            bordered
-            padding="sm"
-            weight="quiet"
-          >
-            <MediaPlaceholder>
-              <Typography
-                as="p"
-                variant="body"
-                gutter={false}
-                accent="axisDensity"
-                measure="prose"
-              >
-                Bild-Placeholder: Reale Lehrerpräsenz. Ruhige, klare
-                Körperlichkeit. Keine Heldenpose.
-              </Typography>
-            </MediaPlaceholder>
-          </Surface>
-        </SideColumn>
-      </MiddleLayout>
-
-      <Surface
-        tone="card"
-        movement="recognition"
-        radius="large"
-        bordered
-        padding="md"
-        weight="steady"
-      >
-        <Stack gap={0.8}>
-          <Typography
-            as="p"
-            variant="caption"
-            gutter={false}
-            accent="axisDensity"
-            measure="wide"
-          >
-            Fachliche Grundlage
-          </Typography>
-
-          <Typography
-            as="h3"
-            variant="h3"
-            gutter={false}
-            accent="axisDensity"
-            measure="title"
-          >
-            Meta-Placeholder: Hier später die geordnete, belastbare Ausbildung.
-          </Typography>
-
-          <Typography as="p" variant="body" gutter={false} measure="prose">
-            Meta-Placeholder: Yoga, Qigong, Taijiquan, Meditation, Entspannung,
-            dokumentierter Gesamtumfang, Vermittlung, Methodik und Didaktik.
-          </Typography>
-
-          <Typography
-            as="p"
-            variant="body"
-            gutter={false}
-            tone="soft"
-            measure="prose"
-          >
-            Meta-Placeholder: Nachweise stützen die Haltung, sie ersetzen sie
-            nicht.
-          </Typography>
-        </Stack>
-      </Surface>
-    </SectionStack>
+          items={[
+            {
+              label: 'Weg und Reibung',
+              tone: 'threshold',
+              accent: 'axisTension',
+              title:
+                'Praxis wurde nicht aus einem perfekten Lebenslauf geboren.',
+              asset: {
+                name: '032_Kern',
+                right: '-6rem',
+                bottom: '-7rem',
+                width: 'clamp(12rem, 24vw, 20rem)',
+                presence: 'subtle',
+                boundary: 'bleed',
+                opacity: 0.2,
+              },
+              children:
+                'Hier darf später stehen, dass diese Arbeit durch echte Krisen, Verluste, Neuaufbau und Wiederannäherung glaubwürdig wurde. Nicht dramatisieren. Nicht therapieren. Nur zeigen, dass der Weg nicht künstlich glatt war.',
+            },
+            {
+              label: 'Unterricht',
+              tone: 'card',
+              accent: 'axisDensity',
+              title: 'Locker, direkt, präzise — und mit hohem Anspruch.',
+              asset: {
+                name: '022_Kühle_Präzision',
+                right: '-8rem',
+                top: '-8rem',
+                width: 'clamp(13rem, 24vw, 21rem)',
+                presence: 'subtle',
+                boundary: 'bleed',
+                opacity: 0.2,
+              },
+              children:
+                'Später wird hier sichtbar, dass Freude und Niveau zusammengehören. Kein Guru-Auftritt, keine Wellnessrolle, keine Methode als Selbstzweck.',
+            },
+            {
+              label: 'Präsenz',
+              tone: 'note',
+              accent: 'axisDensity',
+              media: true,
+              children:
+                'Component-Placeholder: Reale Lehrerpräsenz. Bildfläche für Jonas ohne Heldenpose, ohne Naturtapete, ohne Yogaklischee.',
+            },
+            {
+              label: 'Fachliche Grundlage',
+              tone: 'field',
+              accent: 'axisDensity',
+              title: 'Ausbildung als Substanz, nicht als Eingangsschild.',
+              children:
+                'Hier später dokumentierter Umfang in Yoga, Qigong, Taijiquan, Meditation, Entspannung, Methodik und Didaktik. Die Nachweise stützen die Haltung, aber sie ersetzen sie nicht.',
+            },
+          ]}
+        />
+      </ProofArea>
+    </Surface>
   </Section>
 )
 

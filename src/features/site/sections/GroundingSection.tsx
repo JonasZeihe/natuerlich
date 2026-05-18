@@ -2,28 +2,20 @@
 'use client'
 
 import styled from 'styled-components'
+import SectionIntro from '@/components/content/SectionIntro'
+import StepList from '@/components/content/StepList'
 import Section from '@/components/primitives/Section'
 import Stack from '@/components/primitives/Stack'
 import Surface from '@/components/primitives/Surface'
 import Typography from '@/design/typography'
 
-const SectionStack = styled(Stack)`
-  gap: ${({ theme }) => theme.spacing(1.35)};
+const StepArea = styled.div`
+  margin-top: ${({ theme }) => theme.spacing(3)};
 `
 
-const ContrastGrid = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(1.1)};
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
-    gap: ${({ theme }) => theme.spacing(1.3)};
-    align-items: stretch;
-  }
-`
-
-const IntroSurface = styled(Surface)`
-  max-width: 56rem;
+const GroundingNote = styled.div`
+  max-width: 41rem;
+  margin-top: ${({ theme }) => theme.spacing(3)};
 `
 
 const GroundingSection = () => (
@@ -31,152 +23,146 @@ const GroundingSection = () => (
     id="sammeln"
     titleId="sammeln-title"
     ariaLabel="Sammeln"
-    container="default"
+    container="wide"
+    content="left"
+    frame="content"
     variant="body"
-    rhythm="default"
+    rhythm="spacious"
     tone="clarify"
-    energy="opening"
+    movement="grounding"
+    mix={['density', 'flow']}
+    assets={[
+      {
+        name: '008_Sammelpunkt',
+        right: 'clamp(4rem, 8vw, 12rem)',
+        top: 'clamp(2rem, 6vw, 6rem)',
+        width: 'clamp(16rem, 27vw, 30rem)',
+        presence: 'default',
+        boundary: 'bleed',
+        opacity: 0.42,
+        mobile: {
+          right: 'clamp(-9rem, -30vw, -5rem)',
+          top: 'clamp(1rem, 8vw, 4rem)',
+          width: 'clamp(18rem, 82vw, 32rem)',
+          opacity: 0.24,
+        },
+      },
+      {
+        name: '010_Resonanzfeld',
+        left: 'clamp(18rem, 48vw, 58rem)',
+        bottom: 'clamp(-10rem, -9vw, -4rem)',
+        width: 'clamp(18rem, 28vw, 34rem)',
+        presence: 'subtle',
+        boundary: 'bleed',
+        opacity: 0.22,
+        mobile: {
+          left: 'clamp(-9rem, -34vw, -5rem)',
+          bottom: 'clamp(-8rem, -18vw, -3rem)',
+          width: 'clamp(20rem, 88vw, 32rem)',
+          opacity: 0.18,
+        },
+      },
+    ]}
   >
-    <SectionStack>
-      <IntroSurface
-        tone="field"
-        movement="grounding"
-        radius="large"
-        bordered
-        padding="lg"
-        weight="steady"
+    <Surface
+      tone="bare"
+      movement="grounding"
+      radius="none"
+      bordered={false}
+      padding="lg"
+      weight="quiet"
+    >
+      <SectionIntro
+        label="Sammeln"
+        titleId="sammeln-title"
+        title="Bevor Praxis wirkt, muss klarer werden, von wo aus du überhaupt beginnst."
+        accent="axisDensity"
+        max="54rem"
       >
-        <Stack gap={0.9}>
-          <Typography
-            as="p"
-            variant="caption"
-            gutter={false}
-            accent="axisDensity"
-          >
-            Sammeln
-          </Typography>
+        Diese Bewegung stellt die Motivationsachse in den Raum. Bin ich hier, um
+        wieder besser zu funktionieren? Oder bin ich hier, weil ich mich selbst
+        wieder spüren will?
+      </SectionIntro>
 
-          <Typography
-            as="h2"
-            variant="h2"
-            gutter={false}
-            accent="axisDensity"
-            id="sammeln-title"
-          >
-            Meta-Placeholder: Diese Bewegung sammelt Aufmerksamkeit und klärt
-            das Feld, bevor die Praxis körperlicher und fordernder wird.
-          </Typography>
+      <StepArea>
+        <StepList
+          movement="grounding"
+          items={[
+            {
+              label: 'Grund',
+              children:
+                'Nicht zuerst: Welche Technik passt? Sondern: Warum bin ich hier? Was sucht in mir eigentlich nach Form?',
+            },
+            {
+              label: 'Achse',
+              tone: 'field',
+              title:
+                'Wenn die Achse verrutscht, wird selbst Entspannung zur Wartungspause.',
+              asset: {
+                name: '008_Sammelpunkt',
+                right: '-5rem',
+                bottom: '-6rem',
+                width: 'clamp(10rem, 22vw, 17rem)',
+                presence: 'subtle',
+                boundary: 'bleed',
+                opacity: 0.22,
+              },
+              children:
+                'Sammlung heißt: den Punkt wiederfinden, von dem aus Praxis wirklich meine wird.',
+            },
+            {
+              label: 'Zustimmung',
+              accent: 'axisFlow',
+              children:
+                'Es geht nicht darum, den inneren Widerstand niederzudrücken. Vielleicht zeigt er nur, dass Form, Maß oder Richtung noch nicht stimmen.',
+            },
+          ]}
+        />
+      </StepArea>
 
-          <Typography as="p" variant="body" gutter={false}>
-            Meta-Placeholder: Hier später die ruhige Unterscheidung. Nicht
-            Wellness, nicht Pose, nicht Methode als Identität, sondern Praxis
-            als Werkzeug für Alltag, Körper und Selbstführung.
-          </Typography>
-        </Stack>
-      </IntroSurface>
-
-      <ContrastGrid>
+      <GroundingNote>
         <Surface
-          tone="card"
+          tone="note"
           movement="grounding"
           radius="large"
           bordered
-          padding="lg"
-          weight="steady"
+          padding="md"
+          weight="quiet"
+          asset={{
+            name: '010_Resonanzfeld',
+            right: '-6rem',
+            top: '-5rem',
+            width: 'clamp(11rem, 24vw, 18rem)',
+            presence: 'subtle',
+            boundary: 'bleed',
+            opacity: 0.26,
+            mobile: {
+              right: '-8rem',
+              top: '-5rem',
+              width: '16rem',
+              opacity: 0.18,
+            },
+          }}
         >
-          <Stack gap={0.82}>
+          <Stack gap={4}>
             <Typography
               as="p"
               variant="caption"
               gutter={false}
               accent="axisFlow"
             >
-              Was trägt
-            </Typography>
-
-            <Typography as="h3" variant="h3" gutter={false} accent="axisFlow">
-              Meta-Placeholder: Später die positive Setzung dieser Arbeit.
+              Übergang
             </Typography>
 
             <Typography as="p" variant="body" gutter={false}>
-              Meta-Placeholder: Klarheit, Freude, Anspruch, Lehrbarkeit,
-              Praxisfähigkeit, Resonanz und Anschluss im wirklichen Leben.
-            </Typography>
-
-            <Typography as="p" variant="body" gutter={false} tone="soft">
-              Meta-Placeholder: Diese Fläche zeigt, was Menschen hier finden
-              können, ohne in Versprechen oder Werbesprache zu kippen.
+              Diese Section beruhigt nicht, um passiv zu werden. Sie sammelt
+              genug innere Zustimmung, damit die nächste Bewegung wacher, klarer
+              und körperlicher einsetzen kann.
             </Typography>
           </Stack>
         </Surface>
-
-        <Surface
-          tone="threshold"
-          movement="grounding"
-          radius="large"
-          bordered
-          padding="lg"
-          weight="steady"
-        >
-          <Stack gap={0.82}>
-            <Typography
-              as="p"
-              variant="caption"
-              gutter={false}
-              accent="axisTension"
-            >
-              Was abfällt
-            </Typography>
-
-            <Typography
-              as="h3"
-              variant="h3"
-              gutter={false}
-              accent="axisTension"
-            >
-              Meta-Placeholder: Später die klare Negativabgrenzung ohne
-              Bitterkeit.
-            </Typography>
-
-            <Typography as="p" variant="body" gutter={false}>
-              Meta-Placeholder: Keine Wellness-Kulisse. Kein Methodencontainer.
-              Keine Öko-Romantik. Keine Guru-Rolle. Keine beruhigende Oberfläche
-              ohne Tragfähigkeit.
-            </Typography>
-
-            <Typography as="p" variant="body" gutter={false} tone="soft">
-              Meta-Placeholder: Diese Fläche darf schneiden, aber nicht nörgeln.
-              Sie klärt, statt sich zu beschweren.
-            </Typography>
-          </Stack>
-        </Surface>
-      </ContrastGrid>
-
-      <Surface
-        tone="note"
-        movement="grounding"
-        radius="large"
-        bordered
-        padding="md"
-      >
-        <Stack gap={0.72}>
-          <Typography
-            as="p"
-            variant="caption"
-            gutter={false}
-            accent="axisDensity"
-          >
-            Erste Schärfung
-          </Typography>
-
-          <Typography as="p" variant="body" gutter={false}>
-            Meta-Placeholder: Diese Schlussbewegung macht klar, dass Entspannung
-            hier nicht Flucht ist. Sie bereitet Arbeit, Wachheit und Bewegung
-            vor.
-          </Typography>
-        </Stack>
-      </Surface>
-    </SectionStack>
+      </GroundingNote>
+    </Surface>
   </Section>
 )
 
