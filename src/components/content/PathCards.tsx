@@ -1,289 +1,382 @@
 // src/components/content/PathCards.tsx
 'use client'
 
-import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import styled from 'styled-components'
-import type { AssetConsumerSpec } from '@/components/assets/registry'
 import Card from '@/components/primitives/Card'
-import Grid from '@/components/primitives/Grid'
-import Stack from '@/components/primitives/Stack'
-import type { AxisKey, MovementKey, SurfaceToneKey } from '@/design/theme'
 import Typography from '@/design/typography'
 
-export type PathCardFact = {
-  label: ReactNode
-  value: ReactNode
+type AudienceKey = 'individual' | 'group' | 'company'
+
+export type IndividualOffer = {
+  format: ReactNode
+  price: ReactNode
+  text: ReactNode
 }
 
-export type PathCardDetail = {
-  title: ReactNode
+export type GroupOffer = {
+  format: ReactNode
+  duration: ReactNode
+  price: ReactNode
   text: ReactNode
-  facts?: readonly PathCardFact[]
+  classText: ReactNode
+  classPrice: ReactNode
+}
+
+export type CompanyOffer = {
+  format: ReactNode
+  duration: ReactNode
+  price: ReactNode
+  text: ReactNode
 }
 
 export type PathCardItem = {
-  label: ReactNode
   title: ReactNode
-  children: ReactNode
-  tone?: SurfaceToneKey
-  accent?: AxisKey
-  asset?: AssetConsumerSpec | null
-  details?: readonly PathCardDetail[]
+  line: ReactNode
+  text: ReactNode
+  individual: IndividualOffer
+  group: GroupOffer
+  company?: CompanyOffer
 }
 
 type Props = {
   items: readonly PathCardItem[]
-  movement: MovementKey
-  mobileAriaLabel: string
-  columns?: number
 }
 
-const Desktop = styled.div`
-  display: block;
+const audienceItems: readonly {
+  key: AudienceKey
+  label: string
+}[] = [
+  { key: 'individual', label: 'Einzel' },
+  { key: 'group', label: 'Gruppe' },
+  { key: 'company', label: 'Firma' },
+]
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    display: none;
+const Wrap = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(1)};
+`
+
+const Tabs = styled.div`
+  position: sticky;
+  top: ${({ theme }) => theme.spacing(1)};
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: ${({ theme }) => theme.spacing(0.35)};
+  padding: ${({ theme }) => theme.spacing(0.35)};
+  border: 1px solid ${({ theme }) => theme.roles.border.subtle};
+  border-radius: ${({ theme }) => theme.borderRadius.pill};
+  background: ${({ theme }) => theme.roles.surface.card};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    position: static;
+    width: min(100%, 26rem);
   }
 `
 
-const Mobile = styled.div`
-  display: none;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    display: block;
-  }
+const Tab = styled.button<{ $active: boolean }>`
+  appearance: none;
+  border: 0;
+  border-radius: ${({ theme }) => theme.borderRadius.pill};
+  background: ${({ theme, $active }) =>
+    $active ? theme.roles.text.primary : 'transparent'};
+  color: ${({ theme, $active }) =>
+    $active ? theme.roles.surface.chrome : theme.roles.text.primary};
+  padding: ${({ theme }) => `${theme.spacing(0.7)} ${theme.spacing(1)}`};
+  font: inherit;
+  cursor: pointer;
 `
 
-const MobileTrack = styled.div`
+const List = styled.div`
   display: flex;
   gap: ${({ theme }) => theme.spacing(1)};
+  margin-inline: ${({ theme }) => `-${theme.spacing(1)}`};
+  padding-inline: ${({ theme }) => theme.spacing(1)};
+  padding-bottom: ${({ theme }) => theme.spacing(0.25)};
   overflow-x: auto;
-  overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
-  scroll-padding-inline: ${({ theme }) => theme.spacing(0.25)};
-  padding: ${({ theme }) =>
-    `${theme.spacing(0.25)} ${theme.spacing(0.25)} ${theme.spacing(1)}`};
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
 
   &::-webkit-scrollbar {
     display: none;
   }
-`
 
-const MobileSlide = styled.div`
-  flex: 0 0 100%;
-  min-width: 0;
-  scroll-snap-align: start;
-`
-
-const Progress = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: ${({ theme }) => theme.spacing(0.5)};
-  margin-top: ${({ theme }) => theme.spacing(0.75)};
-`
-
-const ProgressDot = styled.span<{ $active: boolean }>`
-  width: ${({ $active }) => ($active ? '1.35rem' : '0.45rem')};
-  height: 0.45rem;
-  border-radius: ${({ theme }) => theme.borderRadius.pill};
-  background: ${({ theme, $active }) =>
-    $active ? theme.roles.text.primary : theme.roles.border.subtle};
-`
-
-const DetailList = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(1.5)};
-`
-
-const DetailItem = styled.article`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(0.75)};
-  padding-top: ${({ theme }) => theme.spacing(1.5)};
-  border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
-
-  &:first-child {
-    padding-top: 0;
-    border-top: 0;
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    margin-inline: 0;
+    padding-inline: 0;
+    overflow: visible;
   }
 `
 
-const FactList = styled.ul`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(0.5)};
-  margin: 0;
-  padding: 0;
-  list-style: none;
+const Item = styled.div`
+  flex: 0 0 min(86vw, 24rem);
+  scroll-snap-align: start;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    flex-basis: auto;
+  }
 `
 
-const FactLine = styled.li`
+const Body = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(1.35)};
+`
+
+const Head = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(0.4)};
+`
+
+const Panel = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(0.75)};
+  padding-top: ${({ theme }) => theme.spacing(1)};
+  border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
+`
+
+const Row = styled.div`
   display: flex;
   justify-content: space-between;
-  gap: ${({ theme }) => theme.spacing(1.5)};
+  align-items: baseline;
+  gap: ${({ theme }) => theme.spacing(1)};
 `
 
-const renderDetails = (
-  details: readonly PathCardDetail[] | undefined,
-  accent: AxisKey
-) =>
-  details?.length ? (
-    <DetailList>
-      {details.map((detail, index) => (
-        <DetailItem key={index}>
-          <Stack gap={1}>
-            <Typography
-              as="h4"
-              variant="subtitle"
-              gutter={false}
-              accent={accent}
-            >
-              {detail.title}
-            </Typography>
+const GroupFlow = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(0.9)};
+`
 
-            <Typography as="p" variant="body" gutter={false} tone="soft">
-              {detail.text}
-            </Typography>
-          </Stack>
+const Step = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(0.35)};
+`
 
-          {detail.facts?.length ? (
-            <FactList>
-              {detail.facts.map((fact, factIndex) => (
-                <FactLine key={factIndex}>
-                  <Typography as="span" variant="caption" gutter={false}>
-                    {fact.label}
-                  </Typography>
+const Meta = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${({ theme }) => theme.spacing(0.5)};
+`
 
-                  <Typography
-                    as="span"
-                    variant="caption"
-                    gutter={false}
-                    accent={accent}
-                  >
-                    {fact.value}
-                  </Typography>
-                </FactLine>
-              ))}
-            </FactList>
-          ) : null}
-        </DetailItem>
-      ))}
-    </DetailList>
-  ) : null
+const Pill = styled.div`
+  display: inline-flex;
+  width: fit-content;
+  border: 1px solid ${({ theme }) => theme.roles.border.subtle};
+  border-radius: ${({ theme }) => theme.borderRadius.pill};
+  padding: ${({ theme }) => `${theme.spacing(0.3)} ${theme.spacing(0.7)}`};
+`
 
-const PathCard = ({
-  item,
-  movement,
-}: {
-  item: PathCardItem
-  movement: MovementKey
-}) => {
-  const accent = item.accent ?? 'axisDensity'
-
-  return (
+const IndividualCard = ({ item }: { item: PathCardItem }) => (
+  <Item>
     <Card
-      tone={item.tone ?? 'card'}
-      movement={movement}
+      tone="card"
+      movement="integration"
       radius="large"
       bordered
       padding="md"
-      asset={item.asset}
     >
-      <Stack gap={4}>
-        <Typography as="p" variant="caption" gutter={false} accent={accent}>
-          {item.label}
+      <Body>
+        <Head>
+          <Typography as="h3" variant="h3" gutter={false}>
+            {item.title}
+          </Typography>
+
+          <Typography as="p" variant="subtitle" gutter={false}>
+            {item.line}
+          </Typography>
+        </Head>
+
+        <Typography as="p" variant="body" gutter={false} tone="soft">
+          {item.text}
         </Typography>
 
-        <Typography as="h3" variant="h3" gutter={false} accent={accent}>
-          {item.title}
-        </Typography>
+        <Panel>
+          <Row>
+            <Typography as="p" variant="caption" gutter={false}>
+              {item.individual.format}
+            </Typography>
 
-        <Typography as="p" variant="body" gutter={false} measure="prose">
-          {item.children}
-        </Typography>
+            <Typography as="p" variant="subtitle" gutter={false}>
+              {item.individual.price}
+            </Typography>
+          </Row>
 
-        {renderDetails(item.details, accent)}
-      </Stack>
+          <Typography as="p" variant="body" gutter={false} tone="soft">
+            {item.individual.text}
+          </Typography>
+        </Panel>
+      </Body>
     </Card>
+  </Item>
+)
+
+const GroupCard = ({ item }: { item: PathCardItem }) => (
+  <Item>
+    <Card
+      tone="card"
+      movement="integration"
+      radius="large"
+      bordered
+      padding="md"
+    >
+      <Body>
+        <Head>
+          <Typography as="h3" variant="h3" gutter={false}>
+            {item.title}
+          </Typography>
+
+          <Typography as="p" variant="subtitle" gutter={false}>
+            {item.line}
+          </Typography>
+        </Head>
+
+        <Typography as="p" variant="body" gutter={false} tone="soft">
+          {item.text}
+        </Typography>
+
+        <GroupFlow>
+          <Step>
+            <Typography as="p" variant="caption" gutter={false}>
+              Kurs
+            </Typography>
+
+            <Typography as="p" variant="subtitle" gutter={false}>
+              {item.group.format}
+            </Typography>
+
+            <Meta>
+              <Pill>
+                <Typography as="span" variant="caption" gutter={false}>
+                  {item.group.duration}
+                </Typography>
+              </Pill>
+
+              <Pill>
+                <Typography as="span" variant="caption" gutter={false}>
+                  {item.group.price}
+                </Typography>
+              </Pill>
+            </Meta>
+
+            <Typography as="p" variant="body" gutter={false}>
+              {item.group.text}
+            </Typography>
+          </Step>
+
+          <Step>
+            <Typography as="p" variant="caption" gutter={false}>
+              Danach
+            </Typography>
+
+            <Typography as="p" variant="body" gutter={false}>
+              {item.group.classText}
+            </Typography>
+
+            <Typography as="p" variant="caption" gutter={false}>
+              {item.group.classPrice}
+            </Typography>
+          </Step>
+        </GroupFlow>
+      </Body>
+    </Card>
+  </Item>
+)
+
+const CompanyCard = ({ item }: { item: PathCardItem }) => {
+  if (!item.company) {
+    return null
+  }
+
+  return (
+    <Item>
+      <Card
+        tone="card"
+        movement="integration"
+        radius="large"
+        bordered
+        padding="md"
+      >
+        <Body>
+          <Head>
+            <Typography as="h3" variant="h3" gutter={false}>
+              {item.title}
+            </Typography>
+
+            <Typography as="p" variant="subtitle" gutter={false}>
+              {item.line}
+            </Typography>
+          </Head>
+
+          <Typography as="p" variant="body" gutter={false} tone="soft">
+            {item.text}
+          </Typography>
+
+          <Panel>
+            <Typography as="p" variant="subtitle" gutter={false}>
+              {item.company.format}
+            </Typography>
+
+            <Meta>
+              <Pill>
+                <Typography as="span" variant="caption" gutter={false}>
+                  {item.company.duration}
+                </Typography>
+              </Pill>
+
+              <Pill>
+                <Typography as="span" variant="caption" gutter={false}>
+                  {item.company.price}
+                </Typography>
+              </Pill>
+            </Meta>
+
+            <Typography as="p" variant="body" gutter={false} tone="soft">
+              {item.company.text}
+            </Typography>
+          </Panel>
+        </Body>
+      </Card>
+    </Item>
   )
 }
 
-const PathCards = ({
-  items,
-  movement,
-  mobileAriaLabel,
-  columns = Math.min(items.length, 4),
-}: Props) => {
-  const trackRef = useRef<HTMLDivElement | null>(null)
-  const frameRef = useRef<number | null>(null)
-  const [activeIndex, setActiveIndex] = useState(0)
+const PathCards = ({ items }: Props) => {
+  const [audience, setAudience] = useState<AudienceKey>('group')
 
-  const syncActiveIndex = useCallback(() => {
-    const track = trackRef.current
-
-    if (!track) return
-
-    const width = track.clientWidth
-
-    if (!width) return
-
-    setActiveIndex(
-      Math.max(
-        0,
-        Math.min(items.length - 1, Math.round(track.scrollLeft / width))
-      )
-    )
-  }, [items.length])
-
-  const handleScroll = useCallback(() => {
-    if (frameRef.current !== null) return
-
-    frameRef.current = window.requestAnimationFrame(() => {
-      frameRef.current = null
-      syncActiveIndex()
-    })
-  }, [syncActiveIndex])
-
-  useEffect(
-    () => () => {
-      if (frameRef.current === null) return
-
-      window.cancelAnimationFrame(frameRef.current)
-    },
-    []
-  )
+  const visibleItems =
+    audience === 'company' ? items.filter((item) => item.company) : items
 
   return (
-    <>
-      <Desktop>
-        <Grid columns={columns} min="15rem" gap={2} switchAt="lg">
-          {items.map((item, index) => (
-            <PathCard key={index} item={item} movement={movement} />
-          ))}
-        </Grid>
-      </Desktop>
+    <Wrap>
+      <Tabs aria-label="Angebotsrahmen">
+        {audienceItems.map((item) => (
+          <Tab
+            key={item.key}
+            type="button"
+            $active={item.key === audience}
+            onClick={() => setAudience(item.key)}
+          >
+            {item.label}
+          </Tab>
+        ))}
+      </Tabs>
 
-      <Mobile>
-        <MobileTrack
-          ref={trackRef}
-          aria-label={mobileAriaLabel}
-          role="list"
-          onScroll={handleScroll}
-        >
-          {items.map((item, index) => (
-            <MobileSlide key={index} role="listitem">
-              <PathCard item={item} movement={movement} />
-            </MobileSlide>
-          ))}
-        </MobileTrack>
+      <List>
+        {visibleItems.map((item, index) => {
+          if (audience === 'individual') {
+            return <IndividualCard key={index} item={item} />
+          }
 
-        <Progress aria-hidden="true">
-          {items.map((_, index) => (
-            <ProgressDot key={index} $active={index === activeIndex} />
-          ))}
-        </Progress>
-      </Mobile>
-    </>
+          if (audience === 'company') {
+            return <CompanyCard key={index} item={item} />
+          }
+
+          return <GroupCard key={index} item={item} />
+        })}
+      </List>
+    </Wrap>
   )
 }
 

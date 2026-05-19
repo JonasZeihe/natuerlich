@@ -5,114 +5,139 @@ import styled from 'styled-components'
 import PathCards, { type PathCardItem } from '@/components/content/PathCards'
 import SectionIntro from '@/components/content/SectionIntro'
 import Section from '@/components/primitives/Section'
-import Stack from '@/components/primitives/Stack'
 import Surface from '@/components/primitives/Surface'
 
 type Props = {
   onGoToNextStep: () => void
 }
 
-const PathwayShell = styled.div`
-  margin-top: ${({ theme }) => theme.spacing(3)};
+const Shell = styled.div`
+  margin-top: ${({ theme }) => theme.spacing(2.5)};
 `
 
 const offerItems: readonly PathCardItem[] = [
   {
-    label: 'Für dich',
-    title: 'Wenn du selbst üben möchtest.',
-    accent: 'axisDensity',
-    children:
-      'Für dich, wenn du einen Kurs suchst, wieder einsteigen willst oder persönliche Begleitung brauchst.',
-    details: [
-      {
-        title: 'Yoga',
-        text: 'Geführte Praxis mit Bewegung, Atem, Entspannung und Ruhe. Für Einsteiger, Wiedereinsteiger und Menschen, die regelmäßig üben möchten.',
-        facts: [
-          { label: 'Kursblock', value: 'ab 129 €' },
-          { label: 'Einzelunterricht', value: 'ab 70 € pro Einheit' },
-        ],
-      },
-      {
-        title: 'Qigong',
-        text: 'Ruhige, wiederholbare Bewegung für Sammlung, Aufrichtung, Atem und innere Ordnung.',
-        facts: [
-          { label: 'Kursblock', value: 'ab 129 €' },
-          { label: 'Einzelunterricht', value: 'ab 70 € pro Einheit' },
-        ],
-      },
-      {
-        title: 'Taijiquan',
-        text: 'Langsame, präzise Bewegung mit Stand, Gewichtsverlagerung, Richtung und Formbewusstsein.',
-        facts: [
-          { label: 'Kursblock', value: 'ab 129 €' },
-          { label: 'Einzelunterricht', value: 'ab 70 € pro Einheit' },
-        ],
-      },
-      {
-        title: 'Einzelunterricht',
-        text: 'Wenn du genauer arbeiten möchtest: an deinem Stand, deinem Thema, deinem Körper, deinem Einstieg oder deiner Praxis zuhause.',
-        facts: [
-          { label: 'Einzeltermin', value: 'ab 70 € pro Einheit' },
-          { label: 'Begleitung', value: 'ab 250 € als Paket' },
-        ],
-      },
-    ],
+    title: 'Grundlage',
+    line: 'Atem, Entspannung, Achtsamkeit.',
+    text: 'Der beste Anfang, wenn noch nicht klar ist, ob es später Qigong, Yoga oder Taijiquan werden soll.',
+    individual: {
+      format: 'Einzeltraining',
+      price: 'ab 70 € pro Einheit',
+      text: 'Für persönlichen Einstieg, Sortierung, Stressregulation oder eine ruhige eigene Praxis. Kein Kursersatz, sondern gezielte Begleitung.',
+    },
+    group: {
+      format: 'Auftaktkurs',
+      duration: '6–8 Termine',
+      price: 'ab 690 € pro Kursblock',
+      text: 'Ein gemeinsamer Einstieg in Atem, Entspannung, Body Scan, Achtsamkeit und einfache Selbstregulation.',
+      classText:
+        'Daraus kann eine ruhige fortlaufende Praxis entstehen, wenn die Gruppe weiter üben möchte.',
+      classPrice: 'fortlaufend ab 110 € pro Termin',
+    },
+    company: {
+      format: 'BGM-Impuls oder Workshop',
+      duration: '60–180 Minuten',
+      price: 'ab 390 €',
+      text: 'Stressregulation, Entspannung und alltagstaugliche Körperwahrnehmung für Teams. Als Einzeltermin, Workshop oder kleine Reihe möglich.',
+    },
   },
   {
-    label: 'Für euch',
-    title: 'Wenn ihr als Gruppe üben möchtet.',
-    tone: 'note',
-    children:
-      'Für private Gruppen, kleine Kreise oder Menschen, die jemanden für einen passenden Ort suchen.',
-    details: [
-      {
-        title: 'Gruppenkurs vor Ort',
-        text: 'Yoga, Qigong oder Taijiquan für kleine Gruppen in vorhandenen Räumen, zuhause, im Garten, im Wintergarten oder an einem anderen passenden Ort.',
-        facts: [
-          { label: 'Gruppentermin', value: 'ab 95 € pro Einheit' },
-          { label: 'Kursblock', value: 'auf Anfrage' },
-        ],
-      },
-      {
-        title: 'Workshop',
-        text: 'Ein kompakter Rahmen für Bewegung, Atem, Entspannung, Präsenz und ein gemeinsames Thema.',
-        facts: [{ label: 'Workshop', value: 'ab 240 €' }],
-      },
-      {
-        title: 'Outdoor-Format',
-        text: 'Ein unkomplizierter Zugang draußen: klar geführt, gut machbar und ohne großen Aufbau.',
-        facts: [{ label: 'Format', value: 'auf Anfrage' }],
-      },
-    ],
+    title: 'Qigong',
+    line: 'Ruhig beginnen, später tiefer gehen.',
+    text: 'Oft der beste bewegte Einstieg: Atem, Stand, Aufmerksamkeit und einfache Bewegung kommen zusammen.',
+    individual: {
+      format: 'Einzeltraining',
+      price: 'ab 70 € pro Einheit',
+      text: 'Für Aufbau, Korrektur und Vertiefung. Sinnvoll, wenn du genau, ruhig und persönlich lernen möchtest.',
+    },
+    group: {
+      format: 'Qigong-Einsteigerkurs',
+      duration: '10 Termine',
+      price: 'ab 1.100 € pro Kursblock',
+      text: 'Ein klarer Kursblock mit Acht Brokaten oder einfachen Übungen aus dem Daoyin Yangsheng Gong.',
+      classText:
+        'Nach dem Kurs kann daraus eine fortlaufende Klasse entstehen: Wiederholung, Varianten, Wahrnehmung und später tiefere Formen.',
+      classPrice: 'fortlaufend ab 110 € pro Termin',
+    },
+    company: {
+      format: 'BGM-Workshop',
+      duration: '90–180 Minuten',
+      price: 'ab 490 €',
+      text: 'Ruhige, körperlich zugängliche Praxis für Teams. Gut als Workshop, Gesundheitstag oder kurze Kursreihe.',
+    },
   },
   {
-    label: 'Für Unternehmen',
-    title: 'Wenn ein Team ein klares Gesundheitsformat braucht.',
-    tone: 'field',
-    accent: 'axisFlow',
-    children:
-      'Für Unternehmen, Einrichtungen und Teams, die Bewegung, Regulation und Präsenz in einen professionellen Rahmen bringen möchten.',
-    details: [
-      {
-        title: 'Firmenmodul',
-        text: 'Ein klarer Praxisblock für Fokus, Entspannung, Atem und alltagstaugliche Regulation.',
-        facts: [{ label: 'Format', value: 'ab 160 €' }],
-      },
-      {
-        title: 'Team-Workshop',
-        text: 'Ein verdichtetes Format für Bewegung, Präsenz, Spannungsregulation und gemeinsame Erfahrung.',
-        facts: [{ label: 'Workshop', value: 'ab 240 €' }],
-      },
-      {
-        title: 'Gesundheitstag',
-        text: 'Ein halber oder ganzer Tag mit stimmigem Ablauf, Praxisblöcken und gut dosierten Impulsen.',
-        facts: [{ label: 'Tagesformat', value: 'ab 550 €' }],
-      },
-    ],
+    title: 'Yoga',
+    line: 'Ein klarer Weg in vollständige Praxis.',
+    text: 'Yoga ist zugänglich, aber größer als ein kurzer Einstieg. Haltung, Atem und Entspannung greifen ineinander.',
+    individual: {
+      format: 'Einzeltraining',
+      price: 'ab 70 € pro Einheit',
+      text: 'Für persönlichen Aufbau, Anpassung und saubere Grundlagen. Besonders sinnvoll, wenn der Körper eigene Rücksicht braucht.',
+    },
+    group: {
+      format: 'Yoga-Kursblock',
+      duration: '14–16 Termine',
+      price: 'ab 1.680 € pro Kursblock',
+      text: 'Ein ruhiger Aufbau in eine vollständige Hatha-Yoga-Praxis mit Asana, Atem, Konzentration und Entspannung.',
+      classText:
+        'Wenn die Grundlagen sitzen, kann daraus eine regelmäßige Yogaklasse mit vollständigem Übungsrahmen entstehen.',
+      classPrice: 'fortlaufend ab 120 € pro Termin',
+    },
+    company: {
+      format: 'Workshop oder Kursreihe',
+      duration: '90–180 Minuten',
+      price: 'ab 490 €',
+      text: 'Für Unternehmen nur sinnvoll, wenn genug Raum für Ruhe, Aufbau und Praxis da ist. Nicht als schnelle Fitnesspause gedacht.',
+    },
+  },
+  {
+    title: 'Taijiquan',
+    line: 'Nicht schnell. Nicht nebenbei.',
+    text: 'Taijiquan braucht Unterbau. Sonst bleibt von der Form nur langsame Bewegung.',
+    individual: {
+      format: 'Einzeltraining',
+      price: 'ab 70 € pro Einheit',
+      text: 'Für ernsthaften Einstieg oder gezielte Vertiefung. Langsam, genau und mit viel Korrektur.',
+    },
+    group: {
+      format: 'Taijiquan-Aufbaukurs',
+      duration: 'ca. 20 Termine',
+      price: 'ab 2.600 € pro Kursblock',
+      text: 'Ein sauberer Einstieg braucht Zeit für Stand, Gewicht, Richtung, Schritte, Struktur und Bewegungsprinzipien.',
+      classText:
+        'Formarbeit gehört in eine stabile Praxis. Dann können Übergänge, Korrektur und innere Ordnung wirklich wachsen.',
+      classPrice: 'fortlaufend ab 130 € pro Termin',
+    },
+    company: {
+      format: 'Sonderformat',
+      duration: 'nach Rahmen',
+      price: 'auf Anfrage',
+      text: 'Nicht als Standardworkshop gedacht. Möglich nur, wenn Zeit, Ziel und Gruppe wirklich dazu passen.',
+    },
+  },
+  {
+    title: 'Besondere Situationen',
+    line: 'Wenn es nicht sauber in eine Preisliste passt.',
+    text: 'Manchmal geht es nicht um ein Standardangebot, sondern darum, ob etwas menschlich, körperlich oder praktisch sinnvoll möglich ist.',
+    individual: {
+      format: 'nach Absprache',
+      price: 'flexibel',
+      text: 'Für Menschen mit wenig Geld, Schwangerschaft, körperlichen Themen, Einschränkungen oder besonderem Bedarf.',
+    },
+    group: {
+      format: 'soziales oder freies Format',
+      duration: 'nach Absprache',
+      price: 'nach Absprache',
+      text: 'Für kleine Gruppen, soziale Kontexte, Ehrenamt, Outdoor-Termine oder gemeinsames Üben draußen.',
+      classText:
+        'Wenn Ort, Menschen und Situation passen, kann daraus ein offenes oder gemeinschaftliches Format entstehen.',
+      classPrice: 'flexibel',
+    },
   },
 ]
 
-const IntegrationSection = ({ onGoToNextStep }: Props) => (
+const IntegrationSection = ({ onGoToNextStep: _onGoToNextStep }: Props) => (
   <Section
     id="integrieren"
     titleId="integrieren-title"
@@ -124,34 +149,6 @@ const IntegrationSection = ({ onGoToNextStep }: Props) => (
     tone="relief"
     movement="integration"
     mix={['opening', 'flow']}
-    assets={[
-      {
-        name: '019_Trägerform',
-        right: 'clamp(-9rem, -6vw, -3rem)',
-        top: 'clamp(2rem, 5vw, 7rem)',
-        width: 'clamp(22rem, 38vw, 48rem)',
-        presence: 'subtle',
-        boundary: 'bleed',
-        mobile: {
-          right: '-14rem',
-          top: '3rem',
-          width: '34rem',
-        },
-      },
-      {
-        name: '028_Dialogform',
-        left: 'clamp(-10rem, -6vw, -3rem)',
-        bottom: 'clamp(-9rem, -7vw, -3rem)',
-        width: 'clamp(18rem, 31vw, 38rem)',
-        presence: 'subtle',
-        boundary: 'bleed',
-        mobile: {
-          left: '-12rem',
-          bottom: '-7rem',
-          width: '30rem',
-        },
-      },
-    ]}
   >
     <Surface
       tone="bare"
@@ -162,27 +159,15 @@ const IntegrationSection = ({ onGoToNextStep }: Props) => (
       weight="quiet"
     >
       <SectionIntro
-        label="Angebote"
         titleId="integrieren-title"
-        title="Was passt zu dir oder zu euch?"
+        title="Du musst nicht schon wissen, ob es Yoga, Qigong oder Taijiquan ist."
         accent="axisDensity"
         max="56rem"
-      >
-        Du musst das nicht perfekt einordnen. Schau erst einmal, welcher Rahmen
-        am nächsten liegt: du allein, ihr als Gruppe oder ein professionelles
-        Format für ein Team.
-      </SectionIntro>
+      />
 
-      <PathwayShell>
-        <Stack>
-          <PathCards
-            movement="integration"
-            mobileAriaLabel="Angebote"
-            columns={3}
-            items={offerItems}
-          />
-        </Stack>
-      </PathwayShell>
+      <Shell>
+        <PathCards items={offerItems} />
+      </Shell>
     </Surface>
   </Section>
 )

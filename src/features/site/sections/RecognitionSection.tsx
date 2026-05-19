@@ -73,7 +73,7 @@ const RecognitionSection = () => (
         title="Herzlich willkommen, ich bin Jonas :-)"
         accent="axisTension"
         max="58rem"
-      ></SectionIntro>
+      />
 
       <ProfileArea>
         <RecognitionProfile
@@ -94,6 +94,31 @@ const RecognitionSection = () => (
             },
             children:
               'Durch ihn und das Daoyin Zentrum Deutschland habe ich verstanden, dass diese Arbeit keine Dekoration ist. Sie ist Übung, Linie, Körperarbeit, Atem, Form, Aufmerksamkeit und die Bereitschaft, etwas wirklich ernst zu nehmen.',
+          }}
+          teaching={{
+            label: 'Unterricht',
+            tone: 'card',
+            accent: 'axisDensity',
+            title: 'Ich unterrichte, was ich selbst übe.',
+            asset: {
+              name: '022_Kühle_Präzision',
+              right: '-8rem',
+              top: '-8rem',
+              width: 'clamp(13rem, 24vw, 21rem)',
+              presence: 'subtle',
+              boundary: 'bleed',
+              opacity: 0.1,
+            },
+            children:
+              'Yoga, Qigong, Daoyin Yangsheng Gong, Taijiquan, Meditation und Entspannung haben unterschiedliche Wurzeln. Im Unterricht werden sie durch Übung lebendig: im Atem, im Körper, in der Aufmerksamkeit und in der Art, wie du mit dir arbeitest.',
+          }}
+          style={{
+            label: 'Stil',
+            tone: 'card',
+            accent: 'axisOpening',
+            title: 'Freude ist kein Gegensatz zu Anspruch.',
+            children:
+              'Ich mag Unterricht, der lebendig ist. Bewegung darf Freude machen, und gleichzeitig darf die Arbeit genau sein. Aus ernsthafter Übung entsteht Leichtigkeit: durch Wiederholung, Aufmerksamkeit und echte Lust an der Sache.',
           }}
           presence={{
             label: 'Bild',
@@ -139,31 +164,6 @@ const RecognitionSection = () => (
                 hours: '60 Stunden',
               },
             ],
-          }}
-          teaching={{
-            label: 'Unterricht',
-            tone: 'card',
-            accent: 'axisDensity',
-            title: 'Ich unterrichte, was ich selbst übe.',
-            asset: {
-              name: '022_Kühle_Präzision',
-              right: '-8rem',
-              top: '-8rem',
-              width: 'clamp(13rem, 24vw, 21rem)',
-              presence: 'subtle',
-              boundary: 'bleed',
-              opacity: 0.1,
-            },
-            children:
-              'Yoga, Qigong, Daoyin Yangsheng Gong, Taijiquan, Meditation und Entspannung haben unterschiedliche Wurzeln. Im Unterricht werden sie durch Übung lebendig: im Atem, im Körper, in der Aufmerksamkeit und in der Art, wie du mit dir arbeitest.',
-          }}
-          style={{
-            label: 'Stil',
-            tone: 'card',
-            accent: 'axisOpening',
-            title: 'Freude ist kein Gegensatz zu Anspruch.',
-            children:
-              'Ich mag Unterricht, der lebendig ist. Bewegung darf Freude machen, und gleichzeitig darf die Arbeit genau sein. Aus ernsthafter Übung entsteht Leichtigkeit: durch Wiederholung, Aufmerksamkeit und echte Lust an der Sache.',
           }}
           scope={{
             label: 'Umfang',

@@ -3,138 +3,207 @@
 
 import { type ReactNode } from 'react'
 import styled from 'styled-components'
-import type { AssetConsumerSpec } from '@/components/assets/registry'
-import Grid from '@/components/primitives/Grid'
-import Stack from '@/components/primitives/Stack'
+import Button from '@/components/actions/Button'
 import Surface from '@/components/primitives/Surface'
-import type { AxisKey, MovementKey, SurfaceToneKey } from '@/design/theme'
+import type { MovementKey } from '@/design/theme'
 import Typography from '@/design/typography'
 
-export type PracticeFieldItem = {
-  label: ReactNode
+type Step = {
+  label: string
   title: ReactNode
-  children: ReactNode
-  tone?: SurfaceToneKey
-  accent?: AxisKey
-  asset?: AssetConsumerSpec | null
+  body: ReactNode
+}
+
+type Method = {
+  title: ReactNode
+  body: ReactNode
+  name: ReactNode
+  note: ReactNode
+}
+
+type Way = {
+  label: string
+  title: ReactNode
+  body: ReactNode
 }
 
 type Props = {
-  items: readonly PracticeFieldItem[]
+  intro: Step
+  steps: readonly Step[]
+  result: Step
+  method: Method
+  ways: readonly Way[]
   movement: MovementKey
   mobileAriaLabel: string
-  footer?: ReactNode
+  onGoToIntegration: () => void
 }
 
-const Desktop = styled.div`
-  display: block;
+const Shell = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(1.5)};
+`
+
+const IntroWrap = styled.div`
+  width: min(100%, 64rem);
+  margin-inline: auto;
+`
+
+const IntroCard = styled(Surface)`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(1)};
+  min-height: ${({ theme }) => theme.spacing(19)};
+  align-content: center;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    min-height: auto;
+    align-content: start;
+  }
+`
+
+const Track = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min(82vw, 23rem);
+  gap: ${({ theme }) => theme.spacing(1)};
+  margin-inline: ${({ theme }) => `-${theme.spacing(1)}`};
+  padding-inline: ${({ theme }) => theme.spacing(1)};
+  padding-bottom: ${({ theme }) => theme.spacing(0.25)};
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
     display: none;
   }
-`
 
-const Mobile = styled.div`
-  display: none;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    display: block;
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    grid-auto-columns: minmax(18rem, 24rem);
+    margin-inline: 0;
+    padding-inline: 0;
   }
 `
 
-const DesktopGrid = styled(Grid)`
-  align-items: stretch;
+const TrackItem = styled.div`
+  scroll-snap-align: start;
 `
 
-const MobileSequence = styled.div`
+const StepCard = styled(Surface)`
+  min-height: ${({ theme }) => theme.spacing(16)};
+  height: 100%;
+  display: grid;
+  align-content: start;
+  gap: ${({ theme }) => theme.spacing(1)};
+`
+
+const MethodCard = styled(Surface)`
   display: grid;
   gap: ${({ theme }) => theme.spacing(1.25)};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    width: min(100%, 64rem);
+    margin-inline: auto;
+  }
 `
 
-const Field = styled.article`
-  min-width: 0;
-  height: 100%;
+const MethodName = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(0.45)};
+  padding-top: ${({ theme }) => theme.spacing(1)};
+  border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
 `
 
-const FieldSurface = styled(Surface)`
-  height: 100%;
+const Ways = styled.div`
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min(82vw, 23rem);
+  gap: ${({ theme }) => theme.spacing(1)};
+  margin-inline: ${({ theme }) => `-${theme.spacing(1)}`};
+  padding-inline: ${({ theme }) => theme.spacing(1)};
+  padding-bottom: ${({ theme }) => theme.spacing(0.25)};
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    width: min(100%, 64rem);
+    margin-inline: auto;
+    padding-inline: 0;
+    grid-auto-flow: initial;
+    grid-auto-columns: initial;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow: visible;
+  }
 `
 
-const Body = styled.div`
-  width: min(100%, 38rem);
+const WayCard = styled.article`
+  scroll-snap-align: start;
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(0.7)};
+  border: 1px solid ${({ theme }) => theme.roles.border.subtle};
+  border-radius: ${({ theme }) => theme.borderRadius.large};
+  background: ${({ theme }) => theme.roles.surface.card};
+  padding: ${({ theme }) => theme.spacing(1.1)};
 `
 
-const Marker = styled.div`
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing(0.75)};
+const Footer = styled(Surface)`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(1.25)};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    width: min(100%, 64rem);
+    margin-inline: auto;
+  }
 `
 
-const MarkerLine = styled.span`
-  width: 2rem;
-  height: 1px;
-  background: ${({ theme }) => theme.roles.border.subtle};
+const FooterText = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(0.8)};
+  max-width: 42rem;
 `
 
-const Footer = styled.div`
-  margin-top: ${({ theme }) => theme.spacing(2)};
+const NoBreak = styled.span`
+  white-space: nowrap;
+  word-break: keep-all;
 `
 
-const PracticeFieldCard = ({
-  item,
+const PracticeFields = ({
+  intro,
+  steps,
+  result,
+  method,
+  ways,
   movement,
-  index,
-  mobile = false,
-}: {
-  item: PracticeFieldItem
-  movement: MovementKey
-  index: number
-  mobile?: boolean
-}) => {
-  const accent = item.accent ?? 'axisDensity'
+  mobileAriaLabel,
+  onGoToIntegration,
+}: Props) => {
+  const flowItems = [...steps, result]
 
   return (
-    <FieldSurface
-      tone={item.tone ?? 'card'}
-      movement={movement}
-      radius="large"
-      bordered
-      padding={mobile ? 'md' : 'lg'}
-      weight="steady"
-      asset={item.asset}
-    >
-      <Body>
-        <Stack gap={mobile ? 3 : 4}>
-          <Marker>
-            <Typography
-              as="span"
-              variant="caption"
-              gutter={false}
-              accent={accent}
-            >
-              {String(index + 1).padStart(2, '0')}
-            </Typography>
-
-            <MarkerLine />
-
-            <Typography
-              as="span"
-              variant="caption"
-              gutter={false}
-              accent={accent}
-            >
-              {item.label}
-            </Typography>
-          </Marker>
-
+    <Shell aria-label={mobileAriaLabel}>
+      <IntroWrap>
+        <IntroCard
+          tone="threshold"
+          movement={movement}
+          radius="large"
+          bordered
+          padding="lg"
+          weight="steady"
+        >
           <Typography
-            as="h3"
-            variant="h3"
+            as="p"
+            variant="caption"
             gutter={false}
-            color="primary"
-            measure="full"
+            accent="axisDensity"
           >
-            {item.title}
+            {intro.label}
+          </Typography>
+
+          <Typography as="h2" variant="h2" gutter={false} color="primary">
+            {intro.title}
           </Typography>
 
           <Typography
@@ -144,50 +213,170 @@ const PracticeFieldCard = ({
             tone="soft"
             cadence="open"
           >
-            {item.children}
+            {intro.body}
           </Typography>
-        </Stack>
-      </Body>
-    </FieldSurface>
+        </IntroCard>
+      </IntroWrap>
+
+      <Track aria-label="Praxisweg">
+        {flowItems.map((item) => (
+          <TrackItem key={item.label}>
+            <StepCard
+              tone="card"
+              movement={movement}
+              radius="large"
+              bordered
+              padding="lg"
+              weight="steady"
+            >
+              <Typography
+                as="p"
+                variant="caption"
+                gutter={false}
+                accent="axisDensity"
+              >
+                {item.label}
+              </Typography>
+
+              <Typography as="h3" variant="h3" gutter={false} color="primary">
+                {item.title}
+              </Typography>
+
+              <Typography
+                as="p"
+                variant="body"
+                gutter={false}
+                tone="soft"
+                cadence="open"
+              >
+                {item.body}
+              </Typography>
+            </StepCard>
+          </TrackItem>
+        ))}
+      </Track>
+
+      <MethodCard
+        tone="note"
+        movement={movement}
+        radius="large"
+        bordered
+        padding="lg"
+        weight="steady"
+      >
+        <Typography
+          as="p"
+          variant="caption"
+          gutter={false}
+          accent="axisDensity"
+        >
+          Die Mitte
+        </Typography>
+
+        <Typography as="h2" variant="h2" gutter={false} color="primary">
+          {method.title}
+        </Typography>
+
+        <Typography
+          as="p"
+          variant="body"
+          gutter={false}
+          tone="soft"
+          cadence="open"
+        >
+          {method.body}
+        </Typography>
+
+        <MethodName>
+          <Typography as="p" variant="subtitle" gutter={false} color="primary">
+            {method.name}
+          </Typography>
+
+          <Typography
+            as="p"
+            variant="body"
+            gutter={false}
+            tone="soft"
+            cadence="open"
+          >
+            {method.note}
+          </Typography>
+        </MethodName>
+      </MethodCard>
+
+      <Ways>
+        {ways.map((way) => (
+          <WayCard key={way.label}>
+            <Typography
+              as="p"
+              variant="caption"
+              gutter={false}
+              accent="axisDensity"
+            >
+              {way.label}
+            </Typography>
+
+            <Typography as="h3" variant="subtitle" gutter={false}>
+              {way.title}
+            </Typography>
+
+            <Typography
+              as="p"
+              variant="body"
+              gutter={false}
+              tone="soft"
+              cadence="open"
+            >
+              {way.body}
+            </Typography>
+          </WayCard>
+        ))}
+      </Ways>
+
+      <Footer
+        tone="note"
+        movement={movement}
+        radius="large"
+        bordered
+        padding="lg"
+        weight="steady"
+      >
+        <Typography
+          as="p"
+          variant="caption"
+          gutter={false}
+          accent="axisDensity"
+        >
+          Der passende Rahmen
+        </Typography>
+
+        <FooterText>
+          <Typography as="h3" variant="h3" gutter={false} color="primary">
+            Manchmal ist ein Kurs der richtige Anfang. Manchmal braucht es
+            Einzelunterricht. Manchmal entsteht daraus eine regelmäßige Gruppe.
+          </Typography>
+
+          <Typography
+            as="p"
+            variant="body"
+            gutter={false}
+            tone="soft"
+            cadence="open"
+          >
+            Entscheidend ist nicht, wie das Format heißt. Entscheidend ist, ob
+            es zu deinem Stand, deinem Alltag und deiner Richtung passt.
+          </Typography>
+        </FooterText>
+
+        <div>
+          <Button variant="primary" onClick={onGoToIntegration}>
+            Angebote ansehen
+          </Button>
+        </div>
+      </Footer>
+    </Shell>
   )
 }
 
-const PracticeFields = ({
-  items,
-  movement,
-  mobileAriaLabel,
-  footer,
-}: Props) => (
-  <>
-    <Desktop>
-      <DesktopGrid columns={2} gap={2} switchAt="md">
-        {items.map((item, index) => (
-          <Field key={index}>
-            <PracticeFieldCard item={item} movement={movement} index={index} />
-          </Field>
-        ))}
-      </DesktopGrid>
-
-      {footer ? <Footer>{footer}</Footer> : null}
-    </Desktop>
-
-    <Mobile aria-label={mobileAriaLabel}>
-      <MobileSequence>
-        {items.map((item, index) => (
-          <Field key={index}>
-            <PracticeFieldCard
-              item={item}
-              movement={movement}
-              index={index}
-              mobile
-            />
-          </Field>
-        ))}
-      </MobileSequence>
-
-      {footer ? <Footer>{footer}</Footer> : null}
-    </Mobile>
-  </>
-)
-
 export default PracticeFields
+export { NoBreak }

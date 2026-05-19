@@ -6,35 +6,16 @@ import PageCanvas from '@/components/compositions/page/PageCanvas'
 import { scrollToTarget } from '@/components/utilities/SmoothScroller'
 import { getClientLogger } from '@/logging'
 import { type SiteSectionId } from '@/features/site/model/sections'
-import ActivationSection from '@/features/site/sections/ActivationSection'
-import ArrivalSection from '@/features/site/sections/ArrivalSection'
-import GroundingSection from '@/features/site/sections/GroundingSection'
 import IntegrationSection from '@/features/site/sections/IntegrationSection'
 import NextStepSection from '@/features/site/sections/NextStepSection'
 import PracticeFieldSection from '@/features/site/sections/PracticeFieldSection'
 import RecognitionSection from '@/features/site/sections/RecognitionSection'
+import SchnupperkursSection from '@/features/site/sections/SchnupperkursSection'
 
 type FlowSource =
-  | 'arrival_activation'
-  | 'activation_practice'
+  | 'schnupperkurs_practice'
   | 'practice_integration'
   | 'integration_next'
-
-const goToSchnupperkurs = () => {
-  const targetPath = '/schnupperkurs'
-
-  getClientLogger()
-    .withContext({
-      cat: 'flow',
-      phase: 'intent',
-    })
-    .info('flow_route_intent', {
-      targetPath,
-      source: 'arrival_schnupperkurs',
-    })
-
-  window.location.assign(targetPath)
-}
 
 const scrollToSection = async (targetId: SiteSectionId, source: FlowSource) => {
   const logger = getClientLogger().withContext({
@@ -106,18 +87,9 @@ const scrollToSection = async (targetId: SiteSectionId, source: FlowSource) => {
 const HomePage = () => (
   <PageCanvas variant="landing" introOffset={false} noFooterGap>
     <Content>
-      <ArrivalSection
-        onGoToSchnupperkurs={goToSchnupperkurs}
-        onGoToActivation={() => {
-          void scrollToSection('aktivieren', 'arrival_activation')
-        }}
-      />
-
-      <GroundingSection />
-
-      <ActivationSection
+      <SchnupperkursSection
         onGoToPracticeField={() => {
-          void scrollToSection('arbeiten', 'activation_practice')
+          void scrollToSection('arbeiten', 'schnupperkurs_practice')
         }}
       />
 

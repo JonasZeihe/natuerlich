@@ -78,16 +78,12 @@ const NextStepSection = () => (
           domain: 'gmail.com',
         }}
         subject="Anfrage zur Praxis"
+        title="Du musst es noch nicht richtig benennen."
+        text="Wenn du nicht sicher bist, welches Format passt, ist das kein Problem. Beschreib einfach kurz, wo du stehst. Dann schauen wir, ob und wie ein sinnvoller Rahmen entstehen kann."
         primaryLabel="E-Mail schreiben"
         copyLabel="Mailadresse kopieren"
         copiedLabel="Adresse kopiert"
         accent="axisFlow"
-        prompt={{
-          label: 'Kontakt',
-          title: 'Schreib mir direkt.',
-          children:
-            'Unklarheit ist kein Problem. Wenn du noch nicht weißt, welches Format passt, ordnen wir es gemeinsam.',
-        }}
       />
     </Surface>
   </Section>
