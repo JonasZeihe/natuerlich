@@ -1,7 +1,6 @@
 // src/features/site/sections/ArrivalSection.tsx
 'use client'
 
-import styled from 'styled-components'
 import Button from '@/components/actions/Button'
 import Grid from '@/components/primitives/Grid'
 import Section from '@/components/primitives/Section'
@@ -11,14 +10,10 @@ import Typography from '@/design/typography'
 
 type Props = {
   onGoToActivation: () => void
-  onGoToIntegration: () => void
+  onGoToSchnupperkurs: () => void
 }
 
-const ArrivalNote = styled.div`
-  max-width: 35rem;
-`
-
-const ArrivalSection = ({ onGoToActivation, onGoToIntegration }: Props) => (
+const ArrivalSection = ({ onGoToActivation, onGoToSchnupperkurs }: Props) => (
   <Section
     id="ankommen"
     container="wide"
@@ -94,8 +89,7 @@ const ArrivalSection = ({ onGoToActivation, onGoToIntegration }: Props) => (
           gutter={false}
           tone="strong"
         >
-          Praxis beginnt nicht bei der Technik. Sie beginnt bei der Frage, warum
-          du überhaupt da bist.
+          Schön, dass du da bist.
         </Typography>
 
         <Typography
@@ -106,36 +100,20 @@ const ArrivalSection = ({ onGoToActivation, onGoToIntegration }: Props) => (
           cadence="open"
           measure="prose"
         >
-          Du musst noch nicht wissen, ob Yoga, Qigong, Taijiquan, Meditation
-          oder Einzelarbeit zu dir passt. Komm erst einmal an. Atme. Spür, wo du
-          gerade stehst. Von dort aus wird klarer, was dich wirklich trägt.
+          Komm erst einmal an. Atme ein. Atme aus. Du musst noch nichts leisten,
+          nichts beweisen und nichts über dich wissen. Für den Anfang reicht
+          dieser Moment.
         </Typography>
       </Stack>
 
       <Grid gap={3} offset={3}>
+        <Button variant="ghost" onClick={onGoToSchnupperkurs}>
+          Schnupperkurs starten
+        </Button>
         <Button variant="ghost" onClick={onGoToActivation}>
           In Bewegung kommen
         </Button>
-        <Button variant="ghost" onClick={onGoToIntegration}>
-          Passenden Rahmen finden
-        </Button>
       </Grid>
-
-      <ArrivalNote>
-        <Stack gap={5}>
-          <Typography as="p" variant="body" gutter={false} accent="axisFlow">
-            Hier geht es nicht darum, dich in eine Methode zu drücken. Es geht
-            darum, eine Praxis zu finden, die aus dir heraus Sinn ergibt: ruhig,
-            klar, körperlich und ehrlich genug, um im Alltag zu tragen.
-          </Typography>
-
-          <Typography as="p" variant="body" gutter={false} tone="soft">
-            Manchmal beginnt Veränderung nicht mit mehr Anstrengung, sondern mit
-            einem Moment, in dem du merkst: So wie bisher muss es nicht
-            weiterlaufen.
-          </Typography>
-        </Stack>
-      </ArrivalNote>
     </Surface>
   </Section>
 )

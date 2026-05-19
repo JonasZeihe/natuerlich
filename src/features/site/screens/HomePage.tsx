@@ -16,10 +16,25 @@ import RecognitionSection from '@/features/site/sections/RecognitionSection'
 
 type FlowSource =
   | 'arrival_activation'
-  | 'arrival_integration'
   | 'activation_practice'
   | 'practice_integration'
   | 'integration_next'
+
+const goToSchnupperkurs = () => {
+  const targetPath = '/schnupperkurs'
+
+  getClientLogger()
+    .withContext({
+      cat: 'flow',
+      phase: 'intent',
+    })
+    .info('flow_route_intent', {
+      targetPath,
+      source: 'arrival_schnupperkurs',
+    })
+
+  window.location.assign(targetPath)
+}
 
 const scrollToSection = async (targetId: SiteSectionId, source: FlowSource) => {
   const logger = getClientLogger().withContext({
@@ -92,11 +107,9 @@ const HomePage = () => (
   <PageCanvas variant="landing" introOffset={false} noFooterGap>
     <Content>
       <ArrivalSection
+        onGoToSchnupperkurs={goToSchnupperkurs}
         onGoToActivation={() => {
           void scrollToSection('aktivieren', 'arrival_activation')
-        }}
-        onGoToIntegration={() => {
-          void scrollToSection('integrieren', 'arrival_integration')
         }}
       />
 

@@ -10,7 +10,7 @@ const NextStepSection = () => (
   <Section
     id="anschluss"
     titleId="anschluss-title"
-    ariaLabel="Anschluss"
+    ariaLabel="Kontakt"
     container="wide"
     content="default"
     variant="outro"
@@ -60,16 +60,15 @@ const NextStepSection = () => (
       weight="quiet"
     >
       <SectionIntro
-        label="Anschluss"
+        label="Kontakt"
         titleId="anschluss-title"
-        title="Wenn du wissen möchtest, ob das passt, schreib mir."
+        title="Schreib mir, wenn du wissen möchtest, ob das passt."
         accent="axisFlow"
         max="58rem"
       >
-        Du musst noch nicht genau wissen, welches Format richtig ist. Ein paar
-        Sätze reichen: wo du gerade stehst, was dich interessiert und ob es um
-        Kurs, Einzelarbeit, eine Gruppe, ein Firmenformat oder erstmal
-        Orientierung geht.
+        Ein paar Sätze reichen. Wer du bist, was dich hierher geführt hat und ob
+        du eher an Kurs, Einzelunterricht, einer Gruppe, einem Firmenformat oder
+        erst einmal Orientierung interessiert bist.
       </SectionIntro>
 
       <ContactPanel
@@ -87,7 +86,7 @@ const NextStepSection = () => (
           label: 'Kontakt',
           title: 'Schreib mir direkt.',
           children:
-            'Schreib kurz, wer du bist, was dich hierher geführt hat und welche Form von Praxis dich interessiert. Unklarheit ist kein Problem: Wenn Kurs, Klasse, Einzelarbeit, Gruppe oder Firmenformat noch nicht klar sind, ordnen wir es gemeinsam.',
+            'Unklarheit ist kein Problem. Wenn du noch nicht weißt, welches Format passt, ordnen wir es gemeinsam.',
         }}
       />
     </Surface>
