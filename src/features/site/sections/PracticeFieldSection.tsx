@@ -1,29 +1,18 @@
+// src/features/site/sections/PracticeFieldSection.tsx
 'use client'
 
 import styled from 'styled-components'
-import Button from '@/components/actions/Button'
-import PracticeFields from '@/components/content/PracticeFields'
+import PracticeFields, { NoBreak } from '@/components/content/PracticeFields'
 import SectionIntro from '@/components/content/SectionIntro'
 import Section from '@/components/primitives/Section'
-import Stack from '@/components/primitives/Stack'
 import Surface from '@/components/primitives/Surface'
-import Typography from '@/design/typography'
 
 type Props = {
   onGoToIntegration: () => void
 }
 
 const PracticePanel = styled.div`
-  margin-top: ${({ theme }) => theme.spacing(3)};
-`
-
-const FooterBody = styled.div`
-  width: min(100%, 56rem);
-`
-
-const FooterAction = styled.div`
-  display: flex;
-  align-items: center;
+  margin-top: ${({ theme }) => theme.spacing(2.5)};
 `
 
 const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
@@ -58,104 +47,66 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
         <PracticeFields
           movement="practice"
           mobileAriaLabel="Praxisweg"
-          scene={{
-            title:
-              'Manchmal liegt man wach und merkt- der Atem allein findet den Weg nicht zurück: Phasenverschiebung',
-            body: 'Nicht, weil die Übung falsch ist. Sondern weil der Körper schon lange vorher in eine andere Richtung geraten ist. Ruhe lässt sich dann nicht einfach einschalten. Sie braucht einen Weg, der früher beginnt.',
+          onGoToIntegration={onGoToIntegration}
+          intro={{
+            label: 'Anfang',
+            title: 'Wenn der Atem nicht mehr reicht.',
+            body: 'Manchmal macht man alles richtig. Man atmet. Man entspannt. Man will zur Ruhe kommen. Und trotzdem findet das System nicht zurück. Dann ist nicht die einzelne Technik das Problem, sondern der Zustand, in dem sie angewendet wird.',
           }}
-          forge={{
-            title: 'Stressmanagement ist der Schlüssel.',
-            body: 'Nicht als Theorie über Stress. Als praktische Fähigkeit, den eigenen Zustand früher zu lesen: bevor Schlaf kippt, bevor Spannung normal wird, bevor der Körper erst nachts zeigt, was tagsüber keinen Raum hatte.',
-            items: [
-              {
-                label: 'Atmung',
-                text: 'öffnet Rhythmus, Weite und einen ersten direkten Zugang zum eigenen Zustand',
-              },
-              {
-                label: 'Entspannung',
-                text: 'macht spürbar, wo Spannung sitzt, wie sie gehalten wird und wo sie nachlassen kann',
-              },
-              {
-                label: 'Achtsamkeit',
-                text: 'ordnet Wahrnehmung, ohne sofort zu bewerten, zu reparieren oder wegzudrücken',
-              },
-            ],
+          steps={[
+            {
+              label: 'Atem',
+              title: 'Der Atem ist der erste Zugang.',
+              body: 'Er öffnet Rhythmus, Weite und Wahrnehmung. Nicht als Trick, der sofort alles löst, sondern als Anfang einer Beziehung zum eigenen System.',
+            },
+            {
+              label: 'Entspannung',
+              title: 'Entspannung muss wieder gelernt werden.',
+              body: 'Viele Menschen merken erst in der Ruhe, wie viel Spannung sie tragen. Entspannung heißt dann nicht einfach loslassen, sondern spüren, wo etwas gehalten wird und wie es langsam nachgeben kann.',
+            },
+            {
+              label: 'Achtsamkeit',
+              title: 'Achtsamkeit ordnet Wahrnehmung.',
+              body: 'Body Scan, Meditation und einfache Aufmerksamkeit helfen, nicht sofort zu bewerten, zu reparieren oder wegzudrücken. Man lernt, genauer da zu sein, ohne sich im eigenen Zustand zu verlieren.',
+            },
+            {
+              label: 'Regulation',
+              title: 'Daraus entsteht Stressmanagement.',
+              body: 'Stressmanagement ist dann kein theoretisches Thema mehr, sondern eine Konsequenz aus Wahrnehmung, Atem, Entspannung und Achtsamkeit. Man lernt, den eigenen Zustand früher zu lesen, bevor Schlaf kippt, Spannung normal wird oder der Körper erst nachts zeigt, was tagsüber keinen Raum hatte.',
+            },
+          ]}
+          result={{
+            label: 'Praxis',
+            title: 'Dann wird aus Technik ein Weg.',
+            body: 'Atmung, Entspannung und Achtsamkeit bleiben nicht getrennt. Sie greifen ineinander. Erst dadurch wird Bewegung mehr als Bewegung: eine Praxis, die den ganzen Menschen mitnimmt.',
           }}
-          center={{
-            title: 'In 導引養生功 wird daraus eine zusammenhängende Praxis.',
-            body: 'Daoyin Yangsheng Gong ist für mich die Mitte dieser Arbeit: führen, bis Bewegung antwortet; nähren, was lebendig werden darf; üben, bis daraus Können entsteht.',
+          method={{
+            title: 'In der Mitte steht Daoyin Yangsheng Gong.',
+            body: 'Das ist der Zusammenhang, aus dem ich arbeite. Nicht als exotisches Etikett, sondern als gelernte Praxis: Atem, Aufmerksamkeit, Gesundheitspflege, Bewegung, Qigong und später auch Taijiquan.',
+            name: (
+              <>
+                Daoyin Yangsheng Gong — <NoBreak>導引養生功</NoBreak>
+              </>
+            ),
+            note: 'Der Name bedeutet sinngemäß: führen, nähren, üben. Erst kommt die Erfahrung. Dann bekommt sie einen Namen.',
           }}
           ways={[
             {
+              label: 'Yoga',
+              title: 'Verbinden, anschirren, ausrichten.',
+              body: 'Yoga kommt von yuj. Gemeint ist hier kein einzelner Trick und keine Körperform zum Abhaken, sondern ein Übungsweg für Körper, Atem, Geist und Alltag: Haltung, Bewegung, Atmung, Entspannung, Konzentration und die Art, wie du mit dir selbst umgehst.',
+            },
+            {
               label: 'Qigong',
-              title: '氣功 ist oft der zugänglichste Einstieg.',
-              body: 'Atem, Stand, Aufmerksamkeit und wiederholbare Bewegungen verbinden sich zu einer ruhigen Praxis. Sie kann einfach beginnen und mit der Zeit tiefer werden.',
+              title: 'Übung an der Lebendigkeit.',
+              body: '氣功: Qi als Atem, Dampf und Lebenskraft. Gong als Übung, Arbeit und erworbenes Können. Im alten Zeichen steckt das Bild von Reis, aus dem Wärme aufsteigt. Qigong ist keine Energiebehauptung, sondern Praxis: führen, atmen, drehen, wahrnehmen, wiederholen.',
             },
             {
               label: 'Taijiquan',
-              title: '太極拳 braucht mehr Unterbau.',
-              body: 'Die Form ist nicht der Anfang. Erst wenn Stand, Gewicht, Richtung und Mitte lesbar werden, kann aus langsamer Bewegung geführte Kraft entstehen.',
-            },
-            {
-              label: 'Yoga',
-              title: 'Yoga steht als eigener klarer Weg daneben.',
-              body: 'Haltung, Atem, Konzentration und Entspannung kommen in eine feste Praxisform. Nicht als Lifestyle, sondern als vollständiger körperlicher Übungsweg.',
+              title: 'Ruhe als geführte Kraft.',
+              body: '太極拳: Taiji, das höchste Prinzip. Quan, die Faust. Taijiquan ist nicht langsames Qigong und nicht Entspannungsbewegung mit schöner Form. Es ist Arbeit an Struktur, Mitte, Gewicht, Richtung, Wandlung und Kraft ohne Verkrampfung.',
             },
           ]}
-          footer={
-            <Surface
-              tone="note"
-              movement="practice"
-              radius="large"
-              bordered
-              padding="lg"
-              weight="steady"
-            >
-              <Stack gap={4} align="start">
-                <Typography
-                  as="p"
-                  variant="caption"
-                  gutter={false}
-                  accent="axisDensity"
-                >
-                  Der passende Rahmen
-                </Typography>
-
-                <FooterBody>
-                  <Stack gap={3}>
-                    <Typography
-                      as="h3"
-                      variant="h3"
-                      gutter={false}
-                      color="primary"
-                    >
-                      Manchmal ist ein Kurs der richtige Anfang. Manchmal
-                      braucht es Einzelunterricht. Manchmal entsteht daraus eine
-                      regelmäßige Gruppe.
-                    </Typography>
-
-                    <Typography
-                      as="p"
-                      variant="body"
-                      gutter={false}
-                      tone="soft"
-                      cadence="open"
-                    >
-                      Entscheidend ist nicht, wie das Format heißt. Entscheidend
-                      ist, ob es zu deinem Stand, deinem Alltag und deiner
-                      Richtung passt.
-                    </Typography>
-                  </Stack>
-                </FooterBody>
-
-                <FooterAction>
-                  <Button variant="primary" onClick={onGoToIntegration}>
-                    Angebote ansehen
-                  </Button>
-                </FooterAction>
-              </Stack>
-            </Surface>
-          }
         />
       </PracticePanel>
     </Surface>

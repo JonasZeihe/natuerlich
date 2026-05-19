@@ -1,3 +1,4 @@
+// src/features/site/sections/IntegrationSection.tsx
 'use client'
 
 import styled from 'styled-components'

@@ -4,7 +4,6 @@
 import { useMemo, useState, type ReactNode } from 'react'
 import styled from 'styled-components'
 import Button from '@/components/actions/Button'
-import Stack from '@/components/primitives/Stack'
 import Surface from '@/components/primitives/Surface'
 import type { AxisKey, MovementKey } from '@/design/theme'
 import Typography from '@/design/typography'
@@ -14,76 +13,74 @@ type MailParts = {
   domain: string
 }
 
-type ContactPrompt = {
-  label: ReactNode
-  title: ReactNode
-  children: ReactNode
-}
-
 type Props = {
   movement: MovementKey
   mail: MailParts
   subject: string
+  title: ReactNode
+  text: ReactNode
+  hint?: ReactNode
   primaryLabel: ReactNode
   copyLabel: ReactNode
   copiedLabel: ReactNode
-  prompt: ContactPrompt
-  processLabel?: ReactNode
-  process?: ReactNode
   accent?: AxisKey
 }
 
 const Shell = styled.div`
-  margin-top: ${({ theme }) => theme.spacing(3)};
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(1.5)};
+  margin-top: ${({ theme }) => theme.spacing(2.5)};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     margin-top: ${({ theme }) => theme.spacing(2)};
-    gap: ${({ theme }) => theme.spacing(1.25)};
   }
 `
 
-const Gateway = styled(Surface)`
+const Panel = styled(Surface)`
+  width: min(100%, 64rem);
+  margin-inline: auto;
   display: grid;
-  gap: ${({ theme }) => theme.spacing(2)};
+  gap: ${({ theme }) => theme.spacing(1.5)};
 `
 
-const GatewayGrid = styled.div`
+const Grid = styled.div`
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.62fr);
-  gap: ${({ theme }) => theme.spacing(2)};
-  align-items: end;
+  gap: ${({ theme }) => theme.spacing(1.5)};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    grid-template-columns: 1fr;
-    gap: ${({ theme }) => theme.spacing(1.5)};
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    grid-template-columns: minmax(0, 1fr) minmax(17rem, 0.42fr);
+    align-items: end;
+    gap: ${({ theme }) => theme.spacing(2)};
   }
 `
 
-const TextColumn = styled.div`
-  max-width: 50rem;
-`
-
-const ActionColumn = styled.div`
+const Text = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(0.75)};
+  gap: ${({ theme }) => theme.spacing(0.85)};
+  max-width: 48rem;
 `
 
 const Hint = styled.div`
-  max-width: 26rem;
+  padding-top: ${({ theme }) => theme.spacing(0.85)};
+  border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
+  max-width: 42rem;
 `
 
-const SecondaryAction = styled.button`
+const Actions = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(0.7)};
+`
+
+const CopyButton = styled.button`
+  appearance: none;
   border: 0;
   background: transparent;
-  color: ${({ theme }) => theme.getAxisRole('axisDensity').text};
-  padding: ${({ theme }) => theme.spacingHalf(1)};
+  color: ${({ theme }) => theme.roles.text.subtle};
+  padding: ${({ theme }) => theme.spacing(0.4)};
   font: inherit;
-  text-align: center;
   cursor: pointer;
+  text-align: center;
 
   &:hover {
+    color: ${({ theme }) => theme.roles.text.primary};
     text-decoration: underline;
     text-underline-offset: 0.16em;
   }
@@ -95,22 +92,18 @@ const SecondaryAction = styled.button`
   }
 `
 
-const Process = styled(Surface)`
-  max-width: 58rem;
-`
-
 const buildMail = ({ local, domain }: MailParts) => `${local}@${domain}`
 
 const ContactPanel = ({
   movement,
   mail,
   subject,
+  title,
+  text,
+  hint,
   primaryLabel,
   copyLabel,
   copiedLabel,
-  prompt,
-  processLabel,
-  process,
   accent = 'axisDensity',
 }: Props) => {
   const [copied, setCopied] = useState(false)
@@ -136,7 +129,7 @@ const ContactPanel = ({
 
   return (
     <Shell>
-      <Gateway
+      <Panel
         tone="card"
         movement={movement}
         radius="large"
@@ -144,68 +137,11 @@ const ContactPanel = ({
         padding="lg"
         weight="steady"
       >
-        <GatewayGrid>
-          <TextColumn>
-            <Stack gap={4}>
-              <Typography
-                as="p"
-                variant="caption"
-                gutter={false}
-                accent={accent}
-              >
-                {prompt.label}
-              </Typography>
-
-              <Typography as="h3" variant="h3" gutter={false} color="primary">
-                {prompt.title}
-              </Typography>
-
-              <Typography
-                as="p"
-                variant="body"
-                gutter={false}
-                tone="soft"
-                cadence="open"
-              >
-                {prompt.children}
-              </Typography>
-            </Stack>
-          </TextColumn>
-
-          <ActionColumn>
-            <Button variant="primary" fullWidth onClick={openMail}>
-              {primaryLabel}
-            </Button>
-
-            <SecondaryAction type="button" onClick={copyMail}>
-              <Typography as="span" variant="caption" gutter={false}>
-                {copied ? copiedLabel : copyLabel}
-              </Typography>
-            </SecondaryAction>
-          </ActionColumn>
-        </GatewayGrid>
-      </Gateway>
-
-      {process ? (
-        <Process
-          tone="field"
-          movement={movement}
-          radius="large"
-          bordered
-          padding="md"
-          weight="steady"
-        >
-          <Stack gap={3}>
-            {processLabel ? (
-              <Typography
-                as="p"
-                variant="caption"
-                gutter={false}
-                accent={accent}
-              >
-                {processLabel}
-              </Typography>
-            ) : null}
+        <Grid>
+          <Text>
+            <Typography as="h3" variant="h3" gutter={false} color="primary">
+              {title}
+            </Typography>
 
             <Typography
               as="p"
@@ -213,13 +149,32 @@ const ContactPanel = ({
               gutter={false}
               tone="soft"
               cadence="open"
-              measure="prose"
             >
-              {process}
+              {text}
             </Typography>
-          </Stack>
-        </Process>
-      ) : null}
+
+            {hint ? (
+              <Hint>
+                <Typography as="p" variant="caption" gutter={false} tone="soft">
+                  {hint}
+                </Typography>
+              </Hint>
+            ) : null}
+          </Text>
+
+          <Actions>
+            <Button variant="primary" fullWidth onClick={openMail}>
+              {primaryLabel}
+            </Button>
+
+            <CopyButton type="button" onClick={copyMail}>
+              <Typography as="span" variant="caption" gutter={false}>
+                {copied ? copiedLabel : copyLabel}
+              </Typography>
+            </CopyButton>
+          </Actions>
+        </Grid>
+      </Panel>
     </Shell>
   )
 }

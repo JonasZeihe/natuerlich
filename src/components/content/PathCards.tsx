@@ -1,3 +1,4 @@
+// src/components/content/PathCards.tsx
 'use client'
 
 import { useState, type ReactNode } from 'react'

@@ -1,217 +1,209 @@
+// src/components/content/PracticeFields.tsx
 'use client'
 
 import { type ReactNode } from 'react'
 import styled from 'styled-components'
-import Stack from '@/components/primitives/Stack'
+import Button from '@/components/actions/Button'
 import Surface from '@/components/primitives/Surface'
-import type { AxisKey, MovementKey, SurfaceToneKey } from '@/design/theme'
+import type { MovementKey } from '@/design/theme'
 import Typography from '@/design/typography'
 
-type TextBlock = {
-  label?: ReactNode
+type Step = {
+  label: string
   title: ReactNode
   body: ReactNode
-  accent?: AxisKey
-  tone?: SurfaceToneKey
 }
 
-type ForgeBlock = TextBlock & {
-  items: readonly {
-    label: ReactNode
-    text: ReactNode
-  }[]
+type Method = {
+  title: ReactNode
+  body: ReactNode
+  name: ReactNode
+  note: ReactNode
+}
+
+type Way = {
+  label: string
+  title: ReactNode
+  body: ReactNode
 }
 
 type Props = {
-  scene: TextBlock
-  forge: ForgeBlock
-  center: TextBlock
-  ways: readonly TextBlock[]
+  intro: Step
+  steps: readonly Step[]
+  result: Step
+  method: Method
+  ways: readonly Way[]
   movement: MovementKey
   mobileAriaLabel: string
-  footer?: ReactNode
+  onGoToIntegration: () => void
 }
 
 const Shell = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(2)};
+  gap: ${({ theme }) => theme.spacing(1.5)};
+`
+
+const IntroWrap = styled.div`
+  width: min(100%, 64rem);
+  margin-inline: auto;
+`
+
+const IntroCard = styled(Surface)`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(1)};
+  min-height: ${({ theme }) => theme.spacing(19)};
+  align-content: center;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    gap: ${({ theme }) => theme.spacing(1.25)};
+    min-height: auto;
+    align-content: start;
   }
 `
 
-const Flow = styled.div`
+const Track = styled.div`
   display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min(82vw, 23rem);
   gap: ${({ theme }) => theme.spacing(1)};
-`
+  margin-inline: ${({ theme }) => `-${theme.spacing(1)}`};
+  padding-inline: ${({ theme }) => theme.spacing(1)};
+  padding-bottom: ${({ theme }) => theme.spacing(0.25)};
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
 
-const Passage = styled(Surface)<{ $compact?: boolean }>`
-  position: relative;
-  overflow: hidden;
-  padding-top: ${({ theme, $compact }) => theme.spacing($compact ? 1.5 : 2.25)};
-  padding-bottom: ${({ theme, $compact }) =>
-    theme.spacing($compact ? 1.5 : 2.25)};
-`
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
-const PassageInner = styled.div<{ $wide?: boolean }>`
-  width: min(100%, ${({ $wide }) => ($wide ? '62rem' : '48rem')});
-`
-
-const PassageLine = styled.div`
-  width: 3rem;
-  height: 1px;
-  margin-bottom: ${({ theme }) => theme.spacing(2)};
-  background: ${({ theme }) => theme.roles.border.subtle};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    margin-bottom: ${({ theme }) => theme.spacing(1.25)};
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    grid-auto-columns: minmax(18rem, 24rem);
+    margin-inline: 0;
+    padding-inline: 0;
   }
 `
 
-const Split = styled.div`
-  display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
-  gap: ${({ theme }) => theme.spacing(2)};
-  align-items: stretch;
+const TrackItem = styled.div`
+  scroll-snap-align: start;
+`
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    grid-template-columns: 1fr;
-    gap: ${({ theme }) => theme.spacing(1.25)};
+const StepCard = styled(Surface)`
+  min-height: ${({ theme }) => theme.spacing(16)};
+  height: 100%;
+  display: grid;
+  align-content: start;
+  gap: ${({ theme }) => theme.spacing(1)};
+`
+
+const MethodCard = styled(Surface)`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(1.25)};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    width: min(100%, 64rem);
+    margin-inline: auto;
   }
 `
 
-const ForgeList = styled.ul`
+const MethodName = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(1)};
-  margin: 0;
-  padding: 0;
-  list-style: none;
-`
-
-const ForgeItem = styled.li`
-  display: grid;
-  grid-template-columns: minmax(6rem, 0.28fr) minmax(0, 1fr);
-  gap: ${({ theme }) => theme.spacing(1)};
-  align-items: baseline;
+  gap: ${({ theme }) => theme.spacing(0.45)};
   padding-top: ${({ theme }) => theme.spacing(1)};
   border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
-
-  &:first-child {
-    padding-top: 0;
-    border-top: 0;
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    grid-template-columns: 1fr;
-    gap: ${({ theme }) => theme.spacing(0.35)};
-  }
 `
 
-const Center = styled(Surface)`
+const Ways = styled.div`
   display: grid;
-  align-items: center;
-  min-height: ${({ theme }) => theme.spacing(18)};
-`
-
-const CenterText = styled.div`
-  width: min(100%, 58rem);
-`
-
-const WayGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-flow: column;
+  grid-auto-columns: min(82vw, 23rem);
   gap: ${({ theme }) => theme.spacing(1)};
+  margin-inline: ${({ theme }) => `-${theme.spacing(1)}`};
+  padding-inline: ${({ theme }) => theme.spacing(1)};
+  padding-bottom: ${({ theme }) => theme.spacing(0.25)};
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    grid-template-columns: 1fr;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    width: min(100%, 64rem);
+    margin-inline: auto;
+    padding-inline: 0;
+    grid-auto-flow: initial;
+    grid-auto-columns: initial;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow: visible;
   }
 `
 
-const WayCard = styled(Surface)`
-  height: 100%;
+const WayCard = styled.article`
+  scroll-snap-align: start;
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(0.7)};
+  border: 1px solid ${({ theme }) => theme.roles.border.subtle};
+  border-radius: ${({ theme }) => theme.borderRadius.large};
+  background: ${({ theme }) => theme.roles.surface.card};
+  padding: ${({ theme }) => theme.spacing(1.1)};
+`
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    border-color: transparent;
-    background: transparent;
-    padding-right: 0;
-    padding-left: 0;
-    box-shadow: none;
+const Footer = styled(Surface)`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(1.25)};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    width: min(100%, 64rem);
+    margin-inline: auto;
   }
 `
 
-const Footer = styled.div`
-  margin-top: ${({ theme }) => theme.spacing(0.25)};
+const FooterText = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(0.8)};
+  max-width: 42rem;
 `
 
-const accentOf = (block: TextBlock, fallback: AxisKey): AxisKey =>
-  block.accent ?? fallback
+const NoBreak = styled.span`
+  white-space: nowrap;
+  word-break: keep-all;
+`
 
-const toneOf = (block: TextBlock, fallback: SurfaceToneKey): SurfaceToneKey =>
-  block.tone ?? fallback
+const PracticeFields = ({
+  intro,
+  steps,
+  result,
+  method,
+  ways,
+  movement,
+  mobileAriaLabel,
+  onGoToIntegration,
+}: Props) => {
+  const flowItems = [...steps, result]
 
-const PassageText = ({
-  block,
-  accent,
-  titleVariant = 'h3',
-  wide = false,
-}: {
-  block: TextBlock
-  accent: AxisKey
-  titleVariant?: 'h2' | 'h3'
-  wide?: boolean
-}) => (
-  <PassageInner $wide={wide}>
-    <Stack gap={3}>
-      {block.label ? (
-        <Typography as="p" variant="caption" gutter={false} accent={accent}>
-          {block.label}
-        </Typography>
-      ) : null}
-
-      <Typography
-        as={titleVariant}
-        variant={titleVariant}
-        gutter={false}
-        color="primary"
-        measure={wide ? 'wide' : 'full'}
-      >
-        {block.title}
-      </Typography>
-
-      <Typography
-        as="p"
-        variant="body"
-        gutter={false}
-        tone="soft"
-        cadence="open"
-      >
-        {block.body}
-      </Typography>
-    </Stack>
-  </PassageInner>
-)
-
-const ForgeContent = ({
-  forge,
-  accent,
-}: {
-  forge: ForgeBlock
-  accent: AxisKey
-}) => (
-  <Stack gap={4}>
-    <PassageText block={forge} accent={accent} titleVariant="h2" wide />
-
-    <ForgeList>
-      {forge.items.map((item, index) => (
-        <ForgeItem key={`${item.label}-${index}`}>
+  return (
+    <Shell aria-label={mobileAriaLabel}>
+      <IntroWrap>
+        <IntroCard
+          tone="threshold"
+          movement={movement}
+          radius="large"
+          bordered
+          padding="lg"
+          weight="steady"
+        >
           <Typography
-            as="span"
+            as="p"
             variant="caption"
             gutter={false}
-            accent={accent}
+            accent="axisDensity"
           >
-            {item.label}
+            {intro.label}
+          </Typography>
+
+          <Typography as="h2" variant="h2" gutter={false} color="primary">
+            {intro.title}
           </Typography>
 
           <Typography
@@ -221,103 +213,170 @@ const ForgeContent = ({
             tone="soft"
             cadence="open"
           >
-            {item.text}
+            {intro.body}
           </Typography>
-        </ForgeItem>
-      ))}
-    </ForgeList>
-  </Stack>
-)
+        </IntroCard>
+      </IntroWrap>
 
-const PracticeFields = ({
-  scene,
-  forge,
-  center,
-  ways,
-  movement,
-  mobileAriaLabel,
-  footer,
-}: Props) => {
-  const sceneAccent = accentOf(scene, 'axisTension')
-  const forgeAccent = accentOf(forge, 'axisDensity')
-  const centerAccent = accentOf(center, 'axisDensity')
-
-  return (
-    <Shell aria-label={mobileAriaLabel}>
-      <Flow>
-        <Passage
-          tone={toneOf(scene, 'threshold')}
-          movement={movement}
-          radius="large"
-          bordered
-          padding="lg"
-          weight="steady"
-        >
-          <PassageLine />
-          <PassageText
-            block={scene}
-            accent={sceneAccent}
-            titleVariant="h2"
-            wide
-          />
-        </Passage>
-
-        <Split>
-          <Passage
-            tone={toneOf(forge, 'card')}
-            movement={movement}
-            radius="large"
-            bordered
-            padding="lg"
-            weight="steady"
-            $compact
-          >
-            <ForgeContent forge={forge} accent={forgeAccent} />
-          </Passage>
-        </Split>
-
-        <Center
-          tone={toneOf(center, 'note')}
-          movement={movement}
-          radius="large"
-          bordered
-          padding="lg"
-          weight="steady"
-        >
-          <CenterText>
-            <PassageText
-              block={center}
-              accent={centerAccent}
-              titleVariant="h2"
-              wide
-            />
-          </CenterText>
-        </Center>
-      </Flow>
-
-      <WayGrid>
-        {ways.map((way, index) => {
-          const accent = accentOf(way, 'axisDensity')
-
-          return (
-            <WayCard
-              key={`${way.label ?? index}`}
-              tone={toneOf(way, 'card')}
+      <Track aria-label="Praxisweg">
+        {flowItems.map((item) => (
+          <TrackItem key={item.label}>
+            <StepCard
+              tone="card"
               movement={movement}
               radius="large"
               bordered
-              padding="md"
+              padding="lg"
               weight="steady"
             >
-              <PassageText block={way} accent={accent} />
-            </WayCard>
-          )
-        })}
-      </WayGrid>
+              <Typography
+                as="p"
+                variant="caption"
+                gutter={false}
+                accent="axisDensity"
+              >
+                {item.label}
+              </Typography>
 
-      {footer ? <Footer>{footer}</Footer> : null}
+              <Typography as="h3" variant="h3" gutter={false} color="primary">
+                {item.title}
+              </Typography>
+
+              <Typography
+                as="p"
+                variant="body"
+                gutter={false}
+                tone="soft"
+                cadence="open"
+              >
+                {item.body}
+              </Typography>
+            </StepCard>
+          </TrackItem>
+        ))}
+      </Track>
+
+      <MethodCard
+        tone="note"
+        movement={movement}
+        radius="large"
+        bordered
+        padding="lg"
+        weight="steady"
+      >
+        <Typography
+          as="p"
+          variant="caption"
+          gutter={false}
+          accent="axisDensity"
+        >
+          Die Mitte
+        </Typography>
+
+        <Typography as="h2" variant="h2" gutter={false} color="primary">
+          {method.title}
+        </Typography>
+
+        <Typography
+          as="p"
+          variant="body"
+          gutter={false}
+          tone="soft"
+          cadence="open"
+        >
+          {method.body}
+        </Typography>
+
+        <MethodName>
+          <Typography as="p" variant="subtitle" gutter={false} color="primary">
+            {method.name}
+          </Typography>
+
+          <Typography
+            as="p"
+            variant="body"
+            gutter={false}
+            tone="soft"
+            cadence="open"
+          >
+            {method.note}
+          </Typography>
+        </MethodName>
+      </MethodCard>
+
+      <Ways>
+        {ways.map((way) => (
+          <WayCard key={way.label}>
+            <Typography
+              as="p"
+              variant="caption"
+              gutter={false}
+              accent="axisDensity"
+            >
+              {way.label}
+            </Typography>
+
+            <Typography as="h3" variant="subtitle" gutter={false}>
+              {way.title}
+            </Typography>
+
+            <Typography
+              as="p"
+              variant="body"
+              gutter={false}
+              tone="soft"
+              cadence="open"
+            >
+              {way.body}
+            </Typography>
+          </WayCard>
+        ))}
+      </Ways>
+
+      <Footer
+        tone="note"
+        movement={movement}
+        radius="large"
+        bordered
+        padding="lg"
+        weight="steady"
+      >
+        <Typography
+          as="p"
+          variant="caption"
+          gutter={false}
+          accent="axisDensity"
+        >
+          Der passende Rahmen
+        </Typography>
+
+        <FooterText>
+          <Typography as="h3" variant="h3" gutter={false} color="primary">
+            Manchmal ist ein Kurs der richtige Anfang. Manchmal braucht es
+            Einzelunterricht. Manchmal entsteht daraus eine regelmäßige Gruppe.
+          </Typography>
+
+          <Typography
+            as="p"
+            variant="body"
+            gutter={false}
+            tone="soft"
+            cadence="open"
+          >
+            Entscheidend ist nicht, wie das Format heißt. Entscheidend ist, ob
+            es zu deinem Stand, deinem Alltag und deiner Richtung passt.
+          </Typography>
+        </FooterText>
+
+        <div>
+          <Button variant="primary" onClick={onGoToIntegration}>
+            Angebote ansehen
+          </Button>
+        </div>
+      </Footer>
     </Shell>
   )
 }
 
 export default PracticeFields
+export { NoBreak }
