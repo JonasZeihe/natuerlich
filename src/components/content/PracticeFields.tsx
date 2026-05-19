@@ -1,140 +1,217 @@
-// src/components/content/PracticeFields.tsx
 'use client'
 
 import { type ReactNode } from 'react'
 import styled from 'styled-components'
-import type { AssetConsumerSpec } from '@/components/assets/registry'
-import Grid from '@/components/primitives/Grid'
 import Stack from '@/components/primitives/Stack'
 import Surface from '@/components/primitives/Surface'
 import type { AxisKey, MovementKey, SurfaceToneKey } from '@/design/theme'
 import Typography from '@/design/typography'
 
-export type PracticeFieldItem = {
-  label: ReactNode
+type TextBlock = {
+  label?: ReactNode
   title: ReactNode
-  children: ReactNode
-  tone?: SurfaceToneKey
+  body: ReactNode
   accent?: AxisKey
-  asset?: AssetConsumerSpec | null
+  tone?: SurfaceToneKey
+}
+
+type ForgeBlock = TextBlock & {
+  items: readonly {
+    label: ReactNode
+    text: ReactNode
+  }[]
 }
 
 type Props = {
-  items: readonly PracticeFieldItem[]
+  scene: TextBlock
+  forge: ForgeBlock
+  center: TextBlock
+  ways: readonly TextBlock[]
   movement: MovementKey
   mobileAriaLabel: string
   footer?: ReactNode
 }
 
-const Desktop = styled.div`
-  display: block;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    display: none;
-  }
-`
-
-const Mobile = styled.div`
-  display: none;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    display: block;
-  }
-`
-
-const DesktopGrid = styled(Grid)`
-  align-items: stretch;
-`
-
-const MobileSequence = styled.div`
+const Shell = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(1.25)};
+  gap: ${({ theme }) => theme.spacing(2)};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    gap: ${({ theme }) => theme.spacing(1.25)};
+  }
 `
 
-const Field = styled.article`
-  min-width: 0;
-  height: 100%;
+const Flow = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(1)};
 `
 
-const FieldSurface = styled(Surface)`
-  height: 100%;
+const Passage = styled(Surface)<{ $compact?: boolean }>`
+  position: relative;
+  overflow: hidden;
+  padding-top: ${({ theme, $compact }) => theme.spacing($compact ? 1.5 : 2.25)};
+  padding-bottom: ${({ theme, $compact }) =>
+    theme.spacing($compact ? 1.5 : 2.25)};
 `
 
-const Body = styled.div`
-  width: min(100%, 38rem);
+const PassageInner = styled.div<{ $wide?: boolean }>`
+  width: min(100%, ${({ $wide }) => ($wide ? '62rem' : '48rem')});
 `
 
-const Marker = styled.div`
-  display: flex;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing(0.75)};
-`
-
-const MarkerLine = styled.span`
-  width: 2rem;
+const PassageLine = styled.div`
+  width: 3rem;
   height: 1px;
+  margin-bottom: ${({ theme }) => theme.spacing(2)};
   background: ${({ theme }) => theme.roles.border.subtle};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    margin-bottom: ${({ theme }) => theme.spacing(1.25)};
+  }
+`
+
+const Split = styled.div`
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: ${({ theme }) => theme.spacing(2)};
+  align-items: stretch;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    grid-template-columns: 1fr;
+    gap: ${({ theme }) => theme.spacing(1.25)};
+  }
+`
+
+const ForgeList = styled.ul`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(1)};
+  margin: 0;
+  padding: 0;
+  list-style: none;
+`
+
+const ForgeItem = styled.li`
+  display: grid;
+  grid-template-columns: minmax(6rem, 0.28fr) minmax(0, 1fr);
+  gap: ${({ theme }) => theme.spacing(1)};
+  align-items: baseline;
+  padding-top: ${({ theme }) => theme.spacing(1)};
+  border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
+
+  &:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    grid-template-columns: 1fr;
+    gap: ${({ theme }) => theme.spacing(0.35)};
+  }
+`
+
+const Center = styled(Surface)`
+  display: grid;
+  align-items: center;
+  min-height: ${({ theme }) => theme.spacing(18)};
+`
+
+const CenterText = styled.div`
+  width: min(100%, 58rem);
+`
+
+const WayGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: ${({ theme }) => theme.spacing(1)};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    grid-template-columns: 1fr;
+  }
+`
+
+const WayCard = styled(Surface)`
+  height: 100%;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    border-color: transparent;
+    background: transparent;
+    padding-right: 0;
+    padding-left: 0;
+    box-shadow: none;
+  }
 `
 
 const Footer = styled.div`
-  margin-top: ${({ theme }) => theme.spacing(2)};
+  margin-top: ${({ theme }) => theme.spacing(0.25)};
 `
 
-const PracticeFieldCard = ({
-  item,
-  movement,
-  index,
-  mobile = false,
+const accentOf = (block: TextBlock, fallback: AxisKey): AxisKey =>
+  block.accent ?? fallback
+
+const toneOf = (block: TextBlock, fallback: SurfaceToneKey): SurfaceToneKey =>
+  block.tone ?? fallback
+
+const PassageText = ({
+  block,
+  accent,
+  titleVariant = 'h3',
+  wide = false,
 }: {
-  item: PracticeFieldItem
-  movement: MovementKey
-  index: number
-  mobile?: boolean
-}) => {
-  const accent = item.accent ?? 'axisDensity'
+  block: TextBlock
+  accent: AxisKey
+  titleVariant?: 'h2' | 'h3'
+  wide?: boolean
+}) => (
+  <PassageInner $wide={wide}>
+    <Stack gap={3}>
+      {block.label ? (
+        <Typography as="p" variant="caption" gutter={false} accent={accent}>
+          {block.label}
+        </Typography>
+      ) : null}
 
-  return (
-    <FieldSurface
-      tone={item.tone ?? 'card'}
-      movement={movement}
-      radius="large"
-      bordered
-      padding={mobile ? 'md' : 'lg'}
-      weight="steady"
-      asset={item.asset}
-    >
-      <Body>
-        <Stack gap={mobile ? 3 : 4}>
-          <Marker>
-            <Typography
-              as="span"
-              variant="caption"
-              gutter={false}
-              accent={accent}
-            >
-              {String(index + 1).padStart(2, '0')}
-            </Typography>
+      <Typography
+        as={titleVariant}
+        variant={titleVariant}
+        gutter={false}
+        color="primary"
+        measure={wide ? 'wide' : 'full'}
+      >
+        {block.title}
+      </Typography>
 
-            <MarkerLine />
+      <Typography
+        as="p"
+        variant="body"
+        gutter={false}
+        tone="soft"
+        cadence="open"
+      >
+        {block.body}
+      </Typography>
+    </Stack>
+  </PassageInner>
+)
 
-            <Typography
-              as="span"
-              variant="caption"
-              gutter={false}
-              accent={accent}
-            >
-              {item.label}
-            </Typography>
-          </Marker>
+const ForgeContent = ({
+  forge,
+  accent,
+}: {
+  forge: ForgeBlock
+  accent: AxisKey
+}) => (
+  <Stack gap={4}>
+    <PassageText block={forge} accent={accent} titleVariant="h2" wide />
 
+    <ForgeList>
+      {forge.items.map((item, index) => (
+        <ForgeItem key={`${item.label}-${index}`}>
           <Typography
-            as="h3"
-            variant="h3"
+            as="span"
+            variant="caption"
             gutter={false}
-            color="primary"
-            measure="full"
+            accent={accent}
           >
-            {item.title}
+            {item.label}
           </Typography>
 
           <Typography
@@ -144,50 +221,103 @@ const PracticeFieldCard = ({
             tone="soft"
             cadence="open"
           >
-            {item.children}
+            {item.text}
           </Typography>
-        </Stack>
-      </Body>
-    </FieldSurface>
-  )
-}
+        </ForgeItem>
+      ))}
+    </ForgeList>
+  </Stack>
+)
 
 const PracticeFields = ({
-  items,
+  scene,
+  forge,
+  center,
+  ways,
   movement,
   mobileAriaLabel,
   footer,
-}: Props) => (
-  <>
-    <Desktop>
-      <DesktopGrid columns={2} gap={2} switchAt="md">
-        {items.map((item, index) => (
-          <Field key={index}>
-            <PracticeFieldCard item={item} movement={movement} index={index} />
-          </Field>
-        ))}
-      </DesktopGrid>
+}: Props) => {
+  const sceneAccent = accentOf(scene, 'axisTension')
+  const forgeAccent = accentOf(forge, 'axisDensity')
+  const centerAccent = accentOf(center, 'axisDensity')
 
-      {footer ? <Footer>{footer}</Footer> : null}
-    </Desktop>
+  return (
+    <Shell aria-label={mobileAriaLabel}>
+      <Flow>
+        <Passage
+          tone={toneOf(scene, 'threshold')}
+          movement={movement}
+          radius="large"
+          bordered
+          padding="lg"
+          weight="steady"
+        >
+          <PassageLine />
+          <PassageText
+            block={scene}
+            accent={sceneAccent}
+            titleVariant="h2"
+            wide
+          />
+        </Passage>
 
-    <Mobile aria-label={mobileAriaLabel}>
-      <MobileSequence>
-        {items.map((item, index) => (
-          <Field key={index}>
-            <PracticeFieldCard
-              item={item}
-              movement={movement}
-              index={index}
-              mobile
+        <Split>
+          <Passage
+            tone={toneOf(forge, 'card')}
+            movement={movement}
+            radius="large"
+            bordered
+            padding="lg"
+            weight="steady"
+            $compact
+          >
+            <ForgeContent forge={forge} accent={forgeAccent} />
+          </Passage>
+        </Split>
+
+        <Center
+          tone={toneOf(center, 'note')}
+          movement={movement}
+          radius="large"
+          bordered
+          padding="lg"
+          weight="steady"
+        >
+          <CenterText>
+            <PassageText
+              block={center}
+              accent={centerAccent}
+              titleVariant="h2"
+              wide
             />
-          </Field>
-        ))}
-      </MobileSequence>
+          </CenterText>
+        </Center>
+      </Flow>
+
+      <WayGrid>
+        {ways.map((way, index) => {
+          const accent = accentOf(way, 'axisDensity')
+
+          return (
+            <WayCard
+              key={`${way.label ?? index}`}
+              tone={toneOf(way, 'card')}
+              movement={movement}
+              radius="large"
+              bordered
+              padding="md"
+              weight="steady"
+            >
+              <PassageText block={way} accent={accent} />
+            </WayCard>
+          )
+        })}
+      </WayGrid>
 
       {footer ? <Footer>{footer}</Footer> : null}
-    </Mobile>
-  </>
-)
+    </Shell>
+  )
+}
 
 export default PracticeFields

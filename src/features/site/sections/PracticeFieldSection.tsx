@@ -1,4 +1,3 @@
-// src/features/site/sections/PracticeFieldSection.tsx
 'use client'
 
 import styled from 'styled-components'
@@ -50,92 +49,57 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
     >
       <SectionIntro
         titleId="arbeiten-title"
-        title="Yoga, Qigong und Taijiquan — ich bin, was ich tue."
+        title="Schmiede die Schwerter vor dem Krieg"
         accent="axisDensity"
         max="58rem"
-      >
-        Jetzt geht es nicht mehr um schöne Begriffe. Jetzt geht es um Praxis. Um
-        alte Übungswege, die im Körper landen müssen: Atem, Kraft, Ruhe,
-        Aufmerksamkeit, Regulation und die Fähigkeit, wirklich bei dem zu
-        bleiben, was du tust.
-      </SectionIntro>
+      />
 
       <PracticePanel>
         <PracticeFields
           movement="practice"
-          mobileAriaLabel="Praxisfelder"
-          items={[
-            {
-              label: 'Yoga',
-              title:
-                'Von yuj: verbinden, anschirren, ausrichten — ein Übungsweg für Körper, Atem, Geist und Alltag.',
-              tone: 'card',
-              accent: 'axisDensity',
-              asset: {
-                name: '012_S-Kurve',
-                right: '-6rem',
-                bottom: '-7rem',
-                width: 'clamp(12rem, 24vw, 20rem)',
-                presence: 'subtle',
-                boundary: 'bleed',
-                opacity: 0.12,
+          mobileAriaLabel="Praxisweg"
+          scene={{
+            title:
+              'Manchmal liegt man wach und merkt- der Atem allein findet den Weg nicht zurück: Phasenverschiebung',
+            body: 'Nicht, weil die Übung falsch ist. Sondern weil der Körper schon lange vorher in eine andere Richtung geraten ist. Ruhe lässt sich dann nicht einfach einschalten. Sie braucht einen Weg, der früher beginnt.',
+          }}
+          forge={{
+            title: 'Stressmanagement ist der Schlüssel.',
+            body: 'Nicht als Theorie über Stress. Als praktische Fähigkeit, den eigenen Zustand früher zu lesen: bevor Schlaf kippt, bevor Spannung normal wird, bevor der Körper erst nachts zeigt, was tagsüber keinen Raum hatte.',
+            items: [
+              {
+                label: 'Atmung',
+                text: 'öffnet Rhythmus, Weite und einen ersten direkten Zugang zum eigenen Zustand',
               },
-              children:
-                'Yoga ist hier kein einzelner Trick und keine Körperform zum Abhaken. Es geht darum, den Menschen wieder in Beziehung zu bringen: Haltung, Bewegung, Atmung, Entspannung, Konzentration und die Art, wie du mit dir selbst umgehst.',
-            },
+              {
+                label: 'Entspannung',
+                text: 'macht spürbar, wo Spannung sitzt, wie sie gehalten wird und wo sie nachlassen kann',
+              },
+              {
+                label: 'Achtsamkeit',
+                text: 'ordnet Wahrnehmung, ohne sofort zu bewerten, zu reparieren oder wegzudrücken',
+              },
+            ],
+          }}
+          center={{
+            title: 'In 導引養生功 wird daraus eine zusammenhängende Praxis.',
+            body: 'Daoyin Yangsheng Gong ist für mich die Mitte dieser Arbeit: führen, bis Bewegung antwortet; nähren, was lebendig werden darf; üben, bis daraus Können entsteht.',
+          }}
+          ways={[
             {
               label: 'Qigong',
-              title:
-                '氣功: Qi als Atem, Dampf und Lebenskraft. Gong als Übung, Arbeit und erworbenes Können.',
-              tone: 'field',
-              accent: 'axisDensity',
-              asset: {
-                name: '005_Gewichtsverlagerung',
-                right: '-7rem',
-                top: '-7rem',
-                width: 'clamp(12rem, 25vw, 20rem)',
-                presence: 'subtle',
-                boundary: 'bleed',
-                opacity: 0.1,
-              },
-              children:
-                'Im alten Zeichen steckt dieses starke Bild: Reis, aus dem Wärme aufsteigt. Qigong ist keine Energiebehauptung, sondern Übung an der Lebendigkeit. Im Daoyin Yangsheng Gong nach Prof. Zhang Guangde wird daraus Lebenspflege in Bewegung: führen, atmen, drehen, wahrnehmen, wiederholen — einfach genug für den Einstieg, präzise genug für echte Arbeit.',
+              title: '氣功 ist oft der zugänglichste Einstieg.',
+              body: 'Atem, Stand, Aufmerksamkeit und wiederholbare Bewegungen verbinden sich zu einer ruhigen Praxis. Sie kann einfach beginnen und mit der Zeit tiefer werden.',
             },
             {
               label: 'Taijiquan',
-              title:
-                '太極拳: Taiji, das höchste Prinzip. Quan, die Faust. Ruhe als geführte Kraft.',
-              tone: 'card',
-              accent: 'axisOpening',
-              asset: {
-                name: '003_Standfeld',
-                right: '-6rem',
-                bottom: '-7rem',
-                width: 'clamp(12rem, 24vw, 20rem)',
-                presence: 'subtle',
-                boundary: 'bleed',
-                opacity: 0.1,
-              },
-              children:
-                'Taijiquan ist nicht langsames Qigong und nicht Entspannungsbewegung mit schöner Form. Es ist eine innere Kampfkunst: Arbeit an Struktur, Mitte, Gewicht, Richtung, Wandlung und Kraft ohne Verkrampfung. Ruhig von außen, sehr genau von innen.',
+              title: '太極拳 braucht mehr Unterbau.',
+              body: 'Die Form ist nicht der Anfang. Erst wenn Stand, Gewicht, Richtung und Mitte lesbar werden, kann aus langsamer Bewegung geführte Kraft entstehen.',
             },
             {
-              label: 'Meditation und Entspannung',
-              title:
-                'Entspannungsfähigkeit ist keine Stimmung. Sie ist eine trainierbare Form neurovegetativer Regulation.',
-              tone: 'field',
-              accent: 'axisFlow',
-              asset: {
-                name: '021_Ruhige_Wärme',
-                right: '-7rem',
-                top: '-6rem',
-                width: 'clamp(12rem, 24vw, 20rem)',
-                presence: 'subtle',
-                boundary: 'bleed',
-                opacity: 0.12,
-              },
-              children:
-                'Stress ist nicht nur ein Moment, der wieder verschwindet. Er kann dein System verschieben, bis Anspannung normal wirkt und Erholung nicht mehr richtig greift. Darum üben wir parasympathikotone Umschaltung: Atem, Wahrnehmung, Rhythmus, Stille und einen Körper, der wieder lernen darf, vom Angriff in Regeneration zu wechseln.',
+              label: 'Yoga',
+              title: 'Yoga steht als eigener klarer Weg daneben.',
+              body: 'Haltung, Atem, Konzentration und Entspannung kommen in eine feste Praxisform. Nicht als Lifestyle, sondern als vollständiger körperlicher Übungsweg.',
             },
           ]}
           footer={
@@ -146,15 +110,6 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
               bordered
               padding="lg"
               weight="steady"
-              asset={{
-                name: '031_Tatkraft',
-                right: '-5rem',
-                bottom: '-6rem',
-                width: 'clamp(13rem, 22vw, 20rem)',
-                presence: 'subtle',
-                boundary: 'bleed',
-                opacity: 0.1,
-              }}
             >
               <Stack gap={4} align="start">
                 <Typography
@@ -174,8 +129,9 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
                       gutter={false}
                       color="primary"
                     >
-                      Manchmal reicht ein Kurs. Manchmal braucht es
-                      Einzelunterricht. Manchmal wollt ihr als Gruppe üben.
+                      Manchmal ist ein Kurs der richtige Anfang. Manchmal
+                      braucht es Einzelunterricht. Manchmal entsteht daraus eine
+                      regelmäßige Gruppe.
                     </Typography>
 
                     <Typography
