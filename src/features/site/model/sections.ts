@@ -1,23 +1,13 @@
 // src/features/site/model/sections.ts
 export const SITE_SECTIONS = [
   {
-    id: 'ankommen',
-    label: 'Ankommen',
-    showInHeader: true,
-  },
-  {
-    id: 'sammeln',
-    label: 'Sammeln',
-    showInHeader: true,
-  },
-  {
-    id: 'aktivieren',
-    label: 'Aktivieren',
+    id: 'schnupperkurs',
+    label: 'Schnupperkurs',
     showInHeader: true,
   },
   {
     id: 'arbeiten',
-    label: 'Arbeiten',
+    label: 'Praxis',
     showInHeader: true,
   },
   {
@@ -27,12 +17,12 @@ export const SITE_SECTIONS = [
   },
   {
     id: 'integrieren',
-    label: 'Integrieren',
+    label: 'Angebot',
     showInHeader: true,
   },
   {
     id: 'anschluss',
-    label: 'Anschluss',
+    label: 'Kontakt',
     showInHeader: true,
   },
 ] as const

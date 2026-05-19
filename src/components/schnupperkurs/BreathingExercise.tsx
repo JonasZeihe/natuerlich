@@ -32,7 +32,11 @@ type CarrierStyle = {
   opacity: MotionValue<number>
 }
 
-const BreathingExercise = () => {
+type Props = {
+  showWebsiteAction?: boolean
+}
+
+const BreathingExercise = ({ showWebsiteAction = true }: Props) => {
   const phaseProgress = useMotionValue(0)
   const [state, setState] = useState<BreathExerciseState>('idle')
   const [countdown, setCountdown] = useState(countdownStart)
@@ -161,7 +165,7 @@ const BreathingExercise = () => {
   }
 
   const returnToWebsite = () => {
-    window.location.assign('/#ankommen')
+    window.location.assign('/#schnupperkurs')
   }
 
   return (
@@ -209,9 +213,11 @@ const BreathingExercise = () => {
       </Canvas>
 
       <AppActions>
-        <QuietAction type="button" onClick={returnToWebsite}>
-          Website
-        </QuietAction>
+        {showWebsiteAction ? (
+          <QuietAction type="button" onClick={returnToWebsite}>
+            Website
+          </QuietAction>
+        ) : null}
 
         <QuietAction
           type="button"
