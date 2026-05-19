@@ -2,13 +2,11 @@
 'use client'
 
 import styled from 'styled-components'
-import Button from '@/components/actions/Button'
 import PathCards, { type PathCardItem } from '@/components/content/PathCards'
 import SectionIntro from '@/components/content/SectionIntro'
 import Section from '@/components/primitives/Section'
 import Stack from '@/components/primitives/Stack'
 import Surface from '@/components/primitives/Surface'
-import Typography from '@/design/typography'
 
 type Props = {
   onGoToNextStep: () => void
@@ -18,21 +16,17 @@ const PathwayShell = styled.div`
   margin-top: ${({ theme }) => theme.spacing(3)};
 `
 
-const Footnote = styled.div`
-  max-width: 60rem;
-`
-
 const offerItems: readonly PathCardItem[] = [
   {
     label: 'Für dich',
     title: 'Wenn du selbst üben möchtest.',
     accent: 'axisDensity',
     children:
-      'Für Einzelpersonen, die Yoga, Qigong, Taijiquan oder einen klar geführten Einzelunterricht suchen.',
+      'Für dich, wenn du einen Kurs suchst, wieder einsteigen willst oder persönliche Begleitung brauchst.',
     details: [
       {
         title: 'Yoga',
-        text: 'Klar geführte Praxis mit Bewegung, Atem und Ruhe. Geeignet für Einsteiger, Wiedereinsteiger und alle, die regelmäßig üben wollen.',
+        text: 'Geführte Praxis mit Bewegung, Atem, Entspannung und Ruhe. Für Einsteiger, Wiedereinsteiger und Menschen, die regelmäßig üben möchten.',
         facts: [
           { label: 'Kursblock', value: 'ab 129 €' },
           { label: 'Einzelunterricht', value: 'ab 70 € pro Einheit' },
@@ -40,7 +34,7 @@ const offerItems: readonly PathCardItem[] = [
       },
       {
         title: 'Qigong',
-        text: 'Ruhige, konzentrierte Bewegung für Sammlung, Aufrichtung und Fluss. Geeignet für regelmäßige Praxis und einen klaren Einstieg.',
+        text: 'Ruhige, wiederholbare Bewegung für Sammlung, Aufrichtung, Atem und innere Ordnung.',
         facts: [
           { label: 'Kursblock', value: 'ab 129 €' },
           { label: 'Einzelunterricht', value: 'ab 70 € pro Einheit' },
@@ -48,7 +42,7 @@ const offerItems: readonly PathCardItem[] = [
       },
       {
         title: 'Taijiquan',
-        text: 'Präzise Bewegung mit Stand, Übergängen und Formprinzipien. Für Menschen, die ruhig und gleichzeitig klar arbeiten wollen.',
+        text: 'Langsame, präzise Bewegung mit Stand, Gewichtsverlagerung, Richtung und Formbewusstsein.',
         facts: [
           { label: 'Kursblock', value: 'ab 129 €' },
           { label: 'Einzelunterricht', value: 'ab 70 € pro Einheit' },
@@ -56,7 +50,7 @@ const offerItems: readonly PathCardItem[] = [
       },
       {
         title: 'Einzelunterricht',
-        text: 'Wenn du ein persönliches Format suchst, das genau auf deinen Stand, dein Thema oder dein Ziel abgestimmt ist.',
+        text: 'Wenn du genauer arbeiten möchtest: an deinem Stand, deinem Thema, deinem Körper, deinem Einstieg oder deiner Praxis zuhause.',
         facts: [
           { label: 'Einzeltermin', value: 'ab 70 € pro Einheit' },
           { label: 'Begleitung', value: 'ab 250 € als Paket' },
@@ -65,15 +59,15 @@ const offerItems: readonly PathCardItem[] = [
     ],
   },
   {
-    label: 'Für Gruppen',
-    title: 'Wenn ihr als Gruppe etwas buchen möchtet.',
+    label: 'Für euch',
+    title: 'Wenn ihr als Gruppe üben möchtet.',
     tone: 'note',
     children:
-      'Für private Gruppen, kleine Teams oder bestehende Kreise mit eigenen Räumlichkeiten oder einem passenden Ort vor Ort.',
+      'Für private Gruppen, kleine Kreise oder Menschen, die jemanden für einen passenden Ort suchen.',
     details: [
       {
         title: 'Gruppenkurs vor Ort',
-        text: 'Yoga, Qigong oder Taijiquan für kleine Gruppen in vorhandenen Räumen, zuhause oder an einem passenden Ort.',
+        text: 'Yoga, Qigong oder Taijiquan für kleine Gruppen in vorhandenen Räumen, zuhause, im Garten, im Wintergarten oder an einem anderen passenden Ort.',
         facts: [
           { label: 'Gruppentermin', value: 'ab 95 € pro Einheit' },
           { label: 'Kursblock', value: 'auf Anfrage' },
@@ -81,37 +75,37 @@ const offerItems: readonly PathCardItem[] = [
       },
       {
         title: 'Workshop',
-        text: 'Ein kompaktes Format für Gruppen, die einen klaren thematischen Rahmen möchten: Bewegung, Atem, Präsenz und Spannungsregulation.',
+        text: 'Ein kompakter Rahmen für Bewegung, Atem, Entspannung, Präsenz und ein gemeinsames Thema.',
         facts: [{ label: 'Workshop', value: 'ab 240 €' }],
       },
       {
         title: 'Outdoor-Format',
-        text: 'Einfach, direkt und gut geeignet für Gruppen, die draußen üben oder einen offenen Zugang wählen möchten.',
+        text: 'Ein unkomplizierter Zugang draußen: klar geführt, gut machbar und ohne großen Aufbau.',
         facts: [{ label: 'Format', value: 'auf Anfrage' }],
       },
     ],
   },
   {
     label: 'Für Unternehmen',
-    title: 'Wenn ein Team oder eine Einrichtung ein gutes Format braucht.',
+    title: 'Wenn ein Team ein klares Gesundheitsformat braucht.',
     tone: 'field',
     accent: 'axisFlow',
     children:
-      'Für Unternehmen, Einrichtungen und Teams, die ein professionelles Angebot für Bewegung, Regulation und Präsenz suchen.',
+      'Für Unternehmen, Einrichtungen und Teams, die Bewegung, Regulation und Präsenz in einen professionellen Rahmen bringen möchten.',
     details: [
       {
         title: 'Firmenmodul',
-        text: 'Ein kompaktes Format für Fokus, Regulation und alltagstaugliche Praxis. Klar, direkt und ohne unnötigen Überbau.',
+        text: 'Ein klarer Praxisblock für Fokus, Entspannung, Atem und alltagstaugliche Regulation.',
         facts: [{ label: 'Format', value: 'ab 160 €' }],
       },
       {
         title: 'Team-Workshop',
-        text: 'Ein verdichtetes Format für Bewegung, Atem, Präsenz und Spannungsregulation in einem professionellen Rahmen.',
+        text: 'Ein verdichtetes Format für Bewegung, Präsenz, Spannungsregulation und gemeinsame Erfahrung.',
         facts: [{ label: 'Workshop', value: 'ab 240 €' }],
       },
       {
         title: 'Gesundheitstag',
-        text: 'Ein klarer Rahmen für halbe oder ganze Tage mit Praxisblöcken, Workshops und einem stimmigen Ablauf.',
+        text: 'Ein halber oder ganzer Tag mit stimmigem Ablauf, Praxisblöcken und gut dosierten Impulsen.',
         facts: [{ label: 'Tagesformat', value: 'ab 550 €' }],
       },
     ],
@@ -170,19 +164,20 @@ const IntegrationSection = ({ onGoToNextStep }: Props) => (
       <SectionIntro
         label="Angebote"
         titleId="integrieren-title"
-        title="Einfach, klar und direkt buchbar."
+        title="Was passt zu dir oder zu euch?"
         accent="axisDensity"
         max="56rem"
       >
-        Ob für dich selbst, für eine Gruppe oder für ein Unternehmen: Hier
-        findest du die wichtigsten Formate auf einen Blick.
+        Du musst das nicht perfekt einordnen. Schau erst einmal, welcher Rahmen
+        am nächsten liegt: du allein, ihr als Gruppe oder ein professionelles
+        Format für ein Team.
       </SectionIntro>
 
       <PathwayShell>
         <Stack>
           <PathCards
             movement="integration"
-            mobileAriaLabel="Angebotswege"
+            mobileAriaLabel="Angebote"
             columns={3}
             items={offerItems}
           />

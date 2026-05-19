@@ -11,7 +11,7 @@ import Typography from '@/design/typography'
 
 type ProfileBlock = {
   label: ReactNode
-  title: ReactNode
+  title?: ReactNode
   children: ReactNode
   tone?: SurfaceToneKey
   accent?: AxisKey
@@ -27,7 +27,7 @@ type Credential = {
 
 type CredentialBlock = {
   label: ReactNode
-  title: ReactNode
+  title?: ReactNode
   items: readonly Credential[]
   tone?: SurfaceToneKey
   accent?: AxisKey
@@ -41,6 +41,15 @@ type Props = {
   teaching: ProfileBlock
   style: ProfileBlock
   scope: ProfileBlock
+}
+
+type ProfileCardProps = {
+  block: ProfileBlock
+  movement: MovementKey
+  headingVariant?: 'h3' | 'subtitle'
+  bodyWidth?: 'body' | 'wide' | 'full'
+  padding?: 'md' | 'lg'
+  children?: ReactNode
 }
 
 const DesktopShell = styled.div`
@@ -68,32 +77,45 @@ const DesktopLead = styled.div`
   align-items: stretch;
 `
 
-const HumanPanel = styled(Surface)`
+const EvidenceRow = styled.div`
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(20rem, 0.8fr);
+  gap: ${({ theme }) => theme.spacing(1.5)};
+  align-items: start;
+`
+
+const SideEvidence = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(1.5)};
+`
+
+const CardSurface = styled(Surface)`
+  min-height: 0;
+`
+
+const LeadSurface = styled(Surface)`
   height: 100%;
 `
 
-const HumanContent = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(2)};
+const CredentialsSurface = styled(Surface)`
   height: 100%;
 `
 
-const HumanBody = styled.div`
-  max-width: 42rem;
+const CardBody = styled.div<{ $width: 'body' | 'wide' | 'full' }>`
+  max-width: ${({ $width }) =>
+    $width === 'wide' ? '58rem' : $width === 'body' ? '44rem' : 'none'};
 `
 
-const PresenceAside = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(0.75)};
+const PresenceNote = styled.div`
   padding-top: ${({ theme }) => theme.spacing(1.25)};
   border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    padding-top: ${({ theme }) => theme.spacing(1)};
+  }
 `
 
-const CredentialsPanel = styled(Surface)`
-  height: 100%;
-`
-
-const DesktopTimeline = styled.ol`
+const CredentialList = styled.ol`
   position: relative;
   display: grid;
   gap: ${({ theme }) => theme.spacing(1)};
@@ -110,9 +132,18 @@ const DesktopTimeline = styled.ol`
     width: 1px;
     background: ${({ theme }) => theme.getMovementRole('recognition').border};
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    gap: ${({ theme }) => theme.spacing(0.8)};
+    padding-left: 0;
+
+    &::before {
+      display: none;
+    }
+  }
 `
 
-const DesktopTimelineItem = styled.li`
+const CredentialItem = styled.li`
   position: relative;
   display: grid;
   gap: ${({ theme }) => theme.spacing(0.3)};
@@ -129,9 +160,17 @@ const DesktopTimelineItem = styled.li`
     box-shadow: 0 0 0 4px
       ${({ theme }) => theme.getMovementRole('recognition').field};
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    gap: ${({ theme }) => theme.spacing(0.2)};
+
+    &::before {
+      display: none;
+    }
+  }
 `
 
-const TimelineMeta = styled.div`
+const CredentialMeta = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: ${({ theme }) => theme.spacing(0.25)}
@@ -140,57 +179,6 @@ const TimelineMeta = styled.div`
 
 const MetaDivider = styled.span`
   color: ${({ theme }) => theme.roles.text.subtle};
-`
-
-const EvidenceRow = styled.div`
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(20rem, 0.8fr);
-  gap: ${({ theme }) => theme.spacing(1.5)};
-  align-items: start;
-`
-
-const TeachingPanel = styled(Surface)`
-  min-height: 0;
-`
-
-const SideEvidence = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(1.5)};
-`
-
-const CompactPanel = styled(Surface)`
-  min-height: 0;
-`
-
-const Body = styled.div`
-  max-width: 44rem;
-`
-
-const WideBody = styled.div`
-  max-width: 58rem;
-`
-
-const MobileLead = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(1)};
-`
-
-const MobilePresenceNote = styled.div`
-  padding-top: ${({ theme }) => theme.spacing(1)};
-  border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
-`
-
-const MobileCredentialList = styled.ol`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(0.8)};
-  margin: 0;
-  padding: 0;
-  list-style: none;
-`
-
-const MobileCredentialItem = styled.li`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(0.2)};
 `
 
 const MobileDeck = styled.div`
@@ -255,34 +243,42 @@ const Segment = styled.button<{ $active: boolean }>`
 const blockAccent = (block: { accent?: AxisKey }) =>
   block.accent ?? 'axisDensity'
 
-const MobileProfileSurface = ({
+const ProfileCard = ({
   block,
   movement,
-}: {
-  block: ProfileBlock
-  movement: MovementKey
-}) => {
+  headingVariant = 'h3',
+  bodyWidth = 'body',
+  padding = 'lg',
+  children,
+}: ProfileCardProps) => {
   const accent = blockAccent(block)
 
   return (
-    <Surface
+    <CardSurface
       tone={block.tone ?? 'card'}
       movement={movement}
       radius="large"
       bordered
-      padding="lg"
+      padding={padding}
       weight="steady"
       asset={block.asset}
     >
-      <Body>
+      <CardBody $width={bodyWidth}>
         <Stack gap={3}>
           <Typography as="p" variant="caption" gutter={false} accent={accent}>
             {block.label}
           </Typography>
 
-          <Typography as="h3" variant="h3" gutter={false} color="primary">
-            {block.title}
-          </Typography>
+          {block.title ? (
+            <Typography
+              as="h3"
+              variant={headingVariant}
+              gutter={false}
+              color="primary"
+            >
+              {block.title}
+            </Typography>
+          ) : null}
 
           <Typography
             as="p"
@@ -293,258 +289,169 @@ const MobileProfileSurface = ({
           >
             {block.children}
           </Typography>
+
+          {children}
         </Stack>
-      </Body>
-    </Surface>
+      </CardBody>
+    </CardSurface>
   )
 }
 
-const DesktopCredentials = ({
-  block,
-  movement,
-}: {
-  block: CredentialBlock
-  movement: MovementKey
-}) => {
-  const accent = block.accent ?? 'axisDensity'
-
-  return (
-    <CredentialsPanel
-      tone={block.tone ?? 'field'}
-      movement={movement}
-      radius="large"
-      bordered
-      padding="lg"
-      weight="steady"
-    >
-      <Stack gap={3}>
-        <Typography as="p" variant="caption" gutter={false} accent={accent}>
-          {block.label}
-        </Typography>
-
-        <Typography as="h3" variant="h3" gutter={false} color="primary">
-          {block.title}
-        </Typography>
-
-        <DesktopTimeline>
-          {block.items.map((item, index) => (
-            <DesktopTimelineItem key={index}>
-              <Typography
-                as="h4"
-                variant="subtitle"
-                gutter={false}
-                color="primary"
-                measure="full"
-              >
-                {item.title}
-              </Typography>
-
-              <Typography as="p" variant="caption" gutter={false}>
-                {item.source}
-              </Typography>
-
-              <TimelineMeta>
-                <Typography as="span" variant="caption" gutter={false}>
-                  {item.period}
-                </Typography>
-
-                <MetaDivider aria-hidden="true">·</MetaDivider>
-
-                <Typography
-                  as="span"
-                  variant="caption"
-                  gutter={false}
-                  accent={accent}
-                >
-                  {item.hours}
-                </Typography>
-              </TimelineMeta>
-            </DesktopTimelineItem>
-          ))}
-        </DesktopTimeline>
-      </Stack>
-    </CredentialsPanel>
-  )
-}
-
-const DesktopHuman = ({
+const LeadCard = ({
   path,
   presence,
   movement,
+  padding = 'lg',
 }: {
   path: ProfileBlock
   presence: ProfileBlock
   movement: MovementKey
+  padding?: 'md' | 'lg'
+}) => {
+  const pathAccent = blockAccent(path)
+  const presenceAccent = blockAccent(presence)
+
+  return (
+    <LeadSurface
+      tone={path.tone ?? 'threshold'}
+      movement={movement}
+      radius="large"
+      bordered
+      padding={padding}
+      weight="steady"
+      asset={path.asset}
+    >
+      <Stack gap={4}>
+        <CardBody $width="body">
+          <Stack gap={3}>
+            <Typography
+              as="p"
+              variant="caption"
+              gutter={false}
+              accent={pathAccent}
+            >
+              {path.label}
+            </Typography>
+
+            {path.title ? (
+              <Typography as="h3" variant="h3" gutter={false} color="primary">
+                {path.title}
+              </Typography>
+            ) : null}
+
+            <Typography
+              as="p"
+              variant="body"
+              gutter={false}
+              tone="soft"
+              cadence="open"
+            >
+              {path.children}
+            </Typography>
+          </Stack>
+        </CardBody>
+
+        <PresenceNote>
+          <Stack gap={2}>
+            <Typography
+              as="p"
+              variant="caption"
+              gutter={false}
+              accent={presenceAccent}
+            >
+              {presence.label}
+            </Typography>
+
+            {presence.title ? (
+              <Typography
+                as="h3"
+                variant="subtitle"
+                gutter={false}
+                color="primary"
+              >
+                {presence.title}
+              </Typography>
+            ) : null}
+
+            <Typography
+              as="p"
+              variant="body"
+              gutter={false}
+              tone="soft"
+              cadence="open"
+            >
+              {presence.children}
+            </Typography>
+          </Stack>
+        </PresenceNote>
+      </Stack>
+    </LeadSurface>
+  )
+}
+
+const CredentialTimeline = ({
+  items,
+  accent,
+}: {
+  items: readonly Credential[]
+  accent: AxisKey
 }) => (
-  <HumanPanel
-    tone={path.tone ?? 'threshold'}
-    movement={movement}
-    radius="large"
-    bordered
-    padding="lg"
-    weight="steady"
-    asset={path.asset}
-  >
-    <HumanContent>
-      <HumanBody>
-        <Stack gap={3}>
+  <CredentialList>
+    {items.map((item, index) => (
+      <CredentialItem key={index}>
+        <Typography
+          as="h4"
+          variant="subtitle"
+          gutter={false}
+          color="primary"
+          measure="full"
+        >
+          {item.title}
+        </Typography>
+
+        <Typography as="p" variant="caption" gutter={false}>
+          {item.source}
+        </Typography>
+
+        <CredentialMeta>
+          <Typography as="span" variant="caption" gutter={false}>
+            {item.period}
+          </Typography>
+
+          <MetaDivider aria-hidden="true">·</MetaDivider>
+
           <Typography
-            as="p"
+            as="span"
             variant="caption"
             gutter={false}
-            accent={blockAccent(path)}
+            accent={accent}
           >
-            {path.label}
+            {item.hours}
           </Typography>
-
-          <Typography as="h3" variant="h3" gutter={false} color="primary">
-            {path.title}
-          </Typography>
-
-          <Typography
-            as="p"
-            variant="body"
-            gutter={false}
-            tone="soft"
-            cadence="open"
-          >
-            {path.children}
-          </Typography>
-        </Stack>
-      </HumanBody>
-
-      <PresenceAside>
-        <Typography
-          as="p"
-          variant="caption"
-          gutter={false}
-          accent={blockAccent(presence)}
-        >
-          {presence.label}
-        </Typography>
-
-        <Typography as="h3" variant="subtitle" gutter={false} color="primary">
-          {presence.title}
-        </Typography>
-
-        <Typography
-          as="p"
-          variant="body"
-          gutter={false}
-          tone="soft"
-          cadence="open"
-        >
-          {presence.children}
-        </Typography>
-      </PresenceAside>
-    </HumanContent>
-  </HumanPanel>
+        </CredentialMeta>
+      </CredentialItem>
+    ))}
+  </CredentialList>
 )
 
-const DesktopTeaching = ({
+const CredentialCard = ({
   block,
   movement,
-}: {
-  block: ProfileBlock
-  movement: MovementKey
-}) => (
-  <TeachingPanel
-    tone={block.tone ?? 'card'}
-    movement={movement}
-    radius="large"
-    bordered
-    padding="lg"
-    weight="steady"
-    asset={block.asset}
-  >
-    <WideBody>
-      <Stack gap={3}>
-        <Typography
-          as="p"
-          variant="caption"
-          gutter={false}
-          accent={blockAccent(block)}
-        >
-          {block.label}
-        </Typography>
-
-        <Typography as="h3" variant="h3" gutter={false} color="primary">
-          {block.title}
-        </Typography>
-
-        <Typography
-          as="p"
-          variant="body"
-          gutter={false}
-          tone="soft"
-          cadence="open"
-        >
-          {block.children}
-        </Typography>
-      </Stack>
-    </WideBody>
-  </TeachingPanel>
-)
-
-const DesktopCompact = ({
-  block,
-  movement,
-}: {
-  block: ProfileBlock
-  movement: MovementKey
-}) => (
-  <CompactPanel
-    tone={block.tone ?? 'card'}
-    movement={movement}
-    radius="large"
-    bordered
-    padding="lg"
-    weight="steady"
-    asset={block.asset}
-  >
-    <Stack gap={3}>
-      <Typography
-        as="p"
-        variant="caption"
-        gutter={false}
-        accent={blockAccent(block)}
-      >
-        {block.label}
-      </Typography>
-
-      <Typography as="h3" variant="subtitle" gutter={false} color="primary">
-        {block.title}
-      </Typography>
-
-      <Typography
-        as="p"
-        variant="body"
-        gutter={false}
-        tone="soft"
-        cadence="open"
-      >
-        {block.children}
-      </Typography>
-    </Stack>
-  </CompactPanel>
-)
-
-const MobileCredentialSummary = ({
-  block,
-  movement,
+  padding = 'lg',
 }: {
   block: CredentialBlock
   movement: MovementKey
+  padding?: 'md' | 'lg'
 }) => {
   const accent = block.accent ?? 'axisDensity'
 
   return (
-    <Surface
+    <CredentialsSurface
       tone={block.tone ?? 'field'}
       movement={movement}
       radius="large"
       bordered
-      padding="md"
+      padding={padding}
       weight="steady"
     >
       <Stack gap={3}>
@@ -552,39 +459,15 @@ const MobileCredentialSummary = ({
           {block.label}
         </Typography>
 
-        <Typography as="h3" variant="h3" gutter={false} color="primary">
-          {block.title}
-        </Typography>
+        {block.title ? (
+          <Typography as="h3" variant="h3" gutter={false} color="primary">
+            {block.title}
+          </Typography>
+        ) : null}
 
-        <MobileCredentialList>
-          {block.items.map((item, index) => (
-            <MobileCredentialItem key={index}>
-              <Typography
-                as="h4"
-                variant="subtitle"
-                gutter={false}
-                color="primary"
-              >
-                {item.title}
-              </Typography>
-
-              <Typography as="p" variant="caption" gutter={false}>
-                {item.source} · {item.period}
-              </Typography>
-
-              <Typography
-                as="p"
-                variant="caption"
-                gutter={false}
-                accent={accent}
-              >
-                {item.hours}
-              </Typography>
-            </MobileCredentialItem>
-          ))}
-        </MobileCredentialList>
+        <CredentialTimeline items={block.items} accent={accent} />
       </Stack>
-    </Surface>
+    </CredentialsSurface>
   )
 }
 
@@ -664,7 +547,7 @@ const MobileEvidenceDeck = ({
       <MobileTrack ref={trackRef} onScroll={handleScroll}>
         {items.map((item, index) => (
           <MobileSlide key={index}>
-            <MobileProfileSurface block={item} movement={movement} />
+            <ProfileCard block={item} movement={movement} padding="lg" />
           </MobileSlide>
         ))}
       </MobileTrack>
@@ -684,72 +567,39 @@ const RecognitionProfile = ({
   <>
     <DesktopShell>
       <DesktopLead>
-        <DesktopHuman path={path} presence={presence} movement={movement} />
-        <DesktopCredentials block={credentials} movement={movement} />
+        <LeadCard path={path} presence={presence} movement={movement} />
+        <CredentialCard block={credentials} movement={movement} />
       </DesktopLead>
 
       <EvidenceRow>
-        <DesktopTeaching block={teaching} movement={movement} />
+        <ProfileCard block={teaching} movement={movement} bodyWidth="wide" />
 
         <SideEvidence>
-          <DesktopCompact block={style} movement={movement} />
-          <DesktopCompact block={scope} movement={movement} />
+          <ProfileCard
+            block={style}
+            movement={movement}
+            headingVariant="subtitle"
+            bodyWidth="full"
+          />
+          <ProfileCard
+            block={scope}
+            movement={movement}
+            headingVariant="subtitle"
+            bodyWidth="full"
+          />
         </SideEvidence>
       </EvidenceRow>
     </DesktopShell>
 
     <MobileShell>
-      <Surface
-        tone={path.tone ?? 'threshold'}
+      <LeadCard
+        path={path}
+        presence={presence}
         movement={movement}
-        radius="large"
-        bordered
         padding="md"
-        weight="steady"
-        asset={path.asset}
-      >
-        <MobileLead>
-          <Typography
-            as="p"
-            variant="caption"
-            gutter={false}
-            accent={blockAccent(path)}
-          >
-            {path.label}
-          </Typography>
+      />
 
-          <Typography as="h3" variant="h3" gutter={false} color="primary">
-            {path.title}
-          </Typography>
-
-          <Typography
-            as="p"
-            variant="body"
-            gutter={false}
-            tone="soft"
-            cadence="open"
-          >
-            {path.children}
-          </Typography>
-
-          <MobilePresenceNote>
-            <Typography
-              as="p"
-              variant="caption"
-              gutter={false}
-              accent={blockAccent(presence)}
-            >
-              {presence.label}
-            </Typography>
-
-            <Typography as="p" variant="body" gutter={false} tone="soft">
-              {presence.children}
-            </Typography>
-          </MobilePresenceNote>
-        </MobileLead>
-      </Surface>
-
-      <MobileCredentialSummary block={credentials} movement={movement} />
+      <CredentialCard block={credentials} movement={movement} padding="md" />
 
       <MobileEvidenceDeck
         movement={movement}

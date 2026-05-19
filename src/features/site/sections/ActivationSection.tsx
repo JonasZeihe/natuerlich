@@ -44,21 +44,6 @@ const ActivationSection = ({ onGoToPracticeField }: Props) => (
           opacity: 0.22,
         },
       },
-      {
-        name: '007_Atemsäule',
-        left: 'clamp(30rem, 52vw, 62rem)',
-        bottom: 'clamp(-8rem, -4vw, -2rem)',
-        width: 'clamp(13rem, 21vw, 26rem)',
-        presence: 'subtle',
-        boundary: 'bleed',
-        opacity: 0.24,
-        mobile: {
-          left: '-7rem',
-          bottom: '-5rem',
-          width: '21rem',
-          opacity: 0.16,
-        },
-      },
     ]}
   >
     <Surface
@@ -70,25 +55,22 @@ const ActivationSection = ({ onGoToPracticeField }: Props) => (
       weight="quiet"
     >
       <SectionIntro
-        label="Aktivieren"
         titleId="aktivieren-title"
-        title="Wenn etwas stimmig wird, kommt Bewegung fast von selbst."
+        title="Jetzt fangen wir an."
         accent="axisOpening"
         max="56rem"
       >
-        Nach dem Ankommen und Sammeln muss nichts erzwungen werden. Manchmal
-        reicht ein kleiner Impuls: ein Atemzug, der weiter wird, ein Körper, der
-        sich aufrichtet, eine Bewegung, die wieder Lust macht. Praxis beginnt
-        dort, wo etwas in dir antwortet.
+        Nicht perfekt. Nicht feierlich. Mit dem Körper, der heute da ist. Ein
+        Atemzug mehr. Ein bisschen Wärme. Der erste ehrliche Schritt aus dem
+        Sitzen ins Tun.
       </SectionIntro>
 
       <SplitArea>
         <SplitPanel
           movement="activation"
           primary={{
-            label: 'Freude als Anfang',
-            title:
-              'Nicht erst leisten, damit es sich irgendwann gut anfühlen darf.',
+            label: 'Auftakt',
+            title: 'Wir bringen den Körper in Gang.',
             accent: 'axisFlow',
             tone: 'field',
             asset: {
@@ -101,12 +83,11 @@ const ActivationSection = ({ onGoToPracticeField }: Props) => (
               opacity: 0.25,
             },
             children:
-              'Freude ist nicht die Belohnung am Ende der Praxis. Sie kann der Grund sein, aus dem Bewegung überhaupt entsteht: neugierig, wach, körperlich, ohne diesen ganzen Film von höher, schneller, besser.',
+              'Aufrichten. Atmen. Warm werden. Nicht als Pflichtprogramm, sondern weil Bewegung Freude machen darf, bevor sie Arbeit wird.',
           }}
           secondary={{
-            label: 'Eigenes Maß',
-            title:
-              'Eine Übung darf sich verändern, bis sie wirklich zu dir passt.',
+            label: 'Wärme',
+            title: 'Und wenn wir warm sind, beginnt die eigentliche Praxis.',
             accent: 'axisOpening',
             tone: 'threshold',
             asset: {
@@ -119,12 +100,7 @@ const ActivationSection = ({ onGoToPracticeField }: Props) => (
               opacity: 0.3,
             },
             children:
-              'Wenn etwas zu viel ist, wird es reduziert. Wenn etwas zu wenig ist, darf es tiefer werden. Nicht, um beliebig zu werden, sondern damit die Praxis aus innerer Zustimmung geschieht und nicht gegen dich arbeitet.',
-            action: (
-              <Button variant="ghost" onClick={onGoToPracticeField}>
-                Zur Praxis finden
-              </Button>
-            ),
+              'Dann wird es klarer. Genauer. Interessanter. Der Körper ist wach genug, um nicht nur mitzumachen, sondern wirklich dabei zu sein.',
           }}
         />
       </SplitArea>

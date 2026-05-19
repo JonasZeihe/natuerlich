@@ -39,38 +39,6 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
     tone="pressure"
     movement="practice"
     mix={['density', 'tension']}
-    assets={[
-      {
-        name: '025_Druckfeld',
-        right: 'clamp(-10rem, -7vw, -3rem)',
-        top: 'clamp(2rem, 6vw, 7rem)',
-        width: 'clamp(24rem, 44vw, 52rem)',
-        presence: 'subtle',
-        boundary: 'bleed',
-        opacity: 0.16,
-        mobile: {
-          right: '-15rem',
-          top: '2rem',
-          width: '34rem',
-          opacity: 0.08,
-        },
-      },
-      {
-        name: '003_Standfeld',
-        left: 'clamp(-12rem, -8vw, -4rem)',
-        bottom: 'clamp(-9rem, -7vw, -3rem)',
-        width: 'clamp(20rem, 34vw, 42rem)',
-        presence: 'subtle',
-        boundary: 'bleed',
-        opacity: 0.14,
-        mobile: {
-          left: '-12rem',
-          bottom: '-6rem',
-          width: '29rem',
-          opacity: 0.08,
-        },
-      },
-    ]}
   >
     <Surface
       tone="bare"
@@ -81,19 +49,15 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
       weight="quiet"
     >
       <SectionIntro
-        label="Arbeiten"
         titleId="arbeiten-title"
-        title="Ich unterrichte keine Methoden als Etiketten. Ich unterrichte Praxis."
+        title="Yoga, Qigong und Taijiquan — ich bin, was ich tue."
         accent="axisDensity"
         max="58rem"
       >
-        Yoga, Qigong und Taijiquan sind für mich keine Lifestyle-Produkte und
-        keine schönen Kulissen für ein bisschen Entspannung. Es sind Werkzeuge.
-        Sehr alte, sehr wirksame, manchmal missverstandene Werkzeuge. Sie können
-        helfen, den Körper zu ordnen, den Atem wiederzufinden, den Kopf klarer
-        zu machen und im eigenen Leben mehr Freiheit, Ruhe und Freude entstehen
-        zu lassen. Aber nur, wenn man sie ernst genug nimmt, um sie nicht zu
-        verkleiden.
+        Jetzt geht es nicht mehr um schöne Begriffe. Jetzt geht es um Praxis. Um
+        alte Übungswege, die im Körper landen müssen: Atem, Kraft, Ruhe,
+        Aufmerksamkeit, Regulation und die Fähigkeit, wirklich bei dem zu
+        bleiben, was du tust.
       </SectionIntro>
 
       <PracticePanel>
@@ -104,7 +68,7 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
             {
               label: 'Yoga',
               title:
-                'Nicht Posen, nicht Wellness-Fassade, sondern Körper, Atem, Kraft und Ruhe in einer gemeinsamen Form.',
+                'Von yuj: verbinden, anschirren, ausrichten — ein Übungsweg für Körper, Atem, Geist und Alltag.',
               tone: 'card',
               accent: 'axisDensity',
               asset: {
@@ -117,12 +81,12 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
                 opacity: 0.12,
               },
               children:
-                'Yoga wird schnell entweder zu Fitness-Gehopse oder zu halber Esoterik. Beides interessiert mich nicht. Mich interessiert Yoga als lebendige Praxis: klar aufgebaut, körperlich ehrlich, regulierend, kräftigend und so geführt, dass du nicht nur Übungen machst, sondern merkst, was sie mit dir machen.',
+                'Yoga ist hier kein einzelner Trick und keine Körperform zum Abhaken. Es geht darum, den Menschen wieder in Beziehung zu bringen: Haltung, Bewegung, Atmung, Entspannung, Konzentration und die Art, wie du mit dir selbst umgehst.',
             },
             {
-              label: 'Qigong und Taijiquan',
+              label: 'Qigong',
               title:
-                'Stand, Richtung, Gewichtsverlagerung und Fluss — ruhig genug, um fein zu werden, präzise genug, um wirklich zu wirken.',
+                '氣功: Qi als Atem, Dampf und Lebenskraft. Gong als Übung, Arbeit und erworbenes Können.',
               tone: 'field',
               accent: 'axisDensity',
               asset: {
@@ -135,7 +99,43 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
                 opacity: 0.1,
               },
               children:
-                'Qigong und Taijiquan sind keine Fernost-Deko und keine Flucht aus dem Alltag. Langsame Bewegung heißt hier nicht Beliebigkeit. Sie macht sichtbar, wo Spannung sitzt, wo der Stand fehlt, wo der Atem stockt und wo Bewegung wieder rund werden kann. Ruhe ist dabei nichts Passives. Sie wird aufgebaut.',
+                'Im alten Zeichen steckt dieses starke Bild: Reis, aus dem Wärme aufsteigt. Qigong ist keine Energiebehauptung, sondern Übung an der Lebendigkeit. Im Daoyin Yangsheng Gong nach Prof. Zhang Guangde wird daraus Lebenspflege in Bewegung: führen, atmen, drehen, wahrnehmen, wiederholen — einfach genug für den Einstieg, präzise genug für echte Arbeit.',
+            },
+            {
+              label: 'Taijiquan',
+              title:
+                '太極拳: Taiji, das höchste Prinzip. Quan, die Faust. Ruhe als geführte Kraft.',
+              tone: 'card',
+              accent: 'axisOpening',
+              asset: {
+                name: '003_Standfeld',
+                right: '-6rem',
+                bottom: '-7rem',
+                width: 'clamp(12rem, 24vw, 20rem)',
+                presence: 'subtle',
+                boundary: 'bleed',
+                opacity: 0.1,
+              },
+              children:
+                'Taijiquan ist nicht langsames Qigong und nicht Entspannungsbewegung mit schöner Form. Es ist eine innere Kampfkunst: Arbeit an Struktur, Mitte, Gewicht, Richtung, Wandlung und Kraft ohne Verkrampfung. Ruhig von außen, sehr genau von innen.',
+            },
+            {
+              label: 'Meditation und Entspannung',
+              title:
+                'Entspannungsfähigkeit ist keine Stimmung. Sie ist eine trainierbare Form neurovegetativer Regulation.',
+              tone: 'field',
+              accent: 'axisFlow',
+              asset: {
+                name: '021_Ruhige_Wärme',
+                right: '-7rem',
+                top: '-6rem',
+                width: 'clamp(12rem, 24vw, 20rem)',
+                presence: 'subtle',
+                boundary: 'bleed',
+                opacity: 0.12,
+              },
+              children:
+                'Stress ist nicht nur ein Moment, der wieder verschwindet. Er kann dein System verschieben, bis Anspannung normal wirkt und Erholung nicht mehr richtig greift. Darum üben wir parasympathikotone Umschaltung: Atem, Wahrnehmung, Rhythmus, Stille und einen Körper, der wieder lernen darf, vom Angriff in Regeneration zu wechseln.',
             },
           ]}
           footer={
@@ -163,7 +163,7 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
                   gutter={false}
                   accent="axisDensity"
                 >
-                  Formen der Praxis
+                  Der passende Rahmen
                 </Typography>
 
                 <FooterBody>
@@ -174,8 +174,8 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
                       gutter={false}
                       color="primary"
                     >
-                      Aus diesen Werkzeugen entstehen Räume: für Einstieg,
-                      Wiederholung, Vertiefung und persönliche Begleitung.
+                      Manchmal reicht ein Kurs. Manchmal braucht es
+                      Einzelunterricht. Manchmal wollt ihr als Gruppe üben.
                     </Typography>
 
                     <Typography
@@ -185,20 +185,16 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
                       tone="soft"
                       cadence="open"
                     >
-                      Ein Kurs ist nicht dasselbe wie eine Klasse. Eine Gruppe
-                      nicht dasselbe wie Einzelarbeit. Manchmal braucht es
-                      Orientierung, manchmal Rhythmus, manchmal Korrektur,
-                      manchmal einfach einen geschützten Rahmen, in dem Praxis
-                      wieder selbstverständlich werden kann. Entscheidend ist
-                      nicht der Name des Formats, sondern ob es zu dem passt,
-                      was du wirklich brauchst.
+                      Entscheidend ist nicht, wie das Format heißt. Entscheidend
+                      ist, ob es zu deinem Stand, deinem Alltag und deiner
+                      Richtung passt.
                     </Typography>
                   </Stack>
                 </FooterBody>
 
                 <FooterAction>
                   <Button variant="primary" onClick={onGoToIntegration}>
-                    Passenden Rahmen einordnen
+                    Angebote ansehen
                   </Button>
                 </FooterAction>
               </Stack>

@@ -19,7 +19,7 @@ const RecognitionSection = () => (
   <Section
     id="erkennen"
     titleId="erkennen-title"
-    ariaLabel="Erkennen"
+    ariaLabel="Jonas"
     container="wide"
     content="default"
     variant="body"
@@ -69,19 +69,11 @@ const RecognitionSection = () => (
       weight="quiet"
     >
       <SectionIntro
-        label="Erkennen"
         titleId="erkennen-title"
-        title="Ich bin kein Bilderbuch-Yogalehrer. Und genau deshalb ist diese Arbeit ehrlich."
+        title="Herzlich willkommen, ich bin Jonas :-)"
         accent="axisTension"
         max="58rem"
-      >
-        Ich unterrichte nicht aus einer perfekten Oberfläche heraus. Mein Weg
-        kam über eigene Erfahrung, Krisen, Ausbildung, Unterricht, Brüche und
-        Wiederannäherung. Yoga, Qigong, Taijiquan, Meditation und Entspannung
-        wurden für mich nicht zu Rollen, sondern zu Werkzeugen: um klarer zu
-        werden, freier zu leben und Menschen eine Praxis zu zeigen, die wirklich
-        im Alltag trägt.
-      </SectionIntro>
+      ></SectionIntro>
 
       <ProfileArea>
         <RecognitionProfile
@@ -90,8 +82,7 @@ const RecognitionSection = () => (
             label: 'Weg',
             tone: 'threshold',
             accent: 'axisTension',
-            title:
-              'Angefangen hat es nicht mit einem Konzept, sondern mit einer Erfahrung.',
+            title: 'Ein wichtiger Teil meines Weges begann bei Ulrich Rosen.',
             asset: {
               name: '032_Kern',
               right: '-6rem',
@@ -102,20 +93,18 @@ const RecognitionSection = () => (
               opacity: 0.12,
             },
             children:
-              '2013 kam ich über Ulrich Rosen zur Praxis. Seine Art zu unterrichten hat meinen Weg stark geprägt: ruhig, klar, körpernah und ohne unnötige Show. In dieser ersten Begegnung wurde für mich spürbar, dass Bewegung, Atmung, Entspannung und Stille nicht nur Übungen sind, sondern Werkzeuge, mit denen sich der eigene Zustand wirklich verändern lässt.',
+              'Durch ihn und das Daoyin Zentrum Deutschland habe ich verstanden, dass diese Arbeit keine Dekoration ist. Sie ist Übung, Linie, Körperarbeit, Atem, Form, Aufmerksamkeit und die Bereitschaft, etwas wirklich ernst zu nehmen.',
           }}
           presence={{
-            label: 'HIER FEHLT NOCH EIN FOTO',
+            label: 'Bild',
             tone: 'quiet',
             accent: 'axisDensity',
-            title: 'HIER FEHLT NOCH EIN FOTO',
+            title: 'Hier gehört ein echtes Foto hin.',
             children:
-              'Hier ist Raum für ein echtes Bild. Kein Guru-Auftritt, keine Yogapose als Werbefläche, keine Naturtapete. Einfach Jonas als Mensch und Lehrer: direkt, ruhig, ansprechbar, mit Humor, mit Anspruch und ohne diese ganze Heiligenschein-Nummer.',
+              'Ein Bild, auf dem man sieht, wer da unterrichtet: nicht als Pose, sondern als Mensch, der diese Arbeit selbst geht.',
           }}
           credentials={{
             label: 'Ausbildungen',
-            title:
-              'Der fachliche Boden: Yoga, Qigong, Taijiquan, Meditation und Entspannung.',
             tone: 'field',
             accent: 'axisDensity',
             items: [
@@ -152,11 +141,10 @@ const RecognitionSection = () => (
             ],
           }}
           teaching={{
-            label: 'Was ich daraus unterrichte',
+            label: 'Unterricht',
             tone: 'card',
             accent: 'axisDensity',
-            title:
-              'Ich unterrichte nicht alles als Tradition. Ich unterrichte das, was in der Praxis trägt.',
+            title: 'Ich unterrichte, was ich selbst übe.',
             asset: {
               name: '022_Kühle_Präzision',
               right: '-8rem',
@@ -167,15 +155,15 @@ const RecognitionSection = () => (
               opacity: 0.1,
             },
             children:
-              'Aus Yoga nehme ich Körperarbeit, Atem, Entspannung, Sammlung und die Möglichkeit, sich selbst wieder in Beziehung zu bringen. Aus Qigong und Taijiquan kommen Stand, Aufrichtung, Gewichtsverlagerung, Fluss, Formbewusstsein und ruhige Präzision. Meditation, Achtsamkeit und Entspannung laufen nicht als Extra-Deko daneben, sondern sind Teil der Arbeit. Was ich nicht unterrichte: Lifestyle-Yoga, Fitness-Gehopse, Guru-Gehabe, Fernost-Deko oder Esoterik als Nebelmaschine.',
+              'Yoga, Qigong, Daoyin Yangsheng Gong, Taijiquan, Meditation und Entspannung haben unterschiedliche Wurzeln. Im Unterricht werden sie durch Übung lebendig: im Atem, im Körper, in der Aufmerksamkeit und in der Art, wie du mit dir arbeitest.',
           }}
           style={{
-            label: 'Unterricht',
+            label: 'Stil',
             tone: 'card',
             accent: 'axisOpening',
-            title: 'Locker, direkt, präzise — und mit hohem Anspruch.',
+            title: 'Freude ist kein Gegensatz zu Anspruch.',
             children:
-              'Ich mag es, wenn Unterricht Freude macht. Wenn gelacht werden darf. Wenn Bewegung nicht nach Pflicht riecht. Aber das heißt nicht, dass es beliebig wird. Gute Praxis kann leicht wirken und trotzdem genau sein. Sie darf angenehm sein, fordern, korrigieren, beruhigen, wachmachen und manchmal auch zeigen, wo man sich selbst im Weg steht.',
+              'Ich mag Unterricht, der lebendig ist. Bewegung darf Freude machen, und gleichzeitig darf die Arbeit genau sein. Aus ernsthafter Übung entsteht Leichtigkeit: durch Wiederholung, Aufmerksamkeit und echte Lust an der Sache.',
           }}
           scope={{
             label: 'Umfang',
@@ -183,7 +171,7 @@ const RecognitionSection = () => (
             accent: 'axisDensity',
             title: 'Rund 1.350 bis 1.400 dokumentierte Zeitstunden.',
             children:
-              'Der Umfang ist nicht das Eingangsschild meiner Arbeit, aber er ist wichtig. Er zeigt, dass diese Praxis nicht aus ein paar Wochenendkursen entstanden ist, sondern aus mehreren Jahren Ausbildung, Methodik, Didaktik, Körperarbeit, Theorie, Meditation, Atemarbeit, Entspannungsverfahren und eigener Übung. Die Nachweise stützen die Arbeit. Sie ersetzen nicht die Begegnung.',
+              'In dieser Arbeit liegen mehrere Jahre Ausbildung, Methodik, Didaktik, Körperarbeit, Theorie, Meditation, Atemarbeit, Entspannungsverfahren und eigener Übung. Die Nachweise zeigen diesen Weg. Die Begegnung beginnt trotzdem immer im gemeinsamen Üben.',
           }}
         />
       </ProfileArea>
