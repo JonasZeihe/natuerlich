@@ -198,7 +198,6 @@ const ProfileCard = ({
     bordered
     padding="lg"
     weight="steady"
-    asset={block.asset}
   >
     <BlockText block={block} heading="subtitle" />
   </Card>
@@ -224,7 +223,6 @@ const RecognitionProfile = ({
         bordered
         padding="lg"
         weight="steady"
-        asset={path.asset}
       >
         <BlockText block={path} heading="h2" />
       </Lead>

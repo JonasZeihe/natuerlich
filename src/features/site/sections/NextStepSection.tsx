@@ -18,38 +18,6 @@ const NextStepSection = () => (
     tone="arrival"
     movement="nextStep"
     energy="flow"
-    assets={[
-      {
-        name: '021_Ruhige_Wärme',
-        right: 'clamp(-8rem, -5vw, -2rem)',
-        top: 'clamp(1rem, 5vw, 6rem)',
-        width: 'clamp(20rem, 33vw, 40rem)',
-        presence: 'subtle',
-        boundary: 'bleed',
-        opacity: 0.2,
-        mobile: {
-          right: '-13rem',
-          top: '2rem',
-          width: '31rem',
-          opacity: 0.12,
-        },
-      },
-      {
-        name: '030_Schutzfeld',
-        left: 'clamp(-9rem, -6vw, -3rem)',
-        bottom: 'clamp(-9rem, -7vw, -3rem)',
-        width: 'clamp(18rem, 30vw, 36rem)',
-        presence: 'subtle',
-        boundary: 'bleed',
-        opacity: 0.14,
-        mobile: {
-          left: '-12rem',
-          bottom: '-7rem',
-          width: '29rem',
-          opacity: 0.08,
-        },
-      },
-    ]}
   >
     <Surface
       tone="bare"

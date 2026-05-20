@@ -27,38 +27,6 @@ const RecognitionSection = () => (
     tone="threshold"
     movement="recognition"
     mix={['density', 'tension']}
-    assets={[
-      {
-        name: '018_Fokusfeld',
-        right: 'clamp(0rem, 7vw, 10rem)',
-        top: 'clamp(1rem, 5vw, 6rem)',
-        width: 'clamp(16rem, 28vw, 34rem)',
-        presence: 'subtle',
-        boundary: 'bleed',
-        opacity: 0.18,
-        mobile: {
-          right: '-9rem',
-          top: '1rem',
-          width: '28rem',
-          opacity: 0.08,
-        },
-      },
-      {
-        name: '022_Kühle_Präzision',
-        left: 'clamp(-12rem, -7vw, -4rem)',
-        bottom: 'clamp(-10rem, -8vw, -4rem)',
-        width: 'clamp(20rem, 34vw, 42rem)',
-        presence: 'subtle',
-        boundary: 'bleed',
-        opacity: 0.1,
-        mobile: {
-          left: '-12rem',
-          bottom: '-7rem',
-          width: '30rem',
-          opacity: 0.06,
-        },
-      },
-    ]}
   >
     <Surface
       tone="bare"
