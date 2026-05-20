@@ -3,7 +3,8 @@
 
 import { useState, type ReactNode } from 'react'
 import styled from 'styled-components'
-import Card from '@/components/primitives/Card'
+import ContentRail, { ContentRailItem } from '@/components/content/ContentRail'
+import Stack from '@/components/primitives/Stack'
 import Typography from '@/design/typography'
 
 type AudienceKey = 'individual' | 'group' | 'company'
@@ -52,26 +53,15 @@ const audienceItems: readonly {
   { key: 'company', text: 'Firma' },
 ]
 
-const Wrap = styled.div`
+const Shell = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(1.25)};
+  gap: ${({ theme }) => theme.spacing(1.5)};
 `
 
 const Tabs = styled.div`
-  position: sticky;
-  top: ${({ theme }) => theme.spacing(1)};
-  z-index: 2;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: ${({ theme }) => theme.spacing(0.35)};
-  width: min(100%, 26rem);
-  padding: ${({ theme }) => theme.spacing(0.35)};
-  border-radius: ${({ theme }) => theme.borderRadius.pill};
-  background: ${({ theme }) => theme.roles.surface.quiet};
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    position: static;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${({ theme }) => theme.spacing(0.5)};
 `
 
 const Tab = styled.button<{ $active: boolean }>`
@@ -79,78 +69,29 @@ const Tab = styled.button<{ $active: boolean }>`
   border: 0;
   border-radius: ${({ theme }) => theme.borderRadius.pill};
   background: ${({ theme, $active }) =>
-    $active ? theme.roles.text.primary : 'transparent'};
+    $active ? theme.roles.text.primary : theme.roles.surface.quiet};
   color: ${({ theme, $active }) =>
     $active ? theme.roles.surface.chrome : theme.roles.text.primary};
   padding: ${({ theme }) => `${theme.spacing(0.7)} ${theme.spacing(1)}`};
   font: inherit;
   cursor: pointer;
-`
 
-const List = styled.div`
-  display: flex;
-  gap: ${({ theme }) => theme.spacing(1)};
-  margin-inline: ${({ theme }) => `-${theme.spacing(1)}`};
-  padding-inline: ${({ theme }) => theme.spacing(1)};
-  padding-bottom: ${({ theme }) => theme.spacing(0.25)};
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-
-  &::-webkit-scrollbar {
-    display: none;
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.roles.focus.ring};
+    outline-offset: 3px;
   }
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-    margin-inline: 0;
-    padding-inline: 0;
-    overflow: visible;
-  }
-`
-
-const Item = styled.div`
-  flex: 0 0 min(86vw, 24rem);
-  scroll-snap-align: start;
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    flex-basis: auto;
-  }
-`
-
-const Body = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(1.35)};
 `
 
 const Head = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(0.4)};
+  gap: ${({ theme }) => theme.spacing(0.45)};
 `
 
-const Panel = styled.div`
+const Details = styled.div`
   display: grid;
   gap: ${({ theme }) => theme.spacing(0.75)};
-  padding-top: ${({ theme }) => theme.spacing(1)};
+  padding-top: ${({ theme }) => theme.spacing(0.85)};
   border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
-`
-
-const Row = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: ${({ theme }) => theme.spacing(1)};
-`
-
-const GroupFlow = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(0.9)};
-`
-
-const Step = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(0.35)};
 `
 
 const Meta = styled.div`
@@ -159,170 +100,100 @@ const Meta = styled.div`
   gap: ${({ theme }) => theme.spacing(0.5)};
 `
 
-const Pill = styled.div`
+const MetaItem = styled.span`
   display: inline-flex;
-  width: fit-content;
-  border-radius: ${({ theme }) => theme.borderRadius.pill};
-  padding: ${({ theme }) => `${theme.spacing(0.3)} ${theme.spacing(0.7)}`};
-  background: ${({ theme }) => theme.roles.surface.quiet};
+  color: ${({ theme }) => theme.roles.text.subtle};
 `
 
-const IndividualCard = ({ item }: { item: PathCardItem }) => (
-  <Item>
-    <Card tone="card" movement="integration" radius="large" padding="md">
-      <Body>
-        <Head>
-          <Typography as="h3" variant="h3">
-            {item.title}
-          </Typography>
+const PriceLine = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: ${({ theme }) => theme.spacing(0.75)};
+`
 
-          <Typography as="p" variant="subtitle">
-            {item.line}
-          </Typography>
-        </Head>
+const renderIndividual = (item: PathCardItem) => (
+  <Details>
+    <PriceLine>
+      <Typography as="p" variant="subtitle" color="primary">
+        {item.individual.format}
+      </Typography>
 
-        <Typography as="p" variant="body" tone="soft">
-          {item.text}
-        </Typography>
+      <Typography as="p" variant="subtitle" color="primary">
+        {item.individual.price}
+      </Typography>
+    </PriceLine>
 
-        <Panel>
-          <Row>
-            <Typography as="p" variant="body" tone="soft">
-              {item.individual.format}
-            </Typography>
-
-            <Typography as="p" variant="subtitle">
-              {item.individual.price}
-            </Typography>
-          </Row>
-
-          <Typography as="p" variant="body" tone="soft">
-            {item.individual.text}
-          </Typography>
-        </Panel>
-      </Body>
-    </Card>
-  </Item>
+    <Typography as="p" variant="body" tone="soft" cadence="open">
+      {item.individual.text}
+    </Typography>
+  </Details>
 )
 
-const GroupCard = ({ item }: { item: PathCardItem }) => (
-  <Item>
-    <Card tone="card" movement="integration" radius="large" padding="md">
-      <Body>
-        <Head>
-          <Typography as="h3" variant="h3">
-            {item.title}
-          </Typography>
+const renderGroup = (item: PathCardItem) => (
+  <Details>
+    <Stack gap={0.55}>
+      <Typography as="p" variant="subtitle" color="primary">
+        {item.group.format}
+      </Typography>
 
-          <Typography as="p" variant="subtitle">
-            {item.line}
-          </Typography>
-        </Head>
+      <Meta>
+        <MetaItem>{item.group.duration}</MetaItem>
+        <MetaItem>{item.group.price}</MetaItem>
+      </Meta>
 
-        <Typography as="p" variant="body" tone="soft">
-          {item.text}
-        </Typography>
+      <Typography as="p" variant="body" tone="soft" cadence="open">
+        {item.group.text}
+      </Typography>
+    </Stack>
 
-        <GroupFlow>
-          <Step>
-            <Typography as="p" variant="subtitle">
-              {item.group.format}
-            </Typography>
+    <Stack gap={0.35}>
+      <Typography as="p" variant="body" color="primary">
+        {item.group.classText}
+      </Typography>
 
-            <Meta>
-              <Pill>
-                <Typography as="span" variant="body" tone="soft">
-                  {item.group.duration}
-                </Typography>
-              </Pill>
-
-              <Pill>
-                <Typography as="span" variant="body" tone="soft">
-                  {item.group.price}
-                </Typography>
-              </Pill>
-            </Meta>
-
-            <Typography as="p" variant="body">
-              {item.group.text}
-            </Typography>
-          </Step>
-
-          <Step>
-            <Typography as="p" variant="body">
-              {item.group.classText}
-            </Typography>
-
-            <Typography as="p" variant="body" tone="soft">
-              {item.group.classPrice}
-            </Typography>
-          </Step>
-        </GroupFlow>
-      </Body>
-    </Card>
-  </Item>
+      <Typography as="p" variant="body" tone="soft">
+        {item.group.classPrice}
+      </Typography>
+    </Stack>
+  </Details>
 )
 
-const CompanyCard = ({ item }: { item: PathCardItem }) => {
-  if (!item.company) {
-    return null
-  }
+const renderCompany = (item: PathCardItem) => {
+  if (!item.company) return null
 
   return (
-    <Item>
-      <Card tone="card" movement="integration" radius="large" padding="md">
-        <Body>
-          <Head>
-            <Typography as="h3" variant="h3">
-              {item.title}
-            </Typography>
+    <Details>
+      <Typography as="p" variant="subtitle" color="primary">
+        {item.company.format}
+      </Typography>
 
-            <Typography as="p" variant="subtitle">
-              {item.line}
-            </Typography>
-          </Head>
+      <Meta>
+        <MetaItem>{item.company.duration}</MetaItem>
+        <MetaItem>{item.company.price}</MetaItem>
+      </Meta>
 
-          <Typography as="p" variant="body" tone="soft">
-            {item.text}
-          </Typography>
-
-          <Panel>
-            <Typography as="p" variant="subtitle">
-              {item.company.format}
-            </Typography>
-
-            <Meta>
-              <Pill>
-                <Typography as="span" variant="body" tone="soft">
-                  {item.company.duration}
-                </Typography>
-              </Pill>
-
-              <Pill>
-                <Typography as="span" variant="body" tone="soft">
-                  {item.company.price}
-                </Typography>
-              </Pill>
-            </Meta>
-
-            <Typography as="p" variant="body" tone="soft">
-              {item.company.text}
-            </Typography>
-          </Panel>
-        </Body>
-      </Card>
-    </Item>
+      <Typography as="p" variant="body" tone="soft" cadence="open">
+        {item.company.text}
+      </Typography>
+    </Details>
   )
+}
+
+const renderDetails = (item: PathCardItem, audience: AudienceKey) => {
+  if (audience === 'individual') return renderIndividual(item)
+  if (audience === 'company') return renderCompany(item)
+  return renderGroup(item)
 }
 
 const PathCards = ({ items }: Props) => {
   const [audience, setAudience] = useState<AudienceKey>('group')
-
   const visibleItems =
     audience === 'company' ? items.filter((item) => item.company) : items
 
   return (
-    <Wrap>
+    <Shell>
       <Tabs aria-label="Angebotsrahmen">
         {audienceItems.map((item) => (
           <Tab
@@ -336,20 +207,33 @@ const PathCards = ({ items }: Props) => {
         ))}
       </Tabs>
 
-      <List>
-        {visibleItems.map((item, index) => {
-          if (audience === 'individual') {
-            return <IndividualCard key={index} item={item} />
-          }
+      <ContentRail
+        columns="auto"
+        min="18rem"
+        gap={1.25}
+        itemWidth="min(86vw, 24rem)"
+      >
+        {visibleItems.map((item, index) => (
+          <ContentRailItem key={index} mode="card">
+            <Head>
+              <Typography as="h3" variant="h3" color="primary">
+                {item.title}
+              </Typography>
 
-          if (audience === 'company') {
-            return <CompanyCard key={index} item={item} />
-          }
+              <Typography as="p" variant="subtitle" tone="soft">
+                {item.line}
+              </Typography>
 
-          return <GroupCard key={index} item={item} />
-        })}
-      </List>
-    </Wrap>
+              <Typography as="p" variant="body" tone="soft" cadence="open">
+                {item.text}
+              </Typography>
+            </Head>
+
+            {renderDetails(item, audience)}
+          </ContentRailItem>
+        ))}
+      </ContentRail>
+    </Shell>
   )
 }
 

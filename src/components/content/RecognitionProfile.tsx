@@ -3,18 +3,13 @@
 
 import { type ReactNode } from 'react'
 import styled from 'styled-components'
-import type { AssetConsumerSpec } from '@/components/assets/registry'
-import Surface from '@/components/primitives/Surface'
-import type { AxisKey, MovementKey, SurfaceToneKey } from '@/design/theme'
+import ContentRail, { ContentRailItem } from '@/components/content/ContentRail'
+import Stack from '@/components/primitives/Stack'
 import Typography from '@/design/typography'
 
 type ProfileBlock = {
-  label: ReactNode
   title?: ReactNode
   children: ReactNode
-  tone?: SurfaceToneKey
-  accent?: AxisKey
-  asset?: AssetConsumerSpec | null
 }
 
 type Credential = {
@@ -25,15 +20,11 @@ type Credential = {
 }
 
 type CredentialBlock = {
-  label: ReactNode
   title?: ReactNode
   items: readonly Credential[]
-  tone?: SurfaceToneKey
-  accent?: AxisKey
 }
 
 type Props = {
-  movement: MovementKey
   path: ProfileBlock
   teaching: ProfileBlock
   style: ProfileBlock
@@ -44,74 +35,22 @@ type Props = {
 
 const Shell = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(1.25)};
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    gap: ${({ theme }) => theme.spacing(1.5)};
-  }
+  gap: ${({ theme }) => theme.spacing(2)};
 `
 
-const Lead = styled(Surface)`
+const Lead = styled.div`
   width: min(100%, 64rem);
   margin-inline: auto;
 `
 
-const Track = styled.div`
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: min(82vw, 23rem);
-  gap: ${({ theme }) => theme.spacing(1)};
-  margin-inline: ${({ theme }) => `-${theme.spacing(1)}`};
-  padding-inline: ${({ theme }) => theme.spacing(1)};
-  padding-bottom: ${({ theme }) => theme.spacing(0.25)};
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    width: min(100%, 64rem);
-    margin-inline: auto;
-    padding-inline: 0;
-    grid-auto-flow: initial;
-    grid-auto-columns: initial;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    overflow: visible;
-  }
-`
-
-const TrackItem = styled.div`
-  scroll-snap-align: start;
-`
-
-const ProfileBody = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(0.85)};
-  height: 100%;
-  align-content: start;
-`
-
-const Evidence = styled(Surface)`
+const Evidence = styled.div`
   width: min(100%, 64rem);
   margin-inline: auto;
-`
-
-const EvidenceBody = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(1.25)};
-`
-
-const EvidenceHead = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(0.7)};
-  max-width: 48rem;
 `
 
 const CredentialList = styled.ol`
   display: grid;
+  grid-template-columns: 1fr;
   gap: ${({ theme }) => theme.spacing(0.75)};
   margin: 0;
   padding: 0;
@@ -158,7 +97,7 @@ const BlockText = ({
   const as = heading === 'subtitle' ? 'h3' : heading
 
   return (
-    <ProfileBody>
+    <Stack gap={0.85}>
       {block.title ? (
         <Typography as={as} variant={heading} color="primary">
           {block.title}
@@ -168,29 +107,11 @@ const BlockText = ({
       <Typography as="p" variant="body" tone="soft" cadence="open">
         {block.children}
       </Typography>
-    </ProfileBody>
+    </Stack>
   )
 }
 
-const ProfileCard = ({
-  block,
-  movement,
-}: {
-  block: ProfileBlock
-  movement: MovementKey
-}) => (
-  <Surface
-    tone={block.tone ?? 'card'}
-    movement={movement}
-    radius="large"
-    padding="lg"
-  >
-    <BlockText block={block} heading="subtitle" />
-  </Surface>
-)
-
 const RecognitionProfile = ({
-  movement,
   path,
   teaching,
   style,
@@ -199,36 +120,24 @@ const RecognitionProfile = ({
   scope,
 }: Props) => (
   <Shell>
-    <Lead
-      tone={path.tone ?? 'threshold'}
-      movement={movement}
-      radius="large"
-      padding="lg"
-    >
+    <Lead>
       <BlockText block={path} heading="h2" />
     </Lead>
 
-    <Track>
+    <ContentRail columns={3} min="16rem" gap={1.5} max="64rem">
       {[teaching, style, presence].map((block, index) => (
-        <TrackItem key={index}>
-          <ProfileCard block={block} movement={movement} />
-        </TrackItem>
+        <ContentRailItem key={index}>
+          <BlockText block={block} heading="subtitle" />
+        </ContentRailItem>
       ))}
-    </Track>
+    </ContentRail>
 
-    <Evidence
-      tone={credentials.tone ?? 'field'}
-      movement={movement}
-      radius="large"
-      padding="lg"
-    >
-      <EvidenceBody>
+    <Evidence>
+      <Stack gap={1.5}>
         {credentials.title ? (
-          <EvidenceHead>
-            <Typography as="h2" variant="h2" color="primary">
-              {credentials.title}
-            </Typography>
-          </EvidenceHead>
+          <Typography as="h2" variant="h2" color="primary">
+            {credentials.title}
+          </Typography>
         ) : null}
 
         <CredentialList>
@@ -258,15 +167,17 @@ const RecognitionProfile = ({
         </CredentialList>
 
         <Scope>
-          <Typography as="p" variant="subtitle" color="primary">
-            {scope.title}
-          </Typography>
+          {scope.title ? (
+            <Typography as="p" variant="subtitle" color="primary">
+              {scope.title}
+            </Typography>
+          ) : null}
 
           <Typography as="p" variant="body" tone="soft" cadence="open">
             {scope.children}
           </Typography>
         </Scope>
-      </EvidenceBody>
+      </Stack>
     </Evidence>
   </Shell>
 )

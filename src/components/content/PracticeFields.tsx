@@ -4,6 +4,7 @@
 import { type ReactNode } from 'react'
 import styled from 'styled-components'
 import Button from '@/components/actions/Button'
+import ContentRail, { ContentRailItem } from '@/components/content/ContentRail'
 import Grid from '@/components/primitives/Grid'
 import Stack from '@/components/primitives/Stack'
 import Surface from '@/components/primitives/Surface'
@@ -72,21 +73,19 @@ const PracticeFields = ({
         </Stack>
       </Lead>
 
-      <Track aria-label="Praxisweg">
+      <ContentRail columns={5} min="12rem" gap={1.25} aria-label="Praxisweg">
         {flowItems.map((item) => (
-          <TrackItem key={item.label}>
-            <FlowBlock>
-              <Typography as="h3" variant="h3" color="primary">
-                {item.title}
-              </Typography>
+          <ContentRailItem key={item.label}>
+            <Typography as="h3" variant="h3" color="primary">
+              {item.title}
+            </Typography>
 
-              <Typography as="p" variant="body" tone="soft" cadence="open">
-                {item.body}
-              </Typography>
-            </FlowBlock>
-          </TrackItem>
+            <Typography as="p" variant="body" tone="soft" cadence="open">
+              {item.body}
+            </Typography>
+          </ContentRailItem>
         ))}
-      </Track>
+      </ContentRail>
 
       <MethodPanel tone="note" movement={movement} radius="large" padding="lg">
         <Stack gap={1.25}>
@@ -122,19 +121,19 @@ const PracticeFields = ({
         </Stack>
       </MethodPanel>
 
-      <Ways>
+      <ContentRail columns={3} min="16rem" gap={1.5} max="64rem">
         {ways.map((way) => (
-          <WayBlock key={way.label}>
-            <Typography as="h3" variant="subtitle">
+          <ContentRailItem key={way.label}>
+            <Typography as="h3" variant="subtitle" color="primary">
               {way.title}
             </Typography>
 
             <Typography as="p" variant="body" tone="soft" cadence="open">
               {way.body}
             </Typography>
-          </WayBlock>
+          </ContentRailItem>
         ))}
-      </Ways>
+      </ContentRail>
 
       <Footer tone="note" movement={movement} radius="large" padding="lg">
         <Grid columns={2} min="18rem" gap={2}>
@@ -173,54 +172,6 @@ const Lead = styled(Surface)`
   margin-inline: auto;
 `
 
-const Track = styled.div`
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: min(82vw, 23rem);
-  gap: ${({ theme }) => theme.spacing(1.5)};
-  margin-inline: ${({ theme }) => `-${theme.spacing(1)}`};
-  padding-inline: ${({ theme }) => theme.spacing(1)};
-  padding-bottom: ${({ theme }) => theme.spacing(0.25)};
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    grid-auto-flow: initial;
-    grid-auto-columns: initial;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: ${({ theme }) => theme.spacing(1.25)};
-    margin-inline: 0;
-    padding-inline: 0;
-    overflow: visible;
-  }
-`
-
-const TrackItem = styled.article`
-  scroll-snap-align: start;
-  min-width: 0;
-`
-
-const FlowBlock = styled.div`
-  display: grid;
-  align-content: start;
-  gap: ${({ theme }) => theme.spacing(0.85)};
-  height: 100%;
-  padding-block: ${({ theme }) => theme.spacing(0.5)};
-  border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
-    padding: ${({ theme }) => theme.spacing(1.25)};
-    border-top: 0;
-    border-radius: ${({ theme }) => theme.borderRadius.large};
-    background: ${({ theme }) => theme.roles.surface.quiet};
-  }
-`
-
 const MethodPanel = styled(Surface)`
   width: min(100%, 64rem);
   margin-inline: auto;
@@ -231,50 +182,6 @@ const MethodName = styled.div`
   gap: ${({ theme }) => theme.spacing(0.45)};
   padding-top: ${({ theme }) => theme.spacing(1)};
   border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
-`
-
-const Ways = styled.div`
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: min(82vw, 23rem);
-  gap: ${({ theme }) => theme.spacing(1.5)};
-  margin-inline: ${({ theme }) => `-${theme.spacing(1)}`};
-  padding-inline: ${({ theme }) => theme.spacing(1)};
-  padding-bottom: ${({ theme }) => theme.spacing(0.25)};
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    width: min(100%, 64rem);
-    margin-inline: auto;
-    padding-inline: 0;
-    grid-auto-flow: initial;
-    grid-auto-columns: initial;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    overflow: visible;
-  }
-`
-
-const WayBlock = styled.article`
-  scroll-snap-align: start;
-  display: grid;
-  align-content: start;
-  gap: ${({ theme }) => theme.spacing(0.75)};
-  min-width: 0;
-  padding-block: ${({ theme }) => theme.spacing(0.5)};
-  border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
-    padding: ${({ theme }) => theme.spacing(1.25)};
-    border-top: 0;
-    border-radius: ${({ theme }) => theme.borderRadius.large};
-    background: ${({ theme }) => theme.roles.surface.quiet};
-  }
 `
 
 const Footer = styled(Surface)`

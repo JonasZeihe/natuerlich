@@ -31,7 +31,6 @@ const NextStepSection = () => (
       </Headline>
 
       <ContactPanel
-        movement="nextStep"
         mail={{
           local: 'jonaszeihe',
           domain: 'gmail.com',
@@ -42,7 +41,6 @@ const NextStepSection = () => (
         primaryLabel="E-Mail schreiben"
         copyLabel="Mailadresse kopieren"
         copiedLabel="Adresse kopiert"
-        accent="axisFlow"
       />
     </Surface>
   </Section>

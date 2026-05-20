@@ -76,18 +76,6 @@ const Outer = styled.section<{
 
       background: ${tone.base};
 
-      ${tone.overlayOpacity > 0 && tone.edge !== 'transparent'
-        ? css`
-            box-shadow: inset 0 1px 0 ${tone.edge};
-          `
-        : ''}
-
-      ${tone.lineOpacity > 0
-        ? css`
-            border-bottom: 1px solid ${tone.line};
-          `
-        : ''}
-
       &::before {
         content: '';
         position: absolute;

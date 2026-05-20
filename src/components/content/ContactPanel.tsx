@@ -4,8 +4,6 @@
 import { useMemo, useState, type ReactNode } from 'react'
 import styled from 'styled-components'
 import Button from '@/components/actions/Button'
-import Surface from '@/components/primitives/Surface'
-import type { AxisKey, MovementKey } from '@/design/theme'
 import Typography from '@/design/typography'
 
 type MailParts = {
@@ -14,7 +12,6 @@ type MailParts = {
 }
 
 type Props = {
-  movement: MovementKey
   mail: MailParts
   subject: string
   title: ReactNode
@@ -23,20 +20,16 @@ type Props = {
   primaryLabel: ReactNode
   copyLabel: ReactNode
   copiedLabel: ReactNode
-  accent?: AxisKey
 }
 
 const Shell = styled.div`
+  width: min(100%, 64rem);
+  margin-inline: auto;
   margin-top: ${({ theme }) => theme.spacing(2.5)};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     margin-top: ${({ theme }) => theme.spacing(2)};
   }
-`
-
-const Panel = styled(Surface)`
-  width: min(100%, 64rem);
-  margin-inline: auto;
 `
 
 const Layout = styled.div`
@@ -93,7 +86,6 @@ const CopyButton = styled.button`
 const buildMail = ({ local, domain }: MailParts) => `${local}@${domain}`
 
 const ContactPanel = ({
-  movement,
   mail,
   subject,
   title,
@@ -126,37 +118,35 @@ const ContactPanel = ({
 
   return (
     <Shell>
-      <Panel tone="card" movement={movement} radius="large" padding="lg">
-        <Layout>
-          <Text>
-            <Typography as="h3" variant="h3" color="primary">
-              {title}
-            </Typography>
+      <Layout>
+        <Text>
+          <Typography as="h3" variant="h3" color="primary">
+            {title}
+          </Typography>
 
-            <Typography as="p" variant="body" tone="soft" cadence="open">
-              {text}
-            </Typography>
+          <Typography as="p" variant="body" tone="soft" cadence="open">
+            {text}
+          </Typography>
 
-            {hint ? (
-              <Hint>
-                <Typography as="p" variant="body" tone="soft" cadence="open">
-                  {hint}
-                </Typography>
-              </Hint>
-            ) : null}
-          </Text>
+          {hint ? (
+            <Hint>
+              <Typography as="p" variant="body" tone="soft" cadence="open">
+                {hint}
+              </Typography>
+            </Hint>
+          ) : null}
+        </Text>
 
-          <Actions>
-            <Button variant="primary" fullWidth onClick={openMail}>
-              {primaryLabel}
-            </Button>
+        <Actions>
+          <Button variant="primary" fullWidth onClick={openMail}>
+            {primaryLabel}
+          </Button>
 
-            <CopyButton type="button" onClick={copyMail}>
-              {copied ? copiedLabel : copyLabel}
-            </CopyButton>
-          </Actions>
-        </Layout>
-      </Panel>
+          <CopyButton type="button" onClick={copyMail}>
+            {copied ? copiedLabel : copyLabel}
+          </CopyButton>
+        </Actions>
+      </Layout>
     </Shell>
   )
 }
