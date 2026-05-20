@@ -1,4 +1,4 @@
-// src/components/schnupperkurs/breathingGeometry.ts
+// src/components/miniCourse/breathingGeometry.ts
 export type ClockPoint = {
   x: number
   y: number

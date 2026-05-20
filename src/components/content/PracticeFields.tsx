@@ -264,15 +264,6 @@ const PracticeFields = ({
         padding="lg"
         weight="steady"
       >
-        <Typography
-          as="p"
-          variant="caption"
-          gutter={false}
-          accent="axisDensity"
-        >
-          Die Mitte
-        </Typography>
-
         <Typography as="h2" variant="h2" gutter={false} color="primary">
           {method.title}
         </Typography>

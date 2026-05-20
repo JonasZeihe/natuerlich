@@ -23,7 +23,7 @@ const HIDE_DELTA = 10
 const REVEAL_DELTA = 8
 const ACTIVE_OFFSET = HEADER_HEIGHT + 40
 const NAV_SCROLL_LOCK_ATTR = 'data-nav-scroll-lock'
-const START_SECTION_ID: SiteSectionId = 'schnupperkurs'
+const START_SECTION_ID: SiteSectionId = 'minikurs'
 
 const HEADER_SECTIONS: SiteSection[] = SITE_SECTIONS.filter(
   (section) => section.showInHeader

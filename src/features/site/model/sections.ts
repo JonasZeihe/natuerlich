@@ -1,8 +1,8 @@
 // src/features/site/model/sections.ts
 export const SITE_SECTIONS = [
   {
-    id: 'schnupperkurs',
-    label: 'Schnupperkurs',
+    id: 'minikurs',
+    label: 'Minikurs',
     showInHeader: true,
   },
   {
