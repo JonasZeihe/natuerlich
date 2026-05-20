@@ -26,7 +26,6 @@ const BodyScanDialog = ({ content, onClose }: Props) => (
         variant="h1"
         cadence="dense"
         measure="title"
-        gutter={false}
       >
         {content.title}
       </Typography>

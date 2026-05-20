@@ -11,7 +11,7 @@ import type { AxisKey, MovementKey, SurfaceToneKey } from '@/design/theme'
 import Typography from '@/design/typography'
 
 export type SplitPanelItem = {
-  label: ReactNode
+  label?: ReactNode
   title: ReactNode
   children: ReactNode
   action?: ReactNode
@@ -35,31 +35,15 @@ const renderPanel = (item: SplitPanelItem, movement: MovementKey) => (
     tone={item.tone ?? 'field'}
     movement={movement}
     radius="large"
-    bordered
     padding="lg"
-    weight="steady"
     asset={item.asset}
   >
-    <PanelContent gap={4}>
-      <Typography
-        as="p"
-        variant="caption"
-        gutter={false}
-        accent={item.accent ?? 'axisDensity'}
-      >
-        {item.label}
-      </Typography>
-
-      <Typography
-        as="h3"
-        variant="h3"
-        gutter={false}
-        accent={item.accent ?? 'axisDensity'}
-      >
+    <PanelContent gap={1}>
+      <Typography as="h3" variant="h3" color="primary">
         {item.title}
       </Typography>
 
-      <Typography as="p" variant="body" gutter={false}>
+      <Typography as="p" variant="body" tone="soft" cadence="open">
         {item.children}
       </Typography>
 

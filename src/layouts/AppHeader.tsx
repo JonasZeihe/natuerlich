@@ -375,20 +375,10 @@ export default function AppHeader() {
                 aria-label="Zum Anfang springen"
               >
                 <BrandStack>
-                  <Typography
-                    as="span"
-                    variant="h3"
-                    gutter={false}
-                    tone="strong"
-                  >
+                  <Typography as="span" variant="h3" tone="strong">
                     Jonas
                   </Typography>
-                  <Typography
-                    as="span"
-                    variant="caption"
-                    gutter={false}
-                    tone="soft"
-                  >
+                  <Typography as="span" variant="body" tone="soft">
                     Praxis, die trägt
                   </Typography>
                 </BrandStack>

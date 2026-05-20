@@ -37,11 +37,9 @@ const Shell = styled.div`
 const Panel = styled(Surface)`
   width: min(100%, 64rem);
   margin-inline: auto;
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(1.5)};
 `
 
-const Grid = styled.div`
+const Layout = styled.div`
   display: grid;
   gap: ${({ theme }) => theme.spacing(1.5)};
 
@@ -59,9 +57,9 @@ const Text = styled.div`
 `
 
 const Hint = styled.div`
+  max-width: 42rem;
   padding-top: ${({ theme }) => theme.spacing(0.85)};
   border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
-  max-width: 42rem;
 `
 
 const Actions = styled.div`
@@ -104,7 +102,6 @@ const ContactPanel = ({
   primaryLabel,
   copyLabel,
   copiedLabel,
-  accent = 'axisDensity',
 }: Props) => {
   const [copied, setCopied] = useState(false)
   const address = useMemo(() => buildMail(mail), [mail])
@@ -129,33 +126,20 @@ const ContactPanel = ({
 
   return (
     <Shell>
-      <Panel
-        tone="card"
-        movement={movement}
-        radius="large"
-        bordered
-        padding="lg"
-        weight="steady"
-      >
-        <Grid>
+      <Panel tone="card" movement={movement} radius="large" padding="lg">
+        <Layout>
           <Text>
-            <Typography as="h3" variant="h3" gutter={false} color="primary">
+            <Typography as="h3" variant="h3" color="primary">
               {title}
             </Typography>
 
-            <Typography
-              as="p"
-              variant="body"
-              gutter={false}
-              tone="soft"
-              cadence="open"
-            >
+            <Typography as="p" variant="body" tone="soft" cadence="open">
               {text}
             </Typography>
 
             {hint ? (
               <Hint>
-                <Typography as="p" variant="caption" gutter={false} tone="soft">
+                <Typography as="p" variant="body" tone="soft" cadence="open">
                   {hint}
                 </Typography>
               </Hint>
@@ -168,12 +152,10 @@ const ContactPanel = ({
             </Button>
 
             <CopyButton type="button" onClick={copyMail}>
-              <Typography as="span" variant="caption" gutter={false}>
-                {copied ? copiedLabel : copyLabel}
-              </Typography>
+              {copied ? copiedLabel : copyLabel}
             </CopyButton>
           </Actions>
-        </Grid>
+        </Layout>
       </Panel>
     </Shell>
   )

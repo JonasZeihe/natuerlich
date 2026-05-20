@@ -2,8 +2,8 @@
 'use client'
 
 import styled from 'styled-components'
+import Headline from '@/components/content/Headline'
 import RecognitionProfile from '@/components/content/RecognitionProfile'
-import SectionIntro from '@/components/content/SectionIntro'
 import Section from '@/components/primitives/Section'
 import Surface from '@/components/primitives/Surface'
 
@@ -28,19 +28,11 @@ const RecognitionSection = () => (
     movement="recognition"
     mix={['density', 'tension']}
   >
-    <Surface
-      tone="bare"
-      movement="recognition"
-      radius="none"
-      bordered={false}
-      padding="lg"
-      weight="quiet"
-    >
-      <SectionIntro
+    <Surface tone="bare" movement="recognition" padding="lg">
+      <Headline
         titleId="erkennen-title"
         title="Herzlich willkommen, ich bin Jonas :-)"
         accent="axisTension"
-        max="58rem"
       />
 
       <ProfileArea>

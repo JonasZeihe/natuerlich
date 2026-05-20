@@ -41,7 +41,6 @@ const MiniCourseSection = ({ onGoToPracticeField }: Props) => {
             variant="h1"
             cadence="dense"
             measure="title"
-            gutter={false}
           >
             {miniCourseContent.title}
           </Typography>
@@ -52,7 +51,6 @@ const MiniCourseSection = ({ onGoToPracticeField }: Props) => {
             tone="soft"
             cadence="open"
             measure="prose"
-            gutter={false}
           >
             {miniCourseContent.lead}
           </Typography>
@@ -65,13 +63,7 @@ const MiniCourseSection = ({ onGoToPracticeField }: Props) => {
         <Surface tone="card" movement="arrival" radius="large" padding="lg">
           <Grid columns={2} min="18rem" gap={3}>
             <Stack gap={1.25}>
-              <Typography
-                as="h2"
-                variant="h2"
-                cadence="dense"
-                measure="title"
-                gutter={false}
-              >
+              <Typography as="h2" variant="h2" cadence="dense" measure="title">
                 {miniCourseContent.bodyScan.title}
               </Typography>
 
@@ -81,7 +73,6 @@ const MiniCourseSection = ({ onGoToPracticeField }: Props) => {
                 tone="soft"
                 cadence="open"
                 measure="prose"
-                gutter={false}
               >
                 {miniCourseContent.bodyScan.body}
               </Typography>
@@ -108,7 +99,6 @@ const MiniCourseSection = ({ onGoToPracticeField }: Props) => {
               tone="soft"
               cadence="open"
               measure="prose"
-              gutter={false}
             >
               {text}
             </Typography>

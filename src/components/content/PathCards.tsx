@@ -45,16 +45,16 @@ type Props = {
 
 const audienceItems: readonly {
   key: AudienceKey
-  label: string
+  text: string
 }[] = [
-  { key: 'individual', label: 'Einzel' },
-  { key: 'group', label: 'Gruppe' },
-  { key: 'company', label: 'Firma' },
+  { key: 'individual', text: 'Einzel' },
+  { key: 'group', text: 'Gruppe' },
+  { key: 'company', text: 'Firma' },
 ]
 
 const Wrap = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(1)};
+  gap: ${({ theme }) => theme.spacing(1.25)};
 `
 
 const Tabs = styled.div`
@@ -64,14 +64,13 @@ const Tabs = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: ${({ theme }) => theme.spacing(0.35)};
+  width: min(100%, 26rem);
   padding: ${({ theme }) => theme.spacing(0.35)};
-  border: 1px solid ${({ theme }) => theme.roles.border.subtle};
   border-radius: ${({ theme }) => theme.borderRadius.pill};
-  background: ${({ theme }) => theme.roles.surface.card};
+  background: ${({ theme }) => theme.roles.surface.quiet};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     position: static;
-    width: min(100%, 26rem);
   }
 `
 
@@ -163,47 +162,41 @@ const Meta = styled.div`
 const Pill = styled.div`
   display: inline-flex;
   width: fit-content;
-  border: 1px solid ${({ theme }) => theme.roles.border.subtle};
   border-radius: ${({ theme }) => theme.borderRadius.pill};
   padding: ${({ theme }) => `${theme.spacing(0.3)} ${theme.spacing(0.7)}`};
+  background: ${({ theme }) => theme.roles.surface.quiet};
 `
 
 const IndividualCard = ({ item }: { item: PathCardItem }) => (
   <Item>
-    <Card
-      tone="card"
-      movement="integration"
-      radius="large"
-      bordered
-      padding="md"
-    >
+    <Card tone="card" movement="integration" radius="large" padding="md">
       <Body>
         <Head>
-          <Typography as="h3" variant="h3" gutter={false}>
+          <Typography as="h3" variant="h3">
             {item.title}
           </Typography>
 
-          <Typography as="p" variant="subtitle" gutter={false}>
+          <Typography as="p" variant="subtitle">
             {item.line}
           </Typography>
         </Head>
 
-        <Typography as="p" variant="body" gutter={false} tone="soft">
+        <Typography as="p" variant="body" tone="soft">
           {item.text}
         </Typography>
 
         <Panel>
           <Row>
-            <Typography as="p" variant="caption" gutter={false}>
+            <Typography as="p" variant="body" tone="soft">
               {item.individual.format}
             </Typography>
 
-            <Typography as="p" variant="subtitle" gutter={false}>
+            <Typography as="p" variant="subtitle">
               {item.individual.price}
             </Typography>
           </Row>
 
-          <Typography as="p" variant="body" gutter={false} tone="soft">
+          <Typography as="p" variant="body" tone="soft">
             {item.individual.text}
           </Typography>
         </Panel>
@@ -214,67 +207,53 @@ const IndividualCard = ({ item }: { item: PathCardItem }) => (
 
 const GroupCard = ({ item }: { item: PathCardItem }) => (
   <Item>
-    <Card
-      tone="card"
-      movement="integration"
-      radius="large"
-      bordered
-      padding="md"
-    >
+    <Card tone="card" movement="integration" radius="large" padding="md">
       <Body>
         <Head>
-          <Typography as="h3" variant="h3" gutter={false}>
+          <Typography as="h3" variant="h3">
             {item.title}
           </Typography>
 
-          <Typography as="p" variant="subtitle" gutter={false}>
+          <Typography as="p" variant="subtitle">
             {item.line}
           </Typography>
         </Head>
 
-        <Typography as="p" variant="body" gutter={false} tone="soft">
+        <Typography as="p" variant="body" tone="soft">
           {item.text}
         </Typography>
 
         <GroupFlow>
           <Step>
-            <Typography as="p" variant="caption" gutter={false}>
-              Kurs
-            </Typography>
-
-            <Typography as="p" variant="subtitle" gutter={false}>
+            <Typography as="p" variant="subtitle">
               {item.group.format}
             </Typography>
 
             <Meta>
               <Pill>
-                <Typography as="span" variant="caption" gutter={false}>
+                <Typography as="span" variant="body" tone="soft">
                   {item.group.duration}
                 </Typography>
               </Pill>
 
               <Pill>
-                <Typography as="span" variant="caption" gutter={false}>
+                <Typography as="span" variant="body" tone="soft">
                   {item.group.price}
                 </Typography>
               </Pill>
             </Meta>
 
-            <Typography as="p" variant="body" gutter={false}>
+            <Typography as="p" variant="body">
               {item.group.text}
             </Typography>
           </Step>
 
           <Step>
-            <Typography as="p" variant="caption" gutter={false}>
-              Danach
-            </Typography>
-
-            <Typography as="p" variant="body" gutter={false}>
+            <Typography as="p" variant="body">
               {item.group.classText}
             </Typography>
 
-            <Typography as="p" variant="caption" gutter={false}>
+            <Typography as="p" variant="body" tone="soft">
               {item.group.classPrice}
             </Typography>
           </Step>
@@ -291,48 +270,42 @@ const CompanyCard = ({ item }: { item: PathCardItem }) => {
 
   return (
     <Item>
-      <Card
-        tone="card"
-        movement="integration"
-        radius="large"
-        bordered
-        padding="md"
-      >
+      <Card tone="card" movement="integration" radius="large" padding="md">
         <Body>
           <Head>
-            <Typography as="h3" variant="h3" gutter={false}>
+            <Typography as="h3" variant="h3">
               {item.title}
             </Typography>
 
-            <Typography as="p" variant="subtitle" gutter={false}>
+            <Typography as="p" variant="subtitle">
               {item.line}
             </Typography>
           </Head>
 
-          <Typography as="p" variant="body" gutter={false} tone="soft">
+          <Typography as="p" variant="body" tone="soft">
             {item.text}
           </Typography>
 
           <Panel>
-            <Typography as="p" variant="subtitle" gutter={false}>
+            <Typography as="p" variant="subtitle">
               {item.company.format}
             </Typography>
 
             <Meta>
               <Pill>
-                <Typography as="span" variant="caption" gutter={false}>
+                <Typography as="span" variant="body" tone="soft">
                   {item.company.duration}
                 </Typography>
               </Pill>
 
               <Pill>
-                <Typography as="span" variant="caption" gutter={false}>
+                <Typography as="span" variant="body" tone="soft">
                   {item.company.price}
                 </Typography>
               </Pill>
             </Meta>
 
-            <Typography as="p" variant="body" gutter={false} tone="soft">
+            <Typography as="p" variant="body" tone="soft">
               {item.company.text}
             </Typography>
           </Panel>
@@ -358,7 +331,7 @@ const PathCards = ({ items }: Props) => {
             $active={item.key === audience}
             onClick={() => setAudience(item.key)}
           >
-            {item.label}
+            {item.text}
           </Tab>
         ))}
       </Tabs>

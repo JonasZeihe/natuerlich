@@ -33,12 +33,7 @@ export default function AppFooter() {
         <FooterInner>
           <TopRow>
             <ClosingBlock gap={0.7}>
-              <Typography
-                as="p"
-                variant="subtitle"
-                gutter={false}
-                tone="strong"
-              >
+              <Typography as="p" variant="subtitle" tone="strong">
                 Jonas
               </Typography>
               <Microcopy>

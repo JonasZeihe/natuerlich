@@ -2,8 +2,8 @@
 'use client'
 
 import styled from 'styled-components'
+import Headline from '@/components/content/Headline'
 import PathCards, { type PathCardItem } from '@/components/content/PathCards'
-import SectionIntro from '@/components/content/SectionIntro'
 import Section from '@/components/primitives/Section'
 import Surface from '@/components/primitives/Surface'
 
@@ -150,19 +150,11 @@ const IntegrationSection = ({ onGoToNextStep: _onGoToNextStep }: Props) => (
     movement="integration"
     mix={['opening', 'flow']}
   >
-    <Surface
-      tone="bare"
-      movement="integration"
-      radius="none"
-      bordered={false}
-      padding="lg"
-      weight="quiet"
-    >
-      <SectionIntro
+    <Surface tone="bare" movement="integration" padding="lg">
+      <Headline
         titleId="integrieren-title"
         title="Du musst nicht schon wissen, ob es Yoga, Qigong oder Taijiquan ist."
         accent="axisDensity"
-        max="56rem"
       />
 
       <Shell>

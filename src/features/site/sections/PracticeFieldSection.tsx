@@ -2,8 +2,8 @@
 'use client'
 
 import styled from 'styled-components'
+import Headline from '@/components/content/Headline'
 import PracticeFields, { NoBreak } from '@/components/content/PracticeFields'
-import SectionIntro from '@/components/content/SectionIntro'
 import Section from '@/components/primitives/Section'
 import Surface from '@/components/primitives/Surface'
 
@@ -28,19 +28,11 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
     movement="practice"
     mix={['density', 'tension']}
   >
-    <Surface
-      tone="bare"
-      movement="practice"
-      radius="none"
-      bordered={false}
-      padding="lg"
-      weight="quiet"
-    >
-      <SectionIntro
+    <Surface tone="bare" movement="practice" padding="lg">
+      <Headline
         titleId="arbeiten-title"
         title="Schmiede die Schwerter vor dem Krieg"
         accent="axisDensity"
-        max="58rem"
       />
 
       <PracticePanel>

@@ -2,7 +2,7 @@
 'use client'
 
 import ContactPanel from '@/components/content/ContactPanel'
-import SectionIntro from '@/components/content/SectionIntro'
+import Headline from '@/components/content/Headline'
 import Section from '@/components/primitives/Section'
 import Surface from '@/components/primitives/Surface'
 
@@ -19,25 +19,16 @@ const NextStepSection = () => (
     movement="nextStep"
     energy="flow"
   >
-    <Surface
-      tone="bare"
-      movement="nextStep"
-      radius="none"
-      bordered={false}
-      padding="lg"
-      weight="quiet"
-    >
-      <SectionIntro
-        label="Kontakt"
+    <Surface tone="bare" movement="nextStep" padding="lg">
+      <Headline
         titleId="anschluss-title"
         title="Schreib mir, wenn du wissen möchtest, ob das passt."
         accent="axisFlow"
-        max="58rem"
       >
         Ein paar Sätze reichen. Wer du bist, was dich hierher geführt hat und ob
         du eher an Kurs, Einzelunterricht, einer Gruppe, einem Firmenformat oder
         erst einmal Orientierung interessiert bist.
-      </SectionIntro>
+      </Headline>
 
       <ContactPanel
         movement="nextStep"

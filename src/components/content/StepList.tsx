@@ -10,7 +10,7 @@ import type { AxisKey, MovementKey, SurfaceToneKey } from '@/design/theme'
 import Typography from '@/design/typography'
 
 export type StepListItem = {
-  label: ReactNode
+  label?: ReactNode
   title?: ReactNode
   children: ReactNode
   tone?: SurfaceToneKey
@@ -46,33 +46,18 @@ const StepList = ({ items, movement }: Props) => (
         tone={item.tone ?? (index === 1 ? 'field' : 'quiet')}
         movement={movement}
         radius="large"
-        bordered={item.bordered ?? index === 1}
+        bordered={item.bordered ?? false}
         padding={index === 1 ? 'lg' : 'md'}
-        weight={index === 1 ? 'steady' : 'quiet'}
         asset={item.asset}
       >
-        <Stack gap={4}>
-          <Typography
-            as="p"
-            variant="caption"
-            gutter={false}
-            accent={item.accent ?? 'axisDensity'}
-          >
-            {item.label}
-          </Typography>
-
+        <Stack gap={1}>
           {item.title ? (
-            <Typography
-              as="h3"
-              variant="h3"
-              gutter={false}
-              accent={item.accent ?? 'axisDensity'}
-            >
+            <Typography as="h3" variant="h3" color="primary">
               {item.title}
             </Typography>
           ) : null}
 
-          <Typography as="p" variant="body" gutter={false}>
+          <Typography as="p" variant="body" tone="soft" cadence="open">
             {item.children}
           </Typography>
         </Stack>
