@@ -33,7 +33,7 @@ const MiniCourseSection = ({ onGoToPracticeField }: Props) => {
       tone="default"
       movement="arrival"
     >
-      <Stack gap={5}>
+      <CourseFlow>
         <Hero>
           <Typography
             as="h1"
@@ -116,7 +116,7 @@ const MiniCourseSection = ({ onGoToPracticeField }: Props) => {
             </a>
           ))}
         </Inline>
-      </Stack>
+      </CourseFlow>
 
       {isBodyScanOpen ? (
         <BodyScanDialog
@@ -128,6 +128,15 @@ const MiniCourseSection = ({ onGoToPracticeField }: Props) => {
   )
 }
 
+const CourseFlow = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(2.75)};
+
+  @media (min-width: 48rem) {
+    gap: ${({ theme }) => theme.spacing(1)};
+  }
+`
+
 const Hero = styled.header`
   display: grid;
   gap: ${({ theme }) => theme.spacing(1.5)};
@@ -136,7 +145,11 @@ const Hero = styled.header`
 const BreathingArea = styled.div`
   display: grid;
   place-items: center;
-  min-height: clamp(24rem, 58svh, 42rem);
+  min-height: 31rem;
+
+  @media (min-width: 48rem) {
+    min-height: clamp(24rem, 58svh, 42rem);
+  }
 `
 
 const ActionSlot = styled.div`

@@ -11,7 +11,6 @@ import {
   type MotionValue,
 } from 'framer-motion'
 import styled from 'styled-components'
-import { breathCarrierPaths } from './breathingGeometry'
 import {
   breathPhaseLabels,
   breathPhases,
@@ -32,8 +31,21 @@ type CarrierStyle = {
   opacity: MotionValue<number>
 }
 
+type CarrierAsset = {
+  src: string
+}
+
 type Props = {
   showWebsiteAction?: boolean
+}
+
+const carrierAssets: Record<CarrierTone, CarrierAsset> = {
+  inhale: {
+    src: '/minikurs/001_Einatmen.webp',
+  },
+  exhale: {
+    src: '/minikurs/002_Ausatmen.webp',
+  },
 }
 
 const BreathingExercise = ({ showWebsiteAction = true }: Props) => {
@@ -232,40 +244,34 @@ const BreathingExercise = ({ showWebsiteAction = true }: Props) => {
 }
 
 const BreathCarrier = ({ tone }: { tone: CarrierTone }) => {
-  const paths =
-    tone === 'inhale' ? breathCarrierPaths.inhale : breathCarrierPaths.exhale
+  const asset = carrierAssets[tone]
 
-  return (
-    <CarrierShape $tone={tone}>
-      <CarrierBody d={paths.body} />
-      <CarrierInner d={paths.innerEdge} />
-      <CarrierOuter d={paths.outerEdge} />
-    </CarrierShape>
-  )
+  return <CarrierImage href={asset.src} preserveAspectRatio="xMidYMid meet" />
 }
 
 const Stage = styled.section`
   display: grid;
   place-items: center;
-  gap: ${({ theme }) => theme.spacing(2)};
-  min-height: min(74svh, 54rem);
+  width: 100%;
 `
 
 const Canvas = styled.div`
   position: relative;
   display: grid;
   place-items: center;
-  width: min(100%, 27rem);
+  width: 100%;
   aspect-ratio: 1;
-  margin-inline: auto;
   overflow: visible;
 
   @media (min-width: 48rem) {
     width: min(74vw, 44rem);
+    max-width: none;
   }
 `
 
 const CarrierScene = styled.svg`
+  --carrier-size: 20rem;
+
   position: absolute;
   inset: 0;
   z-index: 1;
@@ -279,42 +285,12 @@ const CarrierGroup = styled(motion.g)`
   will-change: transform, opacity;
 `
 
-const CarrierShape = styled.g<{ $tone: CarrierTone }>`
-  --carrier-fill: ${({ theme, $tone }) =>
-    $tone === 'inhale'
-      ? `color-mix(in srgb, ${theme.roles.movement.arrival.wash} 68%, ${theme.roles.surface.card})`
-      : `color-mix(in srgb, ${theme.roles.movement.arrival.assetCounter} 26%, ${theme.roles.movement.arrival.field})`};
-  --carrier-edge: ${({ theme, $tone }) =>
-    $tone === 'inhale'
-      ? theme.roles.movement.arrival.accent
-      : theme.roles.movement.arrival.deep};
-  --carrier-line: ${({ theme, $tone }) =>
-    $tone === 'inhale'
-      ? theme.roles.movement.arrival.wash
-      : theme.roles.movement.arrival.assetCounter};
-`
-
-const CarrierBody = styled.path`
-  fill: var(--carrier-fill);
-  stroke: var(--carrier-edge);
-  stroke-linejoin: round;
-  stroke-width: 6;
-`
-
-const CarrierInner = styled.path`
-  fill: none;
-  stroke: var(--carrier-edge);
-  stroke-linecap: round;
-  stroke-width: 4;
-  opacity: 0.58;
-`
-
-const CarrierOuter = styled.path`
-  fill: none;
-  stroke: var(--carrier-line);
-  stroke-linecap: round;
-  stroke-width: 2.5;
-  opacity: 0.36;
+const CarrierImage = styled.image`
+  x: calc(var(--carrier-size) * -0.5);
+  y: calc(var(--carrier-size) * -0.5);
+  width: var(--carrier-size);
+  height: var(--carrier-size);
+  overflow: visible;
 `
 
 const Center = styled.div`
@@ -322,7 +298,7 @@ const Center = styled.div`
   z-index: 2;
   display: grid;
   place-items: center;
-  width: clamp(11.25rem, 43vw, 16rem);
+  width: clamp(8.75rem, 38vw, 10rem);
   aspect-ratio: 1;
   border: 1px solid ${({ theme }) => theme.roles.movement.arrival.border};
   border-radius: ${({ theme }) => theme.borderRadius.pill};
@@ -332,9 +308,7 @@ const Center = styled.div`
 const CenterContent = styled.div`
   display: grid;
   place-items: center;
-  gap: ${({ theme }) => theme.spacingHalf(1)};
   width: 100%;
-  padding: ${({ theme }) => theme.spacing(2)};
   text-align: center;
 `
 
@@ -342,9 +316,9 @@ const Phase = styled.p`
   margin: 0;
   color: ${({ theme }) => theme.roles.text.primary};
   font-family: ${({ theme }) => theme.typography.fontFamily.primary};
-  font-size: clamp(1.25rem, 4vw, 2.35rem);
+  font-size: clamp(1.3rem, 5.8vw, 1.55rem);
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  line-height: 1.08;
+  line-height: 1.04;
   text-wrap: balance;
 `
 
@@ -361,7 +335,7 @@ const Counter = styled.p`
   margin: 0;
   color: ${({ theme }) => theme.roles.text.primary};
   font-family: ${({ theme }) => theme.typography.fontFamily.primary};
-  font-size: clamp(3.35rem, 10vw, 5.9rem);
+  font-size: clamp(2.7rem, 12vw, 3.6rem);
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   line-height: 0.88;
 `
