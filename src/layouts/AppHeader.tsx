@@ -24,6 +24,7 @@ const REVEAL_DELTA = 8
 const ACTIVE_OFFSET = HEADER_HEIGHT + 40
 const NAV_SCROLL_LOCK_ATTR = 'data-nav-scroll-lock'
 const START_SECTION_ID: SiteSectionId = 'minikurs'
+const MOBILE_NAV_QUERY = '(max-width: 900px)'
 
 const HEADER_SECTIONS: SiteSection[] = SITE_SECTIONS.filter(
   (section) => section.showInHeader
@@ -32,6 +33,12 @@ const HEADER_SECTIONS: SiteSection[] = SITE_SECTIONS.filter(
 const OBSERVED_SECTION_IDS: SiteSectionId[] = SITE_SECTIONS.filter(
   (section) => section.id !== START_SECTION_ID
 ).map((section) => section.id)
+
+const getNavigationOffset = (mobileDocked: boolean) =>
+  mobileDocked ? 0 : HEADER_HEIGHT
+
+const getActiveOffset = (mobileDocked: boolean) =>
+  mobileDocked ? 0 : ACTIVE_OFFSET
 
 const getActiveSectionId = (
   ids: readonly SiteSectionId[],
@@ -65,6 +72,7 @@ export default function AppHeader() {
   const [activeId, setActiveId] = useState<SiteSectionId>(START_SECTION_ID)
   const [compact, setCompact] = useState(false)
   const [hidden, setHidden] = useState(false)
+  const [mobileDocked, setMobileDocked] = useState(false)
   const [indicator, setIndicator] = useState<ActiveIndicatorState>({
     left: 0,
     width: 0,
@@ -81,6 +89,8 @@ export default function AppHeader() {
   const activeLoggedRef = useRef<SiteSectionId | null>(null)
   const hiddenLoggedRef = useRef<boolean | null>(null)
   const lastScrollYRef = useRef(0)
+  const navigationOffset = getNavigationOffset(mobileDocked)
+  const activeOffset = getActiveOffset(mobileDocked)
 
   useEffect(() => {
     document.documentElement.style.setProperty(
@@ -103,6 +113,20 @@ export default function AppHeader() {
   }, [])
 
   useEffect(() => {
+    const mediaQuery = window.matchMedia(MOBILE_NAV_QUERY)
+    const syncMobileDock = () => {
+      setMobileDocked(mediaQuery.matches)
+    }
+
+    syncMobileDock()
+    mediaQuery.addEventListener('change', syncMobileDock)
+
+    return () => {
+      mediaQuery.removeEventListener('change', syncMobileDock)
+    }
+  }, [])
+
+  useEffect(() => {
     const elements = ids
       .map((id) => document.getElementById(id))
       .filter(Boolean) as HTMLElement[]
@@ -120,7 +144,7 @@ export default function AppHeader() {
     }
 
     elements.forEach((element) => {
-      element.style.scrollMarginTop = `${ACTIVE_OFFSET}px`
+      element.style.scrollMarginTop = `${activeOffset}px`
 
       if (!element.hasAttribute('tabindex')) {
         element.setAttribute('tabindex', '-1')
@@ -134,9 +158,9 @@ export default function AppHeader() {
       })
       .info('header_section_tracking_ready', {
         observedIds: elements.map((element) => element.id),
-        offset: ACTIVE_OFFSET,
+        offset: activeOffset,
       })
-  }, [ids])
+  }, [activeOffset, ids])
 
   useEffect(() => {
     const syncFromScroll = () => {
@@ -160,7 +184,7 @@ export default function AppHeader() {
         }
       }
 
-      const nextActiveId = getActiveSectionId(ids, currentY + ACTIVE_OFFSET)
+      const nextActiveId = getActiveSectionId(ids, currentY + activeOffset)
       setActiveId((current) =>
         current === nextActiveId ? current : nextActiveId
       )
@@ -193,7 +217,7 @@ export default function AppHeader() {
         window.cancelAnimationFrame(frame)
       }
     }
-  }, [ids, menuOpen])
+  }, [activeOffset, ids, menuOpen])
 
   useEffect(() => {
     if (!menuOpen) return
@@ -371,7 +395,7 @@ export default function AppHeader() {
             <BrandWrap>
               <BrandLink
                 targetId={START_SECTION_ID}
-                offset={HEADER_HEIGHT}
+                offset={navigationOffset}
                 aria-label="Zum Anfang springen"
               >
                 <BrandStack>
@@ -401,7 +425,7 @@ export default function AppHeader() {
                         navItemRefs.current[section.id] = node
                       }}
                       targetId={section.id}
-                      offset={HEADER_HEIGHT}
+                      offset={navigationOffset}
                       $active={activeId === section.id}
                       aria-current={
                         activeId === section.id ? 'true' : undefined
@@ -439,7 +463,7 @@ export default function AppHeader() {
                   <MobileItem key={section.id}>
                     <MobileLink
                       targetId={section.id}
-                      offset={HEADER_HEIGHT}
+                      offset={navigationOffset}
                       $active={activeId === section.id}
                       aria-current={
                         activeId === section.id ? 'true' : undefined
@@ -461,7 +485,7 @@ export default function AppHeader() {
                         window.requestAnimationFrame(() => {
                           window.requestAnimationFrame(() => {
                             void scrollToTarget(section.id, {
-                              offset: HEADER_HEIGHT,
+                              offset: navigationOffset,
                             }).then((ok) => {
                               if (!ok) return
 
@@ -515,6 +539,22 @@ const HeaderShell = styled.header<{ $compact: boolean; $hidden: boolean }>`
     transition: ${({ theme }) => theme.motion.css.navigation.headerChrome};
     pointer-events: none;
   }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    border-top: 1px solid
+      ${({ theme, $compact }) =>
+        $compact ? theme.roles.border.strong : theme.roles.border.subtle};
+    border-bottom: 0;
+    transform: ${({ $hidden }) =>
+      $hidden ? 'translateY(100%)' : 'translateY(0)'};
+
+    &::after {
+      inset: 0 0 auto;
+    }
+  }
 `
 
 const HeaderInner = styled.div`
@@ -522,6 +562,10 @@ const HeaderInner = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    flex-direction: column-reverse;
+  }
 `
 
 const TopRow = styled.div`
@@ -677,9 +721,9 @@ const MenuButton = styled.button`
 
 const MobilePanel = styled.nav`
   display: none;
-  margin-top: ${({ theme }) => theme.spacing(0.7)};
-  padding-top: ${({ theme }) => theme.spacing(0.35)};
-  border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
+  margin-bottom: ${({ theme }) => theme.spacing(0.7)};
+  padding-bottom: ${({ theme }) => theme.spacing(0.35)};
+  border-bottom: 1px solid ${({ theme }) => theme.roles.border.subtle};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     display: block;
@@ -689,7 +733,7 @@ const MobilePanel = styled.nav`
 const MobileList = styled.ol`
   list-style: none;
   margin: 0;
-  padding: ${({ theme }) => `${theme.spacing(0.25)} 0 0`};
+  padding: ${({ theme }) => `0 0 ${theme.spacing(0.25)}`};
   display: grid;
   gap: ${({ theme }) => theme.spacingHalf(0.55)};
 `

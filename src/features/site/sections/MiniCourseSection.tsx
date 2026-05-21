@@ -7,19 +7,37 @@ import Button from '@/components/actions/Button'
 import BodyScanDialog from '@/components/miniCourse/BodyScanDialog'
 import BreathingExercise from '@/components/miniCourse/BreathingExercise'
 import Grid from '@/components/primitives/Grid'
-import Inline from '@/components/primitives/Inline'
 import Section from '@/components/primitives/Section'
 import Stack from '@/components/primitives/Stack'
 import Surface from '@/components/primitives/Surface'
 import Typography from '@/design/typography'
 import { bodyScanContent } from '@/features/miniCourse/model/bodyScan'
-import { miniCourseContent } from '@/features/miniCourse/model/miniCourse'
 
 type Props = {
   onGoToPracticeField: () => void
 }
 
-const MiniCourseSection = ({ onGoToPracticeField }: Props) => {
+const miniCourseContent = {
+  title: 'Komm erst mal an.',
+  lead: 'Beginne mit dem Atem. Öffne danach den Body Scan, wenn du deinen Körper genauer wahrnehmen möchtest.',
+  bodyScan: {
+    title: 'Den Körper einmal von innen lesen.',
+    action: 'Body Scan öffnen',
+  },
+  afterBodyScan: {
+    opening: 'Vielleicht bist du jetzt ein Stückchen mehr bei dir.',
+    paragraphs: [
+      'Das, was du gerade gemacht hast, war eine einfache Anfangsentspannung: Atem, Wahrnehmung, Body Scan. Egal, wo du eben warst — dieser kleine Wechsel zählt.',
+      'Ich mache keine Heilversprechen. Aber ich bin davon überzeugt, dass regelmäßige Praxis eine echte Entspannungsfähigkeit aufbauen kann. Nicht erst dann, wenn man schon müde, gereizt oder abgebrannt ist.',
+      'Prävention ist nichts, was man sich für später aufspart. Sie ist ein Muster im Alltag: kurz innehalten, wahrnehmen, nachregulieren, bevor der Körper nur noch im Crash antwortet.',
+      'Aus diesem Anfang kann Praxis werden: Yoga, Qigong, Taijiquan, Meditation, Entspannung. Nicht als Etiketten, sondern als Wege, den eigenen Zustand besser zu lesen und mit ihm zu arbeiten.',
+    ],
+    closing:
+      'Wenn dich das neugierig macht, dann schau doch mal wer ich bin, was ich unterrichte und wie ein gemeinsamer Einstieg aussehen kann.',
+  },
+} as const
+
+const MiniCourseSection = ({}: Props) => {
   const [isBodyScanOpen, setIsBodyScanOpen] = useState(false)
 
   return (
@@ -62,21 +80,9 @@ const MiniCourseSection = ({ onGoToPracticeField }: Props) => {
 
         <Surface tone="card" movement="arrival" radius="large" padding="lg">
           <Grid columns={2} min="18rem" gap={3}>
-            <Stack gap={1.25}>
-              <Typography as="h2" variant="h2" cadence="dense" measure="title">
-                {miniCourseContent.bodyScan.title}
-              </Typography>
-
-              <Typography
-                as="p"
-                variant="body"
-                tone="soft"
-                cadence="open"
-                measure="prose"
-              >
-                {miniCourseContent.bodyScan.body}
-              </Typography>
-            </Stack>
+            <Typography as="h2" variant="h2" cadence="dense" measure="title">
+              {miniCourseContent.bodyScan.title}
+            </Typography>
 
             <ActionSlot>
               <Button
@@ -90,32 +96,42 @@ const MiniCourseSection = ({ onGoToPracticeField }: Props) => {
           </Grid>
         </Surface>
 
-        <Grid columns={3} min="16rem" gap={1.5}>
-          {miniCourseContent.introduction.map((text) => (
+        <AfterPractice>
+          <Stack gap={1.25}>
             <Typography
-              key={text}
               as="p"
               variant="body"
-              tone="soft"
+              tone="strong"
               cadence="open"
               measure="prose"
             >
-              {text}
+              {miniCourseContent.afterBodyScan.opening}
             </Typography>
-          ))}
-        </Grid>
 
-        <Inline gap={1} align="center">
-          <Button type="button" variant="primary" onClick={onGoToPracticeField}>
-            {miniCourseContent.navigation.primary}
-          </Button>
+            {miniCourseContent.afterBodyScan.paragraphs.map((text) => (
+              <Typography
+                key={text}
+                as="p"
+                variant="body"
+                tone="soft"
+                cadence="open"
+                measure="prose"
+              >
+                {text}
+              </Typography>
+            ))}
 
-          {miniCourseContent.navigation.links.map((item) => (
-            <a key={item.href} href={item.href}>
-              {item.text}
-            </a>
-          ))}
-        </Inline>
+            <Typography
+              as="p"
+              variant="body"
+              tone="strong"
+              cadence="open"
+              measure="prose"
+            >
+              {miniCourseContent.afterBodyScan.closing}
+            </Typography>
+          </Stack>
+        </AfterPractice>
       </CourseFlow>
 
       {isBodyScanOpen ? (
@@ -154,8 +170,13 @@ const BreathingArea = styled.div`
 
 const ActionSlot = styled.div`
   display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
+`
+
+const AfterPractice = styled.article`
+  width: min(100%, 64ch);
+  margin-inline: auto;
 `
 
 export default MiniCourseSection

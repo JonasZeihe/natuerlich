@@ -145,7 +145,7 @@ const IntegrationSection = ({ onGoToNextStep: _onGoToNextStep }: Props) => (
     container="wide"
     content="default"
     variant="body"
-    rhythm="default"
+    rhythm="spacious"
     tone="relief"
     movement="integration"
     mix={['opening', 'flow']}

@@ -93,13 +93,13 @@ const HomePage = () => (
         }}
       />
 
+      <RecognitionSection />
+
       <PracticeFieldSection
         onGoToIntegration={() => {
           void scrollToSection('integrieren', 'practice_integration')
         }}
       />
-
-      <RecognitionSection />
 
       <IntegrationSection
         onGoToNextStep={() => {

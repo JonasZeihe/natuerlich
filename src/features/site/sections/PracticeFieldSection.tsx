@@ -3,17 +3,13 @@
 
 import styled from 'styled-components'
 import Headline from '@/components/content/Headline'
-import PracticeFields, { NoBreak } from '@/components/content/PracticeFields'
+import PracticeFields from '@/components/content/PracticeFields'
 import Section from '@/components/primitives/Section'
 import Surface from '@/components/primitives/Surface'
 
 type Props = {
   onGoToIntegration: () => void
 }
-
-const PracticePanel = styled.div`
-  margin-top: ${({ theme }) => theme.spacing(2.5)};
-`
 
 const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
   <Section
@@ -61,12 +57,12 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
               title: 'Achtsamkeit ordnet Wahrnehmung.',
               body: 'Body Scan, Meditation und einfache Aufmerksamkeit helfen, nicht sofort zu bewerten, zu reparieren oder wegzudrücken. Man lernt, genauer da zu sein, ohne sich im eigenen Zustand zu verlieren.',
             },
-            {
-              label: 'Regulation',
-              title: 'Daraus entsteht Stressmanagement.',
-              body: 'Stressmanagement ist dann kein theoretisches Thema mehr, sondern eine Konsequenz aus Wahrnehmung, Atem, Entspannung und Achtsamkeit. Man lernt, den eigenen Zustand früher zu lesen, bevor Schlaf kippt, Spannung normal wird oder der Körper erst nachts zeigt, was tagsüber keinen Raum hatte.',
-            },
           ]}
+          regulation={{
+            label: 'Regulation',
+            title: 'Daraus entsteht Stressmanagement.',
+            body: 'Stressmanagement ist dann kein theoretisches Thema mehr, sondern eine Konsequenz aus Wahrnehmung, Atem, Entspannung und Achtsamkeit. Man lernt, den eigenen Zustand früher zu lesen, bevor Schlaf kippt, Spannung normal wird oder der Körper erst nachts zeigt, was tagsüber keinen Raum hatte.',
+          }}
           result={{
             label: 'Praxis',
             title: 'Dann wird aus Technik ein Weg.',
@@ -75,23 +71,32 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
           method={{
             title: 'In der Mitte steht Daoyin Yangsheng Gong.',
             body: 'Das ist der Zusammenhang, aus dem ich arbeite: Atem, Aufmerksamkeit, Gesundheitspflege, Bewegung, Qigong und später auch Taijiquan.',
-            name: (
-              <>
-                Daoyin Yangsheng Gong — <NoBreak>導引養生功</NoBreak>
-              </>
-            ),
-            note: 'Daoyin — 導引: Führung von Spannung in Antwort. Yangsheng — 養生: Sorge für das Lebendige, das dadurch hervortritt. Gong — 功: Gereifte Wirksamkeit aus richtiger Wiederholung.',
+            name: 'Daoyin Yangsheng Gong — 導引養生功',
+            terms: [
+              {
+                name: 'Daoyin — 導引',
+                meaning: 'Führung von Spannung in Antwort.',
+              },
+              {
+                name: 'Yangsheng — 養生',
+                meaning: 'Sorge für das Lebendige, das dadurch hervortritt.',
+              },
+              {
+                name: 'Gong — 功',
+                meaning: 'Gereifte Wirksamkeit aus richtiger Wiederholung.',
+              },
+            ],
           }}
           ways={[
-            {
-              label: 'Yoga',
-              title: 'Verbinden, anschirren, ausrichten.',
-              body: 'Yoga kommt von yuj. Gemeint ist hier kein einzelner Trick und keine Körperform zum Abhaken, sondern ein Übungsweg für Körper, Atem, Geist und Alltag: Haltung, Bewegung, Atmung, Entspannung, Konzentration und die Art, wie du mit dir selbst umgehst.',
-            },
             {
               label: 'Qigong',
               title: 'Übung an der Lebendigkeit.',
               body: '氣功: Qi als Atem, Dampf und Lebenskraft. Gong als Übung, Arbeit und erworbenes Können. Im alten Zeichen steckt das Bild von Reis, aus dem Wärme aufsteigt. Qigong ist keine Energiebehauptung, sondern Praxis: führen, atmen, drehen, wahrnehmen, wiederholen.',
+            },
+            {
+              label: 'Yoga',
+              title: 'Verbinden, anschirren, ausrichten.',
+              body: 'Yoga kommt von yuj. Gemeint ist hier kein einzelner Trick und keine Körperform zum Abhaken, sondern ein Übungsweg für Körper, Atem, Geist und Alltag: Haltung, Bewegung, Atmung, Entspannung, Konzentration und die Art, wie du mit dir selbst umgehst.',
             },
             {
               label: 'Taijiquan',
@@ -104,5 +109,9 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
     </Surface>
   </Section>
 )
+
+const PracticePanel = styled.div`
+  margin-top: ${({ theme }) => theme.spacing(2.5)};
+`
 
 export default PracticeFieldSection

@@ -6,13 +6,13 @@ export const SITE_SECTIONS = [
     showInHeader: true,
   },
   {
-    id: 'arbeiten',
-    label: 'Praxis',
+    id: 'erkennen',
+    label: 'Erkennen',
     showInHeader: true,
   },
   {
-    id: 'erkennen',
-    label: 'Erkennen',
+    id: 'arbeiten',
+    label: 'Praxis',
     showInHeader: true,
   },
   {
