@@ -7,6 +7,7 @@ import styled, { css, type DefaultTheme } from 'styled-components'
 type Columns = number | 'auto'
 type BreakpointKey = keyof DefaultTheme['breakpoints']
 type ItemMode = 'line' | 'card'
+type RailAlign = 'start' | 'stretch'
 
 type ContentRailProps = {
   children?: ReactNode
@@ -16,11 +17,13 @@ type ContentRailProps = {
   itemWidth?: string
   max?: string
   switchAt?: BreakpointKey
+  align?: RailAlign
 } & Omit<ComponentPropsWithoutRef<'div'>, 'children'>
 
 type ContentRailItemProps = {
   children?: ReactNode
   mode?: ItemMode
+  stretch?: boolean
 } & Omit<ComponentPropsWithoutRef<'article'>, 'children'>
 
 const toSpace = (theme: DefaultTheme, value?: number | string) => {
@@ -36,8 +39,10 @@ const Rail = styled.div<{
   $itemWidth: string
   $max?: string
   $switchAt: BreakpointKey
+  $align: RailAlign
 }>`
   display: grid;
+  align-items: ${({ $align }) => $align};
   grid-auto-flow: column;
   grid-auto-columns: ${({ $itemWidth }) => $itemWidth};
   gap: ${({ theme, $gap }) => toSpace(theme, $gap)};
@@ -67,13 +72,13 @@ const Rail = styled.div<{
   `}
 `
 
-const Item = styled.article<{ $mode: ItemMode }>`
+const Item = styled.article<{ $mode: ItemMode; $stretch: boolean }>`
   scroll-snap-align: start;
   display: grid;
   align-content: start;
   gap: ${({ theme }) => theme.spacing(0.85)};
   min-width: 0;
-  height: 100%;
+  height: ${({ $stretch }) => ($stretch ? '100%' : 'auto')};
   padding: ${({ theme }) => theme.spacing(1.25)};
   border-radius: ${({ theme }) => theme.borderRadius.large};
   background: ${({ theme }) => theme.roles.surface.quiet};
@@ -104,6 +109,7 @@ const ContentRail = ({
   itemWidth = 'min(82vw, 23rem)',
   max,
   switchAt = 'lg',
+  align = 'stretch',
   ...rest
 }: ContentRailProps) => (
   <Rail
@@ -113,6 +119,7 @@ const ContentRail = ({
     $itemWidth={itemWidth}
     $max={max}
     $switchAt={switchAt}
+    $align={align}
     {...rest}
   >
     {children}
@@ -122,9 +129,10 @@ const ContentRail = ({
 const ContentRailItem = ({
   children,
   mode = 'line',
+  stretch = true,
   ...rest
 }: ContentRailItemProps) => (
-  <Item $mode={mode} {...rest}>
+  <Item $mode={mode} $stretch={stretch} {...rest}>
     {children}
   </Item>
 )

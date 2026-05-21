@@ -6,12 +6,9 @@ import styled from 'styled-components'
 import { FaArrowUp } from 'react-icons/fa'
 import Container from '@/components/primitives/Container'
 import Stack from '@/components/primitives/Stack'
-import Typography from '@/design/typography'
 
 const FOOTER_NAV_ITEMS = [
-  { href: '/kontakt', label: 'Kontakt' },
-  { href: '/impressum', label: 'Impressum' },
-  { href: '/datenschutz', label: 'Datenschutz' },
+  { href: '/impressum', label: 'Impressum & Datenschutz' },
 ] as const
 
 export default function AppFooter() {
@@ -32,16 +29,7 @@ export default function AppFooter() {
       <Container max="page">
         <FooterInner>
           <TopRow>
-            <ClosingBlock gap={0.7}>
-              <Typography as="p" variant="subtitle" tone="strong">
-                Jonas
-              </Typography>
-              <Microcopy>
-                Meta-Placeholder: Hier später eine knappe Abschlusszeile, die
-                den Weg bündelt und würdig aus der Seite hinausführt.
-              </Microcopy>
-            </ClosingBlock>
-
+            <Copy>© {new Date().getFullYear()} Jonas Zeihe</Copy>
             <LinksCol gap={0.4} aria-label="Fußnavigation">
               {FOOTER_NAV_ITEMS.map((item) => (
                 <FooterLink key={item.href} href={item.href}>
@@ -49,10 +37,6 @@ export default function AppFooter() {
                 </FooterLink>
               ))}
             </LinksCol>
-          </TopRow>
-
-          <BottomRow>
-            <Copy>© {new Date().getFullYear()} Jonas</Copy>
             <ToTop
               type="button"
               onClick={scrollToTop}
@@ -61,7 +45,7 @@ export default function AppFooter() {
             >
               <FaArrowUp />
             </ToTop>
-          </BottomRow>
+          </TopRow>
         </FooterInner>
       </Container>
     </FooterShell>
@@ -99,24 +83,12 @@ const TopRow = styled.div`
   }
 `
 
-const ClosingBlock = styled(Stack)`
-  max-width: 40rem;
-`
-
 const LinksCol = styled(Stack)`
   align-items: start;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     align-items: end;
   }
-`
-
-const Microcopy = styled.p`
-  margin: 0;
-  color: ${({ theme }) => theme.roles.text.subtle};
-  font-size: ${({ theme }) => theme.typography.fontSize.small};
-  line-height: ${({ theme }) => theme.typography.lineHeight.relaxed};
-  max-width: 38rem;
 `
 
 const FooterLink = styled(Link)`
@@ -139,20 +111,6 @@ const FooterLink = styled(Link)`
 
   @media ${({ theme }) => theme.motion.reduced.media} {
     transition: none;
-  }
-`
-
-const BottomRow = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: ${({ theme }) => theme.spacing(1)};
-  padding-top: ${({ theme }) => theme.spacing(1.25)};
-  border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    flex-direction: column;
-    align-items: stretch;
   }
 `
 

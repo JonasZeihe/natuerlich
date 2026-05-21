@@ -14,7 +14,7 @@ const NextStepSection = () => (
     container="wide"
     content="default"
     variant="outro"
-    rhythm="compact"
+    rhythm="spacious"
     tone="arrival"
     movement="nextStep"
     energy="flow"
