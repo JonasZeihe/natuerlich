@@ -2,8 +2,8 @@
 'use client'
 
 import styled from 'styled-components'
+import Headline from '@/components/content/Headline'
 import PracticeFields, { NoBreak } from '@/components/content/PracticeFields'
-import SectionIntro from '@/components/content/SectionIntro'
 import Section from '@/components/primitives/Section'
 import Surface from '@/components/primitives/Surface'
 
@@ -28,19 +28,11 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
     movement="practice"
     mix={['density', 'tension']}
   >
-    <Surface
-      tone="bare"
-      movement="practice"
-      radius="none"
-      bordered={false}
-      padding="lg"
-      weight="quiet"
-    >
-      <SectionIntro
+    <Surface tone="bare" movement="practice" padding="lg">
+      <Headline
         titleId="arbeiten-title"
         title="Schmiede die Schwerter vor dem Krieg"
         accent="axisDensity"
-        max="58rem"
       />
 
       <PracticePanel>
@@ -82,13 +74,13 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
           }}
           method={{
             title: 'In der Mitte steht Daoyin Yangsheng Gong.',
-            body: 'Das ist der Zusammenhang, aus dem ich arbeite. Nicht als exotisches Etikett, sondern als gelernte Praxis: Atem, Aufmerksamkeit, Gesundheitspflege, Bewegung, Qigong und später auch Taijiquan.',
+            body: 'Das ist der Zusammenhang, aus dem ich arbeite: Atem, Aufmerksamkeit, Gesundheitspflege, Bewegung, Qigong und später auch Taijiquan.',
             name: (
               <>
                 Daoyin Yangsheng Gong — <NoBreak>導引養生功</NoBreak>
               </>
             ),
-            note: 'Der Name bedeutet sinngemäß: führen, nähren, üben. Erst kommt die Erfahrung. Dann bekommt sie einen Namen.',
+            note: 'Daoyin — 導引: Führung von Spannung in Antwort. Yangsheng — 養生: Sorge für das Lebendige, das dadurch hervortritt. Gong — 功: Gereifte Wirksamkeit aus richtiger Wiederholung.',
           }}
           ways={[
             {

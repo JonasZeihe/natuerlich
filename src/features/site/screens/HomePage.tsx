@@ -10,10 +10,10 @@ import IntegrationSection from '@/features/site/sections/IntegrationSection'
 import NextStepSection from '@/features/site/sections/NextStepSection'
 import PracticeFieldSection from '@/features/site/sections/PracticeFieldSection'
 import RecognitionSection from '@/features/site/sections/RecognitionSection'
-import SchnupperkursSection from '@/features/site/sections/SchnupperkursSection'
+import MiniCourseSection from '@/features/site/sections/MiniCourseSection'
 
 type FlowSource =
-  | 'schnupperkurs_practice'
+  | 'minikurs_practice'
   | 'practice_integration'
   | 'integration_next'
 
@@ -87,9 +87,9 @@ const scrollToSection = async (targetId: SiteSectionId, source: FlowSource) => {
 const HomePage = () => (
   <PageCanvas variant="landing" introOffset={false} noFooterGap>
     <Content>
-      <SchnupperkursSection
+      <MiniCourseSection
         onGoToPracticeField={() => {
-          void scrollToSection('arbeiten', 'schnupperkurs_practice')
+          void scrollToSection('arbeiten', 'minikurs_practice')
         }}
       />
 

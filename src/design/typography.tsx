@@ -13,10 +13,11 @@ type Variant = 'h1' | 'h2' | 'h3' | 'subtitle' | 'body' | 'caption'
 type Align = 'left' | 'right' | 'center' | 'justify'
 type Tone = 'neutral' | 'soft' | 'strong'
 type SemanticColor = 'primary' | 'secondary' | 'subtle' | 'link' | 'linkHover'
-type Measure = 'compact' | 'title' | 'prose' | 'wide' | 'full'
-type Cadence = 'open' | 'neutral' | 'dense'
+type Measure = 'none' | 'compact' | 'title' | 'prose' | 'wide' | 'full'
+type Cadence = 'neutral' | 'open' | 'dense'
 
-type TypographyProps = {
+type TypographyProps<T extends ElementType = 'span'> = {
+  as?: T
   variant?: Variant
   align?: Align
   color?: SemanticColor
@@ -24,24 +25,21 @@ type TypographyProps = {
   tone?: Tone
   measure?: Measure
   cadence?: Cadence
-  gutter?: boolean
-  as?: ElementType
   children: ReactNode
-} & Omit<ComponentPropsWithoutRef<'span'>, 'as' | 'color'>
+} & Omit<ComponentPropsWithoutRef<T>, 'as' | 'color' | 'children'>
 
 const TAG_MAP: Record<Variant, ElementType> = {
   h1: 'h1',
   h2: 'h2',
   h3: 'h3',
-  subtitle: 'h4',
+  subtitle: 'p',
   body: 'p',
   caption: 'span',
 }
 
-const variantCSS = (variant: Variant, theme: DefaultTheme, gutter: boolean) => {
+const variantCSS = (variant: Variant, theme: DefaultTheme) => {
   const {
     typography: { fontSize, fontWeight, lineHeight, letterSpacing },
-    spacing,
   } = theme
 
   switch (variant) {
@@ -51,7 +49,6 @@ const variantCSS = (variant: Variant, theme: DefaultTheme, gutter: boolean) => {
         font-weight: ${fontWeight.bold};
         line-height: ${lineHeight.tight};
         letter-spacing: ${letterSpacing.tighter};
-        margin-bottom: ${gutter ? spacing(2.5) : 0};
         text-wrap: balance;
       `
     case 'h2':
@@ -60,7 +57,6 @@ const variantCSS = (variant: Variant, theme: DefaultTheme, gutter: boolean) => {
         font-weight: ${fontWeight.bold};
         line-height: 1.16;
         letter-spacing: ${letterSpacing.tight};
-        margin-bottom: ${gutter ? spacing(2) : 0};
         text-wrap: balance;
       `
     case 'h3':
@@ -69,7 +65,7 @@ const variantCSS = (variant: Variant, theme: DefaultTheme, gutter: boolean) => {
         font-weight: ${fontWeight.medium};
         line-height: 1.32;
         letter-spacing: ${letterSpacing.normal};
-        margin-bottom: ${gutter ? spacing(1.45) : 0};
+        text-wrap: balance;
       `
     case 'subtitle':
       return css`
@@ -77,15 +73,13 @@ const variantCSS = (variant: Variant, theme: DefaultTheme, gutter: boolean) => {
         font-weight: ${fontWeight.medium};
         line-height: 1.48;
         letter-spacing: ${letterSpacing.normal};
-        margin-bottom: ${gutter ? spacing(1.05) : 0};
       `
     case 'caption':
       return css`
         font-size: ${fontSize.caption};
         font-weight: ${fontWeight.medium};
         line-height: 1.42;
-        letter-spacing: ${letterSpacing.wide};
-        margin-bottom: ${gutter ? spacing(0.75) : 0};
+        letter-spacing: ${letterSpacing.normal};
       `
     default:
       return css`
@@ -93,12 +87,15 @@ const variantCSS = (variant: Variant, theme: DefaultTheme, gutter: boolean) => {
         font-weight: ${fontWeight.regular};
         line-height: ${lineHeight.normal};
         letter-spacing: ${letterSpacing.normal};
-        margin-bottom: ${gutter ? spacing(1) : 0};
       `
   }
 }
 
 const measureCSS = (measure: Measure, theme: DefaultTheme) => {
+  if (measure === 'none') {
+    return ''
+  }
+
   if (measure === 'full') {
     return css`
       max-width: none;
@@ -128,14 +125,8 @@ const cadenceCSS = (cadence: Cadence, variant: Variant) => {
   return ''
 }
 
-const accentCSS = (accent: AxisKey, variant: Variant, theme: DefaultTheme) => {
+const accentCSS = (accent: AxisKey, theme: DefaultTheme) => {
   const axis = theme.getAxisRole(accent)
-
-  if (variant === 'caption') {
-    return css`
-      color: ${axis.fill};
-    `
-  }
 
   return css`
     color: ${axis.text};
@@ -145,7 +136,6 @@ const accentCSS = (accent: AxisKey, variant: Variant, theme: DefaultTheme) => {
 type StyledProps = {
   $variant: Variant
   $align: Align
-  $gutter: boolean
   $semanticColor?: SemanticColor
   $accent?: AxisKey
   $tone: Tone
@@ -158,11 +148,11 @@ const StyledTypography = styled.span<StyledProps>`
   padding: 0;
   min-width: 0;
   text-align: ${({ $align }) => $align};
-  ${({ $variant, theme, $gutter }) => variantCSS($variant, theme, $gutter)}
+  ${({ $variant, theme }) => variantCSS($variant, theme)}
   ${({ $measure, theme }) => measureCSS($measure, theme)}
   ${({ $cadence, $variant }) => cadenceCSS($cadence, $variant)}
 
-  ${({ theme, $variant, $semanticColor, $accent, $tone }) => {
+  ${({ theme, $semanticColor, $accent, $tone }) => {
     if ($semanticColor) {
       return css`
         color: ${theme.roles.text[$semanticColor]};
@@ -170,7 +160,7 @@ const StyledTypography = styled.span<StyledProps>`
     }
 
     if ($accent) {
-      return accentCSS($accent, $variant, theme)
+      return accentCSS($accent, theme)
     }
 
     if ($tone === 'soft') {
@@ -185,27 +175,10 @@ const StyledTypography = styled.span<StyledProps>`
       `
     }
 
-    if ($variant === 'caption') {
-      return css`
-        color: ${theme.roles.text.subtle};
-      `
-    }
-
     return css`
-      color: ${theme.roles.text.primary};
+      color: inherit;
     `
   }}
-
-  ${({ $variant, $measure, $accent, theme }) =>
-    ($variant === 'h1' || $variant === 'h2') && $measure === 'title' && $accent
-      ? css`
-          max-width: ${theme.typography.measure.title};
-
-          @media (max-width: ${theme.breakpoints.md}) {
-            max-width: 24ch;
-          }
-        `
-      : ''}
 
   a {
     color: ${({ theme }) => theme.roles.text.link};
@@ -228,31 +201,25 @@ const StyledTypography = styled.span<StyledProps>`
   }
 `
 
-export default function Typography({
+export default function Typography<T extends ElementType = 'span'>({
   variant = 'body',
   align = 'left',
   color,
   accent,
   tone = 'neutral',
-  measure = variant === 'body'
-    ? 'prose'
-    : variant === 'caption'
-      ? 'wide'
-      : 'title',
+  measure = 'none',
   cadence = 'neutral',
-  gutter = true,
   as,
   children,
   ...rest
-}: TypographyProps) {
-  const componentTag = as ?? TAG_MAP[variant] ?? 'p'
+}: TypographyProps<T>) {
+  const componentTag = as ?? TAG_MAP[variant] ?? 'span'
 
   return (
     <StyledTypography
       as={componentTag}
       $variant={variant}
       $align={align}
-      $gutter={gutter}
       $semanticColor={color}
       $accent={accent}
       $tone={tone}

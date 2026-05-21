@@ -23,7 +23,7 @@ const HIDE_DELTA = 10
 const REVEAL_DELTA = 8
 const ACTIVE_OFFSET = HEADER_HEIGHT + 40
 const NAV_SCROLL_LOCK_ATTR = 'data-nav-scroll-lock'
-const START_SECTION_ID: SiteSectionId = 'schnupperkurs'
+const START_SECTION_ID: SiteSectionId = 'minikurs'
 
 const HEADER_SECTIONS: SiteSection[] = SITE_SECTIONS.filter(
   (section) => section.showInHeader
@@ -375,20 +375,10 @@ export default function AppHeader() {
                 aria-label="Zum Anfang springen"
               >
                 <BrandStack>
-                  <Typography
-                    as="span"
-                    variant="h3"
-                    gutter={false}
-                    tone="strong"
-                  >
+                  <Typography as="span" variant="h3" tone="strong">
                     Jonas
                   </Typography>
-                  <Typography
-                    as="span"
-                    variant="caption"
-                    gutter={false}
-                    tone="soft"
-                  >
+                  <Typography as="span" variant="body" tone="soft">
                     Praxis, die trägt
                   </Typography>
                 </BrandStack>

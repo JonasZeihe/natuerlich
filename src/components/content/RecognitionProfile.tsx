@@ -3,18 +3,13 @@
 
 import { type ReactNode } from 'react'
 import styled from 'styled-components'
-import type { AssetConsumerSpec } from '@/components/assets/registry'
-import Surface from '@/components/primitives/Surface'
-import type { AxisKey, MovementKey, SurfaceToneKey } from '@/design/theme'
+import ContentRail, { ContentRailItem } from '@/components/content/ContentRail'
+import Stack from '@/components/primitives/Stack'
 import Typography from '@/design/typography'
 
 type ProfileBlock = {
-  label: ReactNode
   title?: ReactNode
   children: ReactNode
-  tone?: SurfaceToneKey
-  accent?: AxisKey
-  asset?: AssetConsumerSpec | null
 }
 
 type Credential = {
@@ -25,15 +20,11 @@ type Credential = {
 }
 
 type CredentialBlock = {
-  label: ReactNode
   title?: ReactNode
   items: readonly Credential[]
-  tone?: SurfaceToneKey
-  accent?: AxisKey
 }
 
 type Props = {
-  movement: MovementKey
   path: ProfileBlock
   teaching: ProfileBlock
   style: ProfileBlock
@@ -44,73 +35,22 @@ type Props = {
 
 const Shell = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(1.25)};
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    gap: ${({ theme }) => theme.spacing(1.5)};
-  }
+  gap: ${({ theme }) => theme.spacing(2)};
 `
 
-const Lead = styled(Surface)`
+const Lead = styled.div`
   width: min(100%, 64rem);
   margin-inline: auto;
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(1)};
 `
 
-const Track = styled.div`
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: min(82vw, 23rem);
-  gap: ${({ theme }) => theme.spacing(1)};
-  margin-inline: ${({ theme }) => `-${theme.spacing(1)}`};
-  padding-inline: ${({ theme }) => theme.spacing(1)};
-  padding-bottom: ${({ theme }) => theme.spacing(0.25)};
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    width: min(100%, 64rem);
-    margin-inline: auto;
-    padding-inline: 0;
-    grid-auto-flow: initial;
-    grid-auto-columns: initial;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    overflow: visible;
-  }
-`
-
-const TrackItem = styled.div`
-  scroll-snap-align: start;
-`
-
-const Card = styled(Surface)`
-  height: 100%;
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(0.85)};
-  align-content: start;
-`
-
-const Evidence = styled(Surface)`
+const Evidence = styled.div`
   width: min(100%, 64rem);
   margin-inline: auto;
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(1.25)};
-`
-
-const EvidenceHead = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(0.7)};
-  max-width: 48rem;
 `
 
 const CredentialList = styled.ol`
   display: grid;
+  grid-template-columns: 1fr;
   gap: ${({ theme }) => theme.spacing(0.75)};
   margin: 0;
   padding: 0;
@@ -142,12 +82,10 @@ const MetaDivider = styled.span`
 const Scope = styled.div`
   display: grid;
   gap: ${({ theme }) => theme.spacing(0.65)};
+  max-width: 50rem;
   padding-top: ${({ theme }) => theme.spacing(1)};
   border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
-  max-width: 50rem;
 `
-
-const accentOf = (block: { accent?: AxisKey }) => block.accent ?? 'axisDensity'
 
 const BlockText = ({
   block,
@@ -156,141 +94,71 @@ const BlockText = ({
   block: ProfileBlock
   heading?: 'h2' | 'h3' | 'subtitle'
 }) => {
-  const accent = accentOf(block)
   const as = heading === 'subtitle' ? 'h3' : heading
 
   return (
-    <>
-      <Typography as="p" variant="caption" gutter={false} accent={accent}>
-        {block.label}
-      </Typography>
-
+    <Stack gap={0.85}>
       {block.title ? (
-        <Typography as={as} variant={heading} gutter={false} color="primary">
+        <Typography as={as} variant={heading} color="primary">
           {block.title}
         </Typography>
       ) : null}
 
-      <Typography
-        as="p"
-        variant="body"
-        gutter={false}
-        tone="soft"
-        cadence="open"
-      >
+      <Typography as="p" variant="body" tone="soft" cadence="open">
         {block.children}
       </Typography>
-    </>
+    </Stack>
   )
 }
 
-const ProfileCard = ({
-  block,
-  movement,
-}: {
-  block: ProfileBlock
-  movement: MovementKey
-}) => (
-  <Card
-    tone={block.tone ?? 'card'}
-    movement={movement}
-    radius="large"
-    bordered
-    padding="lg"
-    weight="steady"
-    asset={block.asset}
-  >
-    <BlockText block={block} heading="subtitle" />
-  </Card>
-)
-
 const RecognitionProfile = ({
-  movement,
   path,
   teaching,
   style,
   presence,
   credentials,
   scope,
-}: Props) => {
-  const credentialAccent = credentials.accent ?? 'axisDensity'
+}: Props) => (
+  <Shell>
+    <Lead>
+      <BlockText block={path} heading="h2" />
+    </Lead>
 
-  return (
-    <Shell>
-      <Lead
-        tone={path.tone ?? 'threshold'}
-        movement={movement}
-        radius="large"
-        bordered
-        padding="lg"
-        weight="steady"
-        asset={path.asset}
-      >
-        <BlockText block={path} heading="h2" />
-      </Lead>
+    <ContentRail columns={3} min="16rem" gap={1.5} max="64rem">
+      {[teaching, style, presence].map((block, index) => (
+        <ContentRailItem key={index}>
+          <BlockText block={block} heading="subtitle" />
+        </ContentRailItem>
+      ))}
+    </ContentRail>
 
-      <Track>
-        {[teaching, style, presence].map((block, index) => (
-          <TrackItem key={index}>
-            <ProfileCard block={block} movement={movement} />
-          </TrackItem>
-        ))}
-      </Track>
-
-      <Evidence
-        tone={credentials.tone ?? 'field'}
-        movement={movement}
-        radius="large"
-        bordered
-        padding="lg"
-        weight="steady"
-      >
-        <EvidenceHead>
-          <Typography
-            as="p"
-            variant="caption"
-            gutter={false}
-            accent={credentialAccent}
-          >
-            {credentials.label}
+    <Evidence>
+      <Stack gap={1.5}>
+        {credentials.title ? (
+          <Typography as="h2" variant="h2" color="primary">
+            {credentials.title}
           </Typography>
-
-          {credentials.title ? (
-            <Typography as="h2" variant="h2" gutter={false} color="primary">
-              {credentials.title}
-            </Typography>
-          ) : null}
-        </EvidenceHead>
+        ) : null}
 
         <CredentialList>
           {credentials.items.map((item, index) => (
             <CredentialItem key={index}>
-              <Typography
-                as="h3"
-                variant="subtitle"
-                gutter={false}
-                color="primary"
-              >
+              <Typography as="h3" variant="subtitle" color="primary">
                 {item.title}
               </Typography>
 
-              <Typography as="p" variant="caption" gutter={false}>
+              <Typography as="p" variant="body" tone="soft">
                 {item.source}
               </Typography>
 
               <CredentialMeta>
-                <Typography as="span" variant="caption" gutter={false}>
+                <Typography as="span" variant="body" tone="soft">
                   {item.period}
                 </Typography>
 
                 <MetaDivider aria-hidden="true">·</MetaDivider>
 
-                <Typography
-                  as="span"
-                  variant="caption"
-                  gutter={false}
-                  accent={credentialAccent}
-                >
+                <Typography as="span" variant="body" tone="soft">
                   {item.hours}
                 </Typography>
               </CredentialMeta>
@@ -299,23 +167,19 @@ const RecognitionProfile = ({
         </CredentialList>
 
         <Scope>
-          <Typography as="p" variant="subtitle" gutter={false} color="primary">
-            {scope.title}
-          </Typography>
+          {scope.title ? (
+            <Typography as="p" variant="subtitle" color="primary">
+              {scope.title}
+            </Typography>
+          ) : null}
 
-          <Typography
-            as="p"
-            variant="body"
-            gutter={false}
-            tone="soft"
-            cadence="open"
-          >
+          <Typography as="p" variant="body" tone="soft" cadence="open">
             {scope.children}
           </Typography>
         </Scope>
-      </Evidence>
-    </Shell>
-  )
-}
+      </Stack>
+    </Evidence>
+  </Shell>
+)
 
 export default RecognitionProfile

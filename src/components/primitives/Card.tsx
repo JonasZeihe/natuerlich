@@ -11,7 +11,7 @@ import type { AssetConsumerSpec } from '@/components/assets/registry'
 import type { MovementKey, SurfaceToneKey } from '@/design/theme'
 import Surface from './Surface'
 
-type Padding = 'sm' | 'md' | 'lg'
+type Padding = 'none' | 'sm' | 'md' | 'lg'
 type Radius = 'none' | 'small' | 'medium' | 'large' | 'pill'
 type Weight = 'quiet' | 'steady' | 'strong'
 
@@ -36,15 +36,13 @@ const StyledCard = styled(Surface)<StyledProps>`
   flex-direction: column;
   width: 100%;
   min-width: 0;
-  overflow: hidden;
   cursor: ${({ $interactive }) => ($interactive ? 'pointer' : 'default')};
   transition:
-    border-color 0.18s ease,
+    background-color 0.18s ease,
     box-shadow 0.18s ease,
-    transform 0.18s ease,
-    background-color 0.18s ease;
+    transform 0.18s ease;
 
-  @media (prefers-reduced-motion: reduce) {
+  @media ${({ theme }) => theme.motion.reduced.media} {
     transition: none;
   }
 
@@ -53,7 +51,6 @@ const StyledCard = styled(Surface)<StyledProps>`
       ? css`
           &:hover,
           &:focus-within {
-            outline: 0;
             box-shadow: ${theme.boxShadow.sm};
             transform: translateY(-1px);
           }
@@ -67,9 +64,9 @@ const Card = forwardRef<HTMLDivElement, Props>(function Card(
     tone = 'card',
     movement = 'arrival',
     interactive = false,
-    weight = 'steady',
+    weight = 'quiet',
     radius = 'large',
-    bordered = true,
+    bordered = false,
     asset,
     children,
     ...rest

@@ -45,7 +45,7 @@ const resolveWeightStyles = (
   border: string,
   bordered: boolean
 ) => {
-  if (weight === 'quiet') {
+  if (!bordered || weight === 'quiet') {
     return css`
       box-shadow: none;
     `
@@ -54,13 +54,13 @@ const resolveWeightStyles = (
   if (weight === 'strong') {
     return css`
       box-shadow:
-        inset 0 1px 0 ${bordered ? border : 'transparent'},
-        0 0 0 1px ${bordered ? border : 'transparent'};
+        inset 0 1px 0 ${border},
+        0 0 0 1px ${border};
     `
   }
 
   return css`
-    box-shadow: ${bordered ? `inset 0 1px 0 ${border}` : 'none'};
+    box-shadow: inset 0 1px 0 ${border};
   `
 }
 
@@ -78,16 +78,15 @@ const Base = styled.div<StyledProps>`
 
   ${({ theme, $tone, $movement, $bordered, $weight }) => {
     const resolved = theme.getSurfaceTone($tone, $movement)
+    const hasBorder = $bordered && resolved.border !== 'transparent'
 
     return css`
       background: ${resolved.bg};
       color: ${resolved.fg};
-      border: ${$bordered && resolved.border !== 'transparent'
-        ? `1px solid ${resolved.border}`
-        : 'none'};
+      border: ${hasBorder ? `1px solid ${resolved.border}` : 'none'};
       backdrop-filter: ${resolved.backdrop};
       -webkit-backdrop-filter: ${resolved.backdrop};
-      ${resolveWeightStyles($weight, resolved.border, $bordered)}
+      ${resolveWeightStyles($weight, resolved.border, hasBorder)}
     `
   }}
 `
@@ -118,11 +117,11 @@ const renderAssets = (
 
 const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
   {
-    tone = 'card',
+    tone = 'bare',
     movement = 'arrival',
-    radius = 'large',
-    padding = 'md',
-    bordered = true,
+    radius = 'none',
+    padding = 'none',
+    bordered = false,
     weight = 'quiet',
     asset,
     assets,

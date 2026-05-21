@@ -4,8 +4,6 @@
 import { useMemo, useState, type ReactNode } from 'react'
 import styled from 'styled-components'
 import Button from '@/components/actions/Button'
-import Surface from '@/components/primitives/Surface'
-import type { AxisKey, MovementKey } from '@/design/theme'
 import Typography from '@/design/typography'
 
 type MailParts = {
@@ -14,7 +12,6 @@ type MailParts = {
 }
 
 type Props = {
-  movement: MovementKey
   mail: MailParts
   subject: string
   title: ReactNode
@@ -23,10 +20,11 @@ type Props = {
   primaryLabel: ReactNode
   copyLabel: ReactNode
   copiedLabel: ReactNode
-  accent?: AxisKey
 }
 
 const Shell = styled.div`
+  width: min(100%, 64rem);
+  margin-inline: auto;
   margin-top: ${({ theme }) => theme.spacing(2.5)};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
@@ -34,14 +32,7 @@ const Shell = styled.div`
   }
 `
 
-const Panel = styled(Surface)`
-  width: min(100%, 64rem);
-  margin-inline: auto;
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(1.5)};
-`
-
-const Grid = styled.div`
+const Layout = styled.div`
   display: grid;
   gap: ${({ theme }) => theme.spacing(1.5)};
 
@@ -59,9 +50,9 @@ const Text = styled.div`
 `
 
 const Hint = styled.div`
+  max-width: 42rem;
   padding-top: ${({ theme }) => theme.spacing(0.85)};
   border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
-  max-width: 42rem;
 `
 
 const Actions = styled.div`
@@ -95,7 +86,6 @@ const CopyButton = styled.button`
 const buildMail = ({ local, domain }: MailParts) => `${local}@${domain}`
 
 const ContactPanel = ({
-  movement,
   mail,
   subject,
   title,
@@ -104,7 +94,6 @@ const ContactPanel = ({
   primaryLabel,
   copyLabel,
   copiedLabel,
-  accent = 'axisDensity',
 }: Props) => {
   const [copied, setCopied] = useState(false)
   const address = useMemo(() => buildMail(mail), [mail])
@@ -129,52 +118,35 @@ const ContactPanel = ({
 
   return (
     <Shell>
-      <Panel
-        tone="card"
-        movement={movement}
-        radius="large"
-        bordered
-        padding="lg"
-        weight="steady"
-      >
-        <Grid>
-          <Text>
-            <Typography as="h3" variant="h3" gutter={false} color="primary">
-              {title}
-            </Typography>
+      <Layout>
+        <Text>
+          <Typography as="h3" variant="h3" color="primary">
+            {title}
+          </Typography>
 
-            <Typography
-              as="p"
-              variant="body"
-              gutter={false}
-              tone="soft"
-              cadence="open"
-            >
-              {text}
-            </Typography>
+          <Typography as="p" variant="body" tone="soft" cadence="open">
+            {text}
+          </Typography>
 
-            {hint ? (
-              <Hint>
-                <Typography as="p" variant="caption" gutter={false} tone="soft">
-                  {hint}
-                </Typography>
-              </Hint>
-            ) : null}
-          </Text>
-
-          <Actions>
-            <Button variant="primary" fullWidth onClick={openMail}>
-              {primaryLabel}
-            </Button>
-
-            <CopyButton type="button" onClick={copyMail}>
-              <Typography as="span" variant="caption" gutter={false}>
-                {copied ? copiedLabel : copyLabel}
+          {hint ? (
+            <Hint>
+              <Typography as="p" variant="body" tone="soft" cadence="open">
+                {hint}
               </Typography>
-            </CopyButton>
-          </Actions>
-        </Grid>
-      </Panel>
+            </Hint>
+          ) : null}
+        </Text>
+
+        <Actions>
+          <Button variant="primary" fullWidth onClick={openMail}>
+            {primaryLabel}
+          </Button>
+
+          <CopyButton type="button" onClick={copyMail}>
+            {copied ? copiedLabel : copyLabel}
+          </CopyButton>
+        </Actions>
+      </Layout>
     </Shell>
   )
 }
