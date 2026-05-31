@@ -24,7 +24,7 @@ export default function HighlightText({
   const accentKey: AxisKey = accent === 'neutral' ? 'axisOpening' : accent
   const accentInfo = useAccent(accentKey)
   const resolvedColor =
-    color ?? (accent === 'neutral' ? 'inherit' : accentInfo.text)
+    color ?? (accent === 'neutral' ? 'inherit' : accentInfo.fill)
 
   return (
     <Highlight $color={resolvedColor} $soft={soft}>
@@ -40,10 +40,7 @@ const Highlight = styled.span<{
   color: ${({ $color }) => $color};
   font-weight: ${({ theme, $soft }) =>
     $soft
-      ? theme.typography.fontWeight.medium
+      ? theme.typography.fontWeight.bold
       : theme.typography.fontWeight.bold};
-  letter-spacing: ${({ theme, $soft }) =>
-    $soft
-      ? theme.typography.letterSpacing.normal
-      : theme.typography.letterSpacing.tight};
+  letter-spacing: ${({ theme }) => theme.typography.letterSpacing.normal};
 `

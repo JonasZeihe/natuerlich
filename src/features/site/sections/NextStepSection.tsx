@@ -6,6 +6,7 @@ import ContactPanel from '@/components/content/ContactPanel'
 import Headline from '@/components/content/Headline'
 import Section from '@/components/primitives/Section'
 import Surface from '@/components/primitives/Surface'
+import HighlightText from '@/components/utilities/HighlightText'
 
 const NextStepSection = () => (
   <Section
@@ -40,7 +41,15 @@ const NextStepSection = () => (
           }}
           subject="Anfrage zur Praxis"
           title="Du musst es noch nicht richtig benennen."
-          text="Wenn du nicht sicher bist, welches Format passt, ist das kein Problem. Beschreib einfach kurz, wo du stehst. Dann schauen wir, ob und wie ein sinnvoller Rahmen entstehen kann."
+          text={
+            <>
+              Wenn du nicht sicher bist, welches Format passt, ist das kein
+              Problem. Beschreib einfach kurz, wo du stehst. Dann schauen wir,
+              ob und wie ein{' '}
+              <HighlightText accent="axisFlow">sinnvoller Rahmen</HighlightText>{' '}
+              entstehen kann.
+            </>
+          }
           primaryLabel="E-Mail schreiben"
           copyLabel="Mailadresse kopieren"
           copiedLabel="Adresse kopiert"

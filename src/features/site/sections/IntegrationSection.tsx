@@ -6,6 +6,7 @@ import Headline from '@/components/content/Headline'
 import PathCards, { type PathCardItem } from '@/components/content/PathCards'
 import Section from '@/components/primitives/Section'
 import Surface from '@/components/primitives/Surface'
+import HighlightText from '@/components/utilities/HighlightText'
 
 type Props = {
   onGoToNextStep: () => void
@@ -15,7 +16,15 @@ const offerItems: readonly PathCardItem[] = [
   {
     title: 'Grundlage',
     line: 'Atem, Entspannung, Achtsamkeit.',
-    text: 'Der beste Anfang, wenn noch nicht klar ist, ob es später Qigong, Yoga oder Taijiquan werden soll.',
+    text: (
+      <>
+        Der beste Anfang, wenn noch nicht klar ist, ob es später{' '}
+        <HighlightText accent="axisOpening">Qigong</HighlightText>,{' '}
+        <HighlightText accent="axisFlow">Yoga</HighlightText> oder{' '}
+        <HighlightText accent="axisTension">Taijiquan</HighlightText> werden
+        soll.
+      </>
+    ),
     individual: {
       format: 'Einzeltraining',
       price: 'ab 70 € pro Einheit',
@@ -40,7 +49,13 @@ const offerItems: readonly PathCardItem[] = [
   {
     title: 'Qigong',
     line: 'Ruhig beginnen, später tiefer gehen.',
-    text: 'Oft der beste bewegte Einstieg: Atem, Stand, Aufmerksamkeit und einfache Bewegung kommen zusammen.',
+    text: (
+      <>
+        Oft der beste bewegte Einstieg:{' '}
+        <HighlightText accent="axisOpening">Atem</HighlightText>, Stand,
+        Aufmerksamkeit und einfache Bewegung kommen zusammen.
+      </>
+    ),
     individual: {
       format: 'Einzeltraining',
       price: 'ab 70 € pro Einheit',
@@ -50,7 +65,15 @@ const offerItems: readonly PathCardItem[] = [
       format: 'Qigong-Einsteigerkurs',
       duration: '10 Termine',
       price: 'ab 1.100 € pro Kursblock',
-      text: 'Ein klarer Kursblock mit Acht Brokaten oder einfachen Übungen aus dem Daoyin Yangsheng Gong.',
+      text: (
+        <>
+          Ein klarer Kursblock mit Acht Brokaten oder einfachen Übungen aus dem{' '}
+          <HighlightText accent="axisOpening">
+            Daoyin Yangsheng Gong
+          </HighlightText>
+          .
+        </>
+      ),
       classText:
         'Nach dem Kurs kann daraus eine fortlaufende Klasse entstehen: Wiederholung, Varianten, Wahrnehmung und später tiefere Formen.',
       classPrice: 'fortlaufend ab 110 € pro Termin',
@@ -65,7 +88,13 @@ const offerItems: readonly PathCardItem[] = [
   {
     title: 'Yoga',
     line: 'Ein klarer Weg in vollständige Praxis.',
-    text: 'Yoga ist zugänglich, aber größer als ein kurzer Einstieg. Haltung, Atem und Entspannung greifen ineinander.',
+    text: (
+      <>
+        Yoga ist zugänglich, aber größer als ein kurzer Einstieg. Haltung, Atem
+        und <HighlightText accent="axisFlow">Entspannung</HighlightText> greifen
+        ineinander.
+      </>
+    ),
     individual: {
       format: 'Einzeltraining',
       price: 'ab 70 € pro Einheit',
@@ -90,7 +119,13 @@ const offerItems: readonly PathCardItem[] = [
   {
     title: 'Taijiquan',
     line: 'Nicht schnell. Nicht nebenbei.',
-    text: 'Taijiquan braucht Unterbau. Sonst bleibt von der Form nur langsame Bewegung.',
+    text: (
+      <>
+        Taijiquan braucht{' '}
+        <HighlightText accent="axisTension">Unterbau</HighlightText>. Sonst
+        bleibt von der Form nur langsame Bewegung.
+      </>
+    ),
     individual: {
       format: 'Einzeltraining',
       price: 'ab 70 € pro Einheit',
