@@ -21,6 +21,7 @@ const HIDE_START_OFFSET = 120
 const HIDE_DELTA = 10
 const REVEAL_DELTA = 8
 const ACTIVE_OFFSET = HEADER_HEIGHT + 40
+const MOBILE_ACTIVE_OFFSET_RATIO = 0.36
 const NAV_SCROLL_LOCK_ATTR = 'data-nav-scroll-lock'
 const START_SECTION_ID: SiteSectionId = 'minikurs'
 const MOBILE_NAV_QUERY = '(max-width: 900px)'
@@ -29,15 +30,15 @@ const HEADER_SECTIONS: SiteSection[] = SITE_SECTIONS.filter(
   (section) => section.showInHeader
 )
 
-const OBSERVED_SECTION_IDS: SiteSectionId[] = SITE_SECTIONS.filter(
-  (section) => section.id !== START_SECTION_ID
-).map((section) => section.id)
+const OBSERVED_SECTION_IDS: SiteSectionId[] = HEADER_SECTIONS.map(
+  (section) => section.id
+)
 
 const getNavigationOffset = (mobileDocked: boolean) =>
   mobileDocked ? 0 : HEADER_HEIGHT
 
-const getActiveOffset = (mobileDocked: boolean) =>
-  mobileDocked ? 0 : ACTIVE_OFFSET
+const getMobileActiveOffset = () =>
+  Math.round(window.innerHeight * MOBILE_ACTIVE_OFFSET_RATIO)
 
 const getActiveSectionId = (
   ids: readonly SiteSectionId[],
@@ -77,6 +78,7 @@ export default function AppHeader() {
   const [compact, setCompact] = useState(false)
   const [hidden, setHidden] = useState(false)
   const [mobileDocked, setMobileDocked] = useState(false)
+  const [activeOffset, setActiveOffset] = useState(ACTIVE_OFFSET)
   const [indicator, setIndicator] = useState<ActiveIndicatorState>({
     left: 0,
     width: 0,
@@ -95,7 +97,6 @@ export default function AppHeader() {
   const hiddenLoggedRef = useRef<boolean | null>(null)
   const lastScrollYRef = useRef(0)
   const navigationOffset = getNavigationOffset(mobileDocked)
-  const activeOffset = getActiveOffset(mobileDocked)
 
   useEffect(() => {
     document.documentElement.style.setProperty(
@@ -119,15 +120,23 @@ export default function AppHeader() {
 
   useEffect(() => {
     const mediaQuery = window.matchMedia(MOBILE_NAV_QUERY)
-    const syncMobileDock = () => {
-      setMobileDocked(mediaQuery.matches)
+
+    const syncMobileState = () => {
+      const nextMobileDocked = mediaQuery.matches
+
+      setMobileDocked(nextMobileDocked)
+      setActiveOffset(
+        nextMobileDocked ? getMobileActiveOffset() : ACTIVE_OFFSET
+      )
     }
 
-    syncMobileDock()
-    mediaQuery.addEventListener('change', syncMobileDock)
+    syncMobileState()
+    mediaQuery.addEventListener('change', syncMobileState)
+    window.addEventListener('resize', syncMobileState)
 
     return () => {
-      mediaQuery.removeEventListener('change', syncMobileDock)
+      mediaQuery.removeEventListener('change', syncMobileState)
+      window.removeEventListener('resize', syncMobileState)
     }
   }, [])
 
@@ -149,7 +158,7 @@ export default function AppHeader() {
     }
 
     elements.forEach((element) => {
-      element.style.scrollMarginTop = `${activeOffset}px`
+      element.style.scrollMarginTop = `${navigationOffset}px`
 
       if (!element.hasAttribute('tabindex')) {
         element.setAttribute('tabindex', '-1')
@@ -165,7 +174,7 @@ export default function AppHeader() {
         observedIds: elements.map((element) => element.id),
         offset: activeOffset,
       })
-  }, [activeOffset, ids])
+  }, [activeOffset, ids, navigationOffset])
 
   useEffect(() => {
     const syncFromScroll = () => {

@@ -74,12 +74,14 @@ const PracticeFields = ({
     <ContentRail
       columns={3}
       min="18rem"
-      gap={1.35}
-      itemWidth="min(88vw, 27rem)"
+      gap={1.5}
+      itemWidth="min(84vw, 25rem)"
       max="64rem"
+      variant="editorial"
+      align="start"
     >
       {steps.map((item) => (
-        <PracticeCard key={item.label} mode="card">
+        <PracticeCard key={item.label} mode="line" stretch={false}>
           <Typography as="h3" variant="h3" color="primary">
             {item.title}
           </Typography>
@@ -170,12 +172,14 @@ const PracticeFields = ({
     <ContentRail
       columns={3}
       min="18rem"
-      gap={1.35}
-      itemWidth="min(88vw, 27rem)"
+      gap={1.5}
+      itemWidth="min(84vw, 25rem)"
       max="64rem"
+      variant="editorial"
+      align="start"
     >
       {ways.map((way) => (
-        <PracticeCard key={way.label} mode="card">
+        <PracticeCard key={way.label} mode="line" stretch={false}>
           <Typography as="h3" variant="h3" color="primary">
             {way.title}
           </Typography>
@@ -223,11 +227,10 @@ const IntroCopy = styled.div`
 `
 
 const PracticeCard = styled(ContentRailItem)`
-  gap: ${({ theme }) => theme.spacing(1.2)};
-  padding: ${({ theme }) => theme.spacing(2.15)};
+  gap: ${({ theme }) => theme.spacing(1.1)};
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    padding: ${({ theme }) => theme.spacing(1.35)};
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
+    padding-right: ${({ theme }) => theme.spacing(1)};
   }
 `
 

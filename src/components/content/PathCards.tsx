@@ -53,6 +53,22 @@ const audienceItems: readonly {
   { key: 'company', text: 'Firma' },
 ]
 
+const isSameText = (first: ReactNode, second: ReactNode) =>
+  typeof first === 'string' && typeof second === 'string' && first === second
+
+const renderMeta = (first: ReactNode, second: ReactNode) => (
+  <Meta>
+    <MetaItem>{first}</MetaItem>
+
+    {isSameText(first, second) ? null : (
+      <>
+        <MetaDivider aria-hidden="true">·</MetaDivider>
+        <MetaItem>{second}</MetaItem>
+      </>
+    )}
+  </Meta>
+)
+
 const renderIndividual = (item: PathCardItem) => (
   <Details>
     <PriceLine>
@@ -78,10 +94,7 @@ const renderGroup = (item: PathCardItem) => (
         {item.group.format}
       </Typography>
 
-      <Meta>
-        <MetaItem>{item.group.duration}</MetaItem>
-        <MetaItem>{item.group.price}</MetaItem>
-      </Meta>
+      {renderMeta(item.group.duration, item.group.price)}
 
       <Typography as="p" variant="body" tone="soft" cadence="open">
         {item.group.text}
@@ -109,10 +122,7 @@ const renderCompany = (item: PathCardItem) => {
         {item.company.format}
       </Typography>
 
-      <Meta>
-        <MetaItem>{item.company.duration}</MetaItem>
-        <MetaItem>{item.company.price}</MetaItem>
-      </Meta>
+      {renderMeta(item.company.duration, item.company.price)}
 
       <Typography as="p" variant="body" tone="soft" cadence="open">
         {item.company.text}
@@ -152,7 +162,8 @@ const PathCards = ({ items }: Props) => {
         columns="auto"
         min="20rem"
         gap={1.35}
-        itemWidth="min(90vw, 28rem)"
+        itemWidth="min(94vw, 30rem)"
+        variant="cards"
       >
         {visibleItems.map((item, index) => (
           <OfferCard key={index} mode="card">
@@ -231,11 +242,17 @@ const Details = styled.div`
 const Meta = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: ${({ theme }) => theme.spacing(0.5)};
+  align-items: baseline;
+  gap: ${({ theme }) => theme.spacing(0.25)}
+    ${({ theme }) => theme.spacing(0.5)};
 `
 
 const MetaItem = styled.span`
   display: inline-flex;
+  color: ${({ theme }) => theme.roles.text.subtle};
+`
+
+const MetaDivider = styled.span`
   color: ${({ theme }) => theme.roles.text.subtle};
 `
 
