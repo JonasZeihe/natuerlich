@@ -59,87 +59,75 @@ const PracticeFields = ({
   onGoToIntegration,
 }: Props) => (
   <Stack gap={3} aria-label={mobileAriaLabel}>
-    <Lead tone="threshold" movement={movement} radius="large" padding="lg">
-      <Stack gap={1}>
-        <Typography as="h2" variant="h2" color="primary">
-          {intro.title}
-        </Typography>
+    <IntroCopy>
+      <Typography
+        as="p"
+        variant="body"
+        tone="soft"
+        cadence="open"
+        measure="wide"
+      >
+        {intro.body}
+      </Typography>
+    </IntroCopy>
 
-        <Typography
-          as="p"
-          variant="body"
-          tone="soft"
-          cadence="open"
-          measure="wide"
-        >
-          {intro.body}
-        </Typography>
-      </Stack>
-    </Lead>
+    <ContentRail
+      columns={3}
+      min="18rem"
+      gap={1.35}
+      itemWidth="min(88vw, 27rem)"
+      max="64rem"
+    >
+      {steps.map((item) => (
+        <PracticeCard key={item.label} mode="card">
+          <Typography as="h3" variant="h3" color="primary">
+            {item.title}
+          </Typography>
 
-    <PracticeProgression>
-      <ContentRail columns={3} min="16rem" gap={1.25} max="64rem">
-        {steps.map((item) => (
-          <ContentRailItem key={item.label}>
-            <Typography as="h3" variant="h3" color="primary">
-              {item.title}
-            </Typography>
+          <Typography as="p" variant="body" tone="soft" cadence="open">
+            {item.body}
+          </Typography>
+        </PracticeCard>
+      ))}
+    </ContentRail>
 
-            <Typography as="p" variant="body" tone="soft" cadence="open">
-              {item.body}
-            </Typography>
-          </ContentRailItem>
-        ))}
-      </ContentRail>
+    <ResultFlow>
+      <ResultPanel tone="quiet" movement={movement} radius="large" padding="lg">
+        <Stack gap={0.85}>
+          <Typography as="h3" variant="h3" color="primary">
+            {regulation.title}
+          </Typography>
 
-      <ResultFlow>
-        <ResultPanel
-          tone="quiet"
-          movement={movement}
-          radius="large"
-          padding="lg"
-        >
-          <Stack gap={0.85}>
-            <Typography as="h3" variant="h3" color="primary">
-              {regulation.title}
-            </Typography>
+          <Typography
+            as="p"
+            variant="body"
+            tone="soft"
+            cadence="open"
+            measure="wide"
+          >
+            {regulation.body}
+          </Typography>
+        </Stack>
+      </ResultPanel>
 
-            <Typography
-              as="p"
-              variant="body"
-              tone="soft"
-              cadence="open"
-              measure="wide"
-            >
-              {regulation.body}
-            </Typography>
-          </Stack>
-        </ResultPanel>
+      <ResultPanel tone="quiet" movement={movement} radius="large" padding="lg">
+        <Stack gap={0.85}>
+          <Typography as="h3" variant="h3" color="primary">
+            {result.title}
+          </Typography>
 
-        <ResultPanel
-          tone="quiet"
-          movement={movement}
-          radius="large"
-          padding="lg"
-        >
-          <Stack gap={0.85}>
-            <Typography as="h3" variant="h3" color="primary">
-              {result.title}
-            </Typography>
-
-            <Typography
-              as="p"
-              variant="body"
-              tone="soft"
-              cadence="open"
-              measure="wide"
-            >
-              {result.body}
-            </Typography>
-          </Stack>
-        </ResultPanel>
-      </ResultFlow>
-    </PracticeProgression>
+          <Typography
+            as="p"
+            variant="body"
+            tone="soft"
+            cadence="open"
+            measure="wide"
+          >
+            {result.body}
+          </Typography>
+        </Stack>
+      </ResultPanel>
+    </ResultFlow>
 
     <MethodPanel tone="note" movement={movement} radius="large" padding="lg">
       <Stack gap={1.25}>
@@ -179,17 +167,23 @@ const PracticeFields = ({
       </Stack>
     </MethodPanel>
 
-    <ContentRail columns={3} min="16rem" gap={1.5} max="64rem">
+    <ContentRail
+      columns={3}
+      min="18rem"
+      gap={1.35}
+      itemWidth="min(88vw, 27rem)"
+      max="64rem"
+    >
       {ways.map((way) => (
-        <ContentRailItem key={way.label}>
-          <Typography as="h3" variant="subtitle" color="primary">
+        <PracticeCard key={way.label} mode="card">
+          <Typography as="h3" variant="h3" color="primary">
             {way.title}
           </Typography>
 
           <Typography as="p" variant="body" tone="soft" cadence="open">
             {way.body}
           </Typography>
-        </ContentRailItem>
+        </PracticeCard>
       ))}
     </ContentRail>
 
@@ -223,14 +217,18 @@ const PracticeFields = ({
   </Stack>
 )
 
-const Lead = styled(Surface)`
-  width: min(100%, 64rem);
+const IntroCopy = styled.div`
+  width: min(100%, 58rem);
   margin-inline: auto;
 `
 
-const PracticeProgression = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(1.5)};
+const PracticeCard = styled(ContentRailItem)`
+  gap: ${({ theme }) => theme.spacing(1.2)};
+  padding: ${({ theme }) => theme.spacing(2.15)};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    padding: ${({ theme }) => theme.spacing(1.35)};
+  }
 `
 
 const ResultFlow = styled.div`

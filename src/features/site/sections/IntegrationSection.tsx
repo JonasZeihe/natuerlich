@@ -11,10 +11,6 @@ type Props = {
   onGoToNextStep: () => void
 }
 
-const Shell = styled.div`
-  margin-top: ${({ theme }) => theme.spacing(2.5)};
-`
-
 const offerItems: readonly PathCardItem[] = [
   {
     title: 'Grundlage',
@@ -151,17 +147,27 @@ const IntegrationSection = ({ onGoToNextStep: _onGoToNextStep }: Props) => (
     mix={['opening', 'flow']}
   >
     <Surface tone="bare" movement="integration" padding="lg">
-      <Headline
-        titleId="integrieren-title"
-        title="Du musst nicht schon wissen, ob es Yoga, Qigong oder Taijiquan ist."
-        accent="axisDensity"
-      />
+      <Flow>
+        <Headline
+          titleId="integrieren-title"
+          title="Du musst nicht schon wissen, ob es Yoga, Qigong oder Taijiquan ist."
+          accent="axisFlow"
+          weight="poster"
+        />
 
-      <Shell>
         <PathCards items={offerItems} />
-      </Shell>
+      </Flow>
     </Surface>
   </Section>
 )
+
+const Flow = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(2.25)};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    gap: ${({ theme }) => theme.spacing(3)};
+  }
+`
 
 export default IntegrationSection

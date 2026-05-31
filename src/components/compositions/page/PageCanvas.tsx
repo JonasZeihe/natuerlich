@@ -18,14 +18,11 @@ const Root = styled.div<{
   $introOffset: boolean
   $noFooterGap: boolean
 }>`
+  position: relative;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
   width: 100%;
-  max-width: 100vw;
   min-width: 0;
-  position: relative;
-  box-sizing: border-box;
   overflow: clip;
   color: ${({ theme }) => theme.roles.text.primary};
   padding-top: ${({ theme, $introOffset }) =>
@@ -45,20 +42,6 @@ const Root = styled.div<{
         : css`
             background: transparent;
           `}
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    padding-top: ${({ theme, $introOffset }) =>
-      $introOffset ? `calc(${theme.layout.section.default.pad} * 0.7)` : 0};
-    padding-bottom: ${({ theme, $noFooterGap }) =>
-      $noFooterGap ? 0 : `calc(${theme.layout.section.default.pad} * 0.66)`};
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
-    padding-top: ${({ theme, $introOffset }) =>
-      $introOffset ? `calc(${theme.layout.section.default.pad} * 0.58)` : 0};
-    padding-bottom: ${({ theme, $noFooterGap }) =>
-      $noFooterGap ? 0 : `calc(${theme.layout.section.default.pad} * 0.52)`};
-  }
 `
 
 export default function PageCanvas({

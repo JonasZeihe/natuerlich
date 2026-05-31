@@ -27,8 +27,10 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
     <Surface tone="bare" movement="practice" padding="lg">
       <Headline
         titleId="arbeiten-title"
-        title="Schmiede die Schwerter vor dem Krieg"
-        accent="axisDensity"
+        title="Wenn der Atem nicht mehr reicht."
+        subheadline="Dann ist nicht die einzelne Technik das Problem, sondern der Zustand, in dem sie angewendet wird."
+        accent="axisTension"
+        weight="poster"
       />
 
       <PracticePanel>

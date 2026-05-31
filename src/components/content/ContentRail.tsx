@@ -76,10 +76,10 @@ const Item = styled.article<{ $mode: ItemMode; $stretch: boolean }>`
   scroll-snap-align: start;
   display: grid;
   align-content: start;
-  gap: ${({ theme }) => theme.spacing(0.85)};
+  gap: ${({ theme }) => theme.spacing(1.85)};
   min-width: 0;
   height: ${({ $stretch }) => ($stretch ? '100%' : 'auto')};
-  padding: ${({ theme }) => theme.spacing(1.25)};
+  padding: ${({ theme }) => theme.spacing(2)};
   border-radius: ${({ theme }) => theme.borderRadius.large};
   background: ${({ theme }) => theme.roles.surface.quiet};
 

@@ -53,66 +53,6 @@ const audienceItems: readonly {
   { key: 'company', text: 'Firma' },
 ]
 
-const Shell = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(1.5)};
-`
-
-const Tabs = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: ${({ theme }) => theme.spacing(0.5)};
-`
-
-const Tab = styled.button<{ $active: boolean }>`
-  appearance: none;
-  border: 0;
-  border-radius: ${({ theme }) => theme.borderRadius.pill};
-  background: ${({ theme, $active }) =>
-    $active ? theme.roles.text.primary : theme.roles.surface.quiet};
-  color: ${({ theme, $active }) =>
-    $active ? theme.roles.surface.chrome : theme.roles.text.primary};
-  padding: ${({ theme }) => `${theme.spacing(0.7)} ${theme.spacing(1)}`};
-  font: inherit;
-  cursor: pointer;
-
-  &:focus-visible {
-    outline: 2px solid ${({ theme }) => theme.roles.focus.ring};
-    outline-offset: 3px;
-  }
-`
-
-const Head = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(0.45)};
-`
-
-const Details = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(0.75)};
-  padding-top: ${({ theme }) => theme.spacing(0.85)};
-  border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
-`
-
-const Meta = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: ${({ theme }) => theme.spacing(0.5)};
-`
-
-const MetaItem = styled.span`
-  display: inline-flex;
-  color: ${({ theme }) => theme.roles.text.subtle};
-`
-
-const PriceLine = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: ${({ theme }) => theme.spacing(0.75)};
-`
-
 const renderIndividual = (item: PathCardItem) => (
   <Details>
     <PriceLine>
@@ -200,6 +140,7 @@ const PathCards = ({ items }: Props) => {
             key={item.key}
             type="button"
             $active={item.key === audience}
+            aria-pressed={item.key === audience}
             onClick={() => setAudience(item.key)}
           >
             {item.text}
@@ -209,18 +150,18 @@ const PathCards = ({ items }: Props) => {
 
       <ContentRail
         columns="auto"
-        min="18rem"
-        gap={1.25}
-        itemWidth="min(86vw, 24rem)"
+        min="20rem"
+        gap={1.35}
+        itemWidth="min(90vw, 28rem)"
       >
         {visibleItems.map((item, index) => (
-          <ContentRailItem key={index} mode="card">
+          <OfferCard key={index} mode="card">
             <Head>
-              <Typography as="h3" variant="h3" color="primary">
+              <Typography as="h3" variant="h2" color="primary" cadence="dense">
                 {item.title}
               </Typography>
 
-              <Typography as="p" variant="subtitle" tone="soft">
+              <Typography as="p" variant="subtitle" color="primary">
                 {item.line}
               </Typography>
 
@@ -230,11 +171,80 @@ const PathCards = ({ items }: Props) => {
             </Head>
 
             {renderDetails(item, audience)}
-          </ContentRailItem>
+          </OfferCard>
         ))}
       </ContentRail>
     </Shell>
   )
 }
+
+const Shell = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(1.35)};
+`
+
+const Tabs = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${({ theme }) => theme.spacing(0.5)};
+`
+
+const Tab = styled.button<{ $active: boolean }>`
+  appearance: none;
+  border: 0;
+  border-radius: ${({ theme }) => theme.borderRadius.pill};
+  background: ${({ theme, $active }) =>
+    $active ? theme.roles.text.primary : theme.roles.surface.quiet};
+  color: ${({ theme, $active }) =>
+    $active ? theme.roles.surface.chrome : theme.roles.text.primary};
+  padding: ${({ theme }) => `${theme.spacing(0.7)} ${theme.spacing(1)}`};
+  font: inherit;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.roles.focus.ring};
+    outline-offset: 3px;
+  }
+`
+
+const OfferCard = styled(ContentRailItem)`
+  gap: ${({ theme }) => theme.spacing(1.5)};
+  padding: ${({ theme }) => theme.spacing(2.25)};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    padding: ${({ theme }) => theme.spacing(1.5)};
+  }
+`
+
+const Head = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(0.7)};
+`
+
+const Details = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(0.9)};
+  padding-top: ${({ theme }) => theme.spacing(1)};
+  border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
+`
+
+const Meta = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: ${({ theme }) => theme.spacing(0.5)};
+`
+
+const MetaItem = styled.span`
+  display: inline-flex;
+  color: ${({ theme }) => theme.roles.text.subtle};
+`
+
+const PriceLine = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: ${({ theme }) => theme.spacing(0.75)};
+`
 
 export default PathCards
