@@ -1,4 +1,3 @@
-// src/components/miniCourse/BreathingExercise.tsx
 'use client'
 
 import { useEffect, useState } from 'react'
@@ -35,8 +34,30 @@ type CarrierAsset = {
   src: string
 }
 
+type CenterLayout = {
+  x: number
+  y: number
+  scale: number
+  surfaceAlpha: number
+  borderAlpha: number
+}
+
+type VisualLayout = {
+  center: CenterLayout
+}
+
 type Props = {
   showWebsiteAction?: boolean
+}
+
+const visualLayout: VisualLayout = {
+  center: {
+    x: 0,
+    y: 0,
+    scale: 0.7,
+    surfaceAlpha: 0.52,
+    borderAlpha: 0.48,
+  },
 }
 
 const carrierAssets: Record<CarrierTone, CarrierAsset> = {
@@ -48,7 +69,7 @@ const carrierAssets: Record<CarrierTone, CarrierAsset> = {
   },
 }
 
-const BreathingExercise = ({ showWebsiteAction = true }: Props) => {
+export default function BreathingExercise({ showWebsiteAction = true }: Props) {
   const phaseProgress = useMotionValue(0)
   const [state, setState] = useState<BreathExerciseState>('idle')
   const [countdown, setCountdown] = useState(countdownStart)
@@ -195,33 +216,42 @@ const BreathingExercise = ({ showWebsiteAction = true }: Props) => {
           </g>
         </CarrierScene>
 
-        <Center>
-          <CenterContent aria-live="polite">
-            {state === 'idle' ? (
-              <>
-                <Phase>Start</Phase>
-                <Hint>Atemübung</Hint>
-                <PrimaryAction type="button" onClick={startExercise}>
-                  Starten
-                </PrimaryAction>
-              </>
-            ) : null}
+        <CenterFrame
+          $x={visualLayout.center.x}
+          $y={visualLayout.center.y}
+          $scale={visualLayout.center.scale}
+        >
+          <Center
+            $surfaceAlpha={visualLayout.center.surfaceAlpha}
+            $borderAlpha={visualLayout.center.borderAlpha}
+          >
+            <CenterContent aria-live="polite">
+              {state === 'idle' ? (
+                <>
+                  <Phase>Start</Phase>
+                  <Hint>Atemübung</Hint>
+                  <PrimaryAction type="button" onClick={startExercise}>
+                    Starten
+                  </PrimaryAction>
+                </>
+              ) : null}
 
-            {state === 'countdown' ? (
-              <>
-                <Phase>Deine Atemübung beginnt</Phase>
-                <Counter>{countdown}</Counter>
-              </>
-            ) : null}
+              {state === 'countdown' ? (
+                <>
+                  <CountdownPhase>Deine Atemübung beginnt</CountdownPhase>
+                  <Counter>{countdown}</Counter>
+                </>
+              ) : null}
 
-            {state === 'running' ? (
-              <>
-                <Phase>{breathPhaseLabels[phase]}</Phase>
-                <Counter>{phaseSecond}</Counter>
-              </>
-            ) : null}
-          </CenterContent>
-        </Center>
+              {state === 'running' ? (
+                <>
+                  <Phase>{breathPhaseLabels[phase]}</Phase>
+                  <Counter>{phaseSecond}</Counter>
+                </>
+              ) : null}
+            </CenterContent>
+          </Center>
+        </CenterFrame>
       </Canvas>
 
       <AppActions>
@@ -282,6 +312,8 @@ const CarrierScene = styled.svg`
 `
 
 const CarrierGroup = styled(motion.g)`
+  transform-box: view-box;
+  transform-origin: center;
   will-change: transform, opacity;
 `
 
@@ -293,22 +325,43 @@ const CarrierImage = styled.image`
   overflow: visible;
 `
 
-const Center = styled.div`
+const CenterFrame = styled.div<{ $x: number; $y: number; $scale: number }>`
   position: relative;
   z-index: 2;
   display: grid;
   place-items: center;
+  transform: translate(${({ $x }) => `${$x}px`}, ${({ $y }) => `${$y}px`})
+    scale(${({ $scale }) => $scale});
+  transform-origin: center;
+`
+
+const Center = styled.div<{ $surfaceAlpha: number; $borderAlpha: number }>`
+  display: grid;
+  place-items: center;
   width: clamp(8.75rem, 38vw, 10rem);
   aspect-ratio: 1;
-  border: 1px solid ${({ theme }) => theme.roles.movement.arrival.border};
+  border: 1px solid
+    color-mix(
+      in srgb,
+      ${({ theme }) => theme.roles.movement.arrival.border}
+        ${({ $borderAlpha }) => `${Math.round($borderAlpha * 100)}%`},
+      transparent
+    );
   border-radius: ${({ theme }) => theme.borderRadius.pill};
-  background: ${({ theme }) => theme.roles.surface.card};
+  background: color-mix(
+    in srgb,
+    ${({ theme }) => theme.roles.surface.card}
+      ${({ $surfaceAlpha }) => `${Math.round($surfaceAlpha * 100)}%`},
+    transparent
+  );
 `
 
 const CenterContent = styled.div`
   display: grid;
   place-items: center;
+  gap: ${({ theme }) => theme.spacingHalf(0.25)};
   width: 100%;
+  max-width: 8.25rem;
   text-align: center;
 `
 
@@ -316,9 +369,22 @@ const Phase = styled.p`
   margin: 0;
   color: ${({ theme }) => theme.roles.text.primary};
   font-family: ${({ theme }) => theme.typography.fontFamily.primary};
-  font-size: clamp(1.3rem, 5.8vw, 1.55rem);
+  font-size: clamp(1.24rem, 5.2vw, 1.5rem);
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  line-height: 1.04;
+  line-height: 1.02;
+  letter-spacing: ${({ theme }) => theme.typography.letterSpacing.tight};
+  text-wrap: balance;
+`
+
+const CountdownPhase = styled.p`
+  margin: 0;
+  max-width: 7.1rem;
+  color: ${({ theme }) => theme.roles.text.primary};
+  font-family: ${({ theme }) => theme.typography.fontFamily.primary};
+  font-size: clamp(0.98rem, 4.3vw, 1.12rem);
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  line-height: 0.98;
+  letter-spacing: ${({ theme }) => theme.typography.letterSpacing.tight};
   text-wrap: balance;
 `
 
@@ -335,9 +401,9 @@ const Counter = styled.p`
   margin: 0;
   color: ${({ theme }) => theme.roles.text.primary};
   font-family: ${({ theme }) => theme.typography.fontFamily.primary};
-  font-size: clamp(2.7rem, 12vw, 3.6rem);
+  font-size: clamp(2.55rem, 11vw, 3.45rem);
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  line-height: 0.88;
+  line-height: 0.84;
 `
 
 const PrimaryAction = styled.button`
@@ -363,25 +429,49 @@ const AppActions = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: ${({ theme }) => theme.spacing(1)};
+  gap: ${({ theme }) => theme.spacing(0.7)};
 `
 
 const QuietAction = styled.button`
-  padding: ${({ theme }) => theme.spacingHalf(1)}
-    ${({ theme }) => theme.spacing(1)};
-  border: 0;
+  min-height: ${({ theme }) => theme.spacing(3.35)};
+  padding: ${({ theme }) => `${theme.spacingHalf(0.75)} ${theme.spacing(1)}`};
+  border: 1px solid
+    color-mix(
+      in srgb,
+      ${({ theme }) => theme.roles.movement.arrival.border} 38%,
+      transparent
+    );
   border-radius: ${({ theme }) => theme.borderRadius.pill};
-  background: transparent;
-  color: ${({ theme }) => theme.roles.text.subtle};
+  background: color-mix(
+    in srgb,
+    ${({ theme }) => theme.roles.surface.card} 32%,
+    transparent
+  );
+  color: ${({ theme }) => theme.roles.text.secondary};
   cursor: pointer;
   font-family: ${({ theme }) => theme.typography.fontFamily.primary};
   font-size: ${({ theme }) => theme.typography.fontSize.caption};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
   line-height: 1;
+  transition: ${({ theme }) => theme.motion.css.interactive.control};
+
+  &:hover,
+  &:focus-visible {
+    color: ${({ theme }) => theme.roles.text.primary};
+    background: color-mix(
+      in srgb,
+      ${({ theme }) => theme.roles.surface.card} 52%,
+      transparent
+    );
+    border-color: ${({ theme }) => theme.roles.movement.arrival.border};
+  }
 
   &:disabled {
     cursor: default;
-    opacity: 0.34;
+    opacity: 0.38;
+    color: ${({ theme }) => theme.roles.text.subtle};
+    background: transparent;
+    border-color: transparent;
   }
 
   &:focus-visible {
@@ -389,5 +479,3 @@ const QuietAction = styled.button`
     outline-offset: 0.25rem;
   }
 `
-
-export default BreathingExercise
