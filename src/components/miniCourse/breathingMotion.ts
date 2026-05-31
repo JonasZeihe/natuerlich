@@ -1,3 +1,4 @@
+// src/components/miniCourse/breathingMotion.ts
 import { pointOnClock } from './breathingGeometry'
 
 export type BreathExerciseState = 'idle' | 'countdown' | 'running'

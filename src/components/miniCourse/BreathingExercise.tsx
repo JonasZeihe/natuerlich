@@ -1,3 +1,4 @@
+// src/components/miniCourse/BreathingExercise.tsx
 'use client'
 
 import { useEffect, useState } from 'react'
