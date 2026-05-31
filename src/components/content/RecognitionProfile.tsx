@@ -67,7 +67,7 @@ const RecognitionProfile = ({
           <BlockText block={style} heading="h2" />
         </ProfileCard>
 
-        <PortraitCard mode="card" stretch={false}>
+        <PortraitCard mode="line" stretch={false}>
           <Portrait
             src="/jonas_zeihe.webp"
             alt="Jonas"
