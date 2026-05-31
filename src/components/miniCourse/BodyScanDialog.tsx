@@ -19,7 +19,7 @@ type Props = {
 
 const BodyScanDialog = ({ content, onClose }: Props) => (
   <ModalOverlay onClose={onClose}>
-    <Stack gap={4} aria-labelledby="body-scan-title">
+    <DialogFlow aria-labelledby="body-scan-title">
       <Typography
         as="h2"
         id="body-scan-title"
@@ -41,13 +41,17 @@ const BodyScanDialog = ({ content, onClose }: Props) => (
           Schließen
         </Button>
       </Footer>
-    </Stack>
+    </DialogFlow>
   </ModalOverlay>
 )
 
+const DialogFlow = styled(Stack)`
+  gap: ${({ theme }) => theme.layout.flow.region};
+`
+
 const Flow = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(2)};
+  gap: ${({ theme }) => theme.layout.flow.block};
   max-width: ${({ theme }) => theme.typography.measure.prose};
 `
 

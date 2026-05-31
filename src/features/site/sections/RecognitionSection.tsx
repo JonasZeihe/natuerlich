@@ -96,11 +96,7 @@ const HeaderFrame = styled.div`
 `
 
 const ProfileArea = styled.div`
-  margin-top: ${({ theme }) => theme.spacing(2.5)};
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    margin-top: ${({ theme }) => theme.spacing(3.5)};
-  }
+  margin-top: ${({ theme }) => theme.layout.flow.region};
 `
 
 export default RecognitionSection

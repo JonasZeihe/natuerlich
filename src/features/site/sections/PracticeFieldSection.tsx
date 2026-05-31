@@ -25,15 +25,15 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
     mix={['density', 'tension']}
   >
     <Surface tone="bare" movement="practice" padding="lg">
-      <Headline
-        titleId="arbeiten-title"
-        title="Ein Stein, der ins Wasser fällt, zieht Kreise."
-        subheadline="Was später tragen soll, muss vorher gesetzt sein."
-        accent="axisTension"
-        weight="poster"
-      />
+      <PracticeFrame>
+        <Headline
+          titleId="arbeiten-title"
+          title="Ein Stein, der ins Wasser fällt, zieht Kreise."
+          subheadline="Was später tragen soll, muss vorher gesetzt sein."
+          accent="axisTension"
+          weight="poster"
+        />
 
-      <PracticePanel>
         <PracticeFields
           movement="practice"
           mobileAriaLabel="Praxisweg"
@@ -107,13 +107,14 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
             },
           ]}
         />
-      </PracticePanel>
+      </PracticeFrame>
     </Surface>
   </Section>
 )
 
-const PracticePanel = styled.div`
-  margin-top: ${({ theme }) => theme.spacing(2.5)};
+const PracticeFrame = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.layout.flow.region};
 `
 
 export default PracticeFieldSection

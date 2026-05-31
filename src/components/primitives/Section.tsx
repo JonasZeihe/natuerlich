@@ -70,7 +70,7 @@ const Outer = styled.section<{
     return css`
       ${$bleed
         ? css`
-            margin-inline: calc(${theme.layout.containerInset} * -1);
+            margin-inline: calc(${theme.layout.inset.page} * -1);
           `
         : ''}
 
@@ -108,7 +108,7 @@ const Inner = styled.div<{
   width: 100%;
 
   ${({ theme, $padY, $rhythm, $tone, $energy, $mix, $frame }) => {
-    const rhythm = theme.layout.section[$rhythm]
+    const sectionSpace = theme.layout.section[$rhythm]
     const tone = theme.getSectionTone($tone, $energy, $mix)
 
     return css`
@@ -122,14 +122,14 @@ const Inner = styled.div<{
 
       ${$padY
         ? css`
-            padding-block: calc(${rhythm.pad} * ${tone.padScale});
+            padding-block: calc(${sectionSpace} * ${tone.padScale});
 
             @media (max-width: ${theme.breakpoints.md}) {
-              padding-block: calc(${rhythm.pad} * ${tone.padScale} * 0.86);
+              padding-block: calc(${sectionSpace} * ${tone.padScale} * 0.9);
             }
 
             @media (max-width: ${theme.breakpoints.sm}) {
-              padding-block: calc(${rhythm.pad} * ${tone.padScale} * 0.74);
+              padding-block: calc(${sectionSpace} * ${tone.padScale} * 0.82);
             }
           `
         : ''}
@@ -150,7 +150,7 @@ const Content = styled.div<{ $content: SectionContent }>`
       return css`
         max-width: 48rem;
         margin-right: auto;
-        margin-left: clamp(1rem, 7vw, 7rem);
+        margin-left: clamp(${theme.layout.inset.page}, 7vw, 7rem);
 
         @media (max-width: ${theme.breakpoints.md}) {
           max-width: 42rem;
@@ -174,7 +174,7 @@ const Content = styled.div<{ $content: SectionContent }>`
       return css`
         max-width: 48rem;
         margin-left: auto;
-        margin-right: clamp(1rem, 7vw, 7rem);
+        margin-right: clamp(${theme.layout.inset.page}, 7vw, 7rem);
 
         @media (max-width: ${theme.breakpoints.md}) {
           max-width: 42rem;

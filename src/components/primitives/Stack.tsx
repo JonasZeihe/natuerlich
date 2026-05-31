@@ -16,7 +16,7 @@ type Props = {
 const toGap = (theme: DefaultTheme, gap?: number | string) => {
   if (typeof gap === 'number') return theme.spacing(gap)
   if (typeof gap === 'string') return gap
-  return theme.spacing(0.75)
+  return theme.layout.flow.text
 }
 
 const Box = styled.div<{ $gap?: number | string; $align: Align }>`

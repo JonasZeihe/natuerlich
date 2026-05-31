@@ -430,7 +430,7 @@ const AppActions = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: ${({ theme }) => theme.spacing(0.7)};
+  gap: ${({ theme }) => theme.layout.flow.text};
 `
 
 const QuietAction = styled.button`

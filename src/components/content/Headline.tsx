@@ -18,23 +18,6 @@ type Props = {
   weight?: Weight
 }
 
-const Shell = styled.header<{ $weight: Weight }>`
-  width: min(100%, 58rem);
-
-  ${({ theme, $weight }) =>
-    $weight === 'poster'
-      ? css`
-          max-width: 50rem;
-          padding-left: ${theme.spacing(1.25)};
-          border-left: 3px solid ${theme.roles.border.accent};
-
-          @media (max-width: ${theme.breakpoints.sm}) {
-            padding-left: ${theme.spacing(1)};
-          }
-        `
-      : ''}
-`
-
 const Headline = ({
   title,
   titleId,
@@ -44,17 +27,18 @@ const Headline = ({
   weight = 'normal',
 }: Props) => (
   <Shell $weight={weight}>
-    <Stack gap={weight === 'poster' ? 1 : 1.25}>
-      <Typography
+    <HeadlineStack $weight={weight}>
+      <Title
         as="h2"
-        variant="h2"
+        variant={weight === 'poster' ? 'h1' : 'h2'}
         id={titleId}
         accent={accent}
         cadence="dense"
         measure="title"
+        $weight={weight}
       >
         {title}
-      </Typography>
+      </Title>
 
       {subheadline ? (
         <Typography
@@ -71,7 +55,7 @@ const Headline = ({
       {children ? (
         <Typography
           as="p"
-          variant="body"
+          variant={weight === 'poster' ? 'subtitle' : 'body'}
           tone="soft"
           cadence="open"
           measure="prose"
@@ -79,8 +63,36 @@ const Headline = ({
           {children}
         </Typography>
       ) : null}
-    </Stack>
+    </HeadlineStack>
   </Shell>
 )
+
+const Shell = styled.header<{ $weight: Weight }>`
+  width: min(100%, 58rem);
+
+  ${({ theme, $weight }) =>
+    $weight === 'poster'
+      ? css`
+          width: min(100%, 68rem);
+          max-width: 68rem;
+          padding-left: clamp(1rem, 1.8vw, 1.75rem);
+          border-left: 3px solid ${theme.roles.border.accent};
+        `
+      : ''}
+`
+
+const HeadlineStack = styled(Stack)<{ $weight: Weight }>`
+  gap: ${({ theme, $weight }) =>
+    $weight === 'poster' ? theme.layout.flow.block : theme.layout.flow.block};
+`
+
+const Title = styled(Typography)<{ $weight: Weight }>`
+  ${({ $weight }) =>
+    $weight === 'poster'
+      ? css`
+          max-width: 17ch;
+        `
+      : ''}
+`
 
 export default Headline

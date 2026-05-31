@@ -163,7 +163,7 @@ const PathCards = ({ items }: Props) => {
       <OfferFlow key={audience}>
         <ContentRail
           columns="auto"
-          min="18rem"
+          min="20rem"
           gap={1.15}
           itemWidth="min(88vw, 27rem)"
           variant="cards"
@@ -229,13 +229,13 @@ const PathCards = ({ items }: Props) => {
 
 const Shell = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(1.25)};
+  gap: ${({ theme }) => theme.spacing(1.35)};
 `
 
 const Tabs = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: ${({ theme }) => theme.spacing(1)};
+  gap: ${({ theme }) => theme.spacing(0.5)};
 `
 
 const Tab = styled.button<{ $active: boolean }>`
@@ -246,8 +246,7 @@ const Tab = styled.button<{ $active: boolean }>`
     $active ? theme.roles.text.primary : theme.roles.surface.quiet};
   color: ${({ theme, $active }) =>
     $active ? theme.roles.surface.chrome : theme.roles.text.primary};
-  padding: ${({ theme }) => `${theme.spacing(1)} ${theme.spacing(1.5)}`};
-  margin: ${({ theme }) => theme.spacing(0.5)};
+  padding: ${({ theme }) => `${theme.spacing(0.7)} ${theme.spacing(1)}`};
   font: inherit;
   cursor: pointer;
 

@@ -52,35 +52,37 @@ const MiniCourseSection = ({}: Props) => {
       movement="arrival"
     >
       <CourseFlow>
-        <Hero>
-          <Typography
-            as="h1"
-            id="minikurs-title"
-            variant="h1"
-            cadence="dense"
-            measure="title"
-          >
-            {miniCourseContent.title}
-          </Typography>
+        <ArrivalStage>
+          <Hero>
+            <Typography
+              as="h1"
+              id="minikurs-title"
+              variant="h1"
+              cadence="dense"
+              measure="title"
+            >
+              {miniCourseContent.title}
+            </Typography>
 
-          <Typography
-            as="p"
-            variant="body"
-            tone="soft"
-            cadence="open"
-            measure="prose"
-          >
-            {miniCourseContent.lead}
-          </Typography>
-        </Hero>
+            <Typography
+              as="p"
+              variant="body"
+              tone="soft"
+              cadence="open"
+              measure="prose"
+            >
+              {miniCourseContent.lead}
+            </Typography>
+          </Hero>
 
-        <BreathingArea aria-label="Atemübung">
-          <BreathingExercise showWebsiteAction={false} />
-        </BreathingArea>
+          <BreathingArea aria-label="Atemübung">
+            <BreathingExercise showWebsiteAction={false} />
+          </BreathingArea>
+        </ArrivalStage>
 
         <BodyScanWrap>
           <Surface tone="card" movement="arrival" radius="large" padding="lg">
-            <ScanGrid columns={2} min="18rem" gap={3}>
+            <ScanGrid columns={2} min="18rem">
               <Typography as="h2" variant="h2" cadence="dense" measure="title">
                 {miniCourseContent.bodyScan.title}
               </Typography>
@@ -99,7 +101,7 @@ const MiniCourseSection = ({}: Props) => {
         </BodyScanWrap>
 
         <AfterPractice>
-          <Stack gap={1.35}>
+          <AfterPracticeStack>
             <Typography
               as="p"
               variant="body"
@@ -132,7 +134,7 @@ const MiniCourseSection = ({}: Props) => {
             >
               {miniCourseContent.afterBodyScan.closing}
             </Typography>
-          </Stack>
+          </AfterPracticeStack>
         </AfterPractice>
       </CourseFlow>
 
@@ -148,16 +150,30 @@ const MiniCourseSection = ({}: Props) => {
 
 const CourseFlow = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(2.7)};
+  gap: ${({ theme }) => theme.layout.flow.region};
+`
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    gap: ${({ theme }) => theme.spacing(3.25)};
+const ArrivalStage = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.layout.flow.cluster};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    grid-template-columns: minmax(18rem, 0.46fr) minmax(28rem, 0.74fr);
+    align-items: center;
+    min-height: clamp(34rem, 72svh, 48rem);
+    gap: ${({ theme }) => theme.layout.flow.chapter};
   }
 `
 
 const Hero = styled.header`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(1.5)};
+  gap: ${({ theme }) => theme.layout.flow.block};
+  max-width: 34rem;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    align-self: start;
+    padding-top: clamp(1rem, 7svh, 5rem);
+  }
 `
 
 const BreathingArea = styled.div`
@@ -166,7 +182,11 @@ const BreathingArea = styled.div`
   min-height: 31rem;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    min-height: clamp(25rem, 50svh, 38rem);
+    min-height: clamp(28rem, 58svh, 42rem);
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    min-height: 0;
   }
 `
 
@@ -177,6 +197,7 @@ const BodyScanWrap = styled.div`
 
 const ScanGrid = styled(Grid)`
   align-items: center;
+  gap: ${({ theme }) => theme.layout.flow.cluster};
 `
 
 const ActionSlot = styled.div`
@@ -192,6 +213,10 @@ const ActionSlot = styled.div`
 const AfterPractice = styled.article`
   width: min(100%, 64ch);
   margin-inline: auto;
+`
+
+const AfterPracticeStack = styled(Stack)`
+  gap: ${({ theme }) => theme.layout.flow.block};
 `
 
 export default MiniCourseSection

@@ -31,7 +31,7 @@ type ContentRailItemProps = {
 const toSpace = (theme: DefaultTheme, value?: number | string) => {
   if (typeof value === 'number') return theme.spacing(value)
   if (typeof value === 'string') return value
-  return theme.spacing(1.5)
+  return theme.layout.rail.gap
 }
 
 const RailFrame = styled.div<{
@@ -43,49 +43,28 @@ const RailFrame = styled.div<{
 
   ${({ theme, $switchAt, $variant }) => css`
     @media (max-width: calc(${theme.breakpoints[$switchAt]} - 0.02px)) {
-      ${$variant === 'editorial'
-        ? css`
-            &::after {
-              content: '';
-              position: absolute;
-              z-index: 2;
-              top: 0;
-              right: calc(${theme.spacing(1)} * -1);
-              bottom: ${theme.spacing(0.55)};
-              width: clamp(0.85rem, 5vw, 1.5rem);
-              background: linear-gradient(
-                90deg,
-                transparent,
-                color-mix(
-                  in srgb,
-                  ${theme.roles.surface.canvas} 58%,
-                  transparent
-                )
-              );
-              pointer-events: none;
-            }
-          `
-        : css`
-            &::after {
-              content: '';
-              position: absolute;
-              z-index: 2;
-              top: 0;
-              right: calc(${theme.spacing(1)} * -1);
-              bottom: ${theme.spacing(0.75)};
-              width: clamp(0.9rem, 5vw, 1.65rem);
-              background: linear-gradient(
-                90deg,
-                transparent,
-                color-mix(
-                  in srgb,
-                  ${theme.roles.surface.canvas} 34%,
-                  transparent
-                )
-              );
-              pointer-events: none;
-            }
-          `}
+      &::after {
+        content: '';
+        position: absolute;
+        z-index: 2;
+        top: 0;
+        right: calc(${theme.layout.inset.rail} * -1);
+        bottom: ${$variant === 'editorial'
+          ? theme.layout.flow.text
+          : theme.layout.flow.block};
+        width: ${theme.layout.rail.peek};
+        background: linear-gradient(
+          90deg,
+          transparent,
+          color-mix(
+            in srgb,
+            ${theme.roles.surface.canvas}
+              ${$variant === 'cards' ? '34%' : '58%'},
+            transparent
+          )
+        );
+        pointer-events: none;
+      }
     }
   `}
 `
@@ -112,36 +91,20 @@ const Rail = styled.div<{
     return `min(${$itemWidth}, calc(100% - 2.6rem))`
   }};
   gap: ${({ theme, $gap }) => toSpace(theme, $gap)};
-  margin-inline: ${({ theme }) => `-${theme.spacing(1)}`};
-  padding-inline-start: ${({ theme }) => theme.spacing(1)};
-  padding-inline-end: ${({ theme, $variant }) => {
-    if ($variant === 'cards') {
-      return `calc(${theme.spacing(1)} + clamp(1.5rem, 8vw, 2.8rem))`
-    }
-
-    if ($variant === 'editorial') {
-      return `calc(${theme.spacing(1)} + clamp(1.8rem, 10vw, 3rem))`
-    }
-
-    return `calc(${theme.spacing(1)} + clamp(2.2rem, 12vw, 3.8rem))`
-  }};
+  margin-inline: ${({ theme }) => `calc(${theme.layout.inset.rail} * -1)`};
+  padding-inline-start: ${({ theme }) => theme.layout.inset.rail};
+  padding-inline-end: ${({ theme }) =>
+    `calc(${theme.layout.inset.rail} + ${theme.layout.rail.peek})`};
   padding-bottom: ${({ theme, $variant }) =>
-    $variant === 'editorial' ? theme.spacing(0.55) : theme.spacing(0.75)};
+    $variant === 'editorial'
+      ? theme.layout.flow.text
+      : theme.layout.flow.block};
   overflow-x: auto;
   overflow-y: visible;
   scroll-snap-type: x mandatory;
-  scroll-padding-inline-start: ${({ theme }) => theme.spacing(1)};
-  scroll-padding-inline-end: ${({ theme, $variant }) => {
-    if ($variant === 'cards') {
-      return `calc(${theme.spacing(1)} + clamp(1.5rem, 8vw, 2.8rem))`
-    }
-
-    if ($variant === 'editorial') {
-      return `calc(${theme.spacing(1)} + clamp(1.8rem, 10vw, 3rem))`
-    }
-
-    return `calc(${theme.spacing(1)} + clamp(2.2rem, 12vw, 3.8rem))`
-  }};
+  scroll-padding-inline-start: ${({ theme }) => theme.layout.inset.rail};
+  scroll-padding-inline-end: ${({ theme }) =>
+    `calc(${theme.layout.inset.rail} + ${theme.layout.rail.peek})`};
   -webkit-overflow-scrolling: touch;
 
   &::-webkit-scrollbar {
@@ -155,8 +118,7 @@ const Rail = styled.div<{
             border-radius: 0;
             border-top: 1px solid ${theme.roles.border.subtle};
             background: transparent;
-            padding: ${theme.spacing(1.15)} ${theme.spacing(0.25)}
-              ${theme.spacing(0.25)};
+            padding: ${theme.layout.flow.block} 0 0;
           }
         `
       : null}
@@ -186,10 +148,10 @@ const Rail = styled.div<{
 
       ${$variant === 'editorial'
         ? css`
-            gap: clamp(${theme.spacing(1.2)}, 2vw, ${theme.spacing(2)});
+            gap: ${theme.layout.grid.gap};
 
             & > article {
-              padding: ${theme.spacing(0.75)} 0 0;
+              padding: ${theme.layout.flow.text} 0 0;
               border-top: 1px solid ${theme.roles.border.subtle};
               border-radius: 0;
               background: transparent;
@@ -212,10 +174,10 @@ const Item = styled.article<{ $mode: ItemMode; $stretch: boolean }>`
   scroll-snap-align: start;
   display: grid;
   align-content: start;
-  gap: ${({ theme }) => theme.spacing(1.85)};
+  gap: ${({ theme }) => theme.layout.flow.block};
   min-width: 0;
   height: ${({ $stretch }) => ($stretch ? '100%' : 'auto')};
-  padding: ${({ theme }) => theme.spacing(2)};
+  padding: ${({ theme }) => theme.layout.surface.md};
   border-radius: ${({ theme }) => theme.borderRadius.large};
   background: ${({ theme }) => theme.roles.surface.quiet};
 
@@ -225,8 +187,7 @@ const Item = styled.article<{ $mode: ItemMode; $stretch: boolean }>`
           border-top: 1px solid ${theme.roles.border.subtle};
           border-radius: 0;
           background: transparent;
-          padding: ${theme.spacing(1.15)} ${theme.spacing(0.25)}
-            ${theme.spacing(0.25)};
+          padding: ${theme.layout.flow.block} 0 0;
         `
       : null}
 
@@ -234,13 +195,13 @@ const Item = styled.article<{ $mode: ItemMode; $stretch: boolean }>`
     @media (min-width: ${theme.breakpoints.lg}) {
       ${$mode === 'line'
         ? css`
-            padding: ${theme.spacing(0.5)} 0 0;
+            padding: ${theme.layout.flow.text} 0 0;
             border-top: 1px solid ${theme.roles.border.subtle};
             border-radius: 0;
             background: transparent;
           `
         : css`
-            padding: ${theme.spacing(1.35)};
+            padding: ${theme.layout.surface.md};
             border-radius: ${theme.borderRadius.large};
             background: ${theme.roles.surface.quiet};
           `}

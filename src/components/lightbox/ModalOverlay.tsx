@@ -1,7 +1,7 @@
 // src/components/lightbox/ModalOverlay.tsx
 'use client'
 
-import React, { useEffect, useRef, type ReactNode } from 'react'
+import { useEffect, useRef, type ReactNode } from 'react'
 import ReactDOM from 'react-dom'
 import styled, { keyframes } from 'styled-components'
 import { FaTimes } from 'react-icons/fa'
@@ -34,20 +34,12 @@ const Overlay = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: clamp(0.9rem, 2vw, 1.4rem);
+  padding: ${({ theme }) => theme.layout.inset.page};
   background: ${({ theme }) => theme.roles.overlay.scrim};
   backdrop-filter: blur(1.25px) saturate(1.02);
   animation: ${fadeIn} 0.2s cubic-bezier(0.55, 0.13, 0.45, 1.05);
   -webkit-tap-highlight-color: transparent;
   touch-action: none;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    padding: clamp(0.7rem, 1.8vw, 1rem);
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
-    padding: 0.55rem;
-  }
 `
 
 const Content = styled.div`
@@ -56,7 +48,7 @@ const Content = styled.div`
   max-width: 920px;
   min-width: 0;
   max-height: min(90vh, 980px);
-  padding: ${({ theme }) => theme.spacing(3)};
+  padding: ${({ theme }) => theme.layout.surface.lg};
   background: ${({ theme }) => theme.roles.surface.card};
   border: 1px solid ${({ theme }) => theme.roles.border.subtle};
   border-radius: ${({ theme }) => theme.borderRadius.large};
@@ -88,22 +80,20 @@ const Content = styled.div`
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     max-width: min(92vw, 780px);
     max-height: 88vh;
-    padding: ${({ theme }) => theme.spacing(2)};
     border-radius: ${({ theme }) => theme.borderRadius.medium};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     max-width: 94vw;
     max-height: 86vh;
-    padding: ${({ theme }) => theme.spacing(1.25)};
     border-radius: ${({ theme }) => theme.borderRadius.medium};
   }
 `
 
 const Close = styled.button`
   position: absolute;
-  top: ${({ theme }) => theme.spacing(1)};
-  right: ${({ theme }) => theme.spacing(1)};
+  top: ${({ theme }) => theme.layout.flow.text};
+  right: ${({ theme }) => theme.layout.flow.text};
   width: 40px;
   height: 40px;
   border: 1px solid ${({ theme }) => theme.roles.border.subtle};
@@ -132,8 +122,6 @@ const Close = styled.button`
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
-    top: ${({ theme }) => theme.spacing(0.65)};
-    right: ${({ theme }) => theme.spacing(0.65)};
     width: 32px;
     height: 32px;
     font-size: 0.95rem;

@@ -18,17 +18,15 @@ type Props = {
 } & Omit<ComponentPropsWithoutRef<'div'>, 'children'>
 
 const DEFAULT_GRID_MIN = '18rem'
-const DEFAULT_GRID_GAP = 2
 
 const toSpace = (
   theme: DefaultTheme,
   value: number | string | undefined,
-  fallback?: number
+  fallback: string
 ) => {
   if (typeof value === 'number') return theme.spacing(value)
   if (typeof value === 'string') return value
-  if (typeof fallback === 'number') return theme.spacing(fallback)
-  return undefined
+  return fallback
 }
 
 const GridBox = styled.div<{
@@ -40,8 +38,8 @@ const GridBox = styled.div<{
   $switch?: string
 }>`
   display: grid;
-  margin: ${({ theme, $offset }) => toSpace(theme, $offset) ?? 0};
-  gap: ${({ theme, $gap }) => toSpace(theme, $gap, DEFAULT_GRID_GAP)};
+  margin: ${({ theme, $offset }) => toSpace(theme, $offset, '0')};
+  gap: ${({ theme, $gap }) => toSpace(theme, $gap, theme.layout.grid.gap)};
   grid-auto-flow: ${({ $dense }) => ($dense ? 'row dense' : 'row')};
 
   ${({ $columns, $min }) => {

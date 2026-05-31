@@ -4,6 +4,7 @@
 import { useMemo, useState, type ReactNode } from 'react'
 import styled from 'styled-components'
 import Button from '@/components/actions/Button'
+import Surface from '@/components/primitives/Surface'
 import Typography from '@/design/typography'
 
 type MailParts = {
@@ -21,67 +22,6 @@ type Props = {
   copyLabel: ReactNode
   copiedLabel: ReactNode
 }
-
-const Shell = styled.div`
-  width: min(100%, 64rem);
-  margin-inline: auto;
-  margin-top: ${({ theme }) => theme.spacing(2.5)};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    margin-top: ${({ theme }) => theme.spacing(2)};
-  }
-`
-
-const Layout = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(1.5)};
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    grid-template-columns: minmax(0, 1fr) minmax(17rem, 0.42fr);
-    align-items: end;
-    gap: ${({ theme }) => theme.spacing(2)};
-  }
-`
-
-const Text = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(0.85)};
-  max-width: 48rem;
-`
-
-const Hint = styled.div`
-  max-width: 42rem;
-  padding-top: ${({ theme }) => theme.spacing(0.85)};
-  border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
-`
-
-const Actions = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(0.7)};
-`
-
-const CopyButton = styled.button`
-  appearance: none;
-  border: 0;
-  background: transparent;
-  color: ${({ theme }) => theme.roles.text.subtle};
-  padding: ${({ theme }) => theme.spacing(0.4)};
-  font: inherit;
-  cursor: pointer;
-  text-align: center;
-
-  &:hover {
-    color: ${({ theme }) => theme.roles.text.primary};
-    text-decoration: underline;
-    text-underline-offset: 0.16em;
-  }
-
-  &:focus-visible {
-    outline: 2px solid ${({ theme }) => theme.roles.focus.ring};
-    outline-offset: 3px;
-    border-radius: ${({ theme }) => theme.borderRadius.small};
-  }
-`
 
 const buildMail = ({ local, domain }: MailParts) => `${local}@${domain}`
 
@@ -117,10 +57,10 @@ const ContactPanel = ({
   }
 
   return (
-    <Shell>
+    <Shell tone="quiet" movement="nextStep" radius="large" padding="lg">
       <Layout>
         <Text>
-          <Typography as="h3" variant="h3" color="primary">
+          <Typography as="h3" variant="h2" color="primary" cadence="dense">
             {title}
           </Typography>
 
@@ -150,5 +90,61 @@ const ContactPanel = ({
     </Shell>
   )
 }
+
+const Shell = styled(Surface)`
+  width: min(100%, 72rem);
+  margin-inline: auto;
+`
+
+const Layout = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.layout.flow.cluster};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    grid-template-columns: minmax(0, 1fr) minmax(17rem, 0.42fr);
+    align-items: center;
+    gap: ${({ theme }) => theme.layout.flow.region};
+  }
+`
+
+const Text = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.layout.flow.block};
+  max-width: 52rem;
+`
+
+const Hint = styled.div`
+  max-width: 42rem;
+  padding-top: ${({ theme }) => theme.layout.flow.block};
+  border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
+`
+
+const Actions = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.layout.flow.text};
+`
+
+const CopyButton = styled.button`
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: ${({ theme }) => theme.roles.text.subtle};
+  padding: ${({ theme }) => theme.spacingHalf(1)};
+  font: inherit;
+  cursor: pointer;
+  text-align: center;
+
+  &:hover {
+    color: ${({ theme }) => theme.roles.text.primary};
+    text-decoration: underline;
+    text-underline-offset: 0.16em;
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.roles.focus.ring};
+    outline-offset: 3px;
+    border-radius: ${({ theme }) => theme.borderRadius.small};
+  }
+`
 
 export default ContactPanel

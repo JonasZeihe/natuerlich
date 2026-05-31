@@ -127,7 +127,7 @@ const RecognitionProfile = ({
                     padding="md"
                     bordered
                   >
-                    <Stack gap={0.65}>
+                    <Stack gap={undefined}>
                       <Typography as="h3" variant="subtitle" color="primary">
                         {item.title}
                       </Typography>
@@ -169,7 +169,7 @@ const BlockText = ({
   const as = heading === 'subtitle' ? 'h3' : heading
 
   return (
-    <Stack gap={1}>
+    <BlockStack>
       {block.title ? (
         <Typography as={as} variant={heading} color="primary" cadence="dense">
           {block.title}
@@ -179,55 +179,54 @@ const BlockText = ({
       <Typography as="p" variant="body" cadence="open" measure="wide">
         {block.children}
       </Typography>
-    </Stack>
+    </BlockStack>
   )
 }
 
 const Shell = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(2.4)};
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    gap: ${({ theme }) => theme.spacing(3.25)};
-  }
+  gap: ${({ theme }) => theme.layout.flow.region};
 `
 
 const Lead = styled.div`
-  width: min(100%, 68rem);
+  width: min(100%, 72rem);
   margin-inline: auto;
+`
+
+const BlockStack = styled(Stack)`
+  gap: ${({ theme }) => theme.layout.flow.block};
 `
 
 const ProfileGrid = styled.div`
   display: grid;
-  width: min(100%, 68rem);
+  width: min(100%, 72rem);
   margin-inline: auto;
-  gap: ${({ theme }) => theme.spacing(1.35)};
+  gap: ${({ theme }) => theme.layout.grid.gap};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(18rem, 0.95fr);
     align-items: stretch;
-    gap: ${({ theme }) => theme.spacing(1.5)};
   }
 `
 
 const ProfileCard = styled(Surface)`
   display: flex;
   min-height: 0;
-  padding: ${({ theme }) => theme.spacing(1.75)};
+  padding: ${({ theme }) => theme.layout.surface.lg};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    min-height: 19rem;
+    min-height: 20rem;
+    padding: ${({ theme }) => theme.layout.surface.lg};
   }
 `
 
 const PortraitCard = styled(Surface)`
   display: grid;
-  padding: ${({ theme }) => theme.spacing(0.6)};
+  padding: ${({ theme }) => theme.layout.surface.sm};
   overflow: clip;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    min-height: 19rem;
-    padding: ${({ theme }) => theme.spacing(0.75)};
+    min-height: 20rem;
   }
 `
 
@@ -240,12 +239,13 @@ const Portrait = styled.img`
   object-position: center;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    max-height: 28rem;
+    max-height: 22rem;
+    object-position: center 35%;
   }
 `
 
 const Evidence = styled.div`
-  width: min(100%, 68rem);
+  width: min(100%, 72rem);
   margin-inline: auto;
 `
 
@@ -255,7 +255,7 @@ const ProofPanel = styled(Surface)`
 
 const ProofHeader = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(1.25)};
+  gap: ${({ theme }) => theme.layout.flow.block};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     grid-template-columns: minmax(0, 1fr) auto;
@@ -265,8 +265,8 @@ const ProofHeader = styled.div`
 
 const SummaryText = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(0.75)};
-  max-width: 58rem;
+  gap: ${({ theme }) => theme.layout.flow.text};
+  max-width: 60rem;
 `
 
 const ActionSlot = styled.div`
@@ -281,15 +281,13 @@ const ActionSlot = styled.div`
 const CredentialList = styled.ol`
   display: grid;
   grid-template-columns: 1fr;
-  gap: ${({ theme }) => theme.spacing(1)};
-  margin: ${({ theme }) => `${theme.spacing(1.5)} 0 0`};
+  gap: ${({ theme }) => theme.layout.grid.gap};
+  margin: ${({ theme }) => `${theme.layout.flow.cluster} 0 0`};
   padding: 0;
   list-style: none;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: ${({ theme }) => theme.spacing(1.25)};
-    margin-top: ${({ theme }) => theme.spacing(1.75)};
   }
 `
 
@@ -304,8 +302,7 @@ const CredentialCard = styled(Surface)`
 const CredentialMeta = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: ${({ theme }) => theme.spacingHalf(1)}
-    ${({ theme }) => theme.spacing(0.65)};
+  gap: ${({ theme }) => theme.layout.flow.text};
   color: ${({ theme }) => theme.roles.text.secondary};
 `
 

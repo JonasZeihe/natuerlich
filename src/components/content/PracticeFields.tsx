@@ -58,7 +58,7 @@ const PracticeFields = ({
   mobileAriaLabel,
   onGoToIntegration,
 }: Props) => (
-  <Stack gap={3} aria-label={mobileAriaLabel}>
+  <PracticeStack aria-label={mobileAriaLabel}>
     <IntroCopy>
       <Typography
         as="p"
@@ -89,7 +89,6 @@ const PracticeFields = ({
       <ContentRail
         columns={3}
         min="18rem"
-        gap={1.5}
         itemWidth="min(84vw, 25rem)"
         max="64rem"
         variant="editorial"
@@ -111,7 +110,7 @@ const PracticeFields = ({
 
     <ResultFlow>
       <ResultPanel tone="quiet" movement={movement} radius="large" padding="lg">
-        <Stack gap={0.85}>
+        <Stack gap={undefined}>
           <Typography as="h3" variant="h3" color="primary">
             {regulation.title}
           </Typography>
@@ -129,7 +128,7 @@ const PracticeFields = ({
       </ResultPanel>
 
       <ResultPanel tone="quiet" movement={movement} radius="large" padding="lg">
-        <Stack gap={0.85}>
+        <Stack gap={undefined}>
           <Typography as="h3" variant="h3" color="primary">
             {result.title}
           </Typography>
@@ -148,7 +147,7 @@ const PracticeFields = ({
     </ResultFlow>
 
     <MethodPanel tone="note" movement={movement} radius="large" padding="lg">
-      <Stack gap={1.25}>
+      <MethodStack>
         <Typography as="h2" variant="h2" color="primary">
           {method.title}
         </Typography>
@@ -182,7 +181,7 @@ const PracticeFields = ({
             ))}
           </DefinitionList>
         </MethodDefinition>
-      </Stack>
+      </MethodStack>
     </MethodPanel>
 
     <MobileEditorialStack>
@@ -203,7 +202,6 @@ const PracticeFields = ({
       <ContentRail
         columns={3}
         min="18rem"
-        gap={1.5}
         itemWidth="min(84vw, 25rem)"
         max="64rem"
         variant="editorial"
@@ -224,8 +222,8 @@ const PracticeFields = ({
     </DesktopEditorialRail>
 
     <Footer tone="note" movement={movement} radius="large" padding="lg">
-      <Grid columns={2} min="18rem" gap={2}>
-        <Stack gap={1}>
+      <FooterGrid columns={2} min="18rem">
+        <Stack gap={undefined}>
           <Typography as="h3" variant="h3" color="primary">
             Manchmal ist ein Kurs der richtige Anfang. Manchmal braucht es
             Einzelunterricht. Manchmal entsteht daraus eine regelmäßige Gruppe.
@@ -248,10 +246,15 @@ const PracticeFields = ({
             Angebote ansehen
           </Button>
         </FooterAction>
-      </Grid>
+      </FooterGrid>
     </Footer>
-  </Stack>
+  </PracticeStack>
 )
+
+const PracticeStack = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.layout.flow.region};
+`
 
 const IntroCopy = styled.div`
   width: min(100%, 58rem);
@@ -262,7 +265,7 @@ const MobileEditorialStack = styled.div`
   display: grid;
   width: min(100%, 64rem);
   margin-inline: auto;
-  gap: ${({ theme }) => theme.spacing(1.45)};
+  gap: ${({ theme }) => theme.layout.flow.cluster};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     display: none;
@@ -279,22 +282,18 @@ const DesktopEditorialRail = styled.div`
 
 const EditorialItem = styled.article`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(0.85)};
-  padding-top: ${({ theme }) => theme.spacing(1)};
+  gap: ${({ theme }) => theme.layout.flow.text};
+  padding-top: ${({ theme }) => theme.layout.flow.block};
   border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
 `
 
 const PracticeCard = styled(ContentRailItem)`
-  gap: ${({ theme }) => theme.spacing(1.1)};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
-    padding-right: ${({ theme }) => theme.spacing(1)};
-  }
+  gap: ${({ theme }) => theme.layout.flow.block};
 `
 
 const ResultFlow = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(1.25)};
+  gap: ${({ theme }) => theme.layout.grid.gap};
   width: min(100%, 64rem);
   margin-inline: auto;
 
@@ -313,23 +312,27 @@ const MethodPanel = styled(Surface)`
   margin-inline: auto;
 `
 
+const MethodStack = styled(Stack)`
+  gap: ${({ theme }) => theme.layout.flow.block};
+`
+
 const MethodDefinition = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(0.85)};
-  padding-top: ${({ theme }) => theme.spacing(1)};
+  gap: ${({ theme }) => theme.layout.flow.text};
+  padding-top: ${({ theme }) => theme.layout.flow.block};
   border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
 `
 
 const DefinitionList = styled.dl`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(0.65)};
+  gap: ${({ theme }) => theme.layout.flow.text};
   margin: 0;
   padding: 0;
 `
 
 const DefinitionItem = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacingHalf(0.65)};
+  gap: ${({ theme }) => theme.layout.flow.text};
 
   dd {
     margin: 0;
@@ -337,7 +340,7 @@ const DefinitionItem = styled.div`
 
   @media (min-width: ${({ theme }) => theme.breakpoints.sm}) {
     grid-template-columns: minmax(9.5rem, 0.32fr) minmax(0, 1fr);
-    gap: ${({ theme }) => theme.spacing(1)};
+    gap: ${({ theme }) => theme.layout.flow.block};
     align-items: baseline;
   }
 `
@@ -345,6 +348,10 @@ const DefinitionItem = styled.div`
 const Footer = styled(Surface)`
   width: min(100%, 64rem);
   margin-inline: auto;
+`
+
+const FooterGrid = styled(Grid)`
+  gap: ${({ theme }) => theme.layout.grid.gap};
 `
 
 const FooterAction = styled.div`

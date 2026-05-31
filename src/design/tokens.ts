@@ -78,28 +78,37 @@ export const LAYOUT = {
     page: '96rem',
     default: '72rem',
     wide: '96rem',
+    full: 'none',
+  },
+  inset: {
+    page: 'clamp(1rem, 2.2vw, 2rem)',
+    rail: 'clamp(1rem, 3vw, 1.5rem)',
   },
   section: {
-    compact: {
-      gap: 'clamp(0.8rem, 1.4vw, 1.1rem)',
-      pad: 'clamp(1.45rem, 3.6vw, 2.45rem)',
-    },
-    default: {
-      gap: 'clamp(1.2rem, 2.4vw, 1.8rem)',
-      pad: 'clamp(2.25rem, 5.4vw, 4.6rem)',
-    },
-    spacious: {
-      gap: 'clamp(1.7rem, 3.3vw, 2.8rem)',
-      pad: 'clamp(3rem, 7.6vw, 7rem)',
-    },
+    compact: 'clamp(2.4rem, 4.8vw, 4rem)',
+    default: 'clamp(3.6rem, 6.8vw, 6rem)',
+    spacious: 'clamp(4.8rem, 8.8vw, 8.5rem)',
   },
-  surfacePadding: {
+  flow: {
+    text: 'clamp(0.7rem, 0.8vw, 0.95rem)',
+    block: 'clamp(1rem, 1.2vw, 1.4rem)',
+    cluster: 'clamp(1.45rem, 2vw, 2.35rem)',
+    region: 'clamp(2.25rem, 3.4vw, 4rem)',
+    chapter: 'clamp(3rem, 5vw, 6rem)',
+  },
+  surface: {
     none: '0',
-    sm: 'clamp(0.62rem, 1.35vw, 0.86rem)',
-    md: 'clamp(0.82rem, 1.8vw, 1.14rem)',
-    lg: 'clamp(1rem, 2.35vw, 1.48rem)',
+    sm: 'clamp(0.75rem, 1vw, 1rem)',
+    md: 'clamp(1rem, 1.35vw, 1.45rem)',
+    lg: 'clamp(1.35rem, 2vw, 2.1rem)',
   },
-  containerInset: 'clamp(0.9rem, 3.4vw, 1.65rem)',
+  grid: {
+    gap: 'clamp(1rem, 1.8vw, 1.75rem)',
+  },
+  rail: {
+    gap: 'clamp(0.9rem, 1.6vw, 1.45rem)',
+    peek: 'clamp(1.35rem, 8vw, 2.8rem)',
+  },
 } as const
 
 export const MATERIAL_COLORS = {

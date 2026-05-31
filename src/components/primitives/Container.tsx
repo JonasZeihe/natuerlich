@@ -1,22 +1,41 @@
 // src/components/primitives/Container.tsx
 'use client'
 
-import styled from 'styled-components'
+import { type ComponentPropsWithoutRef, type ReactNode } from 'react'
+import styled, { css } from 'styled-components'
 
-export type ContainerMax =
-  | 'narrow'
-  | 'content'
-  | 'page'
-  | 'default'
-  | 'wide'
-  | 'full'
+type ContainerSize = 'narrow' | 'content' | 'default' | 'wide' | 'page' | 'full'
 
-const Container = styled.div<{ max?: ContainerMax }>`
+type Props = {
+  max?: ContainerSize
+  children?: ReactNode
+} & Omit<ComponentPropsWithoutRef<'div'>, 'children'>
+
+const Box = styled.div<{ $max: ContainerSize }>`
   width: 100%;
-  max-width: ${({ theme, max = 'content' }) =>
-    max === 'full' ? 'none' : theme.layout.containers[max]};
   margin-inline: auto;
-  padding-inline: ${({ theme }) => theme.layout.containerInset};
+  padding-inline: ${({ theme }) => theme.layout.inset.page};
+
+  ${({ theme, $max }) =>
+    $max === 'full'
+      ? css`
+          max-width: none;
+        `
+      : css`
+          max-width: calc(
+            ${theme.layout.containers[$max]} + ${theme.layout.inset.page} * 2
+          );
+        `}
 `
 
-export default Container
+export default function Container({
+  max = 'default',
+  children,
+  ...rest
+}: Props) {
+  return (
+    <Box $max={max} {...rest}>
+      {children}
+    </Box>
+  )
+}

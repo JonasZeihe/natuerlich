@@ -163,11 +163,7 @@ const IntegrationSection = ({ onGoToNextStep: _onGoToNextStep }: Props) => (
 
 const Flow = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(2.25)};
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    gap: ${({ theme }) => theme.spacing(3)};
-  }
+  gap: ${({ theme }) => theme.layout.flow.region};
 `
 
 export default IntegrationSection
