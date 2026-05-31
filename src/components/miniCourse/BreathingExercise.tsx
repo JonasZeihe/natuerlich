@@ -10,7 +10,7 @@ import {
   type AnimationPlaybackControls,
   type MotionValue,
 } from 'framer-motion'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import {
   breathPhaseLabels,
   breathPhases,
@@ -222,36 +222,35 @@ export default function BreathingExercise({ showWebsiteAction = true }: Props) {
           $y={visualLayout.center.y}
           $scale={visualLayout.center.scale}
         >
-          <Center
-            $surfaceAlpha={visualLayout.center.surfaceAlpha}
-            $borderAlpha={visualLayout.center.borderAlpha}
-          >
-            <CenterContent aria-live="polite">
-              {state === 'idle' ? (
-                <>
-                  <Phase>Start</Phase>
-                  <Hint>Atemübung</Hint>
-                  <PrimaryAction type="button" onClick={startExercise}>
-                    Starten
-                  </PrimaryAction>
-                </>
-              ) : null}
+          {state === 'idle' ? (
+            <CenterButton
+              type="button"
+              onClick={startExercise}
+              aria-label="Atemübung starten"
+              $surfaceAlpha={visualLayout.center.surfaceAlpha}
+              $borderAlpha={visualLayout.center.borderAlpha}
+            >
+              <CenterContent $state={state} aria-live="polite">
+                <Phase $state={state}>Start</Phase>
+              </CenterContent>
+            </CenterButton>
+          ) : (
+            <Center
+              $surfaceAlpha={visualLayout.center.surfaceAlpha}
+              $borderAlpha={visualLayout.center.borderAlpha}
+            >
+              <CenterContent $state={state} aria-live="polite">
+                {state === 'countdown' ? <Counter>{countdown}</Counter> : null}
 
-              {state === 'countdown' ? (
-                <>
-                  <CountdownPhase>Deine Atemübung beginnt</CountdownPhase>
-                  <Counter>{countdown}</Counter>
-                </>
-              ) : null}
-
-              {state === 'running' ? (
-                <>
-                  <Phase>{breathPhaseLabels[phase]}</Phase>
-                  <Counter>{phaseSecond}</Counter>
-                </>
-              ) : null}
-            </CenterContent>
-          </Center>
+                {state === 'running' ? (
+                  <>
+                    <Phase $state={state}>{breathPhaseLabels[phase]}</Phase>
+                    <Counter>{phaseSecond}</Counter>
+                  </>
+                ) : null}
+              </CenterContent>
+            </Center>
+          )}
         </CenterFrame>
       </Canvas>
 
@@ -336,10 +335,21 @@ const CenterFrame = styled.div<{ $x: number; $y: number; $scale: number }>`
   transform-origin: center;
 `
 
-const Center = styled.div<{ $surfaceAlpha: number; $borderAlpha: number }>`
+const centerSurface = css<{
+  $surfaceAlpha: number
+  $borderAlpha: number
+}>`
+  --seal-size: 9.4rem;
+  --seal-idle-title: 2.34rem;
+  --seal-phase-title: 1.42rem;
+  --seal-counter: 3.28rem;
+  --seal-content: 7.2rem;
+  --seal-running-gap: 0.03rem;
+
+  position: relative;
   display: grid;
   place-items: center;
-  width: clamp(8.75rem, 38vw, 10rem);
+  width: var(--seal-size);
   aspect-ratio: 1;
   border: 1px solid
     color-mix(
@@ -355,75 +365,101 @@ const Center = styled.div<{ $surfaceAlpha: number; $borderAlpha: number }>`
       ${({ $surfaceAlpha }) => `${Math.round($surfaceAlpha * 100)}%`},
     transparent
   );
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    --seal-size: 10.8rem;
+    --seal-idle-title: 2.68rem;
+    --seal-phase-title: 1.62rem;
+    --seal-counter: 3.72rem;
+    --seal-content: 8.2rem;
+    --seal-running-gap: 0.02rem;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    --seal-size: 11.7rem;
+    --seal-idle-title: 2.86rem;
+    --seal-phase-title: 1.74rem;
+    --seal-counter: 3.94rem;
+    --seal-content: 8.8rem;
+  }
 `
 
-const CenterContent = styled.div`
-  display: grid;
-  place-items: center;
-  gap: ${({ theme }) => theme.spacingHalf(0.25)};
-  width: 100%;
-  max-width: 8.25rem;
+const Center = styled.div<{
+  $surfaceAlpha: number
+  $borderAlpha: number
+}>`
+  ${centerSurface}
+`
+
+const CenterButton = styled.button<{
+  $surfaceAlpha: number
+  $borderAlpha: number
+}>`
+  ${centerSurface}
+
+  appearance: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    background: color-mix(
+      in srgb,
+      ${({ theme }) => theme.roles.surface.card} 64%,
+      transparent
+    );
+  }
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.roles.movement.arrival.accent};
+    outline-offset: 0.24rem;
+  }
+`
+
+const CenterContent = styled.div<{ $state: BreathExerciseState }>`
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  max-width: none;
   text-align: center;
+  gap: ${({ $state }) =>
+    $state === 'running' ? 'var(--seal-running-gap)' : '0'};
+  transform: ${({ $state }) =>
+    $state === 'running' ? 'translateY(0.06rem)' : 'translateY(0)'};
+
+  > * {
+    max-width: var(--seal-content);
+  }
 `
 
-const Phase = styled.p`
+const Phase = styled.p<{ $state: BreathExerciseState }>`
   margin: 0;
   color: ${({ theme }) => theme.roles.text.primary};
   font-family: ${({ theme }) => theme.typography.fontFamily.primary};
-  font-size: clamp(1.24rem, 5.2vw, 1.5rem);
+  font-size: ${({ $state }) =>
+    $state === 'idle' ? 'var(--seal-idle-title)' : 'var(--seal-phase-title)'};
   font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  line-height: 1.02;
+  line-height: ${({ $state }) => ($state === 'idle' ? 0.95 : 0.98)};
   letter-spacing: ${({ theme }) => theme.typography.letterSpacing.tight};
   text-wrap: balance;
-`
-
-const CountdownPhase = styled.p`
-  margin: 0;
-  max-width: 7.1rem;
-  color: ${({ theme }) => theme.roles.text.primary};
-  font-family: ${({ theme }) => theme.typography.fontFamily.primary};
-  font-size: clamp(0.98rem, 4.3vw, 1.12rem);
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  line-height: 0.98;
-  letter-spacing: ${({ theme }) => theme.typography.letterSpacing.tight};
-  text-wrap: balance;
-`
-
-const Hint = styled.p`
-  margin: 0;
-  color: ${({ theme }) => theme.roles.text.subtle};
-  font-family: ${({ theme }) => theme.typography.fontFamily.primary};
-  font-size: ${({ theme }) => theme.typography.fontSize.caption};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  line-height: ${({ theme }) => theme.typography.lineHeight.normal};
+  overflow-wrap: normal;
+  word-break: keep-all;
 `
 
 const Counter = styled.p`
   margin: 0;
   color: ${({ theme }) => theme.roles.text.primary};
   font-family: ${({ theme }) => theme.typography.fontFamily.primary};
-  font-size: clamp(2.55rem, 11vw, 3.45rem);
+  font-size: var(--seal-counter);
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  line-height: 0.84;
-`
-
-const PrimaryAction = styled.button`
-  margin-top: ${({ theme }) => theme.spacingHalf(1)};
-  padding: ${({ theme }) => theme.spacingHalf(1)}
-    ${({ theme }) => theme.spacing(1.25)};
-  border: 1px solid ${({ theme }) => theme.roles.movement.arrival.border};
-  border-radius: ${({ theme }) => theme.borderRadius.pill};
-  background: transparent;
-  color: ${({ theme }) => theme.roles.text.primary};
-  cursor: pointer;
-  font-family: ${({ theme }) => theme.typography.fontFamily.primary};
-  font-size: ${({ theme }) => theme.typography.fontSize.caption};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-
-  &:focus-visible {
-    outline: 2px solid ${({ theme }) => theme.roles.movement.arrival.accent};
-    outline-offset: 0.25rem;
-  }
+  line-height: 0.76;
+  letter-spacing: ${({ theme }) => theme.typography.letterSpacing.tighter};
 `
 
 const AppActions = styled.div`
@@ -434,20 +470,11 @@ const AppActions = styled.div`
 `
 
 const QuietAction = styled.button`
-  min-height: ${({ theme }) => theme.spacing(3.35)};
-  padding: ${({ theme }) => `${theme.spacingHalf(0.75)} ${theme.spacing(1)}`};
-  border: 1px solid
-    color-mix(
-      in srgb,
-      ${({ theme }) => theme.roles.movement.arrival.border} 38%,
-      transparent
-    );
+  min-height: ${({ theme }) => theme.spacing(3.2)};
+  padding: ${({ theme }) => `${theme.spacingHalf(0.5)} ${theme.spacing(0.9)}`};
+  border: 1px solid transparent;
   border-radius: ${({ theme }) => theme.borderRadius.pill};
-  background: color-mix(
-    in srgb,
-    ${({ theme }) => theme.roles.surface.card} 32%,
-    transparent
-  );
+  background: transparent;
   color: ${({ theme }) => theme.roles.text.secondary};
   cursor: pointer;
   font-family: ${({ theme }) => theme.typography.fontFamily.primary};
@@ -461,15 +488,19 @@ const QuietAction = styled.button`
     color: ${({ theme }) => theme.roles.text.primary};
     background: color-mix(
       in srgb,
-      ${({ theme }) => theme.roles.surface.card} 52%,
+      ${({ theme }) => theme.roles.surface.card} 42%,
       transparent
     );
-    border-color: ${({ theme }) => theme.roles.movement.arrival.border};
+    border-color: color-mix(
+      in srgb,
+      ${({ theme }) => theme.roles.movement.arrival.border} 42%,
+      transparent
+    );
   }
 
   &:disabled {
     cursor: default;
-    opacity: 0.38;
+    opacity: 0.34;
     color: ${({ theme }) => theme.roles.text.subtle};
     background: transparent;
     border-color: transparent;
@@ -477,6 +508,6 @@ const QuietAction = styled.button`
 
   &:focus-visible {
     outline: 2px solid ${({ theme }) => theme.roles.movement.arrival.accent};
-    outline-offset: 0.25rem;
+    outline-offset: 0.22rem;
   }
 `

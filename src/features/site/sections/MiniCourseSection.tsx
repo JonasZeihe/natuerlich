@@ -4,6 +4,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import Button from '@/components/actions/Button'
+import HighlightText from '@/components/utilities/HighlightText'
 import BodyScanDialog from '@/components/miniCourse/BodyScanDialog'
 import BreathingExercise from '@/components/miniCourse/BreathingExercise'
 import Grid from '@/components/primitives/Grid'
@@ -19,21 +20,9 @@ type Props = {
 
 const miniCourseContent = {
   title: 'Komm erst mal an.',
-  lead: 'Beginne mit dem Atem. Öffne danach den Body Scan, wenn du deinen Körper genauer wahrnehmen möchtest.',
   bodyScan: {
     title: 'Den Körper einmal von innen lesen.',
     action: 'Body Scan öffnen',
-  },
-  afterBodyScan: {
-    opening: 'Vielleicht bist du jetzt ein Stückchen mehr bei dir.',
-    paragraphs: [
-      'Atem, Wahrnehmung und Body Scan sind einfache Zugänge. Egal, wo du eben warst — dieser kleine Wechsel zählt.',
-      'Ich mache keine Heilversprechen. Aber ich bin davon überzeugt, dass regelmäßige Praxis eine echte Entspannungsfähigkeit aufbauen kann. Nicht erst dann, wenn man schon müde, gereizt oder abgebrannt ist.',
-      'Prävention ist nichts, was man sich für später aufspart. Sie ist ein Muster im Alltag: kurz innehalten, wahrnehmen, nachregulieren, bevor der Körper nur noch im Crash antwortet.',
-      'Aus diesem Anfang kann Praxis werden: Yoga, Qigong, Taijiquan, Meditation, Entspannung. Nicht als Etiketten, sondern als Wege, den eigenen Zustand besser zu lesen und mit ihm zu arbeiten.',
-    ],
-    closing:
-      'Wenn dich das neugierig macht, dann schau, wer ich bin, was ich unterrichte und wie ein gemeinsamer Einstieg aussehen kann.',
   },
 } as const
 
@@ -71,7 +60,11 @@ const MiniCourseSection = ({}: Props) => {
               cadence="open"
               measure="prose"
             >
-              {miniCourseContent.lead}
+              Beginne mit der{' '}
+              <HighlightText accent="axisOpening">Atemübung</HighlightText>.
+              Öffne danach den{' '}
+              <HighlightText accent="axisDensity">Body Scan</HighlightText>,
+              wenn du deinen Körper genauer wahrnehmen möchtest.
             </Typography>
           </Hero>
 
@@ -109,21 +102,65 @@ const MiniCourseSection = ({}: Props) => {
               cadence="open"
               measure="prose"
             >
-              {miniCourseContent.afterBodyScan.opening}
+              Vielleicht bist du jetzt ein Stückchen mehr bei dir.
             </Typography>
 
-            {miniCourseContent.afterBodyScan.paragraphs.map((text) => (
-              <Typography
-                key={text}
-                as="p"
-                variant="body"
-                tone="soft"
-                cadence="open"
-                measure="prose"
-              >
-                {text}
-              </Typography>
-            ))}
+            <Typography
+              as="p"
+              variant="body"
+              tone="soft"
+              cadence="open"
+              measure="prose"
+            >
+              <HighlightText accent="axisOpening">Atem</HighlightText>,
+              Wahrnehmung und{' '}
+              <HighlightText accent="axisDensity">Body Scan</HighlightText> sind
+              einfache Zugänge. Egal, wo du eben warst — dieser kleine Wechsel
+              zählt.
+            </Typography>
+
+            <Typography
+              as="p"
+              variant="body"
+              tone="soft"
+              cadence="open"
+              measure="prose"
+            >
+              Ich mache keine Heilversprechen. Aber ich bin davon überzeugt,
+              dass{' '}
+              <HighlightText accent="axisFlow">
+                regelmäßige Praxis
+              </HighlightText>{' '}
+              eine echte Entspannungsfähigkeit aufbauen kann. Nicht erst dann,
+              wenn man schon müde, gereizt oder abgebrannt ist.
+            </Typography>
+
+            <Typography
+              as="p"
+              variant="body"
+              tone="soft"
+              cadence="open"
+              measure="prose"
+            >
+              <HighlightText accent="axisTension">Prävention</HighlightText> ist
+              nichts, was man sich für später aufspart. Sie ist ein Muster im
+              Alltag: kurz innehalten, wahrnehmen, nachregulieren, bevor der
+              Körper nur noch im Crash antwortet.
+            </Typography>
+
+            <Typography
+              as="p"
+              variant="body"
+              tone="soft"
+              cadence="open"
+              measure="prose"
+            >
+              Aus diesem Anfang kann{' '}
+              <HighlightText accent="axisFlow">Praxis</HighlightText> werden:
+              Yoga, Qigong, Taijiquan, Meditation, Entspannung. Nicht als
+              Etiketten, sondern als Wege, den eigenen Zustand besser zu lesen
+              und mit ihm zu arbeiten.
+            </Typography>
 
             <Typography
               as="p"
@@ -132,7 +169,8 @@ const MiniCourseSection = ({}: Props) => {
               cadence="open"
               measure="prose"
             >
-              {miniCourseContent.afterBodyScan.closing}
+              Wenn dich das neugierig macht, dann schau, wer ich bin, was ich
+              unterrichte und wie ein gemeinsamer Einstieg aussehen kann.
             </Typography>
           </AfterPracticeStack>
         </AfterPractice>
@@ -155,39 +193,26 @@ const CourseFlow = styled.div`
 
 const ArrivalStage = styled.div`
   display: grid;
+  width: min(100%, 72rem);
+  margin-inline: auto;
   gap: ${({ theme }) => theme.layout.flow.cluster};
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    grid-template-columns: minmax(18rem, 0.46fr) minmax(28rem, 0.74fr);
-    align-items: center;
-    min-height: clamp(34rem, 72svh, 48rem);
-    gap: ${({ theme }) => theme.layout.flow.chapter};
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    gap: ${({ theme }) => theme.layout.flow.region};
   }
 `
 
 const Hero = styled.header`
   display: grid;
   gap: ${({ theme }) => theme.layout.flow.block};
-  max-width: 34rem;
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    align-self: start;
-    padding-top: clamp(1rem, 7svh, 5rem);
-  }
+  width: min(100%, 38rem);
 `
 
 const BreathingArea = styled.div`
   display: grid;
   place-items: center;
-  min-height: 31rem;
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    min-height: clamp(28rem, 58svh, 42rem);
-  }
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    min-height: 0;
-  }
+  width: min(100%, 46rem);
+  margin-inline: auto;
 `
 
 const BodyScanWrap = styled.div`
