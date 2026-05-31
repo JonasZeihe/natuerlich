@@ -6,36 +6,25 @@ import styled from 'styled-components'
 import useAccent from '@/design/hooks/useAccent'
 import type { AxisKey } from '@/design/theme'
 
+type HighlightAccent = AxisKey | 'neutral'
+
 type HighlightTextProps = {
   children: ReactNode
   color?: string
-  accent?: AxisKey
+  accent?: HighlightAccent
   soft?: boolean
 }
-
-const Highlight = styled.span<{
-  $color?: string
-  $soft: boolean
-}>`
-  color: ${({ $color }) => $color ?? 'inherit'};
-  font-weight: ${({ theme, $soft }) =>
-    $soft
-      ? theme.typography.fontWeight.medium
-      : theme.typography.fontWeight.bold};
-  letter-spacing: ${({ theme, $soft }) =>
-    $soft
-      ? theme.typography.letterSpacing.normal
-      : theme.typography.letterSpacing.wide};
-`
 
 export default function HighlightText({
   children,
   color,
-  accent = 'axisOpening',
+  accent = 'neutral',
   soft = true,
 }: HighlightTextProps) {
-  const accentInfo = useAccent(accent)
-  const resolvedColor = color ?? accentInfo.text
+  const accentKey: AxisKey = accent === 'neutral' ? 'axisOpening' : accent
+  const accentInfo = useAccent(accentKey)
+  const resolvedColor =
+    color ?? (accent === 'neutral' ? 'inherit' : accentInfo.fill)
 
   return (
     <Highlight $color={resolvedColor} $soft={soft}>
@@ -43,3 +32,15 @@ export default function HighlightText({
     </Highlight>
   )
 }
+
+const Highlight = styled.span<{
+  $color: string
+  $soft: boolean
+}>`
+  color: ${({ $color }) => $color};
+  font-weight: ${({ theme, $soft }) =>
+    $soft
+      ? theme.typography.fontWeight.bold
+      : theme.typography.fontWeight.bold};
+  letter-spacing: ${({ theme }) => theme.typography.letterSpacing.normal};
+`

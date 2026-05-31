@@ -50,7 +50,7 @@ const audienceItems: readonly {
 }[] = [
   { key: 'individual', text: 'Einzel' },
   { key: 'group', text: 'Gruppe' },
-  { key: 'company', text: 'Firma' },
+  { key: 'company', text: 'Unternehmen' },
 ]
 
 const isSameText = (first: ReactNode, second: ReactNode) =>
@@ -141,6 +141,8 @@ const PathCards = ({ items }: Props) => {
   const [audience, setAudience] = useState<AudienceKey>('group')
   const visibleItems =
     audience === 'company' ? items.filter((item) => item.company) : items
+  const primaryItems = visibleItems.slice(0, 4)
+  const supplementalItems = visibleItems.slice(4)
 
   return (
     <Shell>
@@ -158,33 +160,69 @@ const PathCards = ({ items }: Props) => {
         ))}
       </Tabs>
 
-      <ContentRail
-        columns="auto"
-        min="20rem"
-        gap={1.35}
-        itemWidth="min(94vw, 30rem)"
-        variant="cards"
-      >
-        {visibleItems.map((item, index) => (
-          <OfferCard key={index} mode="card">
-            <Head>
-              <Typography as="h3" variant="h2" color="primary" cadence="dense">
-                {item.title}
-              </Typography>
+      <OfferFlow key={audience}>
+        <ContentRail
+          columns="auto"
+          min="20rem"
+          gap={1.15}
+          itemWidth="min(88vw, 27rem)"
+          variant="cards"
+        >
+          {primaryItems.map((item, index) => (
+            <OfferCard key={index} mode="card">
+              <Head>
+                <Typography
+                  as="h3"
+                  variant="h2"
+                  color="primary"
+                  cadence="dense"
+                >
+                  {item.title}
+                </Typography>
 
-              <Typography as="p" variant="subtitle" color="primary">
-                {item.line}
-              </Typography>
+                <Typography as="p" variant="subtitle" color="primary">
+                  {item.line}
+                </Typography>
 
-              <Typography as="p" variant="body" tone="soft" cadence="open">
-                {item.text}
-              </Typography>
-            </Head>
+                <Typography as="p" variant="body" tone="soft" cadence="open">
+                  {item.text}
+                </Typography>
+              </Head>
 
-            {renderDetails(item, audience)}
-          </OfferCard>
-        ))}
-      </ContentRail>
+              {renderDetails(item, audience)}
+            </OfferCard>
+          ))}
+        </ContentRail>
+
+        {supplementalItems.length ? (
+          <SupplementalFlow>
+            {supplementalItems.map((item, index) => (
+              <SupplementalPanel key={index}>
+                <SupplementalHead>
+                  <Typography
+                    as="h3"
+                    variant="h3"
+                    color="primary"
+                    cadence="dense"
+                  >
+                    {item.title}
+                  </Typography>
+
+                  <Typography as="p" variant="subtitle" color="primary">
+                    {item.line}
+                  </Typography>
+
+                  <Typography as="p" variant="body" tone="soft" cadence="open">
+                    {item.text}
+                  </Typography>
+                </SupplementalHead>
+
+                {renderDetails(item, audience)}
+              </SupplementalPanel>
+            ))}
+          </SupplementalFlow>
+        ) : null}
+      </OfferFlow>
     </Shell>
   )
 }
@@ -218,9 +256,18 @@ const Tab = styled.button<{ $active: boolean }>`
   }
 `
 
+const OfferFlow = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(1.1)};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    gap: ${({ theme }) => theme.spacing(1.35)};
+  }
+`
+
 const OfferCard = styled(ContentRailItem)`
-  gap: ${({ theme }) => theme.spacing(1.5)};
-  padding: ${({ theme }) => theme.spacing(2.25)};
+  gap: ${({ theme }) => theme.spacing(1.15)};
+  padding: ${({ theme }) => theme.spacing(1.55)};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     padding: ${({ theme }) => theme.spacing(1.5)};
@@ -229,13 +276,42 @@ const OfferCard = styled(ContentRailItem)`
 
 const Head = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(0.7)};
+  gap: ${({ theme }) => theme.spacing(0.65)};
+`
+
+const SupplementalFlow = styled.div`
+  display: grid;
+  width: min(100%, 64rem);
+  margin-inline: auto;
+`
+
+const SupplementalPanel = styled.article`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(1.05)};
+  padding: ${({ theme }) => theme.spacing(1.45)};
+  border-radius: ${({ theme }) => theme.borderRadius.large};
+  background: color-mix(
+    in srgb,
+    ${({ theme }) => theme.roles.surface.quiet} 72%,
+    transparent
+  );
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    grid-template-columns: minmax(0, 0.72fr) minmax(18rem, 0.58fr);
+    align-items: start;
+    padding: ${({ theme }) => theme.spacing(1.5)};
+  }
+`
+
+const SupplementalHead = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(0.65)};
 `
 
 const Details = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(0.9)};
-  padding-top: ${({ theme }) => theme.spacing(1)};
+  gap: ${({ theme }) => theme.spacing(0.85)};
+  padding-top: ${({ theme }) => theme.spacing(0.95)};
   border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
 `
 

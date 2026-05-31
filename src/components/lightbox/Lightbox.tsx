@@ -39,7 +39,7 @@ const Frame = styled.div`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: ${({ theme }) => theme.spacing(0.5)};
+  padding: ${({ theme }) => theme.layout.surface.sm};
   border-radius: ${({ theme }) => theme.borderRadius.large};
   background: ${({ theme }) => theme.roles.surface.card};
   box-shadow: ${({ theme }) => theme.boxShadow.lg};
@@ -87,8 +87,8 @@ const ControlBase = styled.button`
 `
 
 const CloseButton = styled(ControlBase)`
-  top: ${({ theme }) => theme.spacing(1.5)};
-  right: ${({ theme }) => theme.spacing(1.5)};
+  top: ${({ theme }) => theme.layout.inset.page};
+  right: ${({ theme }) => theme.layout.inset.page};
   z-index: 15100;
 `
 
@@ -96,8 +96,8 @@ const NavButton = styled(ControlBase)<{ $direction: 'left' | 'right' }>`
   top: 50%;
   ${({ $direction, theme }) =>
     $direction === 'left'
-      ? `left: ${theme.spacing(1.5)};`
-      : `right: ${theme.spacing(1.5)};`}
+      ? `left: ${theme.layout.inset.page};`
+      : `right: ${theme.layout.inset.page};`}
   transform: translateY(-50%);
   z-index: 15100;
 `

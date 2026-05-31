@@ -4,7 +4,6 @@
 import { useState, type ReactNode } from 'react'
 import styled from 'styled-components'
 import Button from '@/components/actions/Button'
-import ContentRail, { ContentRailItem } from '@/components/content/ContentRail'
 import Stack from '@/components/primitives/Stack'
 import Surface from '@/components/primitives/Surface'
 import Typography from '@/design/typography'
@@ -51,23 +50,16 @@ const RecognitionProfile = ({
         <BlockText block={path} heading="h2" />
       </Lead>
 
-      <ContentRail
-        columns={3}
-        min="20rem"
-        gap={1.5}
-        itemWidth="min(88vw, 28rem)"
-        max="68rem"
-        align="stretch"
-      >
-        <ProfileCard mode="card" stretch={false}>
+      <ProfileGrid>
+        <ProfileCard tone="card" movement="recognition" radius="large">
           <BlockText block={teaching} heading="h3" />
         </ProfileCard>
 
-        <ProfileCard mode="card" stretch={false}>
+        <ProfileCard tone="card" movement="recognition" radius="large">
           <BlockText block={style} heading="h2" />
         </ProfileCard>
 
-        <PortraitCard mode="line" stretch={false}>
+        <PortraitCard tone="bare" movement="recognition" radius="large">
           <Portrait
             src="/jonas_zeihe.webp"
             alt="Jonas"
@@ -75,7 +67,7 @@ const RecognitionProfile = ({
             decoding="async"
           />
         </PortraitCard>
-      </ContentRail>
+      </ProfileGrid>
 
       <Evidence>
         <ProofPanel
@@ -135,7 +127,7 @@ const RecognitionProfile = ({
                     padding="md"
                     bordered
                   >
-                    <Stack gap={0.65}>
+                    <Stack gap={undefined}>
                       <Typography as="h3" variant="subtitle" color="primary">
                         {item.title}
                       </Typography>
@@ -177,7 +169,7 @@ const BlockText = ({
   const as = heading === 'subtitle' ? 'h3' : heading
 
   return (
-    <Stack gap={1}>
+    <BlockStack>
       {block.title ? (
         <Typography as={as} variant={heading} color="primary" cadence="dense">
           {block.title}
@@ -187,35 +179,55 @@ const BlockText = ({
       <Typography as="p" variant="body" cadence="open" measure="wide">
         {block.children}
       </Typography>
-    </Stack>
+    </BlockStack>
   )
 }
 
 const Shell = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(2.5)};
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    gap: ${({ theme }) => theme.spacing(3.25)};
-  }
+  gap: ${({ theme }) => theme.layout.flow.region};
 `
 
 const Lead = styled.div`
-  width: min(100%, 68rem);
+  width: min(100%, 72rem);
   margin-inline: auto;
 `
 
-const ProfileCard = styled(ContentRailItem)`
-  gap: ${({ theme }) => theme.spacing(1.35)};
-  padding: ${({ theme }) => theme.spacing(2.25)};
+const BlockStack = styled(Stack)`
+  gap: ${({ theme }) => theme.layout.flow.block};
+`
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    padding: ${({ theme }) => theme.spacing(1.75)};
+const ProfileGrid = styled.div`
+  display: grid;
+  width: min(100%, 72rem);
+  margin-inline: auto;
+  gap: ${({ theme }) => theme.layout.grid.gap};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(18rem, 0.95fr);
+    align-items: stretch;
   }
 `
 
-const PortraitCard = styled(ContentRailItem)`
-  padding: ${({ theme }) => theme.spacing(0.75)};
+const ProfileCard = styled(Surface)`
+  display: flex;
+  min-height: 0;
+  padding: ${({ theme }) => theme.layout.surface.lg};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    min-height: 20rem;
+    padding: ${({ theme }) => theme.layout.surface.lg};
+  }
+`
+
+const PortraitCard = styled(Surface)`
+  display: grid;
+  padding: ${({ theme }) => theme.layout.surface.sm};
+  overflow: clip;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    min-height: 20rem;
+  }
 `
 
 const Portrait = styled.img`
@@ -225,10 +237,15 @@ const Portrait = styled.img`
   border-radius: ${({ theme }) => theme.borderRadius.medium};
   object-fit: cover;
   object-position: center;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    max-height: 22rem;
+    object-position: center 35%;
+  }
 `
 
 const Evidence = styled.div`
-  width: min(100%, 68rem);
+  width: min(100%, 72rem);
   margin-inline: auto;
 `
 
@@ -238,7 +255,7 @@ const ProofPanel = styled(Surface)`
 
 const ProofHeader = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(1.25)};
+  gap: ${({ theme }) => theme.layout.flow.block};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     grid-template-columns: minmax(0, 1fr) auto;
@@ -248,8 +265,8 @@ const ProofHeader = styled.div`
 
 const SummaryText = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(0.75)};
-  max-width: 58rem;
+  gap: ${({ theme }) => theme.layout.flow.text};
+  max-width: 60rem;
 `
 
 const ActionSlot = styled.div`
@@ -264,15 +281,13 @@ const ActionSlot = styled.div`
 const CredentialList = styled.ol`
   display: grid;
   grid-template-columns: 1fr;
-  gap: ${({ theme }) => theme.spacing(1)};
-  margin: ${({ theme }) => `${theme.spacing(1.5)} 0 0`};
+  gap: ${({ theme }) => theme.layout.grid.gap};
+  margin: ${({ theme }) => `${theme.layout.flow.cluster} 0 0`};
   padding: 0;
   list-style: none;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: ${({ theme }) => theme.spacing(1.25)};
-    margin-top: ${({ theme }) => theme.spacing(1.75)};
   }
 `
 
@@ -287,8 +302,7 @@ const CredentialCard = styled(Surface)`
 const CredentialMeta = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: ${({ theme }) => theme.spacingHalf(1)}
-    ${({ theme }) => theme.spacing(0.65)};
+  gap: ${({ theme }) => theme.layout.flow.text};
   color: ${({ theme }) => theme.roles.text.secondary};
 `
 

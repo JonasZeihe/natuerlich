@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import Headline from '@/components/content/Headline'
 import RecognitionProfile from '@/components/content/RecognitionProfile'
 import Section from '@/components/primitives/Section'
+import HighlightText from '@/components/utilities/HighlightText'
 
 const RecognitionSection = () => (
   <Section
@@ -82,8 +83,18 @@ const RecognitionSection = () => (
         }}
         scope={{
           title: 'Rund 1.350 bis 1.400 dokumentierte Zeitstunden.',
-          children:
-            'In dieser Arbeit liegen mehrere Jahre Ausbildung, Methodik, Didaktik, Körperarbeit, Theorie, Meditation, Atemarbeit, Entspannungsverfahren und eigener Übung. Die Nachweise zeigen diesen Weg. Die Begegnung beginnt trotzdem immer im gemeinsamen Üben.',
+          children: (
+            <>
+              In dieser Arbeit liegen mehrere Jahre Ausbildung, Methodik,
+              Didaktik, Körperarbeit, Theorie, Meditation, Atemarbeit,
+              Entspannungsverfahren und eigener Übung. Die Nachweise zeigen
+              diesen Weg. Die Begegnung beginnt trotzdem immer im{' '}
+              <HighlightText accent="axisOpening">
+                gemeinsamen Üben
+              </HighlightText>
+              .
+            </>
+          ),
         }}
       />
     </ProfileArea>
@@ -96,11 +107,7 @@ const HeaderFrame = styled.div`
 `
 
 const ProfileArea = styled.div`
-  margin-top: ${({ theme }) => theme.spacing(2.5)};
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    margin-top: ${({ theme }) => theme.spacing(3.5)};
-  }
+  margin-top: ${({ theme }) => theme.layout.flow.region};
 `
 
 export default RecognitionSection

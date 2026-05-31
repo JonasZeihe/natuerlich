@@ -69,12 +69,7 @@ const Base = styled.div<StyledProps>`
   min-width: 0;
   border-radius: ${({ theme, $radius }) => theme.borderRadius[$radius]};
   overflow: ${({ $assetBleeds }) => ($assetBleeds ? 'visible' : 'clip')};
-
-  ${({ theme, $padding }) => css`
-    padding: ${$padding === 'none'
-      ? '0'
-      : theme.layout.surfacePadding[$padding]};
-  `}
+  padding: ${({ theme, $padding }) => theme.layout.surface[$padding]};
 
   ${({ theme, $tone, $movement, $bordered, $weight }) => {
     const resolved = theme.getSurfaceTone($tone, $movement)

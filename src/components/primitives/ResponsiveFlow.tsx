@@ -18,7 +18,7 @@ type Props = {
 const toSpace = (theme: DefaultTheme, value?: number | string) => {
   if (typeof value === 'number') return theme.spacing(value)
   if (typeof value === 'string') return value
-  return theme.spacing(1)
+  return theme.layout.rail.gap
 }
 
 const Flow = styled.div<{
@@ -32,11 +32,12 @@ const Flow = styled.div<{
   grid-auto-flow: column;
   grid-auto-columns: ${({ $itemWidth }) => $itemWidth};
   gap: ${({ theme, $gap }) => toSpace(theme, $gap)};
-  margin-inline: ${({ theme }) => `-${theme.spacing(1)}`};
-  padding-inline: ${({ theme }) => theme.spacing(1)};
-  padding-bottom: ${({ theme }) => theme.spacing(0.25)};
+  margin-inline: ${({ theme }) => `calc(${theme.layout.inset.rail} * -1)`};
+  padding-inline: ${({ theme }) => theme.layout.inset.rail};
+  padding-bottom: ${({ theme }) => theme.layout.flow.text};
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  scroll-padding-inline: ${({ theme }) => theme.layout.inset.rail};
   -webkit-overflow-scrolling: touch;
 
   > * {
@@ -57,7 +58,9 @@ const Flow = styled.div<{
         : `repeat(${$columns}, minmax(0, 1fr))`};
       margin-inline: 0;
       padding-inline: 0;
+      padding-bottom: 0;
       overflow: visible;
+      scroll-snap-type: none;
     }
   `}
 `

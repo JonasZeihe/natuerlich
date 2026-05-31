@@ -30,7 +30,7 @@ export default function AppFooter() {
         <FooterInner>
           <TopRow>
             <Copy>© {new Date().getFullYear()} Jonas Zeihe</Copy>
-            <LinksCol gap={0.4} aria-label="Fußnavigation">
+            <LinksCol aria-label="Fußnavigation">
               {FOOTER_NAV_ITEMS.map((item) => (
                 <FooterLink key={item.href} href={item.href}>
                   {item.label}
@@ -58,28 +58,24 @@ const FooterShell = styled.footer`
   color: ${({ theme }) => theme.roles.text.primary};
   border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
   background: ${({ theme }) => theme.roles.surface.chrome};
-  padding-block: ${({ theme }) => theme.spacing(2.75)};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    padding-block: ${({ theme }) => theme.spacing(2.35)};
-  }
+  padding-block: ${({ theme }) => theme.layout.section.compact};
 `
 
 const FooterInner = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.spacing(1.9)};
+  gap: ${({ theme }) => theme.layout.flow.block};
 `
 
 const TopRow = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  gap: ${({ theme }) => theme.spacing(1.75)};
+  gap: ${({ theme }) => theme.layout.flow.cluster};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: start;
-    gap: ${({ theme }) => theme.spacing(2.15)};
+    gap: ${({ theme }) => theme.layout.grid.gap};
   }
 `
 
@@ -95,7 +91,7 @@ const FooterLink = styled(Link)`
   display: inline-flex;
   align-items: center;
   min-height: ${({ theme }) => theme.spacing(3.2)};
-  padding: ${({ theme }) => `${theme.spacingHalf(1)} 0`};
+  padding-block: ${({ theme }) => theme.spacingHalf(1)};
   border-radius: ${({ theme }) => theme.borderRadius.small};
   text-decoration: none;
   border: none;

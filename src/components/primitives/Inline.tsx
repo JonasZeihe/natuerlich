@@ -1,8 +1,8 @@
 // src/components/primitives/Inline.tsx
 'use client'
 
-import { Children, ReactNode } from 'react'
-import styled, { DefaultTheme } from 'styled-components'
+import { Children, type ComponentPropsWithoutRef, type ReactNode } from 'react'
+import styled, { type DefaultTheme } from 'styled-components'
 
 type Align = 'start' | 'center' | 'end' | 'stretch'
 type Justify = 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly'
@@ -14,24 +14,24 @@ type Props = {
   wrap?: boolean
   divider?: boolean
   children?: ReactNode
-} & Omit<React.ComponentPropsWithoutRef<'div'>, 'children'>
+} & Omit<ComponentPropsWithoutRef<'div'>, 'children'>
 
 const toGap = (theme: DefaultTheme, gap?: number | string) => {
   if (typeof gap === 'number') return theme.spacing(gap)
   if (typeof gap === 'string') return gap
-  return theme.spacing(1)
+  return theme.layout.flow.text
 }
 
-const mapJustify = (j: Justify) =>
-  j === 'start'
+const mapJustify = (justify: Justify) =>
+  justify === 'start'
     ? 'flex-start'
-    : j === 'end'
+    : justify === 'end'
       ? 'flex-end'
-      : j === 'between'
+      : justify === 'between'
         ? 'space-between'
-        : j === 'around'
+        : justify === 'around'
           ? 'space-around'
-          : j === 'evenly'
+          : justify === 'evenly'
             ? 'space-evenly'
             : 'center'
 
@@ -53,13 +53,13 @@ const Row = styled.div<{
 const Item = styled.div<{ $withDivider: boolean }>`
   display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
+  gap: ${({ theme }) => theme.spacingHalf(1)};
 
   ${({ $withDivider, theme }) =>
     $withDivider
       ? `
     border-left: 1px solid ${theme.roles.border.subtle};
-    padding-left: ${theme.spacingHalf(2)};
+    padding-left: ${theme.layout.flow.text};
   `
       : ''}
 `

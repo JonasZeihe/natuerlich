@@ -26,9 +26,9 @@ const Root = styled.div<{
   overflow: clip;
   color: ${({ theme }) => theme.roles.text.primary};
   padding-top: ${({ theme, $introOffset }) =>
-    $introOffset ? `calc(${theme.layout.section.default.pad} * 0.82)` : 0};
+    $introOffset ? `calc(${theme.layout.section.default} * 0.82)` : 0};
   padding-bottom: ${({ theme, $noFooterGap }) =>
-    $noFooterGap ? 0 : `calc(${theme.layout.section.default.pad} * 0.8)`};
+    $noFooterGap ? 0 : `calc(${theme.layout.section.default} * 0.8)`};
 
   ${({ theme, $variant }) =>
     $variant === 'article'

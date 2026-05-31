@@ -21,7 +21,6 @@ const OrientationCards = ({ items, ariaLabel }: Props) => (
     <ContentRail
       columns={3}
       min="15rem"
-      gap={1}
       itemWidth="min(78vw, 21rem)"
       max="64rem"
       align="start"

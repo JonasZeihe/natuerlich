@@ -73,20 +73,20 @@ const Panel = styled(Surface)<{
 }>`
   display: grid;
   min-width: 0;
-  gap: ${({ theme }) => theme.spacing(0.85)};
+  gap: ${({ theme }) => theme.layout.flow.text};
   justify-items: ${({ $align }) => ($align === 'center' ? 'center' : 'start')};
 
   ${({ theme, $weight }) =>
     $weight === 'poster'
       ? css`
-          padding-block: clamp(1.25rem, 9vw, 3.25rem);
+          padding-block: ${theme.layout.flow.chapter};
         `
       : $weight === 'strong'
         ? css`
-            padding-block: clamp(0.95rem, 6vw, 2.35rem);
+            padding-block: ${theme.layout.flow.region};
           `
         : css`
-            padding-block: clamp(0.6rem, 4vw, 1.35rem);
+            padding-block: ${theme.layout.flow.cluster};
           `}
 `
 
