@@ -8,7 +8,6 @@ import Container from '@/components/primitives/Container'
 import Inline from '@/components/primitives/Inline'
 import SmoothScroller from '@/components/utilities/SmoothScroller'
 import { scrollToTarget } from '@/components/utilities/SmoothScroller'
-import Typography from '@/design/typography'
 import { getClientLogger } from '@/logging'
 import {
   SITE_SECTIONS,
@@ -61,6 +60,11 @@ const getActiveSectionId = (
   return active
 }
 
+const getSectionLabel = (id: SiteSectionId) =>
+  HEADER_SECTIONS.find((section) => section.id === id)?.label ??
+  HEADER_SECTIONS[0]?.label ??
+  'Navigation'
+
 type ActiveIndicatorState = {
   left: number
   width: number
@@ -85,6 +89,7 @@ export default function AppHeader() {
     Partial<Record<SiteSectionId, HTMLAnchorElement | null>>
   >({})
   const ids = useMemo(() => OBSERVED_SECTION_IDS, [])
+  const activeLabel = useMemo(() => getSectionLabel(activeId), [activeId])
   const compactLoggedRef = useRef<boolean | null>(null)
   const activeLoggedRef = useRef<SiteSectionId | null>(null)
   const hiddenLoggedRef = useRef<boolean | null>(null)
@@ -381,6 +386,38 @@ export default function AppHeader() {
     })
   }
 
+  const handleMobileNavigation = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    sectionId: SiteSectionId
+  ) => {
+    event.preventDefault()
+
+    getClientLogger()
+      .withContext({
+        cat: 'navigation',
+        phase: 'intent',
+      })
+      .info('header_mobile_navigation_intent', {
+        targetId: sectionId,
+      })
+
+    setMenuOpen(false)
+
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        void scrollToTarget(sectionId, {
+          offset: navigationOffset,
+        }).then((ok) => {
+          if (!ok) return
+
+          try {
+            history.replaceState(null, '', `#${sectionId}`)
+          } catch {}
+        })
+      })
+    })
+  }
+
   return (
     <HeaderShell
       ref={shellRef}
@@ -391,21 +428,14 @@ export default function AppHeader() {
     >
       <Container max="page">
         <HeaderInner>
-          <TopRow>
+          <DesktopRow>
             <BrandWrap>
               <BrandLink
                 targetId={START_SECTION_ID}
                 offset={navigationOffset}
                 aria-label="Zum Anfang springen"
               >
-                <BrandStack>
-                  <Typography as="span" variant="h3" tone="strong">
-                    Jonas
-                  </Typography>
-                  <Typography as="span" variant="body" tone="soft">
-                    Praxis, die trägt
-                  </Typography>
-                </BrandStack>
+                <BrandStack />
               </BrandLink>
             </BrandWrap>
 
@@ -437,8 +467,46 @@ export default function AppHeader() {
                 </Inline>
               </DesktopNavTrack>
             </DesktopNav>
+          </DesktopRow>
 
-            <MobileActions>
+          <MobileSurface>
+            {menuOpen ? (
+              <MobileSheet
+                id="site-primary-navigation"
+                aria-label="Hauptnavigation mobil"
+              >
+                <MobileList>
+                  {HEADER_SECTIONS.map((section) => (
+                    <MobileItem key={section.id}>
+                      <MobileLink
+                        targetId={section.id}
+                        offset={navigationOffset}
+                        $active={activeId === section.id}
+                        aria-current={
+                          activeId === section.id ? 'true' : undefined
+                        }
+                        onClick={(event) =>
+                          handleMobileNavigation(event, section.id)
+                        }
+                      >
+                        {section.label}
+                      </MobileLink>
+                    </MobileItem>
+                  ))}
+                </MobileList>
+              </MobileSheet>
+            ) : null}
+
+            <MobileDock aria-label="Mobile Navigation">
+              <MobileCurrent
+                targetId={activeId}
+                offset={navigationOffset}
+                aria-label={`Aktueller Abschnitt: ${activeLabel}`}
+              >
+                <MobileCurrentDot aria-hidden="true" />
+                <MobileCurrentText>{activeLabel}</MobileCurrentText>
+              </MobileCurrent>
+
               <MenuButton
                 type="button"
                 onClick={handleMenuToggle}
@@ -450,60 +518,8 @@ export default function AppHeader() {
               >
                 {menuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
               </MenuButton>
-            </MobileActions>
-          </TopRow>
-
-          {menuOpen ? (
-            <MobilePanel
-              id="site-primary-navigation"
-              aria-label="Hauptnavigation mobil"
-            >
-              <MobileList>
-                {HEADER_SECTIONS.map((section) => (
-                  <MobileItem key={section.id}>
-                    <MobileLink
-                      targetId={section.id}
-                      offset={navigationOffset}
-                      $active={activeId === section.id}
-                      aria-current={
-                        activeId === section.id ? 'true' : undefined
-                      }
-                      onClick={(event) => {
-                        event.preventDefault()
-
-                        getClientLogger()
-                          .withContext({
-                            cat: 'navigation',
-                            phase: 'intent',
-                          })
-                          .info('header_mobile_navigation_intent', {
-                            targetId: section.id,
-                          })
-
-                        setMenuOpen(false)
-
-                        window.requestAnimationFrame(() => {
-                          window.requestAnimationFrame(() => {
-                            void scrollToTarget(section.id, {
-                              offset: navigationOffset,
-                            }).then((ok) => {
-                              if (!ok) return
-
-                              try {
-                                history.replaceState(null, '', `#${section.id}`)
-                              } catch {}
-                            })
-                          })
-                        })
-                      }}
-                    >
-                      {section.label}
-                    </MobileLink>
-                  </MobileItem>
-                ))}
-              </MobileList>
-            </MobilePanel>
-          ) : null}
+            </MobileDock>
+          </MobileSurface>
         </HeaderInner>
       </Container>
     </HeaderShell>
@@ -544,15 +560,15 @@ const HeaderShell = styled.header<{ $compact: boolean; $hidden: boolean }>`
     position: fixed;
     top: auto;
     bottom: 0;
-    border-top: 1px solid
-      ${({ theme, $compact }) =>
-        $compact ? theme.roles.border.strong : theme.roles.border.subtle};
+    background: transparent;
     border-bottom: 0;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     transform: ${({ $hidden }) =>
-      $hidden ? 'translateY(100%)' : 'translateY(0)'};
+      $hidden ? 'translateY(calc(100% + 1rem))' : 'translateY(0)'};
 
     &::after {
-      inset: 0 0 auto;
+      display: none;
     }
   }
 `
@@ -564,18 +580,23 @@ const HeaderInner = styled.div`
   justify-content: center;
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    flex-direction: column-reverse;
+    min-height: 0;
+    justify-content: flex-end;
+    padding-bottom: max(
+      ${({ theme }) => theme.spacing(0.8)},
+      env(safe-area-inset-bottom)
+    );
   }
 `
 
-const TopRow = styled.div`
+const DesktopRow = styled.div`
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto 1fr;
   align-items: center;
   gap: ${({ theme }) => theme.spacing(1)};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    grid-template-columns: 1fr auto;
+    display: none;
   }
 `
 
@@ -607,10 +628,6 @@ const DesktopNav = styled.nav`
   display: flex;
   justify-content: flex-end;
   min-width: 0;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    display: none;
-  }
 `
 
 const DesktopNavTrack = styled.div`
@@ -680,23 +697,82 @@ const NavLink = styled(SmoothScroller)<{ $active: boolean }>`
   ${navLinkStyles}
 `
 
-const MobileActions = styled.div`
+const MobileSurface = styled.div`
   display: none;
-  align-items: center;
-  gap: ${({ theme }) => theme.spacing(0.7)};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    display: flex;
+    display: grid;
+    gap: ${({ theme }) => theme.spacing(0.65)};
   }
+`
+
+const MobileDock = styled.nav`
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacing(0.75)};
+  min-height: ${({ theme }) => theme.spacing(6)};
+  padding: ${({ theme }) => `${theme.spacing(0.55)} ${theme.spacing(0.6)}`};
+  border-radius: ${({ theme }) => theme.borderRadius.pill};
+  background: color-mix(
+    in srgb,
+    ${({ theme }) => theme.roles.surface.chrome} 94%,
+    transparent
+  );
+  border: 1px solid ${({ theme }) => theme.roles.border.strong};
+  box-shadow: ${({ theme }) => theme.boxShadow.sm};
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+`
+
+const MobileCurrent = styled(SmoothScroller)`
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  min-height: ${({ theme }) => theme.spacing(4.6)};
+  gap: ${({ theme }) => theme.spacing(0.7)};
+  padding-inline: ${({ theme }) => theme.spacing(1.05)};
+  border-radius: ${({ theme }) => theme.borderRadius.pill};
+  color: ${({ theme }) => theme.getEnergyRole('density').text};
+  background: ${({ theme }) => theme.getEnergyRole('density').surface};
+  border: 1px solid ${({ theme }) => theme.getEnergyRole('density').border};
+  text-decoration: none;
+  overflow: hidden;
+  transition: ${({ theme }) => theme.motion.css.navigation.link};
+
+  &:hover,
+  &:focus-visible {
+    color: ${({ theme }) => theme.getEnergyRole('density').text};
+    text-decoration: none;
+    background: ${({ theme }) => theme.getEnergyRole('density').surfaceStrong};
+  }
+`
+
+const MobileCurrentDot = styled.span`
+  flex: 0 0 auto;
+  width: 0.46rem;
+  height: 0.46rem;
+  border-radius: ${({ theme }) => theme.borderRadius.pill};
+  background: ${({ theme }) => theme.getEnergyRole('density').text};
+`
+
+const MobileCurrentText = styled.span`
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: ${({ theme }) => theme.typography.fontSize.small};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  letter-spacing: ${({ theme }) => theme.typography.letterSpacing.tight};
 `
 
 const MenuButton = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: ${({ theme }) => theme.spacing(4.25)};
-  min-height: ${({ theme }) => theme.spacing(4.25)};
-  border-radius: ${({ theme }) => theme.borderRadius.medium};
+  min-width: ${({ theme }) => theme.spacing(4.6)};
+  min-height: ${({ theme }) => theme.spacing(4.6)};
+  border-radius: ${({ theme }) => theme.borderRadius.pill};
   background: ${({ theme }) => theme.roles.surface.card};
   color: ${({ theme }) => theme.roles.text.primary};
   border: 1px solid ${({ theme }) => theme.roles.border.subtle};
@@ -719,23 +795,27 @@ const MenuButton = styled.button`
   }
 `
 
-const MobilePanel = styled.nav`
-  display: none;
-  margin-bottom: ${({ theme }) => theme.spacing(0.7)};
-  padding-bottom: ${({ theme }) => theme.spacing(0.35)};
-  border-bottom: 1px solid ${({ theme }) => theme.roles.border.subtle};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    display: block;
-  }
+const MobileSheet = styled.nav`
+  display: block;
+  padding: ${({ theme }) => theme.spacing(0.75)};
+  border-radius: ${({ theme }) => theme.borderRadius.large};
+  background: color-mix(
+    in srgb,
+    ${({ theme }) => theme.roles.surface.chrome} 96%,
+    transparent
+  );
+  border: 1px solid ${({ theme }) => theme.roles.border.strong};
+  box-shadow: ${({ theme }) => theme.boxShadow.md};
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 `
 
 const MobileList = styled.ol`
   list-style: none;
   margin: 0;
-  padding: ${({ theme }) => `0 0 ${theme.spacing(0.25)}`};
+  padding: 0;
   display: grid;
-  gap: ${({ theme }) => theme.spacingHalf(0.55)};
+  gap: ${({ theme }) => theme.spacingHalf(0.65)};
 `
 
 const MobileItem = styled.li`
@@ -746,5 +826,6 @@ const MobileLink = styled(SmoothScroller)<{ $active: boolean }>`
   ${navLinkStyles}
   width: 100%;
   justify-content: flex-start;
-  min-height: ${({ theme }) => theme.spacing(4)};
+  min-height: ${({ theme }) => theme.spacing(4.6)};
+  padding-inline: ${({ theme }) => theme.spacing(1)};
 `
