@@ -4,7 +4,6 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import Button from '@/components/actions/Button'
-import StatementBreak from '@/components/content/StatementBreak'
 import BodyScanDialog from '@/components/miniCourse/BodyScanDialog'
 import BreathingExercise from '@/components/miniCourse/BreathingExercise'
 import Grid from '@/components/primitives/Grid'
@@ -79,23 +78,25 @@ const MiniCourseSection = ({}: Props) => {
           <BreathingExercise showWebsiteAction={false} />
         </BreathingArea>
 
-        <Surface tone="card" movement="arrival" radius="large" padding="lg">
-          <Grid columns={2} min="18rem" gap={3}>
-            <Typography as="h2" variant="h2" cadence="dense" measure="title">
-              {miniCourseContent.bodyScan.title}
-            </Typography>
+        <BodyScanWrap>
+          <Surface tone="card" movement="arrival" radius="large" padding="lg">
+            <ScanGrid columns={2} min="18rem" gap={3}>
+              <Typography as="h2" variant="h2" cadence="dense" measure="title">
+                {miniCourseContent.bodyScan.title}
+              </Typography>
 
-            <ActionSlot>
-              <Button
-                type="button"
-                variant="secondary"
-                onClick={() => setIsBodyScanOpen(true)}
-              >
-                {miniCourseContent.bodyScan.action}
-              </Button>
-            </ActionSlot>
-          </Grid>
-        </Surface>
+              <ActionSlot>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => setIsBodyScanOpen(true)}
+                >
+                  {miniCourseContent.bodyScan.action}
+                </Button>
+              </ActionSlot>
+            </ScanGrid>
+          </Surface>
+        </BodyScanWrap>
 
         <AfterPractice>
           <Stack gap={1.35}>
@@ -147,10 +148,10 @@ const MiniCourseSection = ({}: Props) => {
 
 const CourseFlow = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(2.75)};
+  gap: ${({ theme }) => theme.spacing(2.7)};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    gap: ${({ theme }) => theme.spacing(3.75)};
+    gap: ${({ theme }) => theme.spacing(3.25)};
   }
 `
 
@@ -165,14 +166,27 @@ const BreathingArea = styled.div`
   min-height: 31rem;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    min-height: clamp(24rem, 58svh, 42rem);
+    min-height: clamp(25rem, 50svh, 38rem);
   }
+`
+
+const BodyScanWrap = styled.div`
+  width: min(100%, 72rem);
+  margin-inline: auto;
+`
+
+const ScanGrid = styled(Grid)`
+  align-items: center;
 `
 
 const ActionSlot = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    justify-content: flex-end;
+  }
 `
 
 const AfterPractice = styled.article`

@@ -71,17 +71,9 @@ const PracticeFields = ({
       </Typography>
     </IntroCopy>
 
-    <ContentRail
-      columns={3}
-      min="18rem"
-      gap={1.5}
-      itemWidth="min(84vw, 25rem)"
-      max="64rem"
-      variant="editorial"
-      align="start"
-    >
+    <MobileEditorialStack>
       {steps.map((item) => (
-        <PracticeCard key={item.label} mode="line" stretch={false}>
+        <EditorialItem key={item.label}>
           <Typography as="h3" variant="h3" color="primary">
             {item.title}
           </Typography>
@@ -89,9 +81,33 @@ const PracticeFields = ({
           <Typography as="p" variant="body" tone="soft" cadence="open">
             {item.body}
           </Typography>
-        </PracticeCard>
+        </EditorialItem>
       ))}
-    </ContentRail>
+    </MobileEditorialStack>
+
+    <DesktopEditorialRail>
+      <ContentRail
+        columns={3}
+        min="18rem"
+        gap={1.5}
+        itemWidth="min(84vw, 25rem)"
+        max="64rem"
+        variant="editorial"
+        align="start"
+      >
+        {steps.map((item) => (
+          <PracticeCard key={item.label} mode="line" stretch={false}>
+            <Typography as="h3" variant="h3" color="primary">
+              {item.title}
+            </Typography>
+
+            <Typography as="p" variant="body" tone="soft" cadence="open">
+              {item.body}
+            </Typography>
+          </PracticeCard>
+        ))}
+      </ContentRail>
+    </DesktopEditorialRail>
 
     <ResultFlow>
       <ResultPanel tone="quiet" movement={movement} radius="large" padding="lg">
@@ -169,17 +185,9 @@ const PracticeFields = ({
       </Stack>
     </MethodPanel>
 
-    <ContentRail
-      columns={3}
-      min="18rem"
-      gap={1.5}
-      itemWidth="min(84vw, 25rem)"
-      max="64rem"
-      variant="editorial"
-      align="start"
-    >
+    <MobileEditorialStack>
       {ways.map((way) => (
-        <PracticeCard key={way.label} mode="line" stretch={false}>
+        <EditorialItem key={way.label}>
           <Typography as="h3" variant="h3" color="primary">
             {way.title}
           </Typography>
@@ -187,9 +195,33 @@ const PracticeFields = ({
           <Typography as="p" variant="body" tone="soft" cadence="open">
             {way.body}
           </Typography>
-        </PracticeCard>
+        </EditorialItem>
       ))}
-    </ContentRail>
+    </MobileEditorialStack>
+
+    <DesktopEditorialRail>
+      <ContentRail
+        columns={3}
+        min="18rem"
+        gap={1.5}
+        itemWidth="min(84vw, 25rem)"
+        max="64rem"
+        variant="editorial"
+        align="start"
+      >
+        {ways.map((way) => (
+          <PracticeCard key={way.label} mode="line" stretch={false}>
+            <Typography as="h3" variant="h3" color="primary">
+              {way.title}
+            </Typography>
+
+            <Typography as="p" variant="body" tone="soft" cadence="open">
+              {way.body}
+            </Typography>
+          </PracticeCard>
+        ))}
+      </ContentRail>
+    </DesktopEditorialRail>
 
     <Footer tone="note" movement={movement} radius="large" padding="lg">
       <Grid columns={2} min="18rem" gap={2}>
@@ -224,6 +256,32 @@ const PracticeFields = ({
 const IntroCopy = styled.div`
   width: min(100%, 58rem);
   margin-inline: auto;
+`
+
+const MobileEditorialStack = styled.div`
+  display: grid;
+  width: min(100%, 64rem);
+  margin-inline: auto;
+  gap: ${({ theme }) => theme.spacing(1.45)};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    display: none;
+  }
+`
+
+const DesktopEditorialRail = styled.div`
+  display: none;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    display: block;
+  }
+`
+
+const EditorialItem = styled.article`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(0.85)};
+  padding-top: ${({ theme }) => theme.spacing(1)};
+  border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
 `
 
 const PracticeCard = styled(ContentRailItem)`

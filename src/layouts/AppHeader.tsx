@@ -66,6 +66,9 @@ const getSectionLabel = (id: SiteSectionId) =>
   HEADER_SECTIONS[0]?.label ??
   'Navigation'
 
+const isImmersiveStartPosition = (scrollY: number) =>
+  window.location.hash === '' && scrollY <= TOP_LOCK_OFFSET
+
 type ActiveIndicatorState = {
   left: number
   width: number
@@ -77,6 +80,7 @@ export default function AppHeader() {
   const [activeId, setActiveId] = useState<SiteSectionId>(START_SECTION_ID)
   const [compact, setCompact] = useState(false)
   const [hidden, setHidden] = useState(false)
+  const [startImmersive, setStartImmersive] = useState(false)
   const [mobileDocked, setMobileDocked] = useState(false)
   const [activeOffset, setActiveOffset] = useState(ACTIVE_OFFSET)
   const [indicator, setIndicator] = useState<ActiveIndicatorState>({
@@ -183,6 +187,8 @@ export default function AppHeader() {
       const navScrollLocked =
         document.documentElement.hasAttribute(NAV_SCROLL_LOCK_ATTR)
 
+      setStartImmersive(isImmersiveStartPosition(currentY))
+
       if (currentY <= TOP_LOCK_OFFSET) {
         setCompact(false)
         setHidden(false)
@@ -222,10 +228,12 @@ export default function AppHeader() {
 
     window.addEventListener('scroll', requestSync, { passive: true })
     window.addEventListener('resize', requestSync)
+    window.addEventListener('hashchange', requestSync)
 
     return () => {
       window.removeEventListener('scroll', requestSync)
       window.removeEventListener('resize', requestSync)
+      window.removeEventListener('hashchange', requestSync)
 
       if (frame) {
         window.cancelAnimationFrame(frame)
@@ -431,7 +439,7 @@ export default function AppHeader() {
     <HeaderShell
       ref={shellRef}
       $compact={compact}
-      $hidden={hidden && !menuOpen}
+      $hidden={(hidden || startImmersive) && !menuOpen}
       role="banner"
       aria-label="Seitenkopf"
     >
@@ -536,7 +544,7 @@ export default function AppHeader() {
 }
 
 const HeaderShell = styled.header<{ $compact: boolean; $hidden: boolean }>`
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 1000;
   width: 100%;

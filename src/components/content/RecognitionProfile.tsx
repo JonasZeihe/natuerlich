@@ -4,7 +4,6 @@
 import { useState, type ReactNode } from 'react'
 import styled from 'styled-components'
 import Button from '@/components/actions/Button'
-import ContentRail, { ContentRailItem } from '@/components/content/ContentRail'
 import Stack from '@/components/primitives/Stack'
 import Surface from '@/components/primitives/Surface'
 import Typography from '@/design/typography'
@@ -51,23 +50,16 @@ const RecognitionProfile = ({
         <BlockText block={path} heading="h2" />
       </Lead>
 
-      <ContentRail
-        columns={3}
-        min="20rem"
-        gap={1.5}
-        itemWidth="min(88vw, 28rem)"
-        max="68rem"
-        align="stretch"
-      >
-        <ProfileCard mode="card" stretch={false}>
+      <ProfileGrid>
+        <ProfileCard tone="card" movement="recognition" radius="large">
           <BlockText block={teaching} heading="h3" />
         </ProfileCard>
 
-        <ProfileCard mode="card" stretch={false}>
+        <ProfileCard tone="card" movement="recognition" radius="large">
           <BlockText block={style} heading="h2" />
         </ProfileCard>
 
-        <PortraitCard mode="line" stretch={false}>
+        <PortraitCard tone="bare" movement="recognition" radius="large">
           <Portrait
             src="/jonas_zeihe.webp"
             alt="Jonas"
@@ -75,7 +67,7 @@ const RecognitionProfile = ({
             decoding="async"
           />
         </PortraitCard>
-      </ContentRail>
+      </ProfileGrid>
 
       <Evidence>
         <ProofPanel
@@ -193,7 +185,7 @@ const BlockText = ({
 
 const Shell = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(2.5)};
+  gap: ${({ theme }) => theme.spacing(2.4)};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     gap: ${({ theme }) => theme.spacing(3.25)};
@@ -205,17 +197,38 @@ const Lead = styled.div`
   margin-inline: auto;
 `
 
-const ProfileCard = styled(ContentRailItem)`
+const ProfileGrid = styled.div`
+  display: grid;
+  width: min(100%, 68rem);
+  margin-inline: auto;
   gap: ${({ theme }) => theme.spacing(1.35)};
-  padding: ${({ theme }) => theme.spacing(2.25)};
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    padding: ${({ theme }) => theme.spacing(1.75)};
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+    gap: ${({ theme }) => theme.spacing(1.5)};
   }
 `
 
-const PortraitCard = styled(ContentRailItem)`
-  padding: ${({ theme }) => theme.spacing(0.75)};
+const ProfileCard = styled(Surface)`
+  display: flex;
+  min-height: 0;
+  padding: ${({ theme }) => theme.spacing(1.75)};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    min-height: 19rem;
+  }
+`
+
+const PortraitCard = styled(Surface)`
+  display: grid;
+  padding: ${({ theme }) => theme.spacing(0.6)};
+  overflow: clip;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    min-height: 19rem;
+    padding: ${({ theme }) => theme.spacing(0.75)};
+  }
 `
 
 const Portrait = styled.img`
@@ -225,6 +238,10 @@ const Portrait = styled.img`
   border-radius: ${({ theme }) => theme.borderRadius.medium};
   object-fit: cover;
   object-position: center;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    max-height: 28rem;
+  }
 `
 
 const Evidence = styled.div`
