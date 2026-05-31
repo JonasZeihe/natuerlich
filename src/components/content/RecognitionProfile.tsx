@@ -1,8 +1,9 @@
 // src/components/content/RecognitionProfile.tsx
 'use client'
 
-import { type ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import styled from 'styled-components'
+import Button from '@/components/actions/Button'
 import ContentRail, { ContentRailItem } from '@/components/content/ContentRail'
 import Stack from '@/components/primitives/Stack'
 import Surface from '@/components/primitives/Surface'
@@ -33,94 +34,138 @@ type Props = {
   scope: ProfileBlock
 }
 
+const credentialsPanelId = 'recognition-credentials-panel'
+
 const RecognitionProfile = ({
   path,
   teaching,
   style,
   credentials,
   scope,
-}: Props) => (
-  <Shell>
-    <Lead>
-      <BlockText block={path} heading="h2" />
-    </Lead>
+}: Props) => {
+  const [isCredentialsOpen, setIsCredentialsOpen] = useState(false)
 
-    <ContentRail columns={3} min="17rem" gap={1.25} max="68rem" align="start">
-      {[teaching, style].map((block, index) => (
-        <ContentRailItem key={index} mode="card" stretch={false}>
-          <BlockText block={block} heading="subtitle" />
-        </ContentRailItem>
-      ))}
+  return (
+    <Shell>
+      <Lead>
+        <BlockText block={path} heading="h2" />
+      </Lead>
 
-      <ContentRailItem mode="card" stretch={false}>
-        <Portrait
-          src="/jonas_zeihe.webp"
-          alt="Jonas"
-          loading="lazy"
-          decoding="async"
-        />
-      </ContentRailItem>
-    </ContentRail>
+      <ContentRail
+        columns={3}
+        min="20rem"
+        gap={1.5}
+        itemWidth="min(88vw, 28rem)"
+        max="68rem"
+        align="stretch"
+      >
+        <ProfileCard mode="card" stretch={false}>
+          <BlockText block={teaching} heading="h3" />
+        </ProfileCard>
 
-    <Evidence>
-      <Stack gap={2}>
-        {credentials.title ? (
-          <Typography as="h2" variant="h2" color="primary" cadence="dense">
-            {credentials.title}
-          </Typography>
-        ) : null}
+        <ProfileCard mode="card" stretch={false}>
+          <BlockText block={style} heading="h2" />
+        </ProfileCard>
 
-        <CredentialList>
-          {credentials.items.map((item, index) => (
-            <CredentialItem key={index}>
-              <CredentialCard
-                tone="quiet"
-                movement="recognition"
-                radius="large"
-                padding="md"
-                bordered
+        <PortraitCard mode="card" stretch={false}>
+          <Portrait
+            src="/jonas_zeihe.webp"
+            alt="Jonas"
+            loading="lazy"
+            decoding="async"
+          />
+        </PortraitCard>
+      </ContentRail>
+
+      <Evidence>
+        <ProofPanel
+          tone="quiet"
+          movement="recognition"
+          radius="large"
+          padding="lg"
+        >
+          <ProofHeader>
+            <SummaryText>
+              {credentials.title ? (
+                <Typography
+                  as="h2"
+                  variant="h3"
+                  color="primary"
+                  cadence="dense"
+                >
+                  {credentials.title}
+                </Typography>
+              ) : null}
+
+              {scope.title ? (
+                <Typography as="p" variant="subtitle" color="primary">
+                  {scope.title}
+                </Typography>
+              ) : null}
+
+              <Typography as="p" variant="body" tone="soft" cadence="open">
+                {scope.children}
+              </Typography>
+            </SummaryText>
+
+            <ActionSlot>
+              <Button
+                type="button"
+                variant="secondary"
+                size="sm"
+                aria-expanded={isCredentialsOpen}
+                aria-controls={credentialsPanelId}
+                onClick={() => setIsCredentialsOpen((current) => !current)}
               >
-                <Stack gap={0.65}>
-                  <Typography as="h3" variant="subtitle" color="primary">
-                    {item.title}
-                  </Typography>
+                {isCredentialsOpen
+                  ? 'Nachweise ausblenden'
+                  : 'Nachweise ansehen'}
+              </Button>
+            </ActionSlot>
+          </ProofHeader>
 
-                  <Typography as="p" variant="body">
-                    {item.source}
-                  </Typography>
+          {isCredentialsOpen ? (
+            <CredentialList id={credentialsPanelId}>
+              {credentials.items.map((item, index) => (
+                <CredentialItem key={index}>
+                  <CredentialCard
+                    tone="card"
+                    movement="recognition"
+                    radius="large"
+                    padding="md"
+                    bordered
+                  >
+                    <Stack gap={0.65}>
+                      <Typography as="h3" variant="subtitle" color="primary">
+                        {item.title}
+                      </Typography>
 
-                  <CredentialMeta>
-                    <Typography as="span" variant="caption">
-                      {item.period}
-                    </Typography>
+                      <Typography as="p" variant="body">
+                        {item.source}
+                      </Typography>
 
-                    <MetaDivider aria-hidden="true">·</MetaDivider>
+                      <CredentialMeta>
+                        <Typography as="span" variant="caption">
+                          {item.period}
+                        </Typography>
 
-                    <Typography as="span" variant="caption">
-                      {item.hours}
-                    </Typography>
-                  </CredentialMeta>
-                </Stack>
-              </CredentialCard>
-            </CredentialItem>
-          ))}
-        </CredentialList>
+                        <MetaDivider aria-hidden="true">·</MetaDivider>
 
-        <Scope>
-          {scope.title ? (
-            <Typography as="p" variant="subtitle" color="primary">
-              {scope.title}
-            </Typography>
+                        <Typography as="span" variant="caption">
+                          {item.hours}
+                        </Typography>
+                      </CredentialMeta>
+                    </Stack>
+                  </CredentialCard>
+                </CredentialItem>
+              ))}
+            </CredentialList>
           ) : null}
-
-          <Typography as="p" variant="body" cadence="open" measure="wide">
-            {scope.children}
-          </Typography>
-        </Scope>
-      </Stack>
-    </Evidence>
-  </Shell>
-)
+        </ProofPanel>
+      </Evidence>
+    </Shell>
+  )
+}
 
 const BlockText = ({
   block,
@@ -132,7 +177,7 @@ const BlockText = ({
   const as = heading === 'subtitle' ? 'h3' : heading
 
   return (
-    <Stack gap={0.85}>
+    <Stack gap={1}>
       {block.title ? (
         <Typography as={as} variant={heading} color="primary" cadence="dense">
           {block.title}
@@ -148,7 +193,7 @@ const BlockText = ({
 
 const Shell = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(2.25)};
+  gap: ${({ theme }) => theme.spacing(2.5)};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     gap: ${({ theme }) => theme.spacing(3.25)};
@@ -158,6 +203,19 @@ const Shell = styled.div`
 const Lead = styled.div`
   width: min(100%, 68rem);
   margin-inline: auto;
+`
+
+const ProfileCard = styled(ContentRailItem)`
+  gap: ${({ theme }) => theme.spacing(1.35)};
+  padding: ${({ theme }) => theme.spacing(2.25)};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    padding: ${({ theme }) => theme.spacing(1.75)};
+  }
+`
+
+const PortraitCard = styled(ContentRailItem)`
+  padding: ${({ theme }) => theme.spacing(0.75)};
 `
 
 const Portrait = styled.img`
@@ -174,17 +232,47 @@ const Evidence = styled.div`
   margin-inline: auto;
 `
 
+const ProofPanel = styled(Surface)`
+  border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
+`
+
+const ProofHeader = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(1.25)};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+  }
+`
+
+const SummaryText = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.spacing(0.75)};
+  max-width: 58rem;
+`
+
+const ActionSlot = styled.div`
+  display: flex;
+  justify-content: flex-start;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    justify-content: flex-end;
+  }
+`
+
 const CredentialList = styled.ol`
   display: grid;
   grid-template-columns: 1fr;
   gap: ${({ theme }) => theme.spacing(1)};
-  margin: 0;
+  margin: ${({ theme }) => `${theme.spacing(1.5)} 0 0`};
   padding: 0;
   list-style: none;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: ${({ theme }) => theme.spacing(1.25)};
+    margin-top: ${({ theme }) => theme.spacing(1.75)};
   }
 `
 
@@ -206,18 +294,6 @@ const CredentialMeta = styled.div`
 
 const MetaDivider = styled.span`
   color: ${({ theme }) => theme.roles.text.subtle};
-`
-
-const Scope = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.spacing(0.85)};
-  max-width: 58rem;
-  padding-top: ${({ theme }) => theme.spacing(1.25)};
-  border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    padding-top: ${({ theme }) => theme.spacing(1.75)};
-  }
 `
 
 export default RecognitionProfile

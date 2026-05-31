@@ -515,7 +515,7 @@ const HeaderShell = styled.header<{ $compact: boolean; $hidden: boolean }>`
   top: 0;
   z-index: 1000;
   width: 100%;
-  background: ${({ theme }) => theme.roles.surface.canvas};
+  background: ${({ theme }) => theme.roles.surface.chrome};
   border-bottom: 1px solid
     ${({ theme, $compact }) =>
       $compact ? theme.roles.border.strong : theme.roles.border.subtle};
@@ -632,8 +632,8 @@ const ActivePill = styled.span<{
   left: 0;
   width: ${({ $width }) => `${$width}px`};
   border-radius: ${({ theme }) => theme.borderRadius.pill};
-  background: ${({ theme }) => theme.getSurfaceTone('quiet', 'arrival').bg};
-  border: 1px solid ${({ theme }) => theme.roles.border.subtle};
+  background: ${({ theme }) => theme.getEnergyRole('density').surface};
+  border: 1px solid ${({ theme }) => theme.getEnergyRole('density').border};
   box-shadow: none;
   opacity: ${({ $visible }) => ($visible ? 1 : 0)};
   transform: translateX(${({ $left }) => `${$left}px`});
@@ -672,7 +672,7 @@ const navLinkStyles = css<{ $active: boolean }>`
     color: ${({ theme, $active }) =>
       $active ? theme.getEnergyRole('density').text : theme.roles.text.primary};
     background: ${({ theme, $active }) =>
-      $active ? 'transparent' : theme.roles.surface.chrome};
+      $active ? 'transparent' : theme.roles.surface.card};
   }
 `
 
@@ -697,7 +697,7 @@ const MenuButton = styled.button`
   min-width: ${({ theme }) => theme.spacing(4.25)};
   min-height: ${({ theme }) => theme.spacing(4.25)};
   border-radius: ${({ theme }) => theme.borderRadius.medium};
-  background: transparent;
+  background: ${({ theme }) => theme.roles.surface.card};
   color: ${({ theme }) => theme.roles.text.primary};
   border: 1px solid ${({ theme }) => theme.roles.border.subtle};
   box-shadow: none;
@@ -706,8 +706,8 @@ const MenuButton = styled.button`
 
   &:hover,
   &:focus-visible {
-    background: ${({ theme }) => theme.roles.surface.chrome};
-    border-color: ${({ theme }) => theme.roles.border.strong};
+    background: ${({ theme }) => theme.getEnergyRole('density').surface};
+    border-color: ${({ theme }) => theme.getEnergyRole('density').border};
     color: ${({ theme }) => theme.getEnergyRole('density').text};
     transform: translateY(
       calc(${({ theme }) => theme.motion.foundations.distances.nudge} * -1)

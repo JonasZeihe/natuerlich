@@ -1,15 +1,22 @@
 // src/layouts/Shell.tsx
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { AppErrorBoundary } from '@/errorhandling/errorBoundary'
 import AppFooter from '@/layouts/AppFooter'
 import AppHeader from '@/layouts/AppHeader'
+import { initClientLogging } from '@/logging'
 
 type Props = { children: React.ReactNode }
 
 export default function Shell({ children }: Props) {
+  useEffect(() => {
+    initClientLogging({
+      app: 'natuerlich',
+    })
+  }, [])
+
   return (
     <Outer>
       <AppHeader />
@@ -37,8 +44,10 @@ const Outer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: 100dvh;
+  min-height: var(--app-viewport-height);
   width: 100%;
+  min-width: 0;
+  isolation: isolate;
   background: ${({ theme }) => theme.roles.surface.canvas};
 `
 
@@ -52,6 +61,6 @@ const MainShell = styled.div`
 const Main = styled.main`
   position: relative;
   width: 100%;
-  max-width: 100vw;
+  max-width: 100%;
   min-width: 0;
 `

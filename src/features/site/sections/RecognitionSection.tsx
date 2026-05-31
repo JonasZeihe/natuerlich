@@ -22,8 +22,9 @@ const RecognitionSection = () => (
     <HeaderFrame>
       <Headline
         titleId="erkennen-title"
-        title="Herzlich willkommen, ich bin Jonas :-)"
-        accent="axisOpening"
+        title="Ich unterrichte, was ich selbst übe."
+        accent="axisDensity"
+        weight="poster"
       />
     </HeaderFrame>
 
@@ -35,9 +36,9 @@ const RecognitionSection = () => (
             'Durch ihn und das Daoyin Zentrum Deutschland habe ich verstanden, dass diese Arbeit keine Dekoration ist. Sie ist Übung, Linie, Körperarbeit, Atem, Form, Aufmerksamkeit und die Bereitschaft, etwas wirklich ernst zu nehmen.',
         }}
         teaching={{
-          title: 'Ich unterrichte, was ich selbst übe.',
+          title: 'Unterschiedliche Wurzeln. Gemeinsame Praxis.',
           children:
-            'Yoga, Qigong, Daoyin Yangsheng Gong, Taijiquan, Meditation und Entspannung haben unterschiedliche Wurzeln. Im Unterricht werden sie durch Übung lebendig: im Atem, im Körper, in der Aufmerksamkeit und in der Art, wie du mit dir arbeitest.',
+            'Yoga, Qigong, Daoyin Yangsheng Gong, Taijiquan, Meditation und Entspannung haben unterschiedliche Herkunft. Im Unterricht werden sie nicht gesammelt, sondern geübt: im Atem, im Körper, in der Aufmerksamkeit und in der Art, wie du mit dir arbeitest.',
         }}
         style={{
           title: 'Freude ist kein Gegensatz zu Anspruch.',
@@ -95,10 +96,10 @@ const HeaderFrame = styled.div`
 `
 
 const ProfileArea = styled.div`
-  margin-top: ${({ theme }) => theme.spacing(2)};
+  margin-top: ${({ theme }) => theme.spacing(2.5)};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    margin-top: ${({ theme }) => theme.spacing(3)};
+    margin-top: ${({ theme }) => theme.spacing(3.5)};
   }
 `
 

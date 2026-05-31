@@ -4,6 +4,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import Button from '@/components/actions/Button'
+import StatementBreak from '@/components/content/StatementBreak'
 import BodyScanDialog from '@/components/miniCourse/BodyScanDialog'
 import BreathingExercise from '@/components/miniCourse/BreathingExercise'
 import Grid from '@/components/primitives/Grid'
@@ -27,13 +28,13 @@ const miniCourseContent = {
   afterBodyScan: {
     opening: 'Vielleicht bist du jetzt ein Stückchen mehr bei dir.',
     paragraphs: [
-      'Das, was du gerade gemacht hast, war eine einfache Anfangsentspannung: Atem, Wahrnehmung, Body Scan. Egal, wo du eben warst — dieser kleine Wechsel zählt.',
+      'Atem, Wahrnehmung und Body Scan sind einfache Zugänge. Egal, wo du eben warst — dieser kleine Wechsel zählt.',
       'Ich mache keine Heilversprechen. Aber ich bin davon überzeugt, dass regelmäßige Praxis eine echte Entspannungsfähigkeit aufbauen kann. Nicht erst dann, wenn man schon müde, gereizt oder abgebrannt ist.',
       'Prävention ist nichts, was man sich für später aufspart. Sie ist ein Muster im Alltag: kurz innehalten, wahrnehmen, nachregulieren, bevor der Körper nur noch im Crash antwortet.',
       'Aus diesem Anfang kann Praxis werden: Yoga, Qigong, Taijiquan, Meditation, Entspannung. Nicht als Etiketten, sondern als Wege, den eigenen Zustand besser zu lesen und mit ihm zu arbeiten.',
     ],
     closing:
-      'Wenn dich das neugierig macht, dann schau doch mal wer ich bin, was ich unterrichte und wie ein gemeinsamer Einstieg aussehen kann.',
+      'Wenn dich das neugierig macht, dann schau, wer ich bin, was ich unterrichte und wie ein gemeinsamer Einstieg aussehen kann.',
   },
 } as const
 
@@ -97,7 +98,7 @@ const MiniCourseSection = ({}: Props) => {
         </Surface>
 
         <AfterPractice>
-          <Stack gap={1.25}>
+          <Stack gap={1.35}>
             <Typography
               as="p"
               variant="body"
@@ -148,8 +149,8 @@ const CourseFlow = styled.div`
   display: grid;
   gap: ${({ theme }) => theme.spacing(2.75)};
 
-  @media (min-width: 48rem) {
-    gap: ${({ theme }) => theme.spacing(1)};
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    gap: ${({ theme }) => theme.spacing(3.75)};
   }
 `
 
@@ -163,7 +164,7 @@ const BreathingArea = styled.div`
   place-items: center;
   min-height: 31rem;
 
-  @media (min-width: 48rem) {
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     min-height: clamp(24rem, 58svh, 42rem);
   }
 `

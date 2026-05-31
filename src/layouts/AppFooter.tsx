@@ -57,7 +57,7 @@ const FooterShell = styled.footer`
   width: 100%;
   color: ${({ theme }) => theme.roles.text.primary};
   border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
-  background: ${({ theme }) => theme.roles.surface.canvas};
+  background: ${({ theme }) => theme.roles.surface.chrome};
   padding-block: ${({ theme }) => theme.spacing(2.75)};
 
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
@@ -106,7 +106,8 @@ const FooterLink = styled(Link)`
   &:hover,
   &:focus-visible {
     color: ${({ theme }) => theme.roles.text.primary};
-    text-decoration: none;
+    text-decoration: underline;
+    text-underline-offset: 0.16em;
   }
 
   @media ${({ theme }) => theme.motion.reduced.media} {
@@ -127,7 +128,7 @@ const ToTop = styled.button`
   align-items: center;
   justify-content: center;
   align-self: flex-end;
-  background: transparent;
+  background: ${({ theme }) => theme.roles.surface.card};
   color: ${({ theme }) => theme.roles.text.secondary};
   border: 1px solid ${({ theme }) => theme.roles.border.subtle};
   border-radius: ${({ theme }) => theme.borderRadius.pill};
@@ -138,9 +139,9 @@ const ToTop = styled.button`
 
   &:hover,
   &:focus-visible {
-    background: ${({ theme }) => theme.roles.surface.chrome};
-    border-color: ${({ theme }) => theme.roles.border.strong};
-    color: ${({ theme }) => theme.roles.text.primary};
+    background: ${({ theme }) => theme.getEnergyRole('density').surface};
+    border-color: ${({ theme }) => theme.getEnergyRole('density').border};
+    color: ${({ theme }) => theme.getEnergyRole('density').text};
     transform: translateY(
       calc(${({ theme }) => theme.motion.foundations.distances.nudge} * -1)
     );

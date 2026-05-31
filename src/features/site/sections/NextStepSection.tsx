@@ -24,6 +24,7 @@ const NextStepSection = () => (
         titleId="anschluss-title"
         title="Schreib mir, wenn du wissen möchtest, ob das passt."
         accent="axisFlow"
+        weight="poster"
       >
         Ein paar Sätze reichen. Wer du bist, was dich hierher geführt hat und ob
         du eher an Kurs, Einzelunterricht, einer Gruppe, einem Firmenformat oder
