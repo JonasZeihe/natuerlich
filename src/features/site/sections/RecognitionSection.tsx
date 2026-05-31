@@ -22,7 +22,7 @@ const RecognitionSection = () => (
     <HeaderFrame>
       <Headline
         titleId="erkennen-title"
-        title="Ich unterrichte, was ich selbst übe."
+        title="Herzlich willkommen, ich bin Jonas :-)"
         accent="axisDensity"
         weight="poster"
       />

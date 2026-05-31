@@ -27,8 +27,8 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
     <Surface tone="bare" movement="practice" padding="lg">
       <Headline
         titleId="arbeiten-title"
-        title="Wenn der Atem nicht mehr reicht."
-        subheadline="Dann ist nicht die einzelne Technik das Problem, sondern der Zustand, in dem sie angewendet wird."
+        title="Ein Stein, der ins Wasser fällt, zieht Kreise."
+        subheadline="Was später tragen soll, muss vorher gesetzt sein."
         accent="axisTension"
         weight="poster"
       />
@@ -93,17 +93,17 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
             {
               label: 'Qigong',
               title: 'Übung an der Lebendigkeit.',
-              body: '氣功: Qi als Atem, Dampf und Lebenskraft. Gong als Übung, Arbeit und erworbenes Können. Im alten Zeichen steckt das Bild von Reis, aus dem Wärme aufsteigt. Qigong ist keine Energiebehauptung, sondern Praxis: führen, atmen, drehen, wahrnehmen, wiederholen.',
+              body: 'Qigong 氣功: Qi als Atem, Odem oder Lebenshauch. Gong als Übung, Arbeit und erworbenes Können. Im alten Zeichen steckt das Bild vom aufplatzenden Reiskorn, aus dem Dampf aufsteigt. Qigong ist keine Energiebehauptung, sondern Praxis: führen, atmen, drehen, wringen, wahrnehmen, wiederholen.',
             },
             {
               label: 'Yoga',
               title: 'Verbinden, anschirren, ausrichten.',
-              body: 'Yoga kommt von yuj. Gemeint ist hier kein einzelner Trick und keine Körperform zum Abhaken, sondern ein Übungsweg für Körper, Atem, Geist und Alltag: Haltung, Bewegung, Atmung, Entspannung, Konzentration und die Art, wie du mit dir selbst umgehst.',
+              body: 'Yoga kommt von yuj. Gemeint ist hier keine Körperform zum Abhaken, sondern ein Übungsweg für Körper, Atem, Geist und Alltag: Haltung, Bewegung, Atmung, Entspannung, Konzentration und die Art, wie du mit dir selbst umgehst.',
             },
             {
               label: 'Taijiquan',
               title: 'Ruhe als geführte Kraft.',
-              body: '太極拳: Taiji, das höchste Prinzip. Quan, die Faust. Taijiquan ist nicht langsames Qigong und nicht Entspannungsbewegung mit schöner Form. Es ist Arbeit an Struktur, Mitte, Gewicht, Richtung, Wandlung und Kraft ohne Verkrampfung.',
+              body: 'Taijiquan 太極拳: Taiji, das höchste Prinzip, der Dachfirst. Quan, die Faust. Taijiquan ist nicht langsames Qigong und nicht Entspannungsbewegung mit schöner Form. Es ist Arbeit an Struktur, Mitte, Gewicht, Richtung, Wandlung und Kraft ohne Verkrampfung.',
             },
           ]}
         />
