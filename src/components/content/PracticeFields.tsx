@@ -47,6 +47,8 @@ type Props = {
   onGoToIntegration: () => void
 }
 
+const blogUrl = 'https://ziran.onrender.com/'
+
 const PracticeFields = ({
   intro,
   steps,
@@ -242,9 +244,23 @@ const PracticeFields = ({
         </Stack>
 
         <FooterAction>
-          <Button variant="primary" onClick={onGoToIntegration}>
-            Angebote ansehen
-          </Button>
+          <FooterActionText>
+            <Typography as="p" variant="body" tone="soft" cadence="open">
+              Wenn dich die Zusammenhänge interessieren: In meinem Blog erzähle
+              ich mehr über Stress, Praxis, meinen Weg und die Ideen hinter
+              dieser Arbeit.
+            </Typography>
+          </FooterActionText>
+
+          <FooterButtons>
+            <Button variant="primary" onClick={onGoToIntegration}>
+              Angebote ansehen
+            </Button>
+
+            <BlogLink href={blogUrl} target="_blank" rel="noreferrer">
+              Blog öffnen
+            </BlogLink>
+          </FooterButtons>
         </FooterAction>
       </FooterGrid>
     </Footer>
@@ -355,9 +371,75 @@ const FooterGrid = styled(Grid)`
 `
 
 const FooterAction = styled.div`
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: ${({ theme }) => theme.layout.flow.block};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    justify-items: end;
+    text-align: right;
+  }
+`
+
+const FooterActionText = styled.div`
+  max-width: 32rem;
+`
+
+const FooterButtons = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: ${({ theme }) => theme.spacing(0.75)};
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    justify-content: flex-end;
+  }
+`
+
+const BlogLink = styled.a`
+  display: inline-flex;
   align-items: center;
   justify-content: center;
+  min-height: ${({ theme }) => theme.spacing(4.6)};
+  min-width: ${({ theme }) => theme.spacing(7.2)};
+  padding: ${({ theme }) => `${theme.spacingHalf(1.45)} ${theme.spacing(1.6)}`};
+  border: 1px solid ${({ theme }) => theme.roles.border.subtle};
+  border-radius: 0.78rem;
+  background: ${({ theme }) => theme.roles.surface.quiet};
+  color: ${({ theme }) => theme.roles.text.primary};
+  font-family: ${({ theme }) => theme.typography.fontFamily.button};
+  font-size: ${({ theme }) => theme.typography.fontSize.body};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  line-height: 1.12;
+  letter-spacing: ${({ theme }) => theme.typography.letterSpacing.normal};
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: ${({ theme }) => theme.motion.css.interactive.control};
+
+  &:hover {
+    border-color: ${({ theme }) => theme.roles.border.strong};
+    background: ${({ theme }) => theme.roles.surface.card};
+    color: ${({ theme }) => theme.roles.text.primary};
+    text-decoration: none;
+    transform: translateY(
+      calc(${({ theme }) => theme.motion.foundations.distances.nudge} * -1)
+    );
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    outline: 2px solid transparent;
+    box-shadow: 0 0 0 3px ${({ theme }) => theme.roles.focus.ring};
+  }
+
+  @media ${({ theme }) => theme.motion.reduced.media} {
+    transition: none;
+  }
 `
 
 const NoBreak = styled.span`

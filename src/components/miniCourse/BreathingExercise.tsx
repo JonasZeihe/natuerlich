@@ -54,7 +54,7 @@ type Props = {
 const visualLayout: VisualLayout = {
   center: {
     x: 0,
-    y: 0,
+    y: -1.6,
     scale: 0.7,
     surfaceAlpha: 0.52,
     borderAlpha: 0.48,
