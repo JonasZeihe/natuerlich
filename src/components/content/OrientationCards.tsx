@@ -18,15 +18,9 @@ type Props = {
 
 const OrientationCards = ({ items, ariaLabel }: Props) => (
   <Shell aria-label={ariaLabel}>
-    <ContentRail
-      columns={3}
-      min="15rem"
-      itemWidth="min(78vw, 21rem)"
-      max="64rem"
-      align="start"
-    >
+    <ContentRail columns={3} min="15rem" align="stretch">
       {items.map((item, index) => (
-        <ContentRailItem key={index} mode="line" stretch={false}>
+        <Card key={index}>
           <Typography as="h3" variant="h3" color="primary" cadence="dense">
             {item.title}
           </Typography>
@@ -34,7 +28,7 @@ const OrientationCards = ({ items, ariaLabel }: Props) => (
           <Typography as="p" variant="body" tone="soft" cadence="open">
             {item.text}
           </Typography>
-        </ContentRailItem>
+        </Card>
       ))}
     </ContentRail>
   </Shell>
@@ -42,6 +36,20 @@ const OrientationCards = ({ items, ariaLabel }: Props) => (
 
 const Shell = styled.div`
   width: 100%;
+  max-width: 64rem;
+  min-width: 0;
+`
+
+const Card = styled(ContentRailItem)`
+  align-content: start;
+  gap: ${({ theme }) => theme.layout.flow.text};
+  padding-top: ${({ theme }) => theme.layout.flow.block};
+  border-top: 1px solid
+    color-mix(
+      in srgb,
+      ${({ theme }) => theme.roles.movement.practice.border} 46%,
+      transparent
+    );
 `
 
 export default OrientationCards

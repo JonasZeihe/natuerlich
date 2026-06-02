@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import Headline from '@/components/content/Headline'
 import PathCards, { type PathCardItem } from '@/components/content/PathCards'
 import Section from '@/components/primitives/Section'
-import Surface from '@/components/primitives/Surface'
 import HighlightText from '@/components/utilities/HighlightText'
 
 type Props = {
@@ -19,10 +18,9 @@ const offerItems: readonly PathCardItem[] = [
     text: (
       <>
         Der beste Anfang, wenn noch nicht klar ist, ob es später{' '}
-        <HighlightText accent="axisOpening">Qigong</HighlightText>,{' '}
-        <HighlightText accent="axisFlow">Yoga</HighlightText> oder{' '}
-        <HighlightText accent="axisTension">Taijiquan</HighlightText> werden
-        soll.
+        <HighlightText accent="qigong">Qigong</HighlightText>,{' '}
+        <HighlightText accent="yoga">Yoga</HighlightText> oder{' '}
+        <HighlightText accent="taiji">Taijiquan</HighlightText> werden soll.
       </>
     ),
     individual: {
@@ -52,7 +50,7 @@ const offerItems: readonly PathCardItem[] = [
     text: (
       <>
         Oft der beste bewegte Einstieg:{' '}
-        <HighlightText accent="axisOpening">Atem</HighlightText>, Stand,
+        <HighlightText accent="breath">Atem</HighlightText>, Stand,
         Aufmerksamkeit und einfache Bewegung kommen zusammen.
       </>
     ),
@@ -68,10 +66,7 @@ const offerItems: readonly PathCardItem[] = [
       text: (
         <>
           Ein klarer Kursblock mit Acht Brokaten oder einfachen Übungen aus dem{' '}
-          <HighlightText accent="axisOpening">
-            Daoyin Yangsheng Gong
-          </HighlightText>
-          .
+          <HighlightText accent="daoyin">Daoyin Yangsheng Gong</HighlightText>.
         </>
       ),
       classText:
@@ -91,7 +86,7 @@ const offerItems: readonly PathCardItem[] = [
     text: (
       <>
         Yoga ist zugänglich, aber größer als ein kurzer Einstieg. Haltung, Atem
-        und <HighlightText accent="axisFlow">Entspannung</HighlightText> greifen
+        und <HighlightText accent="yoga">Entspannung</HighlightText> greifen
         ineinander.
       </>
     ),
@@ -121,9 +116,8 @@ const offerItems: readonly PathCardItem[] = [
     line: 'Nicht schnell. Nicht nebenbei.',
     text: (
       <>
-        Taijiquan braucht{' '}
-        <HighlightText accent="axisTension">Unterbau</HighlightText>. Sonst
-        bleibt von der Form nur langsame Bewegung.
+        Taijiquan braucht <HighlightText accent="taiji">Unterbau</HighlightText>
+        . Sonst bleibt von der Form nur langsame Bewegung.
       </>
     ),
     individual: {
@@ -169,7 +163,7 @@ const offerItems: readonly PathCardItem[] = [
 ]
 
 const IntegrationSection = ({ onGoToNextStep: _onGoToNextStep }: Props) => (
-  <Section
+  <OfferSection
     id="integrieren"
     titleId="integrieren-title"
     ariaLabel="Angebote"
@@ -177,28 +171,23 @@ const IntegrationSection = ({ onGoToNextStep: _onGoToNextStep }: Props) => (
     content="default"
     variant="body"
     rhythm="spacious"
-    tone="relief"
-    movement="integration"
-    mix={['opening', 'flow']}
+    tone="default"
+    mix={['density', 'flow']}
+    header={
+      <Headline
+        titleId="integrieren-title"
+        title="Du musst nicht schon wissen, ob es Yoga, Qigong oder Taijiquan ist."
+        accent="axisFlow"
+        weight="poster"
+      />
+    }
   >
-    <Surface tone="bare" movement="integration" padding="lg">
-      <Flow>
-        <Headline
-          titleId="integrieren-title"
-          title="Du musst nicht schon wissen, ob es Yoga, Qigong oder Taijiquan ist."
-          accent="axisFlow"
-          weight="poster"
-        />
-
-        <PathCards items={offerItems} />
-      </Flow>
-    </Surface>
-  </Section>
+    <PathCards items={offerItems} />
+  </OfferSection>
 )
 
-const Flow = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.layout.flow.region};
+const OfferSection = styled(Section)`
+  background: linear-gradient(180deg, #f8f4ea 0%, #f2eddf 56%, #eee8d7 100%);
 `
 
 export default IntegrationSection

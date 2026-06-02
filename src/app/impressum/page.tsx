@@ -15,7 +15,6 @@ const ImpressumPage = () => (
     variant="body"
     rhythm="spacious"
     tone="default"
-    movement="arrival"
   >
     <PageFlow>
       <Header>
@@ -387,13 +386,13 @@ const Address = styled.address`
 `
 
 const TextLink = styled(Link)`
-  color: ${({ theme }) => theme.roles.text.link};
-  text-decoration-color: ${({ theme }) => theme.roles.text.link};
+  color: ${({ theme }) => theme.color.text.link};
+  text-decoration-color: ${({ theme }) => theme.color.text.link};
   text-underline-offset: 0.18em;
 
   &:hover,
   &:focus-visible {
-    color: ${({ theme }) => theme.roles.text.linkHover};
+    color: ${({ theme }) => theme.color.text.linkHover};
     text-decoration-color: currentColor;
   }
 `
@@ -410,18 +409,18 @@ const ActionLink = styled(Link)`
   justify-content: center;
   min-height: ${({ theme }) => theme.spacing(3.2)};
   padding-inline: ${({ theme }) => theme.spacing(1.15)};
-  border: 1px solid ${({ theme }) => theme.roles.border.subtle};
+  border: 1px solid ${({ theme }) => theme.color.border.subtle};
   border-radius: ${({ theme }) => theme.borderRadius.pill};
-  color: ${({ theme }) => theme.roles.text.secondary};
+  color: ${({ theme }) => theme.color.text.soft};
   background: transparent;
   text-decoration: none;
   transition: ${({ theme }) => theme.motion.css.interactive.control};
 
   &:hover,
   &:focus-visible {
-    background: ${({ theme }) => theme.roles.surface.chrome};
-    border-color: ${({ theme }) => theme.roles.border.strong};
-    color: ${({ theme }) => theme.roles.text.primary};
+    background: ${({ theme }) => theme.color.surface.chrome};
+    border-color: ${({ theme }) => theme.color.border.strong};
+    color: ${({ theme }) => theme.color.text.primary};
     text-decoration: none;
     transform: translateY(
       calc(${({ theme }) => theme.motion.foundations.distances.nudge} * -1)

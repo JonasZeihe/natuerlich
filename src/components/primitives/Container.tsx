@@ -13,6 +13,7 @@ type Props = {
 
 const Box = styled.div<{ $max: ContainerSize }>`
   width: 100%;
+  min-width: 0;
   margin-inline: auto;
   padding-inline: ${({ theme }) => theme.layout.inset.page};
 

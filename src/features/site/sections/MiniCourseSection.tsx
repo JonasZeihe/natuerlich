@@ -30,15 +30,15 @@ const MiniCourseSection = ({}: Props) => {
   const [isBodyScanOpen, setIsBodyScanOpen] = useState(false)
 
   return (
-    <Section
+    <MiniCourseShell
       id="minikurs"
       titleId="minikurs-title"
       ariaLabel="Minikurs"
       container="wide"
+      rail="wide"
       variant="intro"
       rhythm="spacious"
       tone="default"
-      movement="arrival"
     >
       <CourseFlow>
         <ArrivalStage>
@@ -60,11 +60,8 @@ const MiniCourseSection = ({}: Props) => {
               cadence="open"
               measure="prose"
             >
-              Beginne mit der{' '}
-              <HighlightText accent="axisOpening">Atemübung</HighlightText>.
-              Öffne danach den{' '}
-              <HighlightText accent="axisDensity">Body Scan</HighlightText>,
-              wenn du deinen Körper genauer wahrnehmen möchtest.
+              Beginne mit der Atemübung. Öffne danach den Body Scan, wenn du
+              deinen Körper genauer wahrnehmen möchtest.
             </Typography>
           </Hero>
 
@@ -73,25 +70,28 @@ const MiniCourseSection = ({}: Props) => {
           </BreathingArea>
         </ArrivalStage>
 
-        <BodyScanWrap>
-          <Surface tone="card" movement="arrival" radius="large" padding="lg">
-            <ScanGrid columns={2} min="18rem">
-              <Typography as="h2" variant="h2" cadence="dense" measure="title">
-                {miniCourseContent.bodyScan.title}
-              </Typography>
+        <BodyScanSurface
+          tone="card"
+          movement="arrival"
+          radius="large"
+          padding="lg"
+        >
+          <ScanGrid columns={2} min="18rem">
+            <Typography as="h2" variant="h2" cadence="dense" measure="title">
+              {miniCourseContent.bodyScan.title}
+            </Typography>
 
-              <ActionSlot>
-                <Button
-                  type="button"
-                  variant="secondary"
-                  onClick={() => setIsBodyScanOpen(true)}
-                >
-                  {miniCourseContent.bodyScan.action}
-                </Button>
-              </ActionSlot>
-            </ScanGrid>
-          </Surface>
-        </BodyScanWrap>
+            <ActionSlot>
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={() => setIsBodyScanOpen(true)}
+              >
+                {miniCourseContent.bodyScan.action}
+              </Button>
+            </ActionSlot>
+          </ScanGrid>
+        </BodyScanSurface>
 
         <AfterPractice>
           <AfterPracticeStack>
@@ -112,9 +112,8 @@ const MiniCourseSection = ({}: Props) => {
               cadence="open"
               measure="prose"
             >
-              <HighlightText accent="axisOpening">Atem</HighlightText>,
-              Wahrnehmung und{' '}
-              <HighlightText accent="axisDensity">Body Scan</HighlightText> sind
+              <HighlightText accent="breath">Atem</HighlightText>, Wahrnehmung
+              und <HighlightText accent="qigong">Body Scan</HighlightText> sind
               einfache Zugänge. Egal, wo du eben warst — dieser kleine Wechsel
               zählt.
             </Typography>
@@ -128,9 +127,7 @@ const MiniCourseSection = ({}: Props) => {
             >
               Ich mache keine Heilversprechen. Aber ich bin davon überzeugt,
               dass{' '}
-              <HighlightText accent="axisFlow">
-                regelmäßige Praxis
-              </HighlightText>{' '}
+              <HighlightText accent="daoyin">regelmäßige Praxis</HighlightText>{' '}
               eine echte Entspannungsfähigkeit aufbauen kann. Nicht erst dann,
               wenn man schon müde, gereizt oder abgebrannt ist.
             </Typography>
@@ -142,7 +139,7 @@ const MiniCourseSection = ({}: Props) => {
               cadence="open"
               measure="prose"
             >
-              <HighlightText accent="axisTension">Prävention</HighlightText> ist
+              <HighlightText accent="taiji">Prävention</HighlightText> ist
               nichts, was man sich für später aufspart. Sie ist ein Muster im
               Alltag: kurz innehalten, wahrnehmen, nachregulieren, bevor der
               Körper nur noch im Crash antwortet.
@@ -156,7 +153,7 @@ const MiniCourseSection = ({}: Props) => {
               measure="prose"
             >
               Aus diesem Anfang kann{' '}
-              <HighlightText accent="axisFlow">Praxis</HighlightText> werden:
+              <HighlightText accent="daoyin">Praxis</HighlightText> werden:
               Yoga, Qigong, Taijiquan, Meditation, Entspannung. Nicht als
               Etiketten, sondern als Wege, den eigenen Zustand besser zu lesen
               und mit ihm zu arbeiten.
@@ -182,42 +179,60 @@ const MiniCourseSection = ({}: Props) => {
           onClose={() => setIsBodyScanOpen(false)}
         />
       ) : null}
-    </Section>
+    </MiniCourseShell>
   )
 }
+
+const MiniCourseShell = styled(Section)`
+  background: linear-gradient(
+    180deg,
+    #2c4351 0%,
+    #6f8585 36%,
+    ${({ theme }) => theme.roles.movement.arrival.field} 70%,
+    ${({ theme }) => theme.roles.movement.arrival.card} 100%
+  );
+`
 
 const CourseFlow = styled.div`
   display: grid;
   gap: ${({ theme }) => theme.layout.flow.region};
+  width: 100%;
+  min-width: 0;
 `
 
 const ArrivalStage = styled.div`
   display: grid;
-  width: min(100%, 72rem);
-  margin-inline: auto;
-  gap: ${({ theme }) => theme.layout.flow.cluster};
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    gap: ${({ theme }) => theme.layout.flow.region};
-  }
+  gap: ${({ theme }) => theme.layout.flow.region};
+  min-width: 0;
 `
 
 const Hero = styled.header`
   display: grid;
   gap: ${({ theme }) => theme.layout.flow.block};
-  width: min(100%, 38rem);
+  max-width: 38rem;
+  min-width: 0;
+  color: ${({ theme }) => theme.roles.movement.arrival.textInverse};
+
+  h1,
+  p {
+    color: inherit;
+  }
 `
 
 const BreathingArea = styled.div`
   display: grid;
   place-items: center;
-  width: min(100%, 46rem);
-  margin-inline: auto;
+  min-width: 0;
 `
 
-const BodyScanWrap = styled.div`
-  width: min(100%, 72rem);
-  margin-inline: auto;
+const BodyScanSurface = styled(Surface)`
+  border: 1px solid
+    color-mix(
+      in srgb,
+      ${({ theme }) => theme.roles.movement.arrival.border} 52%,
+      transparent
+    );
+  background: ${({ theme }) => theme.roles.movement.arrival.card};
 `
 
 const ScanGrid = styled(Grid)`
@@ -228,7 +243,7 @@ const ScanGrid = styled(Grid)`
 const ActionSlot = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     justify-content: flex-end;
@@ -236,7 +251,8 @@ const ActionSlot = styled.div`
 `
 
 const AfterPractice = styled.article`
-  width: min(100%, 64ch);
+  max-width: 64ch;
+  min-width: 0;
   margin-inline: auto;
 `
 

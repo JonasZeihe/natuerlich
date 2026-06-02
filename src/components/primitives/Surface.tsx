@@ -16,7 +16,6 @@ import type { MovementKey, SurfaceToneKey } from '@/design/theme'
 
 type SurfacePadding = 'none' | 'sm' | 'md' | 'lg'
 type SurfaceRadius = 'none' | 'small' | 'medium' | 'large' | 'pill'
-type SurfaceWeight = 'quiet' | 'steady' | 'strong'
 
 type Props = {
   tone?: SurfaceToneKey
@@ -24,7 +23,6 @@ type Props = {
   radius?: SurfaceRadius
   padding?: SurfacePadding
   bordered?: boolean
-  weight?: SurfaceWeight
   asset?: AssetConsumerSpec | null
   assets?: readonly PositionedAssetSpec[] | null
   children?: ReactNode
@@ -35,33 +33,8 @@ type StyledProps = {
   $padding: SurfacePadding
   $bordered: boolean
   $tone: SurfaceToneKey
-  $movement: MovementKey
-  $weight: SurfaceWeight
+  $movement?: MovementKey
   $assetBleeds: boolean
-}
-
-const resolveWeightStyles = (
-  weight: SurfaceWeight,
-  border: string,
-  bordered: boolean
-) => {
-  if (!bordered || weight === 'quiet') {
-    return css`
-      box-shadow: none;
-    `
-  }
-
-  if (weight === 'strong') {
-    return css`
-      box-shadow:
-        inset 0 1px 0 ${border},
-        0 0 0 1px ${border};
-    `
-  }
-
-  return css`
-    box-shadow: inset 0 1px 0 ${border};
-  `
 }
 
 const Base = styled.div<StyledProps>`
@@ -71,17 +44,14 @@ const Base = styled.div<StyledProps>`
   overflow: ${({ $assetBleeds }) => ($assetBleeds ? 'visible' : 'clip')};
   padding: ${({ theme, $padding }) => theme.layout.surface[$padding]};
 
-  ${({ theme, $tone, $movement, $bordered, $weight }) => {
+  ${({ theme, $tone, $movement, $bordered }) => {
     const resolved = theme.getSurfaceTone($tone, $movement)
     const hasBorder = $bordered && resolved.border !== 'transparent'
 
     return css`
       background: ${resolved.bg};
       color: ${resolved.fg};
-      border: ${hasBorder ? `1px solid ${resolved.border}` : 'none'};
-      backdrop-filter: ${resolved.backdrop};
-      -webkit-backdrop-filter: ${resolved.backdrop};
-      ${resolveWeightStyles($weight, resolved.border, hasBorder)}
+      border: ${hasBorder ? `1px solid ${resolved.border}` : '0'};
     `
   }}
 `
@@ -113,11 +83,10 @@ const renderAssets = (
 const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
   {
     tone = 'bare',
-    movement = 'arrival',
+    movement,
     radius = 'none',
     padding = 'none',
     bordered = false,
-    weight = 'quiet',
     asset,
     assets,
     children,
@@ -133,7 +102,6 @@ const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
       $radius={radius}
       $padding={padding}
       $bordered={bordered}
-      $weight={weight}
       $assetBleeds={hasBleedingAsset(asset, assets)}
       {...rest}
     >

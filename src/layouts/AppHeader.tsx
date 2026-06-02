@@ -691,7 +691,7 @@ const navLinkStyles = css<{ $active: boolean }>`
   border: 1px solid transparent;
   background: transparent;
   color: ${({ theme, $active }) =>
-    $active ? theme.getEnergyRole('density').text : theme.roles.text.secondary};
+    $active ? theme.getEnergyRole('density').text : theme.color.text.soft};
   font-size: ${({ theme }) => theme.typography.fontSize.small};
   font-weight: ${({ theme, $active }) =>
     $active

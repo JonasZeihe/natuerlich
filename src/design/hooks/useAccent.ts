@@ -2,47 +2,22 @@
 'use client'
 
 import { useTheme } from 'styled-components'
-import type {
-  AppTheme,
-  AxisKey,
-  EnergyInput,
-  EnergyMix,
-  MovementKey,
-} from '@/design/theme'
+import type { AxisKey } from '@/design/theme'
 
-export type AccentKey = AxisKey
-export type AccentInfo = ReturnType<AppTheme['getAxisRole']>
-export type MovementInfo = ReturnType<AppTheme['getMovementRole']>
-
-export type AccentStyles = {
-  background: string
-  color: string
-  borderColor: string
-  focusRing: string
-}
-
-export default function useAccent(key: AccentKey): AccentInfo {
-  const theme = useTheme() as AppTheme
-  return theme.getAxisRole(key)
-}
-
-export function useEnergy(input?: EnergyInput, mix?: EnergyMix) {
-  const theme = useTheme() as AppTheme
-  return theme.getEnergyRole(input, mix)
-}
-
-export function useMovement(key: MovementKey): MovementInfo {
-  const theme = useTheme() as AppTheme
-  return theme.getMovementRole(key)
-}
-
-export function useAccentStyles(key: AccentKey): AccentStyles {
-  const accent = useAccent(key)
+export default function useAccent(key: AxisKey = 'axisOpening') {
+  const theme = useTheme()
+  const role = theme.getAxisRole(key)
 
   return {
-    background: accent.surface,
-    color: accent.contrast,
-    borderColor: accent.border,
-    focusRing: accent.focusRing,
+    key,
+    text: role.text,
+    fill: role.fill,
+    fillHover: role.fillHover,
+    fillActive: role.fillActive,
+    surface: role.surface,
+    surfaceStrong: role.surfaceStrong,
+    border: role.border,
+    contrast: role.contrast,
+    focusRing: role.focusRing,
   }
 }

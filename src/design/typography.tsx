@@ -7,12 +7,12 @@ import {
   type ReactNode,
 } from 'react'
 import styled, { css, type DefaultTheme } from 'styled-components'
-import type { AxisKey } from '@/design/theme'
+import type { AppTheme } from '@/design/theme'
 
 type Variant = 'h1' | 'h2' | 'h3' | 'subtitle' | 'body' | 'caption'
 type Align = 'left' | 'right' | 'center' | 'justify'
 type Tone = 'neutral' | 'soft' | 'strong'
-type SemanticColor = 'primary' | 'secondary' | 'subtle' | 'link' | 'linkHover'
+type SemanticColor = keyof AppTheme['color']['text']
 type Measure = 'none' | 'compact' | 'title' | 'prose' | 'wide' | 'full'
 type Cadence = 'neutral' | 'open' | 'dense'
 
@@ -21,7 +21,6 @@ type TypographyProps<T extends ElementType = 'span'> = {
   variant?: Variant
   align?: Align
   color?: SemanticColor
-  accent?: AxisKey
   tone?: Tone
   measure?: Measure
   cadence?: Cadence
@@ -92,9 +91,7 @@ const variantCSS = (variant: Variant, theme: DefaultTheme) => {
 }
 
 const measureCSS = (measure: Measure, theme: DefaultTheme) => {
-  if (measure === 'none') {
-    return ''
-  }
+  if (measure === 'none') return ''
 
   if (measure === 'full') {
     return css`
@@ -125,19 +122,10 @@ const cadenceCSS = (cadence: Cadence, variant: Variant) => {
   return ''
 }
 
-const accentCSS = (accent: AxisKey, theme: DefaultTheme) => {
-  const axis = theme.getAxisRole(accent)
-
-  return css`
-    color: ${axis.text};
-  `
-}
-
 type StyledProps = {
   $variant: Variant
   $align: Align
   $semanticColor?: SemanticColor
-  $accent?: AxisKey
   $tone: Tone
   $measure: Measure
   $cadence: Cadence
@@ -152,26 +140,22 @@ const StyledTypography = styled.span<StyledProps>`
   ${({ $measure, theme }) => measureCSS($measure, theme)}
   ${({ $cadence, $variant }) => cadenceCSS($cadence, $variant)}
 
-  ${({ theme, $semanticColor, $accent, $tone }) => {
+  ${({ theme, $semanticColor, $tone }) => {
     if ($semanticColor) {
       return css`
-        color: ${theme.roles.text[$semanticColor]};
+        color: ${theme.color.text[$semanticColor]};
       `
-    }
-
-    if ($accent) {
-      return accentCSS($accent, theme)
     }
 
     if ($tone === 'soft') {
       return css`
-        color: ${theme.roles.text.subtle};
+        color: ${theme.color.text.soft};
       `
     }
 
     if ($tone === 'strong') {
       return css`
-        color: ${theme.roles.text.primary};
+        color: ${theme.color.text.primary};
       `
     }
 
@@ -181,13 +165,13 @@ const StyledTypography = styled.span<StyledProps>`
   }}
 
   a {
-    color: ${({ theme }) => theme.roles.text.link};
-    text-decoration-color: ${({ theme }) => theme.roles.text.link};
+    color: ${({ theme }) => theme.color.text.link};
+    text-decoration-color: ${({ theme }) => theme.color.text.link};
   }
 
   a:hover {
-    color: ${({ theme }) => theme.roles.text.linkHover};
-    text-decoration-color: ${({ theme }) => theme.roles.text.linkHover};
+    color: ${({ theme }) => theme.color.text.linkHover};
+    text-decoration-color: ${({ theme }) => theme.color.text.linkHover};
   }
 
   strong {
@@ -205,7 +189,6 @@ export default function Typography<T extends ElementType = 'span'>({
   variant = 'body',
   align = 'left',
   color,
-  accent,
   tone = 'neutral',
   measure = 'none',
   cadence = 'neutral',
@@ -221,7 +204,6 @@ export default function Typography<T extends ElementType = 'span'>({
       $variant={variant}
       $align={align}
       $semanticColor={color}
-      $accent={accent}
       $tone={tone}
       $measure={measure}
       $cadence={cadence}
