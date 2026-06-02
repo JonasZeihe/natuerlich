@@ -8,23 +8,22 @@ import type {
   AssetConsumerSpec,
   PositionedAssetSpec,
 } from '@/components/assets/registry'
-import type {
-  EnergyInput,
-  EnergyMix,
-  MovementKey,
-  SectionToneKey,
-} from '@/design/theme'
+import type { EnergyInput, EnergyMix, SectionToneKey } from '@/design/theme'
 import Container from './Container'
 
 type ContainerSize = 'narrow' | 'default' | 'wide' | 'full'
 type RhythmKey = 'compact' | 'default' | 'spacious'
 type SectionVariant = 'intro' | 'body' | 'outro'
-type SectionContent = 'default' | 'left' | 'center' | 'right'
 type SectionFrame = 'content' | 'screen'
+type RailSize = 'prose' | 'content' | 'wide' | 'full'
+type RailAlign = 'start' | 'center' | 'end'
+type LegacyContent = 'default' | 'left' | 'center' | 'right'
 
 type Props = {
   container?: ContainerSize
-  content?: SectionContent
+  rail?: RailSize
+  align?: RailAlign
+  content?: LegacyContent
   frame?: SectionFrame
   padY?: boolean
   header?: ReactNode
@@ -34,7 +33,6 @@ type Props = {
   rhythm?: RhythmKey
   variant?: SectionVariant
   tone?: SectionToneKey
-  movement?: MovementKey
   energy?: EnergyInput
   mix?: EnergyMix
   bleed?: boolean
@@ -49,6 +47,20 @@ const RHYTHM_BY_VARIANT: Record<SectionVariant, RhythmKey> = {
   outro: 'compact',
 }
 
+const LEGACY_ALIGN: Record<LegacyContent, RailAlign> = {
+  default: 'center',
+  left: 'start',
+  center: 'center',
+  right: 'end',
+}
+
+const RAIL_WIDTH: Record<RailSize, string> = {
+  prose: '44rem',
+  content: '56rem',
+  wide: '72rem',
+  full: 'none',
+}
+
 const resolveRhythm = (
   variant: SectionVariant,
   override?: RhythmKey
@@ -56,60 +68,32 @@ const resolveRhythm = (
 
 const Outer = styled.section<{
   $tone: SectionToneKey
-  $energy?: EnergyInput
-  $mix?: EnergyMix
   $bleed: boolean
 }>`
   position: relative;
   width: 100%;
   isolation: isolate;
+  background: ${({ theme, $tone }) => theme.color.section[$tone]};
 
-  ${({ theme, $tone, $energy, $mix, $bleed }) => {
-    const tone = theme.getSectionTone($tone, $energy, $mix)
-
-    return css`
-      ${$bleed
-        ? css`
-            margin-inline: calc(${theme.layout.inset.page} * -1);
-          `
-        : ''}
-
-      background: ${tone.base};
-
-      &::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        z-index: 0;
-        opacity: ${tone.washOpacity * 0.72};
-        background: linear-gradient(
-          180deg,
-          ${tone.wash} 0%,
-          transparent 22%,
-          transparent 78%,
-          ${tone.wash} 100%
-        );
-      }
-    `
-  }}
+  ${({ theme, $bleed }) =>
+    $bleed
+      ? css`
+          margin-inline: calc(${theme.layout.inset.page} * -1);
+        `
+      : ''}
 `
 
 const Inner = styled.div<{
   $padY: boolean
   $rhythm: RhythmKey
-  $tone: SectionToneKey
-  $energy?: EnergyInput
-  $mix?: EnergyMix
   $frame: SectionFrame
 }>`
   position: relative;
   z-index: 1;
   width: 100%;
 
-  ${({ theme, $padY, $rhythm, $tone, $energy, $mix, $frame }) => {
+  ${({ theme, $padY, $rhythm, $frame }) => {
     const sectionSpace = theme.layout.section[$rhythm]
-    const tone = theme.getSectionTone($tone, $energy, $mix)
 
     return css`
       ${$frame === 'screen'
@@ -122,69 +106,55 @@ const Inner = styled.div<{
 
       ${$padY
         ? css`
-            padding-block: calc(${sectionSpace} * ${tone.padScale});
+            padding-block: ${sectionSpace};
 
             @media (max-width: ${theme.breakpoints.md}) {
-              padding-block: calc(${sectionSpace} * ${tone.padScale} * 0.9);
+              padding-block: calc(${sectionSpace} * 0.82);
             }
 
             @media (max-width: ${theme.breakpoints.sm}) {
-              padding-block: calc(${sectionSpace} * ${tone.padScale} * 0.82);
+              padding-block: calc(${sectionSpace} * 0.72);
             }
           `
         : ''}
     `
   }}
-
-  > * {
-    width: 100%;
-  }
 `
 
-const Content = styled.div<{ $content: SectionContent }>`
+const Rail = styled.div<{
+  $rail: RailSize
+  $align: RailAlign
+  $rhythm: RhythmKey
+}>`
+  display: grid;
   width: 100%;
   min-width: 0;
+  gap: ${({ theme, $rhythm }) =>
+    $rhythm === 'compact'
+      ? theme.layout.flow.cluster
+      : theme.layout.flow.region};
 
-  ${({ theme, $content }) => {
-    if ($content === 'left') {
-      return css`
-        max-width: 48rem;
-        margin-right: auto;
-        margin-left: clamp(${theme.layout.inset.page}, 7vw, 7rem);
+  ${({ $rail }) =>
+    $rail === 'full'
+      ? css`
+          max-width: none;
+        `
+      : css`
+          max-width: ${RAIL_WIDTH[$rail]};
+        `}
 
-        @media (max-width: ${theme.breakpoints.md}) {
-          max-width: 42rem;
-          margin-left: 0;
-        }
-      `
-    }
-
-    if ($content === 'center') {
-      return css`
-        max-width: 48rem;
-        margin-inline: auto;
-
-        @media (max-width: ${theme.breakpoints.md}) {
-          max-width: 42rem;
-        }
-      `
-    }
-
-    if ($content === 'right') {
-      return css`
-        max-width: 48rem;
-        margin-left: auto;
-        margin-right: clamp(${theme.layout.inset.page}, 7vw, 7rem);
-
-        @media (max-width: ${theme.breakpoints.md}) {
-          max-width: 42rem;
-          margin-right: 0;
-        }
-      `
-    }
-
-    return ''
-  }}
+  ${({ $align }) =>
+    $align === 'start'
+      ? css`
+          margin-right: auto;
+        `
+      : $align === 'end'
+        ? css`
+            margin-left: auto;
+          `
+        : css`
+            margin-inline: auto;
+          `}
 `
 
 const renderAssets = (
@@ -200,6 +170,8 @@ const renderAssets = (
 
 export default function Section({
   container = 'default',
+  rail = 'wide',
+  align,
   content = 'default',
   frame = 'content',
   padY = true,
@@ -210,8 +182,8 @@ export default function Section({
   rhythm,
   variant = 'body',
   tone = 'default',
-  energy,
-  mix,
+  energy: _energy,
+  mix: _mix,
   bleed = false,
   asset,
   assets,
@@ -219,6 +191,7 @@ export default function Section({
   ...rest
 }: Props) {
   const resolvedRhythm = resolveRhythm(variant, rhythm)
+  const resolvedAlign = align ?? LEGACY_ALIGN[content]
   const labelledBy = titleId ?? rest['aria-labelledby']
   const accessibleLabel = ariaLabel ?? rest['aria-label']
   const sectionAriaProps =
@@ -229,31 +202,17 @@ export default function Section({
         : {}
 
   return (
-    <Outer
-      $tone={tone}
-      $energy={energy}
-      $mix={mix}
-      $bleed={bleed}
-      {...rest}
-      {...sectionAriaProps}
-    >
+    <Outer $tone={tone} $bleed={bleed} {...rest} {...sectionAriaProps}>
       {asset ? <AnchoredAsset {...asset} placement="section" /> : null}
       {renderAssets(assets)}
 
-      <Inner
-        $padY={padY}
-        $rhythm={resolvedRhythm}
-        $tone={tone}
-        $energy={energy}
-        $mix={mix}
-        $frame={frame}
-      >
+      <Inner $padY={padY} $rhythm={resolvedRhythm} $frame={frame}>
         <Container max={container}>
-          <Content $content={content}>
+          <Rail $rail={rail} $align={resolvedAlign} $rhythm={resolvedRhythm}>
             {header}
             {children}
             {footer}
-          </Content>
+          </Rail>
         </Container>
       </Inner>
     </Outer>

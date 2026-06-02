@@ -29,7 +29,7 @@ const Overlay = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${({ theme }) => theme.roles.overlay.scrim};
+  background: ${({ theme }) => theme.color.surface.backdrop};
   animation: ${fadeIn} 0.2s ease-out;
 `
 
@@ -81,7 +81,7 @@ const ControlBase = styled.button`
   }
 
   &:focus-visible {
-    outline: 2px solid ${({ theme }) => theme.roles.focus.ring};
+    outline: 2px solid ${({ theme }) => theme.color.border.focus};
     outline-offset: 2px;
   }
 `

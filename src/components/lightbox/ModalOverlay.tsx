@@ -35,7 +35,7 @@ const Overlay = styled.div`
   align-items: center;
   justify-content: center;
   padding: ${({ theme }) => theme.layout.inset.page};
-  background: ${({ theme }) => theme.roles.overlay.scrim};
+  background: ${({ theme }) => theme.color.surface.backdrop};
   backdrop-filter: blur(1.25px) saturate(1.02);
   animation: ${fadeIn} 0.2s cubic-bezier(0.55, 0.13, 0.45, 1.05);
   -webkit-tap-highlight-color: transparent;
@@ -59,7 +59,7 @@ const Content = styled.div`
   animation: ${popIn} 0.22s cubic-bezier(0.61, 0.13, 0.38, 1.15);
   scrollbar-width: thin;
   scrollbar-color: ${({ theme }) =>
-    `${theme.roles.focus.ring} ${theme.roles.surface.field}`};
+    `${theme.color.border.focus} ${theme.roles.surface.field}`};
   overscroll-behavior: contain;
 
   &::-webkit-scrollbar {
@@ -72,7 +72,7 @@ const Content = styled.div`
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.roles.focus.ring};
+    background-color: ${({ theme }) => theme.color.border.focus};
     border-radius: ${({ theme }) => theme.borderRadius.large};
     border: 2px solid ${({ theme }) => theme.roles.surface.field};
   }
@@ -118,7 +118,7 @@ const Close = styled.button`
     color: ${({ theme }) => theme.roles.text.primary};
     border-color: ${({ theme }) => theme.roles.border.strong};
     outline: none;
-    box-shadow: 0 0 0 3px ${({ theme }) => theme.roles.focus.ring};
+    box-shadow: 0 0 0 3px ${({ theme }) => theme.color.border.focus};
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {

@@ -95,7 +95,7 @@ const FooterLink = styled(Link)`
   border-radius: ${({ theme }) => theme.borderRadius.small};
   text-decoration: none;
   border: none;
-  color: ${({ theme }) => theme.roles.text.secondary};
+  color: ${({ theme }) => theme.color.text.soft};
   background: transparent;
   transition: ${({ theme }) => theme.motion.css.link};
 
@@ -125,7 +125,7 @@ const ToTop = styled.button`
   justify-content: center;
   align-self: flex-end;
   background: ${({ theme }) => theme.roles.surface.card};
-  color: ${({ theme }) => theme.roles.text.secondary};
+  color: ${({ theme }) => theme.color.text.soft};
   border: 1px solid ${({ theme }) => theme.roles.border.subtle};
   border-radius: ${({ theme }) => theme.borderRadius.pill};
   box-shadow: none;

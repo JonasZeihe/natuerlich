@@ -20,37 +20,37 @@ const GlobalStyles = createGlobalStyle`
     color-scheme: light;
     text-rendering: optimizeLegibility;
     scroll-behavior: ${({ theme }) => theme.motion.scroll.behavior};
-    background: ${({ theme }) => theme.roles.surface.canvas};
+    background: ${({ theme }) => theme.color.surface.canvas};
   }
 
   body {
     font-family: ${({ theme }) => theme.typography.fontFamily.primary};
     font-size: ${({ theme }) => theme.typography.fontSize.body};
     line-height: ${({ theme }) => theme.typography.lineHeight.normal};
-    color: ${({ theme }) => theme.roles.text.primary};
-    background: ${({ theme }) => theme.roles.surface.canvas};
+    color: ${({ theme }) => theme.color.text.primary};
+    background: ${({ theme }) => theme.color.surface.canvas};
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   a {
-    color: ${({ theme }) => theme.roles.text.link};
+    color: ${({ theme }) => theme.color.text.link};
     text-decoration: underline;
     text-underline-offset: 0.16em;
     text-decoration-thickness: 0.06em;
-    text-decoration-color: ${({ theme }) => theme.roles.text.link};
+    text-decoration-color: ${({ theme }) => theme.color.text.link};
     transition: ${({ theme }) => theme.motion.css.link};
   }
 
   a:hover,
   a:focus-visible {
-    color: ${({ theme }) => theme.roles.text.linkHover};
-    text-decoration-color: ${({ theme }) => theme.roles.text.linkHover};
+    color: ${({ theme }) => theme.color.text.linkHover};
+    text-decoration-color: ${({ theme }) => theme.color.text.linkHover};
   }
 
   ::selection {
-    background: ${({ theme }) => theme.roles.focus.ring};
-    color: ${({ theme }) => theme.roles.text.inverse};
+    background: ${({ theme }) => theme.color.border.focus};
+    color: ${({ theme }) => theme.color.text.inverse};
   }
 
   img, svg, video, canvas, audio, iframe, embed, object {
@@ -70,20 +70,20 @@ const GlobalStyles = createGlobalStyle`
   }
 
   input, select, textarea {
-    background: ${({ theme }) => theme.roles.surface.field};
-    border: 1px solid ${({ theme }) => theme.roles.border.subtle};
+    background: ${({ theme }) => theme.color.surface.field};
+    border: 1px solid ${({ theme }) => theme.color.border.subtle};
     border-radius: ${({ theme }) => theme.borderRadius.small};
-    color: ${({ theme }) => theme.roles.text.primary};
+    color: ${({ theme }) => theme.color.text.primary};
     box-shadow: none;
   }
 
   ::placeholder {
-    color: ${({ theme }) => theme.roles.text.subtle};
+    color: ${({ theme }) => theme.color.text.subtle};
     opacity: 1;
   }
 
   :focus-visible {
-    outline: 2px solid ${({ theme }) => theme.roles.focus.ring};
+    outline: 2px solid ${({ theme }) => theme.color.border.focus};
     outline-offset: 2px;
   }
 

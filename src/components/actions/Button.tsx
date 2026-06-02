@@ -36,7 +36,7 @@ const baseStyles = css`
 
   &:focus-visible {
     outline: 2px solid transparent;
-    box-shadow: 0 0 0 3px ${({ theme }) => theme.roles.focus.ring};
+    box-shadow: 0 0 0 3px ${({ theme }) => theme.color.border.focus};
   }
 
   &:disabled,
@@ -53,17 +53,17 @@ const baseStyles = css`
 
 const roleStyles = css<{ $variant: Variant }>`
   ${({ theme, $variant }) => {
-    const role = theme.roles.interactive.button[$variant]
+    const role = theme.color.action[$variant]
 
     return css`
-      color: ${role.fg};
-      background-color: ${role.bg};
+      color: ${role.text};
+      background-color: ${role.background};
       border-color: ${role.border};
       box-shadow: none;
 
       &:hover {
-        color: ${role.hoverFg};
-        background-color: ${role.hoverBg};
+        color: ${role.hoverText};
+        background-color: ${role.hoverBackground};
         border-color: ${role.hoverBorder};
         transform: ${$variant === 'link'
           ? 'none'
@@ -76,16 +76,16 @@ const roleStyles = css<{ $variant: Variant }>`
       }
 
       &:active {
-        color: ${role.activeFg};
-        background-color: ${role.activeBg};
-        border-color: ${role.activeBorder};
+        color: ${role.hoverText};
+        background-color: ${role.hoverBackground};
+        border-color: ${role.hoverBorder};
         transform: translateY(0);
       }
 
       &:disabled,
       &[aria-disabled='true'] {
-        color: ${role.disabledFg};
-        background-color: ${role.disabledBg};
+        color: ${role.disabledText};
+        background-color: ${role.disabledBackground};
         border-color: ${role.disabledBorder};
         box-shadow: none;
       }

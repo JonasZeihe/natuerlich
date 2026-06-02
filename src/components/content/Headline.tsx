@@ -26,73 +26,75 @@ const Headline = ({
   accent,
   weight = 'normal',
 }: Props) => (
-  <Shell $weight={weight}>
-    <HeadlineStack $weight={weight}>
+  <Shell $weight={weight} $accent={accent}>
+    <HeadlineStack>
       <Title
         as="h2"
         variant={weight === 'poster' ? 'h1' : 'h2'}
         id={titleId}
-        accent={accent}
         cadence="dense"
-        measure="title"
-        $weight={weight}
+        measure="none"
+        $accent={accent}
       >
         {title}
       </Title>
 
       {subheadline ? (
-        <Typography
+        <Text
           as="p"
           variant="subtitle"
           tone={weight === 'poster' ? 'strong' : 'soft'}
           cadence="open"
-          measure="prose"
         >
           {subheadline}
-        </Typography>
+        </Text>
       ) : null}
 
       {children ? (
-        <Typography
+        <Text
           as="p"
           variant={weight === 'poster' ? 'subtitle' : 'body'}
           tone="soft"
           cadence="open"
-          measure="prose"
         >
           {children}
-        </Typography>
+        </Text>
       ) : null}
     </HeadlineStack>
   </Shell>
 )
 
-const Shell = styled.header<{ $weight: Weight }>`
-  width: min(100%, 58rem);
+const Shell = styled.header<{ $weight: Weight; $accent?: AxisKey }>`
+  width: 100%;
+  min-width: 0;
 
-  ${({ theme, $weight }) =>
+  ${({ theme, $weight, $accent }) =>
     $weight === 'poster'
       ? css`
-          width: min(100%, 68rem);
-          max-width: 68rem;
-          padding-left: clamp(1rem, 1.8vw, 1.75rem);
-          border-left: 3px solid ${theme.roles.border.accent};
+          padding-left: clamp(0.9rem, 1.6vw, 1.4rem);
+          border-left: 3px solid
+            ${theme.getAxisRole($accent ?? 'axisOpening').fill};
         `
       : ''}
 `
 
-const HeadlineStack = styled(Stack)<{ $weight: Weight }>`
-  gap: ${({ theme, $weight }) =>
-    $weight === 'poster' ? theme.layout.flow.block : theme.layout.flow.block};
+const HeadlineStack = styled(Stack)`
+  gap: ${({ theme }) => theme.layout.flow.block};
 `
 
-const Title = styled(Typography)<{ $weight: Weight }>`
-  ${({ $weight }) =>
-    $weight === 'poster'
+const Title = styled(Typography)<{ $accent?: AxisKey }>`
+  max-width: 24ch;
+
+  ${({ theme, $accent }) =>
+    $accent
       ? css`
-          max-width: 17ch;
+          color: ${theme.getAxisRole($accent).text};
         `
       : ''}
+`
+
+const Text = styled(Typography)`
+  max-width: 64ch;
 `
 
 export default Headline

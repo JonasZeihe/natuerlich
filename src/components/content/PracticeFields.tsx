@@ -2,19 +2,27 @@
 'use client'
 
 import { type ReactNode } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import Button from '@/components/actions/Button'
-import ContentRail, { ContentRailItem } from '@/components/content/ContentRail'
 import Grid from '@/components/primitives/Grid'
 import Stack from '@/components/primitives/Stack'
 import Surface from '@/components/primitives/Surface'
 import type { MovementKey } from '@/design/theme'
 import Typography from '@/design/typography'
 
+type PracticeTone =
+  | 'breath'
+  | 'release'
+  | 'attention'
+  | 'qigong'
+  | 'yoga'
+  | 'taiji'
+
 type Step = {
   label: string
   title: ReactNode
   body: ReactNode
+  tone?: PracticeTone
 }
 
 type MethodTerm = {
@@ -33,6 +41,7 @@ type Way = {
   label: string
   title: ReactNode
   body: ReactNode
+  tone?: PracticeTone
 }
 
 type Props = {
@@ -49,6 +58,18 @@ type Props = {
 
 const blogUrl = 'https://ziran.onrender.com/'
 
+const inferPracticeTone = (label: string): PracticeTone => {
+  if (label === 'Atem') return 'breath'
+  if (label === 'Entspannung') return 'release'
+  if (label === 'Achtsamkeit') return 'attention'
+  if (label === 'Qigong') return 'qigong'
+  if (label === 'Yoga') return 'yoga'
+  return 'taiji'
+}
+
+const getPracticeTone = (item: Pick<Step, 'label' | 'tone'>): PracticeTone =>
+  item.tone ?? inferPracticeTone(item.label)
+
 const PracticeFields = ({
   intro,
   steps,
@@ -62,56 +83,27 @@ const PracticeFields = ({
 }: Props) => (
   <PracticeStack aria-label={mobileAriaLabel}>
     <IntroCopy>
-      <Typography
-        as="p"
-        variant="body"
-        tone="soft"
-        cadence="open"
-        measure="wide"
-      >
+      <Typography as="p" variant="body" tone="soft" cadence="open">
         {intro.body}
       </Typography>
     </IntroCopy>
 
-    <MobileEditorialStack>
+    <PrincipleGrid>
       {steps.map((item) => (
-        <EditorialItem key={item.label}>
-          <Typography as="h3" variant="h3" color="primary">
+        <PrincipleItem key={item.label} $tone={getPracticeTone(item)}>
+          <Typography as="h3" variant="h3">
             {item.title}
           </Typography>
 
-          <Typography as="p" variant="body" tone="soft" cadence="open">
+          <SoftText as="p" variant="body" cadence="open">
             {item.body}
-          </Typography>
-        </EditorialItem>
+          </SoftText>
+        </PrincipleItem>
       ))}
-    </MobileEditorialStack>
+    </PrincipleGrid>
 
-    <DesktopEditorialRail>
-      <ContentRail
-        columns={3}
-        min="18rem"
-        itemWidth="min(84vw, 25rem)"
-        max="64rem"
-        variant="editorial"
-        align="start"
-      >
-        {steps.map((item) => (
-          <PracticeCard key={item.label} mode="line" stretch={false}>
-            <Typography as="h3" variant="h3" color="primary">
-              {item.title}
-            </Typography>
-
-            <Typography as="p" variant="body" tone="soft" cadence="open">
-              {item.body}
-            </Typography>
-          </PracticeCard>
-        ))}
-      </ContentRail>
-    </DesktopEditorialRail>
-
-    <ResultFlow>
-      <ResultPanel tone="quiet" movement={movement} radius="large" padding="lg">
+    <PanelGrid>
+      <ResultPanel tone="card" movement={movement} radius="large" padding="lg">
         <Stack gap={undefined}>
           <Typography as="h3" variant="h3" color="primary">
             {regulation.title}
@@ -129,7 +121,7 @@ const PracticeFields = ({
         </Stack>
       </ResultPanel>
 
-      <ResultPanel tone="quiet" movement={movement} radius="large" padding="lg">
+      <ResultPanel tone="card" movement={movement} radius="large" padding="lg">
         <Stack gap={undefined}>
           <Typography as="h3" variant="h3" color="primary">
             {result.title}
@@ -146,23 +138,25 @@ const PracticeFields = ({
           </Typography>
         </Stack>
       </ResultPanel>
-    </ResultFlow>
+    </PanelGrid>
 
     <MethodPanel tone="note" movement={movement} radius="large" padding="lg">
       <MethodStack>
-        <Typography as="h2" variant="h2" color="primary">
-          {method.title}
-        </Typography>
+        <MethodHeader>
+          <Typography as="h2" variant="h2" color="primary">
+            {method.title}
+          </Typography>
 
-        <Typography
-          as="p"
-          variant="body"
-          tone="soft"
-          cadence="open"
-          measure="wide"
-        >
-          {method.body}
-        </Typography>
+          <Typography
+            as="p"
+            variant="body"
+            tone="soft"
+            cadence="open"
+            measure="wide"
+          >
+            {method.body}
+          </Typography>
+        </MethodHeader>
 
         <MethodDefinition>
           <Typography as="h3" variant="subtitle" color="primary">
@@ -186,44 +180,21 @@ const PracticeFields = ({
       </MethodStack>
     </MethodPanel>
 
-    <MobileEditorialStack>
+    <PracticeWayGrid>
       {ways.map((way) => (
-        <EditorialItem key={way.label}>
-          <Typography as="h3" variant="h3" color="primary">
+        <PracticeCard key={way.label} $tone={getPracticeTone(way)}>
+          <Typography as="h3" variant="h3">
             {way.title}
           </Typography>
 
-          <Typography as="p" variant="body" tone="soft" cadence="open">
+          <SoftText as="p" variant="body" cadence="open">
             {way.body}
-          </Typography>
-        </EditorialItem>
+          </SoftText>
+        </PracticeCard>
       ))}
-    </MobileEditorialStack>
+    </PracticeWayGrid>
 
-    <DesktopEditorialRail>
-      <ContentRail
-        columns={3}
-        min="18rem"
-        itemWidth="min(84vw, 25rem)"
-        max="64rem"
-        variant="editorial"
-        align="start"
-      >
-        {ways.map((way) => (
-          <PracticeCard key={way.label} mode="line" stretch={false}>
-            <Typography as="h3" variant="h3" color="primary">
-              {way.title}
-            </Typography>
-
-            <Typography as="p" variant="body" tone="soft" cadence="open">
-              {way.body}
-            </Typography>
-          </PracticeCard>
-        ))}
-      </ContentRail>
-    </DesktopEditorialRail>
-
-    <Footer tone="note" movement={movement} radius="large" padding="lg">
+    <Footer tone="note" movement="nextStep" radius="large" padding="lg">
       <FooterGrid columns={2} min="18rem">
         <Stack gap={undefined}>
           <Typography as="h3" variant="h3" color="primary">
@@ -244,13 +215,11 @@ const PracticeFields = ({
         </Stack>
 
         <FooterAction>
-          <FooterActionText>
-            <Typography as="p" variant="body" tone="soft" cadence="open">
-              Wenn dich die Zusammenhänge interessieren: In meinem Blog erzähle
-              ich mehr über Stress, Praxis, meinen Weg und die Ideen hinter
-              dieser Arbeit.
-            </Typography>
-          </FooterActionText>
+          <Typography as="p" variant="body" tone="soft" cadence="open">
+            Wenn dich die Zusammenhänge interessieren: In meinem Blog erzähle
+            ich mehr über Stress, Praxis, meinen Weg und die Ideen hinter dieser
+            Arbeit.
+          </Typography>
 
           <FooterButtons>
             <Button variant="primary" onClick={onGoToIntegration}>
@@ -270,73 +239,149 @@ const PracticeFields = ({
 const PracticeStack = styled.div`
   display: grid;
   gap: ${({ theme }) => theme.layout.flow.region};
+  width: 100%;
+  min-width: 0;
 `
 
 const IntroCopy = styled.div`
-  width: min(100%, 58rem);
-  margin-inline: auto;
+  max-width: 64ch;
+  min-width: 0;
 `
 
-const MobileEditorialStack = styled.div`
+const practiceToneCSS = (tone: PracticeTone) => css`
+  ${({ theme }) => {
+    const { palette } = theme.foundations
+
+    const map = {
+      breath: {
+        background: 'transparent',
+        text: null,
+        soft: palette.inkSoft,
+        border: 'color-mix(in srgb, #B87336 38%, transparent)',
+      },
+      release: {
+        background: 'transparent',
+        text: null,
+        soft: palette.inkSoft,
+        border: 'color-mix(in srgb, #8D8B84 38%, transparent)',
+      },
+      attention: {
+        background: 'transparent',
+        text: null,
+        soft: palette.inkSoft,
+        border: 'color-mix(in srgb, #142B35 38%, transparent)',
+      },
+      qigong: {
+        background: palette.blueLight,
+        text: null,
+        soft: palette.inkSoft,
+        border: 'transparent',
+      },
+      yoga: {
+        background: palette.sandLight,
+        text: null,
+        soft: palette.inkSoft,
+        border: 'transparent',
+      },
+      taiji: {
+        background: palette.blueDeep,
+        text: palette.ivory,
+        soft: 'color-mix(in srgb, #F8F1E5 82%, transparent)',
+        border: 'transparent',
+      },
+    } satisfies Record<
+      PracticeTone,
+      {
+        background: string
+        text: string | null
+        soft: string
+        border: string
+      }
+    >
+
+    const colors = map[tone]
+
+    return css`
+      --practice-soft: ${colors.soft};
+
+      border-color: ${colors.border};
+      background: ${colors.background};
+      ${colors.text
+        ? css`
+            color: ${colors.text};
+          `
+        : ''}
+    `
+  }}
+`
+
+const SoftText = styled(Typography)`
+  color: var(--practice-soft);
+`
+
+const PrincipleGrid = styled.div`
   display: grid;
-  width: min(100%, 64rem);
-  margin-inline: auto;
   gap: ${({ theme }) => theme.layout.flow.cluster};
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    display: none;
-  }
-`
-
-const DesktopEditorialRail = styled.div`
-  display: none;
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    display: block;
-  }
-`
-
-const EditorialItem = styled.article`
-  display: grid;
-  gap: ${({ theme }) => theme.layout.flow.text};
-  padding-top: ${({ theme }) => theme.layout.flow.block};
-  border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
-`
-
-const PracticeCard = styled(ContentRailItem)`
-  gap: ${({ theme }) => theme.layout.flow.block};
-`
-
-const ResultFlow = styled.div`
-  display: grid;
-  gap: ${({ theme }) => theme.layout.grid.gap};
-  width: min(100%, 64rem);
-  margin-inline: auto;
+  min-width: 0;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    align-items: stretch;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: ${({ theme }) => theme.layout.grid.gap};
+  }
+`
+
+const PrincipleItem = styled.article<{ $tone: PracticeTone }>`
+  display: grid;
+  gap: ${({ theme }) => theme.layout.flow.text};
+  min-width: 0;
+  padding-top: ${({ theme }) => theme.layout.flow.block};
+  border-top: 1px solid;
+  ${({ $tone }) => practiceToneCSS($tone)}
+
+  h3 {
+    max-width: 18ch;
+  }
+`
+
+const PanelGrid = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.layout.grid.gap};
+  min-width: 0;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 `
 
 const ResultPanel = styled(Surface)`
   height: 100%;
+  background: ${({ theme }) => theme.roles.movement.practice.card};
 `
 
 const MethodPanel = styled(Surface)`
-  width: min(100%, 64rem);
-  margin-inline: auto;
+  background: ${({ theme }) => theme.roles.movement.practice.note};
 `
 
 const MethodStack = styled(Stack)`
   gap: ${({ theme }) => theme.layout.flow.block};
 `
 
+const MethodHeader = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.layout.flow.text};
+  max-width: 64ch;
+`
+
 const MethodDefinition = styled.div`
   display: grid;
   gap: ${({ theme }) => theme.layout.flow.text};
   padding-top: ${({ theme }) => theme.layout.flow.block};
-  border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
+  border-top: 1px solid
+    color-mix(
+      in srgb,
+      ${({ theme }) => theme.roles.movement.practice.border} 52%,
+      transparent
+    );
 `
 
 const DefinitionList = styled.dl`
@@ -361,10 +406,31 @@ const DefinitionItem = styled.div`
   }
 `
 
-const Footer = styled(Surface)`
-  width: min(100%, 64rem);
-  margin-inline: auto;
+const PracticeWayGrid = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.layout.grid.gap};
+  min-width: 0;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 `
+
+const PracticeCard = styled.article<{ $tone: PracticeTone }>`
+  display: grid;
+  align-content: start;
+  gap: ${({ theme }) => theme.layout.flow.block};
+  min-width: 0;
+  padding: ${({ theme }) => theme.layout.surface.lg};
+  border-radius: ${({ theme }) => theme.borderRadius.large};
+  ${({ $tone }) => practiceToneCSS($tone)}
+
+  h3 {
+    max-width: 18ch;
+  }
+`
+
+const Footer = styled(Surface)``
 
 const FooterGrid = styled(Grid)`
   gap: ${({ theme }) => theme.layout.grid.gap};
@@ -373,23 +439,18 @@ const FooterGrid = styled(Grid)`
 const FooterAction = styled.div`
   display: grid;
   align-content: center;
-  justify-items: center;
   gap: ${({ theme }) => theme.layout.flow.block};
+  max-width: 32rem;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    justify-items: end;
+    justify-self: end;
     text-align: right;
   }
-`
-
-const FooterActionText = styled.div`
-  max-width: 32rem;
 `
 
 const FooterButtons = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: ${({ theme }) => theme.spacing(0.75)};
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
@@ -404,10 +465,10 @@ const BlogLink = styled.a`
   min-height: ${({ theme }) => theme.spacing(4.6)};
   min-width: ${({ theme }) => theme.spacing(7.2)};
   padding: ${({ theme }) => `${theme.spacingHalf(1.45)} ${theme.spacing(1.6)}`};
-  border: 1px solid ${({ theme }) => theme.roles.border.subtle};
+  border: 0;
   border-radius: 0.78rem;
-  background: ${({ theme }) => theme.roles.surface.quiet};
-  color: ${({ theme }) => theme.roles.text.primary};
+  background: ${({ theme }) => theme.roles.movement.nextStep.card};
+  color: ${({ theme }) => theme.roles.movement.nextStep.deep};
   font-family: ${({ theme }) => theme.typography.fontFamily.button};
   font-size: ${({ theme }) => theme.typography.fontSize.body};
   font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
@@ -419,9 +480,8 @@ const BlogLink = styled.a`
   transition: ${({ theme }) => theme.motion.css.interactive.control};
 
   &:hover {
-    border-color: ${({ theme }) => theme.roles.border.strong};
-    background: ${({ theme }) => theme.roles.surface.card};
-    color: ${({ theme }) => theme.roles.text.primary};
+    background: ${({ theme }) => theme.roles.movement.nextStep.quiet};
+    color: ${({ theme }) => theme.roles.movement.nextStep.deep};
     text-decoration: none;
     transform: translateY(
       calc(${({ theme }) => theme.motion.foundations.distances.nudge} * -1)
@@ -434,7 +494,7 @@ const BlogLink = styled.a`
 
   &:focus-visible {
     outline: 2px solid transparent;
-    box-shadow: 0 0 0 3px ${({ theme }) => theme.roles.focus.ring};
+    box-shadow: 0 0 0 3px ${({ theme }) => theme.color.border.focus};
   }
 
   @media ${({ theme }) => theme.motion.reduced.media} {

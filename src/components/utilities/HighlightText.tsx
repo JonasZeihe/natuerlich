@@ -3,44 +3,33 @@
 
 import { type ReactNode } from 'react'
 import styled from 'styled-components'
-import useAccent from '@/design/hooks/useAccent'
-import type { AxisKey } from '@/design/theme'
-
-type HighlightAccent = AxisKey | 'neutral'
+import type { HighlightKey } from '@/design/theme'
 
 type HighlightTextProps = {
   children: ReactNode
   color?: string
-  accent?: HighlightAccent
+  accent?: HighlightKey
   soft?: boolean
 }
 
 export default function HighlightText({
   children,
   color,
-  accent = 'neutral',
-  soft = true,
+  accent,
 }: HighlightTextProps) {
-  const accentKey: AxisKey = accent === 'neutral' ? 'axisOpening' : accent
-  const accentInfo = useAccent(accentKey)
-  const resolvedColor =
-    color ?? (accent === 'neutral' ? 'inherit' : accentInfo.fill)
-
   return (
-    <Highlight $color={resolvedColor} $soft={soft}>
+    <Highlight $color={color} $accent={accent}>
       {children}
     </Highlight>
   )
 }
 
 const Highlight = styled.span<{
-  $color: string
-  $soft: boolean
+  $color?: string
+  $accent?: HighlightKey
 }>`
-  color: ${({ $color }) => $color};
-  font-weight: ${({ theme, $soft }) =>
-    $soft
-      ? theme.typography.fontWeight.bold
-      : theme.typography.fontWeight.bold};
+  color: ${({ theme, $color, $accent }) =>
+    $color ?? ($accent ? theme.color.highlight[$accent] : 'inherit')};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
   letter-spacing: ${({ theme }) => theme.typography.letterSpacing.normal};
 `

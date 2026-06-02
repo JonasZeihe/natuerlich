@@ -3,147 +3,168 @@
 
 import { useMemo, useState, type ReactNode } from 'react'
 import styled from 'styled-components'
-import Button from '@/components/actions/Button'
 import Surface from '@/components/primitives/Surface'
 import Typography from '@/design/typography'
 
-type MailParts = {
+type Mail = {
   local: string
   domain: string
 }
 
 type Props = {
-  mail: MailParts
+  mail: Mail
   subject: string
   title: ReactNode
   text: ReactNode
-  hint?: ReactNode
-  primaryLabel: ReactNode
-  copyLabel: ReactNode
-  copiedLabel: ReactNode
+  primaryLabel: string
+  copyLabel: string
+  copiedLabel: string
 }
-
-const buildMail = ({ local, domain }: MailParts) => `${local}@${domain}`
 
 const ContactPanel = ({
   mail,
   subject,
   title,
   text,
-  hint,
   primaryLabel,
   copyLabel,
   copiedLabel,
 }: Props) => {
   const [copied, setCopied] = useState(false)
-  const address = useMemo(() => buildMail(mail), [mail])
-  const mailto = useMemo(
+  const address = `${mail.local}@${mail.domain}`
+  const href = useMemo(
     () => `mailto:${address}?subject=${encodeURIComponent(subject)}`,
     [address, subject]
   )
 
-  const openMail = () => {
-    window.location.href = mailto
-  }
-
-  const copyMail = async () => {
+  const copyAddress = async () => {
     try {
       await navigator.clipboard.writeText(address)
       setCopied(true)
       window.setTimeout(() => setCopied(false), 1800)
     } catch {
-      window.location.href = mailto
+      setCopied(false)
     }
   }
 
   return (
-    <Shell tone="quiet" movement="nextStep" radius="large" padding="lg">
-      <Layout>
-        <Text>
-          <Typography as="h3" variant="h2" color="primary" cadence="dense">
-            {title}
-          </Typography>
+    <Panel tone="card" movement="nextStep" radius="large" padding="lg">
+      <Copy>
+        <Typography as="h2" variant="h3" color="primary" cadence="dense">
+          {title}
+        </Typography>
 
-          <Typography as="p" variant="body" tone="soft" cadence="open">
-            {text}
-          </Typography>
+        <Typography as="p" variant="body" tone="soft" cadence="open">
+          {text}
+        </Typography>
+      </Copy>
 
-          {hint ? (
-            <Hint>
-              <Typography as="p" variant="body" tone="soft" cadence="open">
-                {hint}
-              </Typography>
-            </Hint>
-          ) : null}
-        </Text>
+      <Actions>
+        <PrimaryLink href={href}>{primaryLabel}</PrimaryLink>
 
-        <Actions>
-          <Button variant="primary" fullWidth onClick={openMail}>
-            {primaryLabel}
-          </Button>
-
-          <CopyButton type="button" onClick={copyMail}>
-            {copied ? copiedLabel : copyLabel}
-          </CopyButton>
-        </Actions>
-      </Layout>
-    </Shell>
+        <CopyButton type="button" onClick={copyAddress}>
+          {copied ? copiedLabel : copyLabel}
+        </CopyButton>
+      </Actions>
+    </Panel>
   )
 }
 
-const Shell = styled(Surface)`
-  width: min(100%, 72rem);
-  margin-inline: auto;
-`
-
-const Layout = styled.div`
+const Panel = styled(Surface)`
   display: grid;
   gap: ${({ theme }) => theme.layout.flow.cluster};
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    grid-template-columns: minmax(0, 1fr) minmax(17rem, 0.42fr);
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
-    gap: ${({ theme }) => theme.layout.flow.region};
   }
 `
 
-const Text = styled.div`
+const Copy = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.layout.flow.block};
-  max-width: 52rem;
-`
-
-const Hint = styled.div`
-  max-width: 42rem;
-  padding-top: ${({ theme }) => theme.layout.flow.block};
-  border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
+  gap: ${({ theme }) => theme.layout.flow.text};
+  max-width: 64ch;
+  min-width: 0;
 `
 
 const Actions = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.layout.flow.text};
+  gap: ${({ theme }) => theme.spacing(0.65)};
+  justify-items: start;
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    justify-items: stretch;
+    min-width: 14rem;
+  }
+`
+
+const PrimaryLink = styled.a`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: ${({ theme }) => theme.spacing(4.6)};
+  min-width: ${({ theme }) => theme.spacing(7.2)};
+  padding: ${({ theme }) => `${theme.spacingHalf(1.45)} ${theme.spacing(1.6)}`};
+  border: 0;
+  border-radius: 0.78rem;
+  background: ${({ theme }) => theme.roles.interactive.button.primary.bg};
+  color: ${({ theme }) => theme.roles.interactive.button.primary.fg};
+  font-family: ${({ theme }) => theme.typography.fontFamily.button};
+  font-size: ${({ theme }) => theme.typography.fontSize.body};
+  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  line-height: 1.12;
+  letter-spacing: ${({ theme }) => theme.typography.letterSpacing.normal};
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: ${({ theme }) => theme.motion.css.interactive.control};
+
+  &:hover {
+    background: ${({ theme }) =>
+      theme.roles.interactive.button.primary.hoverBg};
+    color: ${({ theme }) => theme.roles.interactive.button.primary.hoverFg};
+    text-decoration: none;
+    transform: translateY(
+      calc(${({ theme }) => theme.motion.foundations.distances.nudge} * -1)
+    );
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    outline: 2px solid transparent;
+    box-shadow: 0 0 0 3px ${({ theme }) => theme.color.border.focus};
+  }
+
+  @media ${({ theme }) => theme.motion.reduced.media} {
+    transition: none;
+  }
 `
 
 const CopyButton = styled.button`
   appearance: none;
   border: 0;
   background: transparent;
-  color: ${({ theme }) => theme.roles.text.subtle};
-  padding: ${({ theme }) => theme.spacingHalf(1)};
+  color: ${({ theme }) => theme.roles.movement.nextStep.deep};
+  padding: ${({ theme }) => theme.spacing(0.25)} 0;
   font: inherit;
   cursor: pointer;
-  text-align: center;
+  text-align: left;
 
   &:hover {
-    color: ${({ theme }) => theme.roles.text.primary};
     text-decoration: underline;
-    text-underline-offset: 0.16em;
   }
 
   &:focus-visible {
-    outline: 2px solid ${({ theme }) => theme.roles.focus.ring};
+    outline: 2px solid ${({ theme }) => theme.color.border.focus};
     outline-offset: 3px;
-    border-radius: ${({ theme }) => theme.borderRadius.small};
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    text-align: center;
   }
 `
 

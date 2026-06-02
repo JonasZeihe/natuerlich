@@ -2,252 +2,114 @@
 'use client'
 
 import { type ComponentPropsWithoutRef, type ReactNode } from 'react'
-import styled, { css, type DefaultTheme } from 'styled-components'
+import styled, { css } from 'styled-components'
 
-type Columns = number | 'auto'
-type BreakpointKey = keyof DefaultTheme['breakpoints']
-type ItemMode = 'line' | 'card'
-type RailAlign = 'start' | 'stretch'
-type RailVariant = 'shelf' | 'editorial' | 'cards'
+type RailColumns = 1 | 2 | 3 | 4 | 'auto'
+type RailVariant = 'flow' | 'cards'
+type RailAlign = 'start' | 'center' | 'end' | 'stretch'
 
-type ContentRailProps = {
-  children?: ReactNode
-  columns?: Columns
+type Props = {
+  columns?: RailColumns
   min?: string
-  gap?: number | string
+  gap?: string
   itemWidth?: string
-  max?: string
-  switchAt?: BreakpointKey
-  align?: RailAlign
   variant?: RailVariant
+  align?: RailAlign
+  children?: ReactNode
 } & Omit<ComponentPropsWithoutRef<'div'>, 'children'>
 
-type ContentRailItemProps = {
-  children?: ReactNode
-  mode?: ItemMode
-  stretch?: boolean
-} & Omit<ComponentPropsWithoutRef<'article'>, 'children'>
-
-const toSpace = (theme: DefaultTheme, value?: number | string) => {
-  if (typeof value === 'number') return theme.spacing(value)
-  if (typeof value === 'string') return value
-  return theme.layout.rail.gap
-}
-
-const RailFrame = styled.div<{
-  $switchAt: BreakpointKey
-  $variant: RailVariant
-}>`
-  position: relative;
-  isolation: isolate;
-
-  ${({ theme, $switchAt, $variant }) => css`
-    @media (max-width: calc(${theme.breakpoints[$switchAt]} - 0.02px)) {
-      &::after {
-        content: '';
-        position: absolute;
-        z-index: 2;
-        top: 0;
-        right: calc(${theme.layout.inset.rail} * -1);
-        bottom: ${$variant === 'editorial'
-          ? theme.layout.flow.text
-          : theme.layout.flow.block};
-        width: ${theme.layout.rail.peek};
-        background: linear-gradient(
-          90deg,
-          transparent,
-          color-mix(
-            in srgb,
-            ${theme.roles.surface.canvas}
-              ${$variant === 'cards' ? '34%' : '58%'},
-            transparent
-          )
-        );
-        pointer-events: none;
-      }
-    }
-  `}
-`
-
-const Rail = styled.div<{
-  $columns: Columns
+const Root = styled.div<{
+  $columns: RailColumns
   $min: string
-  $gap?: number | string
-  $itemWidth: string
-  $max?: string
-  $switchAt: BreakpointKey
-  $align: RailAlign
+  $gap?: string
+  $itemWidth?: string
   $variant: RailVariant
+  $align: RailAlign
 }>`
   display: grid;
-  align-items: ${({ $align }) => $align};
-  grid-auto-flow: column;
-  grid-auto-columns: ${({ $itemWidth, $variant }) => {
-    if ($variant === 'cards') return `min(${$itemWidth}, calc(100% - 1.35rem))`
-    if ($variant === 'editorial') {
-      return `min(${$itemWidth}, calc(100% - 3.25rem))`
-    }
-
-    return `min(${$itemWidth}, calc(100% - 2.6rem))`
-  }};
-  gap: ${({ theme, $gap }) => toSpace(theme, $gap)};
-  margin-inline: ${({ theme }) => `calc(${theme.layout.inset.rail} * -1)`};
-  padding-inline-start: ${({ theme }) => theme.layout.inset.rail};
-  padding-inline-end: ${({ theme }) =>
-    `calc(${theme.layout.inset.rail} + ${theme.layout.rail.peek})`};
-  padding-bottom: ${({ theme, $variant }) =>
-    $variant === 'editorial'
-      ? theme.layout.flow.text
-      : theme.layout.flow.block};
-  overflow-x: auto;
-  overflow-y: visible;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline-start: ${({ theme }) => theme.layout.inset.rail};
-  scroll-padding-inline-end: ${({ theme }) =>
-    `calc(${theme.layout.inset.rail} + ${theme.layout.rail.peek})`};
-  -webkit-overflow-scrolling: touch;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  ${({ theme, $variant }) =>
-    $variant === 'editorial'
-      ? css`
-          & > article {
-            border-radius: 0;
-            border-top: 1px solid ${theme.roles.border.subtle};
-            background: transparent;
-            padding: ${theme.layout.flow.block} 0 0;
-          }
-        `
-      : null}
-
-  ${({ theme, $variant }) =>
-    $variant === 'cards'
-      ? css`
-          & > article {
-            background: ${theme.roles.surface.quiet};
-          }
-        `
-      : null}
-
-  ${({ theme, $columns, $min, $max, $switchAt, $variant }) => css`
-    @media (min-width: ${theme.breakpoints[$switchAt]}) {
-      width: ${$max ? `min(100%, ${$max})` : '100%'};
-      margin-inline: ${$max ? 'auto' : '0'};
-      padding-inline: 0;
-      padding-bottom: 0;
-      grid-auto-flow: initial;
-      grid-auto-columns: initial;
-      grid-template-columns: ${$columns === 'auto'
-        ? `repeat(auto-fit, minmax(${$min}, 1fr))`
-        : `repeat(${$columns}, minmax(0, 1fr))`};
-      overflow: visible;
-      scroll-snap-type: none;
-
-      ${$variant === 'editorial'
-        ? css`
-            gap: ${theme.layout.grid.gap};
-
-            & > article {
-              padding: ${theme.layout.flow.text} 0 0;
-              border-top: 1px solid ${theme.roles.border.subtle};
-              border-radius: 0;
-              background: transparent;
-            }
-          `
-        : null}
-
-      ${$variant === 'cards'
-        ? css`
-            & > article {
-              background: ${theme.roles.surface.quiet};
-            }
-          `
-        : null}
-    }
-  `}
-`
-
-const Item = styled.article<{ $mode: ItemMode; $stretch: boolean }>`
-  scroll-snap-align: start;
-  display: grid;
-  align-content: start;
-  gap: ${({ theme }) => theme.layout.flow.block};
+  width: 100%;
   min-width: 0;
-  height: ${({ $stretch }) => ($stretch ? '100%' : 'auto')};
-  padding: ${({ theme }) => theme.layout.surface.md};
-  border-radius: ${({ theme }) => theme.borderRadius.large};
-  background: ${({ theme }) => theme.roles.surface.quiet};
+  gap: ${({ theme, $gap }) => $gap ?? theme.layout.grid.gap};
+  align-items: ${({ $align }) => ($align === 'stretch' ? 'stretch' : 'start')};
+  justify-items: ${({ $align }) => ($align === 'stretch' ? 'stretch' : $align)};
 
-  ${({ theme, $mode }) =>
-    $mode === 'line'
+  ${({ $columns, $min }) =>
+    $columns === 'auto'
       ? css`
-          border-top: 1px solid ${theme.roles.border.subtle};
-          border-radius: 0;
-          background: transparent;
-          padding: ${theme.layout.flow.block} 0 0;
+          grid-template-columns: repeat(
+            auto-fit,
+            minmax(min(100%, ${$min}), 1fr)
+          );
         `
-      : null}
+      : css`
+          grid-template-columns: repeat(${$columns}, minmax(0, 1fr));
+        `}
 
-  ${({ theme, $mode }) => css`
-    @media (min-width: ${theme.breakpoints.lg}) {
-      ${$mode === 'line'
-        ? css`
-            padding: ${theme.layout.flow.text} 0 0;
-            border-top: 1px solid ${theme.roles.border.subtle};
-            border-radius: 0;
-            background: transparent;
-          `
+  ${({ $variant, $itemWidth }) =>
+    $variant === 'cards' && $itemWidth
+      ? css`
+          @media (max-width: 42rem) {
+            display: flex;
+            gap: inherit;
+            align-items: stretch;
+            justify-content: flex-start;
+            overflow-x: auto;
+            overflow-y: hidden;
+            overscroll-behavior-inline: contain;
+            scroll-snap-type: inline mandatory;
+            scroll-padding-inline: 0;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+
+            &::-webkit-scrollbar {
+              display: none;
+            }
+
+            > * {
+              flex: 0 0 ${$itemWidth};
+              max-width: ${$itemWidth};
+            }
+          }
+        `
+      : ''}
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    ${({ $variant }) =>
+      $variant === 'cards'
+        ? ''
         : css`
-            padding: ${theme.layout.surface.md};
-            border-radius: ${theme.borderRadius.large};
-            background: ${theme.roles.surface.quiet};
+            grid-template-columns: 1fr;
           `}
-    }
-  `}
+  }
 `
 
-const ContentRail = ({
-  children,
+export const ContentRailItem = styled.article`
+  display: grid;
+  min-width: 0;
+  scroll-snap-align: start;
+`
+
+export default function ContentRail({
   columns = 'auto',
   min = '18rem',
   gap,
-  itemWidth = 'min(82vw, 23rem)',
-  max,
-  switchAt = 'lg',
+  itemWidth,
+  variant = 'flow',
   align = 'stretch',
-  variant = 'shelf',
+  children,
   ...rest
-}: ContentRailProps) => (
-  <RailFrame $switchAt={switchAt} $variant={variant}>
-    <Rail
+}: Props) {
+  return (
+    <Root
       $columns={columns}
       $min={min}
       $gap={gap}
       $itemWidth={itemWidth}
-      $max={max}
-      $switchAt={switchAt}
-      $align={align}
       $variant={variant}
+      $align={align}
       {...rest}
     >
       {children}
-    </Rail>
-  </RailFrame>
-)
-
-const ContentRailItem = ({
-  children,
-  mode = 'line',
-  stretch = true,
-  ...rest
-}: ContentRailItemProps) => (
-  <Item $mode={mode} $stretch={stretch} {...rest}>
-    {children}
-  </Item>
-)
-
-export default ContentRail
-export { ContentRailItem }
+    </Root>
+  )
+}

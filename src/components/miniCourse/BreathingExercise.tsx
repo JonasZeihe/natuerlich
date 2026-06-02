@@ -475,7 +475,7 @@ const QuietAction = styled.button`
   border: 1px solid transparent;
   border-radius: ${({ theme }) => theme.borderRadius.pill};
   background: transparent;
-  color: ${({ theme }) => theme.roles.text.secondary};
+  color: ${({ theme }) => theme.color.text.soft};
   cursor: pointer;
   font-family: ${({ theme }) => theme.typography.fontFamily.primary};
   font-size: ${({ theme }) => theme.typography.fontSize.caption};
