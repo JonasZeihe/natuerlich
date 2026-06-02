@@ -168,9 +168,11 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
           title: 'Ruhe als geführte Kraft.',
           body: (
             <>
-              <HighlightText accent="taiji">Taijiquan</HighlightText> 太極拳:
-              Taiji, das höchste Prinzip, der Dachfirst. Quan, die Faust.
-              Taijiquan ist nicht langsames Qigong und nicht
+              <HighlightText accent="taiji" tone="inverse">
+                Taijiquan
+              </HighlightText>{' '}
+              太極拳: Taiji, das höchste Prinzip, der Dachfirst. Quan, die
+              Faust. Taijiquan ist nicht langsames Qigong und nicht
               Entspannungsbewegung mit schöner Form. Es ist Arbeit an Struktur,
               Mitte, Gewicht, Richtung, Wandlung und Kraft ohne Verkrampfung.
             </>
