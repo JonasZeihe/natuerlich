@@ -5,64 +5,64 @@ import { type ComponentPropsWithoutRef, type ReactNode } from 'react'
 import styled, { css, type DefaultTheme } from 'styled-components'
 
 type Columns = number | 'auto'
-type BreakpointKey = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
+type BreakpointKey = keyof DefaultTheme['breakpoint']
+type SpaceKey = keyof DefaultTheme['space']
 
 type Props = {
   columns?: Columns
   min?: string
-  gap?: number | string
-  offset?: number | string
+  gap?: SpaceKey | string
+  offset?: SpaceKey | string
   dense?: boolean
-  switchAt?: BreakpointKey | string
+  switchAt?: BreakpointKey | string | false
   children?: ReactNode
 } & Omit<ComponentPropsWithoutRef<'div'>, 'children'>
 
 const DEFAULT_GRID_MIN = '18rem'
 
-const toSpace = (
+const resolveSpace = (
   theme: DefaultTheme,
-  value: number | string | undefined,
+  value: SpaceKey | string | undefined,
   fallback: string
 ) => {
-  if (typeof value === 'number') return theme.spacing(value)
+  if (typeof value === 'number') return theme.space[value]
   if (typeof value === 'string') return value
   return fallback
 }
 
+const resolveBreakpoint = (
+  theme: DefaultTheme,
+  value: BreakpointKey | string
+) =>
+  value in theme.breakpoint ? theme.breakpoint[value as BreakpointKey] : value
+
 const GridBox = styled.div<{
-  $columns?: Columns
-  $min?: string
-  $gap?: number | string
-  $offset?: number | string
-  $dense?: boolean
-  $switch?: string
+  $columns: Columns
+  $min: string
+  $gap?: SpaceKey | string
+  $offset?: SpaceKey | string
+  $dense: boolean
+  $switchAt?: BreakpointKey | string | false
 }>`
   display: grid;
-  margin: ${({ theme, $offset }) => toSpace(theme, $offset, '0')};
-  gap: ${({ theme, $gap }) => toSpace(theme, $gap, theme.layout.grid.gap)};
+  min-width: 0;
+  margin: ${({ theme, $offset }) => resolveSpace(theme, $offset, '0')};
+  gap: ${({ theme, $gap }) => resolveSpace(theme, $gap, theme.layout.gap.grid)};
   grid-auto-flow: ${({ $dense }) => ($dense ? 'row dense' : 'row')};
 
-  ${({ $columns, $min }) => {
-    const cols = $columns ?? 'auto'
-    const minWidth = $min ?? DEFAULT_GRID_MIN
-
-    if (cols === 'auto') {
-      return css`
-        grid-template-columns: repeat(auto-fit, minmax(${minWidth}, 1fr));
-      `
-    }
-
-    return css`
-      grid-template-columns: repeat(${Number(cols || 1)}, minmax(0, 1fr));
-    `
-  }}
-
-  ${({ theme, $switch }) =>
-    $switch
+  ${({ $columns, $min }) =>
+    $columns === 'auto'
       ? css`
-          @media (max-width: ${$switch in theme.breakpoints
-              ? theme.breakpoints[$switch as keyof typeof theme.breakpoints]
-              : $switch}) {
+          grid-template-columns: repeat(auto-fit, minmax(${$min}, 1fr));
+        `
+      : css`
+          grid-template-columns: repeat(${$columns}, minmax(0, 1fr));
+        `}
+
+  ${({ theme, $switchAt }) =>
+    $switchAt
+      ? css`
+          @media (max-width: ${resolveBreakpoint(theme, $switchAt)}) {
             grid-template-columns: 1fr;
           }
         `
@@ -71,7 +71,7 @@ const GridBox = styled.div<{
 
 export default function Grid({
   columns = 'auto',
-  min,
+  min = DEFAULT_GRID_MIN,
   gap,
   offset,
   dense = false,
@@ -86,7 +86,7 @@ export default function Grid({
       $gap={gap}
       $offset={offset}
       $dense={dense}
-      $switch={switchAt}
+      $switchAt={switchAt}
       {...rest}
     >
       {children}

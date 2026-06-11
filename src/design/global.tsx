@@ -2,16 +2,19 @@
 import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyles = createGlobalStyle`
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
   }
 
-  html, body {
+  html,
+  body {
     width: 100%;
-    min-height: 100vh;
     min-width: 0;
+    min-height: 100vh;
   }
 
   html {
@@ -20,45 +23,55 @@ const GlobalStyles = createGlobalStyle`
     color-scheme: light;
     text-rendering: optimizeLegibility;
     scroll-behavior: ${({ theme }) => theme.motion.scroll.behavior};
-    background: ${({ theme }) => theme.color.surface.canvas};
+    background: ${({ theme }) => theme.color.surface.page};
   }
 
   body {
-    font-family: ${({ theme }) => theme.typography.fontFamily.primary};
-    font-size: ${({ theme }) => theme.typography.fontSize.body};
-    line-height: ${({ theme }) => theme.typography.lineHeight.normal};
-    color: ${({ theme }) => theme.color.text.primary};
-    background: ${({ theme }) => theme.color.surface.canvas};
+    font-family: ${({ theme }) => theme.font.family.main};
+    font-size: ${({ theme }) => theme.text.body.fontSize};
+    line-height: ${({ theme }) => theme.text.body.lineHeight};
+    color: ${({ theme }) => theme.color.text.default};
+    background: ${({ theme }) => theme.color.surface.page};
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
   a {
-    color: ${({ theme }) => theme.color.text.link};
+    color: ${({ theme }) => theme.color.link.default};
     text-decoration: underline;
     text-underline-offset: 0.16em;
     text-decoration-thickness: 0.06em;
-    text-decoration-color: ${({ theme }) => theme.color.text.link};
+    text-decoration-color: ${({ theme }) => theme.color.link.default};
     transition: ${({ theme }) => theme.motion.css.link};
   }
 
   a:hover,
   a:focus-visible {
-    color: ${({ theme }) => theme.color.text.linkHover};
-    text-decoration-color: ${({ theme }) => theme.color.text.linkHover};
+    color: ${({ theme }) => theme.color.link.hover};
+    text-decoration-color: ${({ theme }) => theme.color.link.hover};
   }
 
   ::selection {
-    background: ${({ theme }) => theme.color.border.focus};
+    background: ${({ theme }) => theme.color.focus.ring};
     color: ${({ theme }) => theme.color.text.inverse};
   }
 
-  img, svg, video, canvas, audio, iframe, embed, object {
+  img,
+  svg,
+  video,
+  canvas,
+  audio,
+  iframe,
+  embed,
+  object {
     display: block;
     max-width: 100%;
   }
 
-  button, input, select, textarea {
+  button,
+  input,
+  select,
+  textarea {
     font: inherit;
     color: inherit;
   }
@@ -69,32 +82,41 @@ const GlobalStyles = createGlobalStyle`
     border-radius: 0;
   }
 
-  input, select, textarea {
+  input,
+  select,
+  textarea {
     background: ${({ theme }) => theme.color.surface.field};
-    border: 1px solid ${({ theme }) => theme.color.border.subtle};
-    border-radius: ${({ theme }) => theme.borderRadius.small};
-    color: ${({ theme }) => theme.color.text.primary};
+    border: 1px solid ${({ theme }) => theme.color.border.default};
+    border-radius: ${({ theme }) => theme.radius.sm};
+    color: ${({ theme }) => theme.color.text.default};
     box-shadow: none;
   }
 
   ::placeholder {
-    color: ${({ theme }) => theme.color.text.subtle};
+    color: ${({ theme }) => theme.color.text.muted};
     opacity: 1;
   }
 
   :focus-visible {
-    outline: 2px solid ${({ theme }) => theme.color.border.focus};
+    outline: 2px solid ${({ theme }) => theme.color.focus.ring};
     outline-offset: 2px;
   }
 
-  code, kbd, samp, pre {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  code,
+  kbd,
+  samp,
+  pre {
+    font-family: ${({ theme }) => theme.font.family.mono};
   }
 
   @media ${({ theme }) => theme.motion.reduced.media} {
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       animation-duration: ${({ theme }) => theme.motion.reduced.duration} !important;
       animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: ${({ theme }) => theme.motion.reduced.duration} !important;
     }
   }
 `

@@ -171,13 +171,12 @@ const IntegrationSection = ({ onGoToNextStep: _onGoToNextStep }: Props) => (
     content="default"
     variant="body"
     rhythm="spacious"
-    tone="default"
-    mix={['density', 'flow']}
+    tone="quiet"
     header={
       <Headline
         titleId="integrieren-title"
         title="Du musst nicht schon wissen, ob es Yoga, Qigong oder Taijiquan ist."
-        accent="axisFlow"
+        accent="taiji"
         weight="poster"
       />
     }

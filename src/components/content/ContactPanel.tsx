@@ -3,6 +3,7 @@
 
 import { useMemo, useState, type ReactNode } from 'react'
 import styled from 'styled-components'
+import Button from '@/components/actions/Button'
 import Surface from '@/components/primitives/Surface'
 import Typography from '@/design/typography'
 
@@ -48,13 +49,13 @@ const ContactPanel = ({
   }
 
   return (
-    <Panel tone="card" movement="nextStep" radius="large" padding="lg">
+    <Panel tone="card" radius="lg" padding="lg" bordered>
       <Copy>
-        <Typography as="h2" variant="h3" color="primary" cadence="dense">
+        <Typography as="h2" variant="h3" tone="strong">
           {title}
         </Typography>
 
-        <Typography as="p" variant="body" tone="soft" cadence="open">
+        <Typography as="p" variant="body" tone="soft" measure="text">
           {text}
         </Typography>
       </Copy>
@@ -62,7 +63,7 @@ const ContactPanel = ({
       <Actions>
         <PrimaryLink href={href}>{primaryLabel}</PrimaryLink>
 
-        <CopyButton type="button" onClick={copyAddress}>
+        <CopyButton type="button" variant="link" onClick={copyAddress}>
           {copied ? copiedLabel : copyLabel}
         </CopyButton>
       </Actions>
@@ -72,9 +73,9 @@ const ContactPanel = ({
 
 const Panel = styled(Surface)`
   display: grid;
-  gap: ${({ theme }) => theme.layout.flow.cluster};
+  gap: ${({ theme }) => theme.layout.gap.cluster};
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.md}) {
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
   }
@@ -82,17 +83,17 @@ const Panel = styled(Surface)`
 
 const Copy = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.layout.flow.text};
-  max-width: 64ch;
+  gap: ${({ theme }) => theme.layout.gap.text};
+  max-width: ${({ theme }) => theme.font.measure.text};
   min-width: 0;
 `
 
 const Actions = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(0.65)};
+  gap: ${({ theme }) => theme.space(0.65)};
   justify-items: start;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.md}) {
     justify-items: stretch;
     min-width: 14rem;
   }
@@ -102,18 +103,21 @@ const PrimaryLink = styled.a`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: ${({ theme }) => theme.spacing(4.6)};
-  min-width: ${({ theme }) => theme.spacing(7.2)};
-  padding: ${({ theme }) => `${theme.spacingHalf(1.45)} ${theme.spacing(1.6)}`};
-  border: 0;
-  border-radius: 0.78rem;
-  background: ${({ theme }) => theme.roles.interactive.button.primary.bg};
-  color: ${({ theme }) => theme.roles.interactive.button.primary.fg};
-  font-family: ${({ theme }) => theme.typography.fontFamily.button};
-  font-size: ${({ theme }) => theme.typography.fontSize.body};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  min-height: 2.75rem;
+  min-width: 3.75rem;
+  max-width: 100%;
+  padding: ${({ theme }) => `${theme.space(3)} ${theme.space(5)}`};
+  border: 1px solid
+    ${({ theme }) => theme.component.button.primary.default.border};
+  border-radius: ${({ theme }) => theme.radius.pill};
+  background: ${({ theme }) =>
+    theme.component.button.primary.default.background};
+  color: ${({ theme }) => theme.component.button.primary.default.text};
+  font-family: ${({ theme }) => theme.font.family.main};
+  font-size: ${({ theme }) => theme.font.size.md};
+  font-weight: ${({ theme }) => theme.font.weight.medium};
   line-height: 1.12;
-  letter-spacing: ${({ theme }) => theme.typography.letterSpacing.normal};
+  letter-spacing: ${({ theme }) => theme.font.letterSpacing.normal};
   text-align: center;
   text-decoration: none;
   white-space: nowrap;
@@ -122,12 +126,11 @@ const PrimaryLink = styled.a`
 
   &:hover {
     background: ${({ theme }) =>
-      theme.roles.interactive.button.primary.hoverBg};
-    color: ${({ theme }) => theme.roles.interactive.button.primary.hoverFg};
+      theme.component.button.primary.hover.background};
+    border-color: ${({ theme }) => theme.component.button.primary.hover.border};
+    color: ${({ theme }) => theme.component.button.primary.hover.text};
     text-decoration: none;
-    transform: translateY(
-      calc(${({ theme }) => theme.motion.foundations.distances.nudge} * -1)
-    );
+    transform: translateY(-1px);
   }
 
   &:active {
@@ -136,7 +139,7 @@ const PrimaryLink = styled.a`
 
   &:focus-visible {
     outline: 2px solid transparent;
-    box-shadow: 0 0 0 3px ${({ theme }) => theme.color.border.focus};
+    box-shadow: ${({ theme }) => theme.color.focus.shadow};
   }
 
   @media ${({ theme }) => theme.motion.reduced.media} {
@@ -144,27 +147,11 @@ const PrimaryLink = styled.a`
   }
 `
 
-const CopyButton = styled.button`
-  appearance: none;
-  border: 0;
-  background: transparent;
-  color: ${({ theme }) => theme.roles.movement.nextStep.deep};
-  padding: ${({ theme }) => theme.spacing(0.25)} 0;
-  font: inherit;
-  cursor: pointer;
-  text-align: left;
+const CopyButton = styled(Button)`
+  justify-self: start;
 
-  &:hover {
-    text-decoration: underline;
-  }
-
-  &:focus-visible {
-    outline: 2px solid ${({ theme }) => theme.color.border.focus};
-    outline-offset: 3px;
-  }
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    text-align: center;
+  @media (min-width: ${({ theme }) => theme.breakpoint.md}) {
+    justify-self: center;
   }
 `
 

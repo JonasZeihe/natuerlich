@@ -2,9 +2,9 @@
 'use client'
 
 import { type ComponentPropsWithoutRef, type ReactNode } from 'react'
-import styled, { css } from 'styled-components'
+import styled, { css, type DefaultTheme } from 'styled-components'
 
-type ContainerSize = 'narrow' | 'content' | 'default' | 'wide' | 'page' | 'full'
+type ContainerSize = keyof DefaultTheme['layout']['container']
 
 type Props = {
   max?: ContainerSize
@@ -24,7 +24,7 @@ const Box = styled.div<{ $max: ContainerSize }>`
         `
       : css`
           max-width: calc(
-            ${theme.layout.containers[$max]} + ${theme.layout.inset.page} * 2
+            ${theme.layout.container[$max]} + ${theme.layout.inset.page} * 2
           );
         `}
 `

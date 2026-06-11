@@ -15,13 +15,12 @@ const RecognitionSection = () => (
     content="default"
     variant="body"
     rhythm="spacious"
-    tone="threshold"
-    mix={['density', 'tension']}
+    tone="quiet"
     header={
       <Headline
         titleId="erkennen-title"
         title="Herzlich willkommen, ich bin Jonas :-)"
-        accent="axisDensity"
+        accent="daoyin"
         weight="poster"
       />
     }

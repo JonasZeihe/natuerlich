@@ -11,7 +11,7 @@ const FOOTER_NAV_ITEMS = [
   { href: '/impressum', label: 'Impressum & Datenschutz' },
 ] as const
 
-export default function AppFooter() {
+const AppFooter = () => {
   const scrollToTop = () => {
     const reduce =
       typeof window !== 'undefined' &&
@@ -26,7 +26,7 @@ export default function AppFooter() {
 
   return (
     <FooterShell role="contentinfo" aria-label="Seitenfuß">
-      <Container max="page">
+      <Container max="default">
         <FooterInner>
           <TopRow>
             <Copy>© {new Date().getFullYear()} Jonas Zeihe</Copy>
@@ -55,34 +55,34 @@ export default function AppFooter() {
 const FooterShell = styled.footer`
   position: relative;
   width: 100%;
-  color: ${({ theme }) => theme.roles.text.primary};
-  border-top: 1px solid ${({ theme }) => theme.roles.border.subtle};
-  background: ${({ theme }) => theme.roles.surface.chrome};
   padding-block: ${({ theme }) => theme.layout.section.compact};
+  color: ${({ theme }) => theme.color.text.default};
+  background: ${({ theme }) => theme.color.surface.paper};
+  border-top: 1px solid ${({ theme }) => theme.color.border.default};
 `
 
 const FooterInner = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${({ theme }) => theme.layout.flow.block};
+  gap: ${({ theme }) => theme.layout.gap.block};
 `
 
 const TopRow = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  gap: ${({ theme }) => theme.layout.flow.cluster};
+  gap: ${({ theme }) => theme.layout.gap.cluster};
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: start;
-    gap: ${({ theme }) => theme.layout.grid.gap};
+  @media (min-width: ${({ theme }) => theme.breakpoint.md}) {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: ${({ theme }) => theme.layout.gap.grid};
   }
 `
 
 const LinksCol = styled(Stack)`
   align-items: start;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.md}) {
     align-items: end;
   }
 `
@@ -90,18 +90,18 @@ const LinksCol = styled(Stack)`
 const FooterLink = styled(Link)`
   display: inline-flex;
   align-items: center;
-  min-height: ${({ theme }) => theme.spacing(3.2)};
-  padding-block: ${({ theme }) => theme.spacingHalf(1)};
-  border-radius: ${({ theme }) => theme.borderRadius.small};
-  text-decoration: none;
-  border: none;
+  min-height: ${({ theme }) => theme.space(3.2)};
+  padding-block: ${({ theme }) => theme.space(0.5)};
+  border-radius: ${({ theme }) => theme.radius.sm};
   color: ${({ theme }) => theme.color.text.soft};
   background: transparent;
+  border: none;
+  text-decoration: none;
   transition: ${({ theme }) => theme.motion.css.link};
 
   &:hover,
   &:focus-visible {
-    color: ${({ theme }) => theme.roles.text.primary};
+    color: ${({ theme }) => theme.color.text.default};
     text-decoration: underline;
     text-underline-offset: 0.16em;
   }
@@ -113,21 +113,22 @@ const FooterLink = styled(Link)`
 
 const Copy = styled.p`
   margin: 0;
-  color: ${({ theme }) => theme.roles.text.subtle};
-  font-size: ${({ theme }) => theme.typography.fontSize.small};
+  color: ${({ theme }) => theme.color.text.muted};
+  font-size: ${({ theme }) => theme.font.size.sm};
+  line-height: ${({ theme }) => theme.font.lineHeight.normal};
 `
 
 const ToTop = styled.button`
-  width: 2.55rem;
-  height: 2.55rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  align-self: flex-end;
-  background: ${({ theme }) => theme.roles.surface.card};
+  align-self: flex-start;
+  width: 2.55rem;
+  height: 2.55rem;
   color: ${({ theme }) => theme.color.text.soft};
-  border: 1px solid ${({ theme }) => theme.roles.border.subtle};
-  border-radius: ${({ theme }) => theme.borderRadius.pill};
+  background: ${({ theme }) => theme.color.surface.card};
+  border: 1px solid ${({ theme }) => theme.color.border.default};
+  border-radius: ${({ theme }) => theme.radius.pill};
   box-shadow: none;
   font-size: 0.92rem;
   cursor: pointer;
@@ -135,9 +136,9 @@ const ToTop = styled.button`
 
   &:hover,
   &:focus-visible {
-    background: ${({ theme }) => theme.getEnergyRole('density').surface};
-    border-color: ${({ theme }) => theme.getEnergyRole('density').border};
-    color: ${({ theme }) => theme.getEnergyRole('density').text};
+    color: ${({ theme }) => theme.color.intent.success.text};
+    background: ${({ theme }) => theme.color.intent.success.surface};
+    border-color: ${({ theme }) => theme.color.intent.success.border};
     transform: translateY(
       calc(${({ theme }) => theme.motion.foundations.distances.nudge} * -1)
     );
@@ -147,11 +148,13 @@ const ToTop = styled.button`
     transform: translateY(0);
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    align-self: flex-start;
+  @media (min-width: ${({ theme }) => theme.breakpoint.md}) {
+    align-self: center;
   }
 
   @media ${({ theme }) => theme.motion.reduced.media} {
     transition: none;
   }
 `
+
+export default AppFooter

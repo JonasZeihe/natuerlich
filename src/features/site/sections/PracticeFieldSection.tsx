@@ -19,20 +19,18 @@ const PracticeFieldSection = ({ onGoToIntegration }: Props) => (
     content="default"
     variant="body"
     rhythm="spacious"
-    tone="pressure"
-    mix={['density', 'tension']}
+    tone="quiet"
     header={
       <Headline
         titleId="arbeiten-title"
         title="Ein Stein, der ins Wasser fällt, zieht Kreise."
         subheadline="Was später tragen soll, muss vorher gesetzt sein."
-        accent="axisTension"
+        accent="qigong"
         weight="poster"
       />
     }
   >
     <PracticeFields
-      movement="practice"
       mobileAriaLabel="Praxisweg"
       onGoToIntegration={onGoToIntegration}
       intro={{

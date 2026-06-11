@@ -2,43 +2,38 @@
 'use client'
 
 import { type ReactNode } from 'react'
-import styled from 'styled-components'
-import type { HighlightKey } from '@/design/theme'
+import styled, { type DefaultTheme } from 'styled-components'
 
-type HighlightTone = 'default' | 'inverse'
+type Accent = 'default' | keyof DefaultTheme['domain']['practice']
+type Tone = 'default' | 'inverse'
 
 type HighlightTextProps = {
   children: ReactNode
-  color?: string
-  accent?: HighlightKey
-  tone?: HighlightTone
-  soft?: boolean
+  accent?: Accent
+  tone?: Tone
 }
+
+const Highlight = styled.span<{
+  $accent: Accent
+  $tone: Tone
+}>`
+  color: ${({ theme, $accent, $tone }) => {
+    if ($tone === 'inverse') return theme.color.text.inverse
+    if ($accent === 'default') return theme.color.text.default
+    return theme.domain.practice[$accent]
+  }};
+  font-weight: ${({ theme }) => theme.font.weight.bold};
+  letter-spacing: ${({ theme }) => theme.font.letterSpacing.normal};
+`
 
 export default function HighlightText({
   children,
-  color,
-  accent,
+  accent = 'default',
   tone = 'default',
 }: HighlightTextProps) {
   return (
-    <Highlight $color={color} $accent={accent} $tone={tone}>
+    <Highlight $accent={accent} $tone={tone}>
       {children}
     </Highlight>
   )
 }
-
-const Highlight = styled.span<{
-  $color?: string
-  $accent?: HighlightKey
-  $tone: HighlightTone
-}>`
-  color: ${({ theme, $color, $accent, $tone }) => {
-    if ($color) return $color
-    if ($tone === 'inverse') return theme.color.text.inverse
-    if ($accent) return theme.color.highlight[$accent]
-    return 'inherit'
-  }};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  letter-spacing: ${({ theme }) => theme.typography.letterSpacing.normal};
-`

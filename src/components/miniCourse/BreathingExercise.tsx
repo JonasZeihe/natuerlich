@@ -354,19 +354,19 @@ const centerSurface = css<{
   border: 1px solid
     color-mix(
       in srgb,
-      ${({ theme }) => theme.roles.movement.arrival.border}
+      ${({ theme }) => theme.color.focus.ring}
         ${({ $borderAlpha }) => `${Math.round($borderAlpha * 100)}%`},
       transparent
     );
-  border-radius: ${({ theme }) => theme.borderRadius.pill};
+  border-radius: ${({ theme }) => theme.radius.pill};
   background: color-mix(
     in srgb,
-    ${({ theme }) => theme.roles.surface.card}
+    ${({ theme }) => theme.color.surface.card}
       ${({ $surfaceAlpha }) => `${Math.round($surfaceAlpha * 100)}%`},
     transparent
   );
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.md}) {
     --seal-size: 10.8rem;
     --seal-idle-title: 2.68rem;
     --seal-phase-title: 1.62rem;
@@ -375,7 +375,7 @@ const centerSurface = css<{
     --seal-running-gap: 0.02rem;
   }
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.lg}) {
     --seal-size: 11.7rem;
     --seal-idle-title: 2.86rem;
     --seal-phase-title: 1.74rem;
@@ -407,14 +407,14 @@ const CenterButton = styled.button<{
   &:focus-visible {
     background: color-mix(
       in srgb,
-      ${({ theme }) => theme.roles.surface.card} 64%,
+      ${({ theme }) => theme.color.surface.card} 64%,
       transparent
     );
   }
 
   &:focus-visible {
-    outline: 2px solid ${({ theme }) => theme.roles.movement.arrival.accent};
-    outline-offset: 0.24rem;
+    outline: 2px solid ${({ theme }) => theme.color.focus.ring};
+    outline-offset: ${({ theme }) => theme.space(0.6)};
   }
 `
 
@@ -440,13 +440,13 @@ const CenterContent = styled.div<{ $state: BreathExerciseState }>`
 
 const Phase = styled.p<{ $state: BreathExerciseState }>`
   margin: 0;
-  color: ${({ theme }) => theme.roles.text.primary};
-  font-family: ${({ theme }) => theme.typography.fontFamily.primary};
+  color: ${({ theme }) => theme.color.text.default};
+  font-family: ${({ theme }) => theme.font.family.main};
   font-size: ${({ $state }) =>
     $state === 'idle' ? 'var(--seal-idle-title)' : 'var(--seal-phase-title)'};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
+  font-weight: ${({ theme }) => theme.font.weight.bold};
   line-height: ${({ $state }) => ($state === 'idle' ? 0.95 : 0.98)};
-  letter-spacing: ${({ theme }) => theme.typography.letterSpacing.tight};
+  letter-spacing: ${({ theme }) => theme.font.letterSpacing.tight};
   text-wrap: balance;
   overflow-wrap: normal;
   word-break: keep-all;
@@ -454,46 +454,49 @@ const Phase = styled.p<{ $state: BreathExerciseState }>`
 
 const Counter = styled.p`
   margin: 0;
-  color: ${({ theme }) => theme.roles.text.primary};
-  font-family: ${({ theme }) => theme.typography.fontFamily.primary};
+  color: ${({ theme }) => theme.color.text.default};
+  font-family: ${({ theme }) => theme.font.family.main};
   font-size: var(--seal-counter);
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  font-weight: ${({ theme }) => theme.font.weight.medium};
   line-height: 0.76;
-  letter-spacing: ${({ theme }) => theme.typography.letterSpacing.tighter};
+  letter-spacing: ${({ theme }) => theme.font.letterSpacing.tight};
 `
 
 const AppActions = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: ${({ theme }) => theme.layout.flow.text};
+  gap: ${({ theme }) => theme.layout.gap.text};
 `
 
 const QuietAction = styled.button`
-  min-height: ${({ theme }) => theme.spacing(3.2)};
-  padding: ${({ theme }) => `${theme.spacingHalf(0.5)} ${theme.spacing(0.9)}`};
+  min-height: calc(
+    ${({ theme }) => theme.font.size.xs} + ${({ theme }) => theme.space(1.2)}
+  );
+  padding-block: ${({ theme }) => theme.space(0.35)};
+  padding-inline: ${({ theme }) => theme.space(1.05)};
   border: 1px solid transparent;
-  border-radius: ${({ theme }) => theme.borderRadius.pill};
+  border-radius: ${({ theme }) => theme.radius.pill};
   background: transparent;
   color: ${({ theme }) => theme.color.text.soft};
   cursor: pointer;
-  font-family: ${({ theme }) => theme.typography.fontFamily.primary};
-  font-size: ${({ theme }) => theme.typography.fontSize.caption};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  font-family: ${({ theme }) => theme.font.family.main};
+  font-size: ${({ theme }) => theme.font.size.xs};
+  font-weight: ${({ theme }) => theme.font.weight.medium};
   line-height: 1;
   transition: ${({ theme }) => theme.motion.css.interactive.control};
 
   &:hover,
   &:focus-visible {
-    color: ${({ theme }) => theme.roles.text.primary};
+    color: ${({ theme }) => theme.color.text.default};
     background: color-mix(
       in srgb,
-      ${({ theme }) => theme.roles.surface.card} 42%,
+      ${({ theme }) => theme.color.surface.card} 42%,
       transparent
     );
     border-color: color-mix(
       in srgb,
-      ${({ theme }) => theme.roles.movement.arrival.border} 42%,
+      ${({ theme }) => theme.color.focus.ring} 42%,
       transparent
     );
   }
@@ -501,13 +504,13 @@ const QuietAction = styled.button`
   &:disabled {
     cursor: default;
     opacity: 0.34;
-    color: ${({ theme }) => theme.roles.text.subtle};
+    color: ${({ theme }) => theme.color.text.muted};
     background: transparent;
     border-color: transparent;
   }
 
   &:focus-visible {
-    outline: 2px solid ${({ theme }) => theme.roles.movement.arrival.accent};
-    outline-offset: 0.22rem;
+    outline: 2px solid ${({ theme }) => theme.color.focus.ring};
+    outline-offset: ${({ theme }) => theme.space(0.55)};
   }
 `

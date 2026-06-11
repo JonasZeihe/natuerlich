@@ -15,13 +15,12 @@ const NextStepSection = () => (
     content="default"
     variant="outro"
     rhythm="spacious"
-    tone="arrival"
-    energy="flow"
+    tone="quiet"
     header={
       <Headline
         titleId="anschluss-title"
         title="Schreib mir, wenn du wissen möchtest, ob das passt."
-        accent="axisFlow"
+        accent="daoyin"
         weight="poster"
       >
         Ein paar Sätze reichen. Wer du bist, was dich hierher geführt hat und ob

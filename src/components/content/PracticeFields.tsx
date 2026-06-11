@@ -7,7 +7,6 @@ import Button from '@/components/actions/Button'
 import Grid from '@/components/primitives/Grid'
 import Stack from '@/components/primitives/Stack'
 import Surface from '@/components/primitives/Surface'
-import type { MovementKey } from '@/design/theme'
 import Typography from '@/design/typography'
 
 type PracticeTone =
@@ -51,7 +50,6 @@ type Props = {
   result: Step
   method: Method
   ways: readonly Way[]
-  movement: MovementKey
   mobileAriaLabel: string
   onGoToIntegration: () => void
 }
@@ -64,6 +62,7 @@ const inferPracticeTone = (label: string): PracticeTone => {
   if (label === 'Achtsamkeit') return 'attention'
   if (label === 'Qigong') return 'qigong'
   if (label === 'Yoga') return 'yoga'
+
   return 'taiji'
 }
 
@@ -77,13 +76,12 @@ const PracticeFields = ({
   result,
   method,
   ways,
-  movement,
   mobileAriaLabel,
   onGoToIntegration,
 }: Props) => (
   <PracticeStack aria-label={mobileAriaLabel}>
     <IntroCopy>
-      <Typography as="p" variant="body" tone="soft" cadence="open">
+      <Typography as="p" variant="body" tone="soft">
         {intro.body}
       </Typography>
     </IntroCopy>
@@ -95,7 +93,7 @@ const PracticeFields = ({
             {item.title}
           </Typography>
 
-          <SoftText as="p" variant="body" cadence="open">
+          <SoftText as="p" variant="body">
             {item.body}
           </SoftText>
         </PrincipleItem>
@@ -103,76 +101,53 @@ const PracticeFields = ({
     </PrincipleGrid>
 
     <PanelGrid>
-      <ResultPanel tone="card" movement={movement} radius="large" padding="lg">
-        <Stack gap={undefined}>
-          <Typography as="h3" variant="h3" color="primary">
+      <ResultPanel tone="card" radius="lg" padding="lg">
+        <Stack>
+          <Typography as="h3" variant="h3" tone="strong">
             {regulation.title}
           </Typography>
 
-          <Typography
-            as="p"
-            variant="body"
-            tone="soft"
-            cadence="open"
-            measure="wide"
-          >
+          <Typography as="p" variant="body" tone="soft" measure="wide">
             {regulation.body}
           </Typography>
         </Stack>
       </ResultPanel>
 
-      <ResultPanel tone="card" movement={movement} radius="large" padding="lg">
-        <Stack gap={undefined}>
-          <Typography as="h3" variant="h3" color="primary">
+      <ResultPanel tone="card" radius="lg" padding="lg">
+        <Stack>
+          <Typography as="h3" variant="h3" tone="strong">
             {result.title}
           </Typography>
 
-          <Typography
-            as="p"
-            variant="body"
-            tone="soft"
-            cadence="open"
-            measure="wide"
-          >
+          <Typography as="p" variant="body" tone="soft" measure="wide">
             {result.body}
           </Typography>
         </Stack>
       </ResultPanel>
     </PanelGrid>
 
-    <MethodPanel tone="note" movement={movement} radius="large" padding="lg">
+    <MethodPanel tone="note" radius="lg" padding="lg">
       <MethodStack>
         <MethodHeader>
-          <Typography as="h2" variant="h2" color="primary">
+          <Typography as="h2" variant="h2" tone="strong">
             {method.title}
           </Typography>
 
-          <Typography
-            as="p"
-            variant="body"
-            tone="soft"
-            cadence="open"
-            measure="wide"
-          >
+          <Typography as="p" variant="body" tone="soft" measure="wide">
             {method.body}
           </Typography>
         </MethodHeader>
 
         <MethodDefinition>
-          <Typography as="h3" variant="subtitle" color="primary">
+          <Typography as="h3" variant="h3" tone="strong">
             {method.name}
           </Typography>
 
           <DefinitionList>
             {method.terms.map((term) => (
               <DefinitionItem key={String(term.name)}>
-                <Typography as="dt" variant="body" color="primary">
-                  {term.name}
-                </Typography>
-
-                <Typography as="dd" variant="body" tone="soft" cadence="open">
-                  {term.meaning}
-                </Typography>
+                <TermName>{term.name}</TermName>
+                <TermMeaning>{term.meaning}</TermMeaning>
               </DefinitionItem>
             ))}
           </DefinitionList>
@@ -187,35 +162,29 @@ const PracticeFields = ({
             {way.title}
           </Typography>
 
-          <SoftText as="p" variant="body" cadence="open">
+          <SoftText as="p" variant="body">
             {way.body}
           </SoftText>
         </PracticeCard>
       ))}
     </PracticeWayGrid>
 
-    <Footer tone="note" movement="nextStep" radius="large" padding="lg">
+    <Footer tone="note" radius="lg" padding="lg">
       <FooterGrid columns={2} min="18rem">
-        <Stack gap={undefined}>
-          <Typography as="h3" variant="h3" color="primary">
+        <Stack>
+          <Typography as="h3" variant="h3" tone="strong">
             Manchmal ist ein Kurs der richtige Anfang. Manchmal braucht es
             Einzelunterricht. Manchmal entsteht daraus eine regelmäßige Gruppe.
           </Typography>
 
-          <Typography
-            as="p"
-            variant="body"
-            tone="soft"
-            cadence="open"
-            measure="wide"
-          >
+          <Typography as="p" variant="body" tone="soft" measure="wide">
             Entscheidend ist nicht, wie das Format heißt. Entscheidend ist, ob
             es zu deinem Stand, deinem Alltag und deiner Richtung passt.
           </Typography>
         </Stack>
 
         <FooterAction>
-          <Typography as="p" variant="body" tone="soft" cadence="open">
+          <Typography as="p" variant="body" tone="soft">
             Wenn dich die Zusammenhänge interessieren: In meinem Blog erzähle
             ich mehr über Stress, Praxis, meinen Weg und die Ideen hinter dieser
             Arbeit.
@@ -238,7 +207,7 @@ const PracticeFields = ({
 
 const PracticeStack = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.layout.flow.region};
+  gap: ${({ theme }) => theme.layout.gap.region};
   width: 100%;
   min-width: 0;
 `
@@ -250,7 +219,7 @@ const IntroCopy = styled.div`
 
 const practiceToneCSS = (tone: PracticeTone) => css`
   ${({ theme }) => {
-    const { palette } = theme.foundations
+    const { palette } = theme
 
     const map = {
       breath: {
@@ -321,20 +290,20 @@ const SoftText = styled(Typography)`
 
 const PrincipleGrid = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.layout.flow.cluster};
+  gap: ${({ theme }) => theme.layout.gap.cluster};
   min-width: 0;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.md}) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: ${({ theme }) => theme.layout.grid.gap};
+    gap: ${({ theme }) => theme.layout.gap.grid};
   }
 `
 
 const PrincipleItem = styled.article<{ $tone: PracticeTone }>`
   display: grid;
-  gap: ${({ theme }) => theme.layout.flow.text};
+  gap: ${({ theme }) => theme.layout.gap.text};
   min-width: 0;
-  padding-top: ${({ theme }) => theme.layout.flow.block};
+  padding-top: ${({ theme }) => theme.layout.gap.block};
   border-top: 1px solid;
   ${({ $tone }) => practiceToneCSS($tone)}
 
@@ -345,73 +314,87 @@ const PrincipleItem = styled.article<{ $tone: PracticeTone }>`
 
 const PanelGrid = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.layout.grid.gap};
+  gap: ${({ theme }) => theme.layout.gap.grid};
   min-width: 0;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.md}) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 `
 
 const ResultPanel = styled(Surface)`
   height: 100%;
-  background: ${({ theme }) => theme.roles.movement.practice.card};
+  background: ${({ theme }) => theme.color.surface.card};
 `
 
 const MethodPanel = styled(Surface)`
-  background: ${({ theme }) => theme.roles.movement.practice.note};
+  background: ${({ theme }) => theme.color.surface.note};
 `
 
 const MethodStack = styled(Stack)`
-  gap: ${({ theme }) => theme.layout.flow.block};
+  gap: ${({ theme }) => theme.layout.gap.block};
 `
 
 const MethodHeader = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.layout.flow.text};
+  gap: ${({ theme }) => theme.layout.gap.text};
   max-width: 64ch;
 `
 
 const MethodDefinition = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.layout.flow.text};
-  padding-top: ${({ theme }) => theme.layout.flow.block};
+  gap: ${({ theme }) => theme.layout.gap.text};
+  padding-top: ${({ theme }) => theme.layout.gap.block};
   border-top: 1px solid
     color-mix(
       in srgb,
-      ${({ theme }) => theme.roles.movement.practice.border} 52%,
+      ${({ theme }) => theme.color.border.default} 52%,
       transparent
     );
 `
 
 const DefinitionList = styled.dl`
   display: grid;
-  gap: ${({ theme }) => theme.layout.flow.text};
+  gap: ${({ theme }) => theme.layout.gap.text};
   margin: 0;
   padding: 0;
 `
 
 const DefinitionItem = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.layout.flow.text};
+  gap: ${({ theme }) => theme.layout.gap.text};
 
-  dd {
-    margin: 0;
-  }
-
-  @media (min-width: ${({ theme }) => theme.breakpoints.sm}) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.sm}) {
     grid-template-columns: minmax(9.5rem, 0.32fr) minmax(0, 1fr);
-    gap: ${({ theme }) => theme.layout.flow.block};
+    gap: ${({ theme }) => theme.layout.gap.block};
     align-items: baseline;
   }
 `
 
+const TermName = styled.dt`
+  margin: 0;
+  font-family: ${({ theme }) => theme.text.body.fontFamily};
+  font-size: ${({ theme }) => theme.text.body.fontSize};
+  font-weight: ${({ theme }) => theme.font.weight.semibold};
+  line-height: ${({ theme }) => theme.text.body.lineHeight};
+  color: ${({ theme }) => theme.color.text.default};
+`
+
+const TermMeaning = styled.dd`
+  margin: 0;
+  font-family: ${({ theme }) => theme.text.body.fontFamily};
+  font-size: ${({ theme }) => theme.text.body.fontSize};
+  font-weight: ${({ theme }) => theme.text.body.fontWeight};
+  line-height: ${({ theme }) => theme.text.body.lineHeight};
+  color: ${({ theme }) => theme.color.text.soft};
+`
+
 const PracticeWayGrid = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.layout.grid.gap};
+  gap: ${({ theme }) => theme.layout.gap.grid};
   min-width: 0;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.md}) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 `
@@ -419,10 +402,10 @@ const PracticeWayGrid = styled.div`
 const PracticeCard = styled.article<{ $tone: PracticeTone }>`
   display: grid;
   align-content: start;
-  gap: ${({ theme }) => theme.layout.flow.block};
+  gap: ${({ theme }) => theme.layout.gap.block};
   min-width: 0;
-  padding: ${({ theme }) => theme.layout.surface.lg};
-  border-radius: ${({ theme }) => theme.borderRadius.large};
+  padding: ${({ theme }) => theme.layout.surfacePadding.lg};
+  border-radius: ${({ theme }) => theme.radius.lg};
   ${({ $tone }) => practiceToneCSS($tone)}
 
   h3 {
@@ -433,16 +416,16 @@ const PracticeCard = styled.article<{ $tone: PracticeTone }>`
 const Footer = styled(Surface)``
 
 const FooterGrid = styled(Grid)`
-  gap: ${({ theme }) => theme.layout.grid.gap};
+  gap: ${({ theme }) => theme.layout.gap.grid};
 `
 
 const FooterAction = styled.div`
   display: grid;
   align-content: center;
-  gap: ${({ theme }) => theme.layout.flow.block};
+  gap: ${({ theme }) => theme.layout.gap.block};
   max-width: 32rem;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.md}) {
     justify-self: end;
     text-align: right;
   }
@@ -451,9 +434,9 @@ const FooterAction = styled.div`
 const FooterButtons = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: ${({ theme }) => theme.spacing(0.75)};
+  gap: ${({ theme }) => theme.space(0.75)};
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.md}) {
     justify-content: flex-end;
   }
 `
@@ -462,26 +445,31 @@ const BlogLink = styled.a`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: ${({ theme }) => theme.spacing(4.6)};
-  min-width: ${({ theme }) => theme.spacing(7.2)};
-  padding: ${({ theme }) => `${theme.spacingHalf(1.45)} ${theme.spacing(1.6)}`};
-  border: 0;
-  border-radius: 0.78rem;
-  background: ${({ theme }) => theme.roles.movement.nextStep.card};
-  color: ${({ theme }) => theme.roles.movement.nextStep.deep};
-  font-family: ${({ theme }) => theme.typography.fontFamily.button};
-  font-size: ${({ theme }) => theme.typography.fontSize.body};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
+  min-height: ${({ theme }) => theme.space(4.6)};
+  min-width: ${({ theme }) => theme.space(7.2)};
+  padding: ${({ theme }) => `${theme.space(1.45)} ${theme.space(1.6)}`};
+  border: 1px solid
+    ${({ theme }) => theme.component.button.secondary.default.border};
+  border-radius: ${({ theme }) => theme.radius.md};
+  background: ${({ theme }) =>
+    theme.component.button.secondary.default.background};
+  color: ${({ theme }) => theme.component.button.secondary.default.text};
+  font-family: ${({ theme }) => theme.font.family.main};
+  font-size: ${({ theme }) => theme.font.size.md};
+  font-weight: ${({ theme }) => theme.font.weight.medium};
   line-height: 1.12;
-  letter-spacing: ${({ theme }) => theme.typography.letterSpacing.normal};
+  letter-spacing: ${({ theme }) => theme.font.letterSpacing.normal};
   text-align: center;
   text-decoration: none;
   white-space: nowrap;
   transition: ${({ theme }) => theme.motion.css.interactive.control};
 
   &:hover {
-    background: ${({ theme }) => theme.roles.movement.nextStep.quiet};
-    color: ${({ theme }) => theme.roles.movement.nextStep.deep};
+    background: ${({ theme }) =>
+      theme.component.button.secondary.hover.background};
+    border-color: ${({ theme }) =>
+      theme.component.button.secondary.hover.border};
+    color: ${({ theme }) => theme.component.button.secondary.hover.text};
     text-decoration: none;
     transform: translateY(
       calc(${({ theme }) => theme.motion.foundations.distances.nudge} * -1)
@@ -494,7 +482,7 @@ const BlogLink = styled.a`
 
   &:focus-visible {
     outline: 2px solid transparent;
-    box-shadow: 0 0 0 3px ${({ theme }) => theme.color.border.focus};
+    box-shadow: ${({ theme }) => theme.color.focus.shadow};
   }
 
   @media ${({ theme }) => theme.motion.reduced.media} {

@@ -33,6 +33,8 @@ type Props = {
   scope: ProfileBlock
 }
 
+type BlockHeading = 'h2' | 'h3'
+
 const credentialsPanelId = 'recognition-credentials-panel'
 
 const RecognitionProfile = ({
@@ -51,12 +53,7 @@ const RecognitionProfile = ({
       </Lead>
 
       <ProfileGrid>
-        <ProfileCard
-          tone="card"
-          movement="recognition"
-          radius="large"
-          padding="lg"
-        >
+        <ProfileCard tone="card" radius="lg" padding="lg">
           <BlockText block={teaching} heading="h3" />
         </ProfileCard>
 
@@ -74,27 +71,22 @@ const RecognitionProfile = ({
         </PortraitFrame>
       </ProfileGrid>
 
-      <ProofPanel
-        tone="quiet"
-        movement="recognition"
-        radius="large"
-        padding="lg"
-      >
+      <ProofPanel tone="quiet" radius="lg" padding="lg">
         <ProofHeader>
           <SummaryText>
             {credentials.title ? (
-              <Typography as="h2" variant="h3" color="primary" cadence="dense">
+              <Typography as="h2" variant="h3" tone="strong">
                 {credentials.title}
               </Typography>
             ) : null}
 
             {scope.title ? (
-              <Typography as="p" variant="subtitle" color="primary">
+              <Typography as="p" variant="body" tone="strong" measure="wide">
                 {scope.title}
               </Typography>
             ) : null}
 
-            <Typography as="p" variant="body" tone="soft" cadence="open">
+            <Typography as="p" variant="body" tone="soft" measure="wide">
               {scope.children}
             </Typography>
           </SummaryText>
@@ -117,14 +109,9 @@ const RecognitionProfile = ({
           <CredentialList id={credentialsPanelId}>
             {credentials.items.map((item, index) => (
               <CredentialItem key={index}>
-                <CredentialCard
-                  tone="card"
-                  movement="recognition"
-                  radius="large"
-                  padding="md"
-                >
-                  <Stack gap={undefined}>
-                    <Typography as="h3" variant="subtitle" color="primary">
+                <CredentialCard tone="card" radius="lg" padding="md">
+                  <Stack>
+                    <Typography as="h3" variant="h3" tone="strong">
                       {item.title}
                     </Typography>
 
@@ -133,13 +120,13 @@ const RecognitionProfile = ({
                     </Typography>
 
                     <CredentialMeta>
-                      <Typography as="span" variant="caption">
+                      <Typography as="span" variant="small">
                         {item.period}
                       </Typography>
 
                       <MetaDivider aria-hidden="true">·</MetaDivider>
 
-                      <Typography as="span" variant="caption">
+                      <Typography as="span" variant="small">
                         {item.hours}
                       </Typography>
                     </CredentialMeta>
@@ -159,28 +146,24 @@ const BlockText = ({
   heading = 'h3',
 }: {
   block: ProfileBlock
-  heading?: 'h2' | 'h3' | 'subtitle'
-}) => {
-  const as = heading === 'subtitle' ? 'h3' : heading
-
-  return (
-    <BlockStack>
-      {block.title ? (
-        <Typography as={as} variant={heading} color="primary" cadence="dense">
-          {block.title}
-        </Typography>
-      ) : null}
-
-      <Typography as="p" variant="body" cadence="open" measure="wide">
-        {block.children}
+  heading?: BlockHeading
+}) => (
+  <BlockStack>
+    {block.title ? (
+      <Typography as={heading} variant={heading} tone="strong">
+        {block.title}
       </Typography>
-    </BlockStack>
-  )
-}
+    ) : null}
+
+    <Typography as="p" variant="body" measure="wide">
+      {block.children}
+    </Typography>
+  </BlockStack>
+)
 
 const Shell = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.layout.flow.region};
+  gap: ${({ theme }) => theme.layout.gap.region};
   width: 100%;
   min-width: 0;
 `
@@ -191,20 +174,20 @@ const Lead = styled.div`
 `
 
 const BlockStack = styled(Stack)`
-  gap: ${({ theme }) => theme.layout.flow.block};
+  gap: ${({ theme }) => theme.layout.gap.block};
 `
 
 const ProfileGrid = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.layout.grid.gap};
+  gap: ${({ theme }) => theme.layout.gap.grid};
   min-width: 0;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.md}) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     align-items: stretch;
   }
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.lg}) {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(18rem, 0.8fr);
   }
 `
@@ -219,31 +202,27 @@ const JoyCard = styled.article`
   min-width: 0;
   height: 100%;
   padding: clamp(1.65rem, 5vw, 2.6rem);
+  color: ${({ theme }) => theme.color.text.default};
   background: color-mix(
     in srgb,
-    ${({ theme }) => theme.roles.movement.recognition.card} 76%,
-    ${({ theme }) => theme.foundations.palette.sandLight}
+    ${({ theme }) => theme.domain.phase.threshold} 76%,
+    ${({ theme }) => theme.palette.sandLight}
   );
-  color: ${({ theme }) => theme.color.text.primary};
   border-radius: 49% 51% 46% 54% / 55% 44% 56% 45%;
   box-shadow: 0 1rem 2.4rem
-    color-mix(
-      in srgb,
-      ${({ theme }) => theme.foundations.palette.ink} 6%,
-      transparent
-    );
+    color-mix(in srgb, ${({ theme }) => theme.palette.ink} 6%, transparent);
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+  @media (max-width: ${({ theme }) => theme.breakpoint.sm}) {
     padding: clamp(1.45rem, 6vw, 2rem);
     border-radius: 2.2rem 2.8rem 2.4rem 3.1rem / 2.4rem 2.1rem 3rem 2.6rem;
   }
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.md}) {
     align-items: center;
     min-height: 18rem;
   }
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.lg}) {
     min-height: 20rem;
     transform: rotate(-1.4deg);
     transform-origin: 50% 50%;
@@ -260,7 +239,7 @@ const PortraitFrame = styled.figure`
   min-width: 0;
   min-height: 18rem;
   margin: 0;
-  border-radius: ${({ theme }) => theme.borderRadius.large};
+  border-radius: ${({ theme }) => theme.radius.lg};
   overflow: clip;
 `
 
@@ -277,16 +256,16 @@ const Portrait = styled.img`
 const ProofPanel = styled(Surface)`
   background: color-mix(
     in srgb,
-    ${({ theme }) => theme.roles.movement.recognition.quiet} 78%,
-    ${({ theme }) => theme.roles.movement.recognition.card}
+    ${({ theme }) => theme.color.surface.quiet} 78%,
+    ${({ theme }) => theme.color.surface.card}
   );
 `
 
 const ProofHeader = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.layout.flow.block};
+  gap: ${({ theme }) => theme.layout.gap.block};
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.md}) {
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: end;
   }
@@ -294,7 +273,7 @@ const ProofHeader = styled.div`
 
 const SummaryText = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.layout.flow.text};
+  gap: ${({ theme }) => theme.layout.gap.text};
   max-width: 64ch;
 `
 
@@ -302,7 +281,7 @@ const ActionSlot = styled.div`
   display: flex;
   justify-content: flex-start;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.md}) {
     justify-content: flex-end;
   }
 `
@@ -310,12 +289,12 @@ const ActionSlot = styled.div`
 const CredentialList = styled.ol`
   display: grid;
   grid-template-columns: 1fr;
-  gap: ${({ theme }) => theme.layout.grid.gap};
-  margin: ${({ theme }) => `${theme.layout.flow.cluster} 0 0`};
+  gap: ${({ theme }) => theme.layout.gap.grid};
+  margin: ${({ theme }) => `${theme.layout.gap.cluster} 0 0`};
   padding: 0;
   list-style: none;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.md}) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 `
@@ -331,12 +310,12 @@ const CredentialCard = styled(Surface)`
 const CredentialMeta = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: ${({ theme }) => theme.layout.flow.text};
+  gap: ${({ theme }) => theme.layout.gap.text};
   color: ${({ theme }) => theme.color.text.soft};
 `
 
 const MetaDivider = styled.span`
-  color: ${({ theme }) => theme.roles.text.subtle};
+  color: ${({ theme }) => theme.color.text.muted};
 `
 
 export default RecognitionProfile

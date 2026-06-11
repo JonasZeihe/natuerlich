@@ -38,7 +38,6 @@ const MiniCourseSection = ({}: Props) => {
       rail="wide"
       variant="intro"
       rhythm="spacious"
-      tone="default"
     >
       <CourseFlow>
         <ArrivalStage>
@@ -47,19 +46,12 @@ const MiniCourseSection = ({}: Props) => {
               as="h1"
               id="minikurs-title"
               variant="h1"
-              cadence="dense"
               measure="title"
             >
               {miniCourseContent.title}
             </Typography>
 
-            <Typography
-              as="p"
-              variant="body"
-              tone="soft"
-              cadence="open"
-              measure="prose"
-            >
+            <Typography as="p" variant="body" tone="soft" measure="text">
               Beginne mit der Atemübung. Öffne danach den Body Scan, wenn du
               deinen Körper genauer wahrnehmen möchtest.
             </Typography>
@@ -72,14 +64,9 @@ const MiniCourseSection = ({}: Props) => {
 
         <BodyScanShell>
           <BodyScanShape aria-hidden="true" />
-          <BodyScanSurface
-            tone="bare"
-            movement="arrival"
-            radius="none"
-            padding="none"
-          >
+          <BodyScanSurface tone="bare" radius="none" padding="none">
             <ScanGrid columns={2} min="18rem">
-              <Typography as="h2" variant="h2" cadence="dense" measure="title">
+              <Typography as="h2" variant="h2" measure="title">
                 {miniCourseContent.bodyScan.title}
               </Typography>
 
@@ -98,36 +85,18 @@ const MiniCourseSection = ({}: Props) => {
 
         <AfterPractice>
           <AfterPracticeStack>
-            <Typography
-              as="p"
-              variant="body"
-              tone="strong"
-              cadence="open"
-              measure="prose"
-            >
+            <Typography as="p" variant="body" tone="strong" measure="text">
               Vielleicht bist du jetzt ein Stückchen mehr bei dir.
             </Typography>
 
-            <Typography
-              as="p"
-              variant="body"
-              tone="soft"
-              cadence="open"
-              measure="prose"
-            >
+            <Typography as="p" variant="body" tone="soft" measure="text">
               <HighlightText accent="breath">Atem</HighlightText>, Wahrnehmung
               und <HighlightText accent="qigong">Body Scan</HighlightText> sind
               einfache Zugänge. Egal, wo du eben warst — dieser kleine Wechsel
               zählt.
             </Typography>
 
-            <Typography
-              as="p"
-              variant="body"
-              tone="soft"
-              cadence="open"
-              measure="prose"
-            >
+            <Typography as="p" variant="body" tone="soft" measure="text">
               Ich mache keine Heilversprechen. Aber ich bin davon überzeugt,
               dass{' '}
               <HighlightText accent="daoyin">regelmäßige Praxis</HighlightText>{' '}
@@ -135,26 +104,14 @@ const MiniCourseSection = ({}: Props) => {
               wenn man schon müde, gereizt oder abgebrannt ist.
             </Typography>
 
-            <Typography
-              as="p"
-              variant="body"
-              tone="soft"
-              cadence="open"
-              measure="prose"
-            >
+            <Typography as="p" variant="body" tone="soft" measure="text">
               <HighlightText accent="taiji">Prävention</HighlightText> ist
               nichts, was man sich für später aufspart. Sie ist ein Muster im
               Alltag: kurz innehalten, wahrnehmen, nachregulieren, bevor der
               Körper nur noch im Crash antwortet.
             </Typography>
 
-            <Typography
-              as="p"
-              variant="body"
-              tone="soft"
-              cadence="open"
-              measure="prose"
-            >
+            <Typography as="p" variant="body" tone="soft" measure="text">
               Aus diesem Anfang kann{' '}
               <HighlightText accent="daoyin">Praxis</HighlightText> werden:
               Yoga, Qigong, Taijiquan, Meditation, Entspannung. Nicht als
@@ -162,13 +119,7 @@ const MiniCourseSection = ({}: Props) => {
               und mit ihm zu arbeiten.
             </Typography>
 
-            <Typography
-              as="p"
-              variant="body"
-              tone="strong"
-              cadence="open"
-              measure="prose"
-            >
+            <Typography as="p" variant="body" tone="strong" measure="text">
               Wenn dich das neugierig macht, dann schau, wer ich bin, was ich
               unterrichte und wie ein gemeinsamer Einstieg aussehen kann.
             </Typography>
@@ -189,31 +140,31 @@ const MiniCourseSection = ({}: Props) => {
 const MiniCourseShell = styled(Section)`
   background: linear-gradient(
     180deg,
-    #2c4351 0%,
-    ${({ theme }) => theme.roles.movement.arrival.field} 40%,
-    ${({ theme }) => theme.roles.movement.arrival.card} 80%
+    ${({ theme }) => theme.palette.blueDeep} 0%,
+    ${({ theme }) => theme.domain.phase.arrival} 40%,
+    ${({ theme }) => theme.color.surface.paper} 80%
   );
 `
 
 const CourseFlow = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.layout.flow.region};
+  gap: ${({ theme }) => theme.layout.gap.region};
   width: 100%;
   min-width: 0;
 `
 
 const ArrivalStage = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.layout.flow.region};
+  gap: ${({ theme }) => theme.layout.gap.region};
   min-width: 0;
 `
 
 const Hero = styled.header`
   display: grid;
-  gap: ${({ theme }) => theme.layout.flow.block};
+  gap: ${({ theme }) => theme.layout.gap.block};
   max-width: 38rem;
   min-width: 0;
-  color: ${({ theme }) => theme.roles.movement.arrival.textInverse};
+  color: ${({ theme }) => theme.color.text.inverse};
 
   h1,
   p {
@@ -234,10 +185,10 @@ const BodyScanShell = styled.div`
   min-width: 0;
   width: 100%;
   min-height: clamp(9.4rem, 34vw, 13.4rem);
-  margin-top: calc(${({ theme }) => theme.layout.flow.cluster} * -0.35);
+  margin-top: calc(${({ theme }) => theme.layout.gap.cluster} * -0.35);
   overflow: visible;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+  @media (max-width: ${({ theme }) => theme.breakpoint.sm}) {
     min-height: clamp(8.8rem, 39vw, 11.6rem);
     margin-left: calc(${({ theme }) => theme.layout.inset.page} * -1);
     width: calc(100% + ${({ theme }) => theme.layout.inset.page});
@@ -251,18 +202,14 @@ const BodyScanShape = styled.div`
   left: 0;
   width: min(52rem, 100%);
   pointer-events: none;
-  background: ${({ theme }) => theme.roles.movement.arrival.card};
+  background: ${({ theme }) => theme.color.surface.paper};
   border-radius: 52% 48% 45% 55% / 58% 50% 50% 42%;
   box-shadow: 0 1.1rem 2.8rem
-    color-mix(
-      in srgb,
-      ${({ theme }) => theme.foundations.palette.ink} 8%,
-      transparent
-    );
+    color-mix(in srgb, ${({ theme }) => theme.palette.ink} 8%, transparent);
   transform: translateX(-8%) rotate(-1.8deg);
   transform-origin: 50% 50%;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+  @media (max-width: ${({ theme }) => theme.breakpoint.sm}) {
     top: 0;
     bottom: 0;
     left: 0;
@@ -271,7 +218,7 @@ const BodyScanShape = styled.div`
     transform: translateX(-38%) rotate(-4deg);
   }
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.md}) {
     left: 50%;
     width: min(58rem, 92%);
     transform: translateX(-50%) rotate(-1.2deg);
@@ -286,18 +233,18 @@ const BodyScanSurface = styled(Surface)`
   max-width: min(46rem, 86%);
   margin-left: clamp(1rem, 4vw, 2.4rem);
   background: transparent;
-  color: ${({ theme }) => theme.color.text.primary};
+  color: ${({ theme }) => theme.color.text.default};
   padding: clamp(1.2rem, 4vw, 2.1rem) clamp(1.4rem, 5vw, 3rem)
     clamp(1.25rem, 4vw, 2.2rem);
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+  @media (max-width: ${({ theme }) => theme.breakpoint.sm}) {
     max-width: min(22rem, calc(100vw - 3.8rem));
     margin-left: ${({ theme }) => theme.layout.inset.page};
     padding: clamp(1.05rem, 5vw, 1.55rem) clamp(1rem, 5vw, 1.5rem)
       clamp(1.1rem, 5vw, 1.65rem);
   }
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.md}) {
     max-width: min(48rem, 78%);
     margin-inline: auto;
     padding-inline: clamp(2.4rem, 4.5vw, 4.2rem);
@@ -306,9 +253,9 @@ const BodyScanSurface = styled(Surface)`
 
 const ScanGrid = styled(Grid)`
   align-items: center;
-  gap: ${({ theme }) => theme.layout.flow.cluster};
+  gap: ${({ theme }) => theme.layout.gap.cluster};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+  @media (max-width: ${({ theme }) => theme.breakpoint.sm}) {
     grid-template-columns: 1fr;
     max-width: 17rem;
   }
@@ -319,7 +266,7 @@ const ActionSlot = styled.div`
   align-items: center;
   justify-content: flex-start;
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.md}) {
     justify-content: flex-end;
   }
 `
@@ -331,7 +278,7 @@ const AfterPractice = styled.article`
 `
 
 const AfterPracticeStack = styled(Stack)`
-  gap: ${({ theme }) => theme.layout.flow.block};
+  gap: ${({ theme }) => theme.layout.gap.block};
 `
 
 export default MiniCourseSection

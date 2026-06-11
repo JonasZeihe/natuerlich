@@ -3,8 +3,9 @@
 
 import { forwardRef, type ButtonHTMLAttributes } from 'react'
 import styled, { css } from 'styled-components'
+import type { ButtonVariantKey } from '@/design/theme'
 
-type Variant = 'primary' | 'secondary' | 'ghost' | 'link' | 'danger'
+type Variant = ButtonVariantKey
 type Size = 'sm' | 'md'
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -17,26 +18,26 @@ const baseStyles = css`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: ${({ theme }) => theme.spacingHalf(1.25)};
-  border-radius: 0.78rem;
-  font-family: ${({ theme }) => theme.typography.fontFamily.button};
-  font-size: ${({ theme }) => theme.typography.fontSize.body};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.medium};
-  line-height: 1.12;
-  letter-spacing: ${({ theme }) => theme.typography.letterSpacing.normal};
-  text-decoration: none;
-  text-align: center;
-  cursor: pointer;
-  user-select: none;
-  white-space: nowrap;
-  -webkit-tap-highlight-color: transparent;
+  max-width: 100%;
   border-width: 1px;
   border-style: solid;
+  border-radius: ${({ theme }) => theme.radius.pill};
+  font-family: ${({ theme }) => theme.font.family.main};
+  font-size: ${({ theme }) => theme.font.size.md};
+  font-weight: ${({ theme }) => theme.font.weight.medium};
+  line-height: 1.12;
+  letter-spacing: ${({ theme }) => theme.font.letterSpacing.normal};
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
   transition: ${({ theme }) => theme.motion.css.interactive.control};
 
   &:focus-visible {
     outline: 2px solid transparent;
-    box-shadow: 0 0 0 3px ${({ theme }) => theme.color.border.focus};
+    box-shadow: ${({ theme }) => theme.color.focus.shadow};
   }
 
   &:disabled,
@@ -51,78 +52,66 @@ const baseStyles = css`
   }
 `
 
-const roleStyles = css<{ $variant: Variant }>`
+const sizeStyles = css<{ $size: Size }>`
+  ${({ theme, $size }) =>
+    $size === 'sm'
+      ? css`
+          min-height: 2.25rem;
+          min-width: 3.25rem;
+          gap: ${theme.space(1)};
+          padding: ${theme.space(2)} ${theme.space(4)};
+        `
+      : css`
+          min-height: 2.75rem;
+          min-width: 3.75rem;
+          gap: ${theme.space(2)};
+          padding: ${theme.space(3)} ${theme.space(5)};
+        `}
+`
+
+const linkResetStyles = css`
+  min-height: auto;
+  min-width: 0;
+  padding: 0;
+  border-radius: ${({ theme }) => theme.radius.sm};
+`
+
+const variantStyles = css<{ $variant: Variant }>`
   ${({ theme, $variant }) => {
-    const role = theme.color.action[$variant]
+    const variant = theme.component.button[$variant]
 
     return css`
-      color: ${role.text};
-      background-color: ${role.background};
-      border-color: ${role.border};
-      box-shadow: none;
+      color: ${variant.default.text};
+      background: ${variant.default.background};
+      border-color: ${variant.default.border};
 
       &:hover {
-        color: ${role.hoverText};
-        background-color: ${role.hoverBackground};
-        border-color: ${role.hoverBorder};
-        transform: ${$variant === 'link'
-          ? 'none'
-          : `translateY(calc(${theme.motion.foundations.distances.nudge} * -1))`};
+        color: ${variant.hover.text};
+        background: ${variant.hover.background};
+        border-color: ${variant.hover.border};
         text-decoration: ${$variant === 'link' ? 'underline' : 'none'};
         text-underline-offset: ${$variant === 'link' ? '0.16em' : 'initial'};
         text-decoration-thickness: ${$variant === 'link'
           ? '0.06em'
           : 'initial'};
+        transform: ${$variant === 'link' ? 'none' : 'translateY(-1px)'};
       }
 
       &:active {
-        color: ${role.hoverText};
-        background-color: ${role.hoverBackground};
-        border-color: ${role.hoverBorder};
+        color: ${variant.hover.text};
+        background: ${variant.hover.background};
+        border-color: ${variant.hover.border};
         transform: translateY(0);
       }
 
       &:disabled,
       &[aria-disabled='true'] {
-        color: ${role.disabledText};
-        background-color: ${role.disabledBackground};
-        border-color: ${role.disabledBorder};
-        box-shadow: none;
+        color: ${variant.disabled.text};
+        background: ${variant.disabled.background};
+        border-color: ${variant.disabled.border};
       }
     `
   }}
-`
-
-const sizeStyles = css<{ $size: Size }>`
-  ${({ theme, $size }) =>
-    $size === 'sm'
-      ? css`
-          min-height: ${theme.spacing(4)};
-          padding-inline: ${theme.spacing(1.25)};
-          padding-block: ${theme.spacingHalf(1.1)};
-          min-width: ${theme.spacing(6.5)};
-        `
-      : css`
-          min-height: ${theme.spacing(4.6)};
-          padding-inline: ${theme.spacing(1.6)};
-          padding-block: ${theme.spacingHalf(1.45)};
-          min-width: ${theme.spacing(7.2)};
-        `}
-`
-
-const linkSizeStyles = css`
-  min-height: auto;
-  min-width: 0;
-  padding-inline: ${({ theme }) => theme.spacingHalf(1)};
-  padding-block: 0;
-  box-shadow: none;
-  border-radius: ${({ theme }) => theme.borderRadius.small};
-`
-
-const widthStyles = css<{ $fullWidth: boolean; $variant: Variant }>`
-  width: ${({ $fullWidth, $variant }) =>
-    $variant === 'link' ? 'auto' : $fullWidth ? '100%' : 'auto'};
-  max-width: 100%;
 `
 
 const StyledButton = styled.button<{
@@ -130,15 +119,23 @@ const StyledButton = styled.button<{
   $size: Size
   $fullWidth: boolean
 }>`
-  ${baseStyles};
-  ${sizeStyles};
-  ${({ $variant }) => ($variant === 'link' ? linkSizeStyles : '')};
-  ${widthStyles};
-  ${roleStyles};
+  ${baseStyles}
+  ${sizeStyles}
+  ${({ $variant }) => ($variant === 'link' ? linkResetStyles : '')}
+  width: ${({ $fullWidth, $variant }) =>
+    $variant === 'link' ? 'auto' : $fullWidth ? '100%' : 'auto'};
+  ${variantStyles}
 `
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
-  { variant = 'primary', size = 'md', fullWidth = false, children, ...rest },
+  {
+    variant = 'primary',
+    size = 'md',
+    fullWidth = false,
+    children,
+    type,
+    ...rest
+  },
   ref
 ) {
   return (
@@ -147,7 +144,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
       $variant={variant}
       $size={size}
       $fullWidth={fullWidth}
-      type={rest.type ?? 'button'}
+      type={type ?? 'button'}
       {...rest}
     >
       {children}
