@@ -70,28 +70,31 @@ const MiniCourseSection = ({}: Props) => {
           </BreathingArea>
         </ArrivalStage>
 
-        <BodyScanSurface
-          tone="card"
-          movement="arrival"
-          radius="large"
-          padding="lg"
-        >
-          <ScanGrid columns={2} min="18rem">
-            <Typography as="h2" variant="h2" cadence="dense" measure="title">
-              {miniCourseContent.bodyScan.title}
-            </Typography>
+        <BodyScanShell>
+          <BodyScanShape aria-hidden="true" />
+          <BodyScanSurface
+            tone="bare"
+            movement="arrival"
+            radius="none"
+            padding="none"
+          >
+            <ScanGrid columns={2} min="18rem">
+              <Typography as="h2" variant="h2" cadence="dense" measure="title">
+                {miniCourseContent.bodyScan.title}
+              </Typography>
 
-            <ActionSlot>
-              <Button
-                type="button"
-                variant="secondary"
-                onClick={() => setIsBodyScanOpen(true)}
-              >
-                {miniCourseContent.bodyScan.action}
-              </Button>
-            </ActionSlot>
-          </ScanGrid>
-        </BodyScanSurface>
+              <ActionSlot>
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => setIsBodyScanOpen(true)}
+                >
+                  {miniCourseContent.bodyScan.action}
+                </Button>
+              </ActionSlot>
+            </ScanGrid>
+          </BodyScanSurface>
+        </BodyScanShell>
 
         <AfterPractice>
           <AfterPracticeStack>
@@ -187,9 +190,8 @@ const MiniCourseShell = styled(Section)`
   background: linear-gradient(
     180deg,
     #2c4351 0%,
-    #6f8585 36%,
-    ${({ theme }) => theme.roles.movement.arrival.field} 70%,
-    ${({ theme }) => theme.roles.movement.arrival.card} 100%
+    ${({ theme }) => theme.roles.movement.arrival.field} 40%,
+    ${({ theme }) => theme.roles.movement.arrival.card} 80%
   );
 `
 
@@ -225,19 +227,91 @@ const BreathingArea = styled.div`
   min-width: 0;
 `
 
-const BodyScanSurface = styled(Surface)`
-  border: 1px solid
+const BodyScanShell = styled.div`
+  position: relative;
+  display: grid;
+  align-items: center;
+  min-width: 0;
+  width: 100%;
+  min-height: clamp(9.4rem, 34vw, 13.4rem);
+  margin-top: calc(${({ theme }) => theme.layout.flow.cluster} * -0.35);
+  overflow: visible;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    min-height: clamp(8.8rem, 39vw, 11.6rem);
+    margin-left: calc(${({ theme }) => theme.layout.inset.page} * -1);
+    width: calc(100% + ${({ theme }) => theme.layout.inset.page});
+  }
+`
+
+const BodyScanShape = styled.div`
+  position: absolute;
+  z-index: 0;
+  inset-block: 0;
+  left: 0;
+  width: min(52rem, 100%);
+  pointer-events: none;
+  background: ${({ theme }) => theme.roles.movement.arrival.card};
+  border-radius: 52% 48% 45% 55% / 58% 50% 50% 42%;
+  box-shadow: 0 1.1rem 2.8rem
     color-mix(
       in srgb,
-      ${({ theme }) => theme.roles.movement.arrival.border} 52%,
+      ${({ theme }) => theme.foundations.palette.ink} 8%,
       transparent
     );
-  background: ${({ theme }) => theme.roles.movement.arrival.card};
+  transform: translateX(-8%) rotate(-1.8deg);
+  transform-origin: 50% 50%;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: min(31rem, calc(100vw + 7rem));
+    border-radius: 48% 52% 43% 57% / 56% 48% 52% 44%;
+    transform: translateX(-38%) rotate(-4deg);
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    left: 50%;
+    width: min(58rem, 92%);
+    transform: translateX(-50%) rotate(-1.2deg);
+    border-radius: 50% 50% 46% 54% / 56% 49% 51% 44%;
+  }
+`
+
+const BodyScanSurface = styled(Surface)`
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: min(46rem, 86%);
+  margin-left: clamp(1rem, 4vw, 2.4rem);
+  background: transparent;
+  color: ${({ theme }) => theme.color.text.primary};
+  padding: clamp(1.2rem, 4vw, 2.1rem) clamp(1.4rem, 5vw, 3rem)
+    clamp(1.25rem, 4vw, 2.2rem);
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    max-width: min(22rem, calc(100vw - 3.8rem));
+    margin-left: ${({ theme }) => theme.layout.inset.page};
+    padding: clamp(1.05rem, 5vw, 1.55rem) clamp(1rem, 5vw, 1.5rem)
+      clamp(1.1rem, 5vw, 1.65rem);
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    max-width: min(48rem, 78%);
+    margin-inline: auto;
+    padding-inline: clamp(2.4rem, 4.5vw, 4.2rem);
+  }
 `
 
 const ScanGrid = styled(Grid)`
   align-items: center;
   gap: ${({ theme }) => theme.layout.flow.cluster};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    grid-template-columns: 1fr;
+    max-width: 17rem;
+  }
 `
 
 const ActionSlot = styled.div`

@@ -26,7 +26,7 @@ const Headline = ({
   accent,
   weight = 'normal',
 }: Props) => (
-  <Shell $weight={weight} $accent={accent}>
+  <Shell>
     <HeadlineStack>
       <Title
         as="h2"
@@ -64,18 +64,9 @@ const Headline = ({
   </Shell>
 )
 
-const Shell = styled.header<{ $weight: Weight; $accent?: AxisKey }>`
+const Shell = styled.header`
   width: 100%;
   min-width: 0;
-
-  ${({ theme, $weight, $accent }) =>
-    $weight === 'poster'
-      ? css`
-          padding-left: clamp(0.9rem, 1.6vw, 1.4rem);
-          border-left: 3px solid
-            ${theme.getAxisRole($accent ?? 'axisOpening').fill};
-        `
-      : ''}
 `
 
 const HeadlineStack = styled(Stack)`

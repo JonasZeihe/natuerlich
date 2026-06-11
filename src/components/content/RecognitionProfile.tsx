@@ -60,14 +60,9 @@ const RecognitionProfile = ({
           <BlockText block={teaching} heading="h3" />
         </ProfileCard>
 
-        <ProfileCard
-          tone="card"
-          movement="recognition"
-          radius="large"
-          padding="lg"
-        >
+        <JoyCard>
           <BlockText block={style} heading="h2" />
-        </ProfileCard>
+        </JoyCard>
 
         <PortraitFrame>
           <Portrait
@@ -206,6 +201,7 @@ const ProfileGrid = styled.div`
 
   @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
@@ -216,6 +212,47 @@ const ProfileGrid = styled.div`
 const ProfileCard = styled(Surface)`
   display: flex;
   height: 100%;
+`
+
+const JoyCard = styled.article`
+  display: flex;
+  min-width: 0;
+  height: 100%;
+  padding: clamp(1.65rem, 5vw, 2.6rem);
+  background: color-mix(
+    in srgb,
+    ${({ theme }) => theme.roles.movement.recognition.card} 76%,
+    ${({ theme }) => theme.foundations.palette.sandLight}
+  );
+  color: ${({ theme }) => theme.color.text.primary};
+  border-radius: 49% 51% 46% 54% / 55% 44% 56% 45%;
+  box-shadow: 0 1rem 2.4rem
+    color-mix(
+      in srgb,
+      ${({ theme }) => theme.foundations.palette.ink} 6%,
+      transparent
+    );
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    padding: clamp(1.45rem, 6vw, 2rem);
+    border-radius: 2.2rem 2.8rem 2.4rem 3.1rem / 2.4rem 2.1rem 3rem 2.6rem;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    align-items: center;
+    min-height: 18rem;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    min-height: 20rem;
+    transform: rotate(-1.4deg);
+    transform-origin: 50% 50%;
+
+    > * {
+      transform: rotate(1.4deg);
+      transform-origin: 50% 50%;
+    }
+  }
 `
 
 const PortraitFrame = styled.figure`
