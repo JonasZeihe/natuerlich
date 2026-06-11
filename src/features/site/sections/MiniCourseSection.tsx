@@ -4,7 +4,6 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import Button from '@/components/actions/Button'
-import HighlightText from '@/components/utilities/HighlightText'
 import BodyScanDialog from '@/components/miniCourse/BodyScanDialog'
 import BreathingExercise from '@/components/miniCourse/BreathingExercise'
 import Grid from '@/components/primitives/Grid'
@@ -90,33 +89,30 @@ const MiniCourseSection = ({}: Props) => {
             </Typography>
 
             <Typography as="p" variant="body" tone="soft" measure="text">
-              <HighlightText accent="breath">Atem</HighlightText>, Wahrnehmung
-              und <HighlightText accent="qigong">Body Scan</HighlightText> sind
-              einfache Zugänge. Egal, wo du eben warst — dieser kleine Wechsel
-              zählt.
+              <strong>Atem</strong>, Wahrnehmung und <strong>Body Scan</strong>{' '}
+              sind einfache Zugänge. Egal, wo du eben warst — dieser kleine
+              Wechsel zählt.
             </Typography>
 
             <Typography as="p" variant="body" tone="soft" measure="text">
               Ich mache keine Heilversprechen. Aber ich bin davon überzeugt,
-              dass{' '}
-              <HighlightText accent="daoyin">regelmäßige Praxis</HighlightText>{' '}
-              eine echte Entspannungsfähigkeit aufbauen kann. Nicht erst dann,
-              wenn man schon müde, gereizt oder abgebrannt ist.
+              dass <strong>regelmäßige Praxis</strong> eine echte
+              Entspannungsfähigkeit aufbauen kann. Nicht erst dann, wenn man
+              schon müde, gereizt oder abgebrannt ist.
             </Typography>
 
             <Typography as="p" variant="body" tone="soft" measure="text">
-              <HighlightText accent="taiji">Prävention</HighlightText> ist
-              nichts, was man sich für später aufspart. Sie ist ein Muster im
-              Alltag: kurz innehalten, wahrnehmen, nachregulieren, bevor der
-              Körper nur noch im Crash antwortet.
+              <strong>Prävention</strong> ist nichts, was man sich für später
+              aufspart. Sie ist ein Muster im Alltag: kurz innehalten,
+              wahrnehmen, nachregulieren, bevor der Körper nur noch im Crash
+              antwortet.
             </Typography>
 
             <Typography as="p" variant="body" tone="soft" measure="text">
-              Aus diesem Anfang kann{' '}
-              <HighlightText accent="daoyin">Praxis</HighlightText> werden:
-              Yoga, Qigong, Taijiquan, Meditation, Entspannung. Nicht als
-              Etiketten, sondern als Wege, den eigenen Zustand besser zu lesen
-              und mit ihm zu arbeiten.
+              Aus diesem Anfang kann <strong>Praxis</strong> werden: Yoga,
+              Qigong, Taijiquan, Meditation, Entspannung. Nicht als Etiketten,
+              sondern als Wege, den eigenen Zustand besser zu lesen und mit ihm
+              zu arbeiten.
             </Typography>
 
             <Typography as="p" variant="body" tone="strong" measure="text">

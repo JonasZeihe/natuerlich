@@ -9,7 +9,6 @@ import PathCards, { type PathCardItem } from '@/components/content/PathCards'
 import Section from '@/components/primitives/Section'
 import Stack from '@/components/primitives/Stack'
 import Surface from '@/components/primitives/Surface'
-import HighlightText from '@/components/utilities/HighlightText'
 import Typography from '@/design/typography'
 
 type Props = {
@@ -65,9 +64,8 @@ const offerItems: readonly PathCardItem[] = [
     text: (
       <>
         Der beste Anfang, wenn noch nicht klar ist, ob es später{' '}
-        <HighlightText accent="qigong">Qigong</HighlightText>,{' '}
-        <HighlightText accent="yoga">Yoga</HighlightText> oder{' '}
-        <HighlightText accent="taiji">Taijiquan</HighlightText> werden soll.
+        <strong>Qigong</strong>, <strong>Yoga</strong> oder{' '}
+        <strong>Taijiquan</strong> werden soll.
       </>
     ),
     individual: {
@@ -96,8 +94,7 @@ const offerItems: readonly PathCardItem[] = [
     line: 'Ruhig beginnen, später tiefer gehen.',
     text: (
       <>
-        Oft der beste bewegte Einstieg:{' '}
-        <HighlightText accent="breath">Atem</HighlightText>, Stand,
+        Oft der beste bewegte Einstieg: <strong>Atem</strong>, Stand,
         Aufmerksamkeit und einfache Bewegung kommen zusammen.
       </>
     ),
@@ -113,7 +110,7 @@ const offerItems: readonly PathCardItem[] = [
       text: (
         <>
           Ein klarer Kursblock mit Acht Brokaten oder einfachen Übungen aus dem{' '}
-          <HighlightText accent="daoyin">Daoyin Yangsheng Gong</HighlightText>.
+          <strong>Daoyin Yangsheng Gong</strong>.
         </>
       ),
       classText:
@@ -133,8 +130,7 @@ const offerItems: readonly PathCardItem[] = [
     text: (
       <>
         Yoga ist zugänglich, aber größer als ein kurzer Einstieg. Haltung, Atem
-        und <HighlightText accent="yoga">Entspannung</HighlightText> greifen
-        ineinander.
+        und <strong>Entspannung</strong> greifen ineinander.
       </>
     ),
     individual: {
@@ -163,8 +159,8 @@ const offerItems: readonly PathCardItem[] = [
     line: 'Nicht schnell. Nicht nebenbei.',
     text: (
       <>
-        Taijiquan braucht <HighlightText accent="taiji">Unterbau</HighlightText>
-        . Sonst bleibt von der Form nur langsame Bewegung.
+        Taijiquan braucht <strong>Unterbau</strong>. Sonst bleibt von der Form
+        nur langsame Bewegung.
       </>
     ),
     individual: {
@@ -250,7 +246,7 @@ const IntegrationSection = ({ onGoToNextStep: _onGoToNextStep }: Props) => {
                 Didaktik, Körperarbeit, Theorie, Meditation, Atemarbeit,
                 Entspannungsverfahren und eigener Übung. Die Nachweise zeigen
                 diesen Weg. Die Begegnung beginnt trotzdem immer im{' '}
-                <HighlightText accent="breath">gemeinsamen Üben</HighlightText>.
+                <strong>gemeinsamen Üben</strong>.
               </Typography>
             </SummaryText>
 
