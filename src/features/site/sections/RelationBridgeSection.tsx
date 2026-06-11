@@ -53,14 +53,18 @@ const RelationBridgeSection = () => (
 
 const BridgeSection = styled(Section)`
   --bridge-cut: clamp(5.8rem, 17vw, 10rem);
-  --bridge-path: path(
+  --bridge-bottom-cut: calc(var(--bridge-cut) * 0.95);
+  --bridge-top-path: path(
     'M 0 92 C 170 72 260 18 420 32 C 580 46 650 104 820 84 C 960 68 1040 28 1200 42 C 1700 78 2300 16 4000 42 L 4000 4000 L 0 4000 Z'
+  );
+  --bridge-bottom-path: path(
+    'M 0 0 L 4000 0 L 4000 42 C 2300 16 1700 78 1200 42 C 1040 28 960 68 820 84 C 650 104 580 46 420 32 C 260 18 170 72 0 92 Z'
   );
 
   position: relative;
   z-index: 1;
-  margin-top: calc(var(--bridge-cut) * -0.72);
-  padding-top: calc(var(--bridge-cut) * 0.72);
+  margin-block: calc(var(--bridge-cut) * -0.72);
+  padding-block: calc(var(--bridge-cut) * 0.72);
   color: ${({ theme }) => theme.color.text.inverse};
   background: transparent;
   overflow: visible;
@@ -70,22 +74,21 @@ const BridgeSection = styled(Section)`
     content: '';
     position: absolute;
     inset-inline: 0;
+    z-index: 0;
     background: ${({ theme }) => theme.domain.phase.relation};
-    clip-path: var(--bridge-path);
     pointer-events: none;
   }
 
   &::before {
-    z-index: 0;
-    inset-block: 0;
+    top: 0;
+    bottom: calc(var(--bridge-bottom-cut) - 1px);
+    clip-path: var(--bridge-top-path);
   }
 
   &::after {
-    z-index: 0;
-    top: 100%;
-    height: calc(var(--bridge-cut) * 0.95);
-    transform: scale(-1);
-    transform-origin: center;
+    bottom: 0;
+    height: var(--bridge-bottom-cut);
+    clip-path: var(--bridge-bottom-path);
   }
 
   > * {
@@ -95,35 +98,38 @@ const BridgeSection = styled(Section)`
 
   @media (max-width: ${({ theme }) => theme.breakpoint.sm}) {
     --bridge-cut: clamp(4.8rem, 22vw, 7.2rem);
-    --bridge-path: path(
+    --bridge-bottom-cut: calc(var(--bridge-cut) * 1.05);
+    --bridge-top-path: path(
       'M 0 76 C 58 58 96 20 154 30 C 220 42 244 86 316 68 C 356 58 384 38 430 42 C 620 54 760 24 1200 42 L 1200 2400 L 0 2400 Z'
     );
+    --bridge-bottom-path: path(
+      'M 0 0 L 1200 0 L 1200 42 C 760 24 620 54 430 42 C 384 38 356 58 316 68 C 244 86 220 42 154 30 C 96 20 58 58 0 76 Z'
+    );
 
-    margin-top: calc(var(--bridge-cut) * -0.76);
-    padding-top: calc(var(--bridge-cut) * 0.86);
-
-    &::after {
-      height: calc(var(--bridge-cut) * 1.05);
-    }
+    margin-block: calc(var(--bridge-cut) * -0.76);
+    padding-block: calc(var(--bridge-cut) * 0.86);
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoint.md}) {
     --bridge-cut: clamp(7rem, 10vw, 11rem);
-    --bridge-path: path(
+    --bridge-bottom-cut: calc(var(--bridge-cut) * 0.9);
+    --bridge-top-path: path(
       'M 0 94 C 210 76 340 28 520 36 C 720 45 820 104 1030 78 C 1200 57 1360 26 1536 42 C 2100 84 2800 18 5000 42 L 5000 5000 L 0 5000 Z'
     );
+    --bridge-bottom-path: path(
+      'M 0 0 L 5000 0 L 5000 42 C 2800 18 2100 84 1536 42 C 1360 26 1200 57 1030 78 C 820 104 720 45 520 36 C 340 28 210 76 0 94 Z'
+    );
 
-    margin-top: calc(var(--bridge-cut) * -0.68);
-    padding-top: calc(var(--bridge-cut) * 0.58);
-
-    &::after {
-      height: calc(var(--bridge-cut) * 0.9);
-    }
+    margin-block: calc(var(--bridge-cut) * -0.68);
+    padding-block: calc(var(--bridge-cut) * 0.58);
   }
 
   @media (min-width: ${({ theme }) => theme.breakpoint.xl}) {
-    --bridge-path: path(
+    --bridge-top-path: path(
       'M 0 104 C 300 82 470 34 730 42 C 990 50 1120 112 1420 82 C 1640 60 1780 28 1920 44 C 2600 92 3400 18 6000 44 L 6000 6000 L 0 6000 Z'
+    );
+    --bridge-bottom-path: path(
+      'M 0 0 L 6000 0 L 6000 44 C 3400 18 2600 92 1920 44 C 1780 28 1640 60 1420 82 C 1120 112 990 50 730 42 C 470 34 300 82 0 104 Z'
     );
   }
 `
