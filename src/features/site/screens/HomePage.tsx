@@ -10,6 +10,7 @@ import IntegrationSection from '@/features/site/sections/IntegrationSection'
 import NextStepSection from '@/features/site/sections/NextStepSection'
 import PracticeFieldSection from '@/features/site/sections/PracticeFieldSection'
 import RecognitionSection from '@/features/site/sections/RecognitionSection'
+import RelationBridgeSection from '@/features/site/sections/RelationBridgeSection'
 import MiniCourseSection from '@/features/site/sections/MiniCourseSection'
 
 type FlowSource =
@@ -92,6 +93,8 @@ const HomePage = () => (
           void scrollToSection('arbeiten', 'minikurs_practice')
         }}
       />
+
+      <RelationBridgeSection />
 
       <RecognitionSection />
 

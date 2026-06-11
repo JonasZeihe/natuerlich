@@ -2,11 +2,11 @@
 import type { Metadata } from 'next'
 import StyledComponentsRegistry from '@/design/StyledComponentsRegistry'
 import Providers from '@/design/Providers'
+import { fontClassName } from '@/design/fonts'
 import Shell from '@/layouts/Shell'
 
 export const metadata: Metadata = {
-  title: 'Jonas',
-  description: 'Jonas Zeihe- Praxis, die trägt.',
+  title: 'Jonas Zeihe',
 }
 
 export default function RootLayout({
@@ -15,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="de">
+    <html lang="de" className={fontClassName}>
       <body>
         <StyledComponentsRegistry>
           <Providers>

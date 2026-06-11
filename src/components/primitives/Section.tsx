@@ -2,28 +2,23 @@
 'use client'
 
 import type { ComponentPropsWithoutRef, ReactNode } from 'react'
-import styled, { css } from 'styled-components'
-import AnchoredAsset from '@/components/assets/AnchoredAsset'
-import type {
-  AssetConsumerSpec,
-  PositionedAssetSpec,
-} from '@/components/assets/registry'
-import type { EnergyInput, EnergyMix, SectionToneKey } from '@/design/theme'
+import styled, { css, type DefaultTheme } from 'styled-components'
 import Container from './Container'
 
-type ContainerSize = 'narrow' | 'default' | 'wide' | 'full'
-type RhythmKey = 'compact' | 'default' | 'spacious'
+type ContainerSize = keyof DefaultTheme['layout']['container']
+type RhythmKey = keyof DefaultTheme['layout']['section']
 type SectionVariant = 'intro' | 'body' | 'outro'
 type SectionFrame = 'content' | 'screen'
 type RailSize = 'prose' | 'content' | 'wide' | 'full'
 type RailAlign = 'start' | 'center' | 'end'
-type LegacyContent = 'default' | 'left' | 'center' | 'right'
+type ContentAlign = 'default' | 'left' | 'center' | 'right'
+type SectionTone = 'transparent' | keyof DefaultTheme['color']['surface']
 
 type Props = {
   container?: ContainerSize
   rail?: RailSize
   align?: RailAlign
-  content?: LegacyContent
+  content?: ContentAlign
   frame?: SectionFrame
   padY?: boolean
   header?: ReactNode
@@ -32,12 +27,8 @@ type Props = {
   titleId?: string
   rhythm?: RhythmKey
   variant?: SectionVariant
-  tone?: SectionToneKey
-  energy?: EnergyInput
-  mix?: EnergyMix
+  tone?: SectionTone
   bleed?: boolean
-  asset?: AssetConsumerSpec | null
-  assets?: readonly PositionedAssetSpec[] | null
   children?: ReactNode
 } & Omit<ComponentPropsWithoutRef<'section'>, 'children'>
 
@@ -47,7 +38,7 @@ const RHYTHM_BY_VARIANT: Record<SectionVariant, RhythmKey> = {
   outro: 'compact',
 }
 
-const LEGACY_ALIGN: Record<LegacyContent, RailAlign> = {
+const ALIGN_BY_CONTENT: Record<ContentAlign, RailAlign> = {
   default: 'center',
   left: 'start',
   center: 'center',
@@ -63,17 +54,18 @@ const RAIL_WIDTH: Record<RailSize, string> = {
 
 const resolveRhythm = (
   variant: SectionVariant,
-  override?: RhythmKey
-): RhythmKey => override ?? RHYTHM_BY_VARIANT[variant]
+  rhythm?: RhythmKey
+): RhythmKey => rhythm ?? RHYTHM_BY_VARIANT[variant]
 
 const Outer = styled.section<{
-  $tone: SectionToneKey
+  $tone: SectionTone
   $bleed: boolean
 }>`
   position: relative;
   width: 100%;
   isolation: isolate;
-  background: ${({ theme, $tone }) => theme.color.section[$tone]};
+  background: ${({ theme, $tone }) =>
+    $tone === 'transparent' ? 'transparent' : theme.color.surface[$tone]};
 
   ${({ theme, $bleed }) =>
     $bleed
@@ -89,7 +81,6 @@ const Inner = styled.div<{
   $frame: SectionFrame
 }>`
   position: relative;
-  z-index: 1;
   width: 100%;
 
   ${({ theme, $padY, $rhythm, $frame }) => {
@@ -108,11 +99,11 @@ const Inner = styled.div<{
         ? css`
             padding-block: ${sectionSpace};
 
-            @media (max-width: ${theme.breakpoints.md}) {
+            @media (max-width: ${theme.breakpoint.md}) {
               padding-block: calc(${sectionSpace} * 0.82);
             }
 
-            @media (max-width: ${theme.breakpoints.sm}) {
+            @media (max-width: ${theme.breakpoint.sm}) {
               padding-block: calc(${sectionSpace} * 0.72);
             }
           `
@@ -130,9 +121,7 @@ const Rail = styled.div<{
   width: 100%;
   min-width: 0;
   gap: ${({ theme, $rhythm }) =>
-    $rhythm === 'compact'
-      ? theme.layout.flow.cluster
-      : theme.layout.flow.region};
+    $rhythm === 'compact' ? theme.layout.gap.cluster : theme.layout.gap.region};
 
   ${({ $rail }) =>
     $rail === 'full'
@@ -157,17 +146,6 @@ const Rail = styled.div<{
           `}
 `
 
-const renderAssets = (
-  assets: readonly PositionedAssetSpec[] | null | undefined
-) =>
-  assets?.map((item, index) => (
-    <AnchoredAsset
-      key={`${item.name}-${index}`}
-      {...item}
-      placement="section"
-    />
-  )) ?? null
-
 export default function Section({
   container = 'default',
   rail = 'wide',
@@ -181,19 +159,16 @@ export default function Section({
   titleId,
   rhythm,
   variant = 'body',
-  tone = 'default',
-  energy: _energy,
-  mix: _mix,
+  tone = 'transparent',
   bleed = false,
-  asset,
-  assets,
   children,
   ...rest
 }: Props) {
   const resolvedRhythm = resolveRhythm(variant, rhythm)
-  const resolvedAlign = align ?? LEGACY_ALIGN[content]
+  const resolvedAlign = align ?? ALIGN_BY_CONTENT[content]
   const labelledBy = titleId ?? rest['aria-labelledby']
   const accessibleLabel = ariaLabel ?? rest['aria-label']
+
   const sectionAriaProps =
     accessibleLabel && !labelledBy
       ? { 'aria-label': accessibleLabel }
@@ -203,9 +178,6 @@ export default function Section({
 
   return (
     <Outer $tone={tone} $bleed={bleed} {...rest} {...sectionAriaProps}>
-      {asset ? <AnchoredAsset {...asset} placement="section" /> : null}
-      {renderAssets(assets)}
-
       <Inner $padY={padY} $rhythm={resolvedRhythm} $frame={frame}>
         <Container max={container}>
           <Rail $rail={rail} $align={resolvedAlign} $rhythm={resolvedRhythm}>

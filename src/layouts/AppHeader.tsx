@@ -1,7 +1,7 @@
 // src/layouts/AppHeader.tsx
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { type MouseEvent, useEffect, useMemo, useRef, useState } from 'react'
 import styled, { css } from 'styled-components'
 import { FiMenu, FiX } from 'react-icons/fi'
 import Container from '@/components/primitives/Container'
@@ -75,7 +75,7 @@ type ActiveIndicatorState = {
   visible: boolean
 }
 
-export default function AppHeader() {
+const AppHeader = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [activeId, setActiveId] = useState<SiteSectionId>(START_SECTION_ID)
   const [compact, setCompact] = useState(false)
@@ -404,7 +404,7 @@ export default function AppHeader() {
   }
 
   const handleMobileNavigation = (
-    event: React.MouseEvent<HTMLAnchorElement>,
+    event: MouseEvent<HTMLAnchorElement>,
     sectionId: SiteSectionId
   ) => {
     event.preventDefault()
@@ -427,9 +427,7 @@ export default function AppHeader() {
         }).then((ok) => {
           if (!ok) return
 
-          try {
-            history.replaceState(null, '', `#${sectionId}`)
-          } catch {}
+          history.replaceState(null, '', `#${sectionId}`)
         })
       })
     })
@@ -443,7 +441,7 @@ export default function AppHeader() {
       role="banner"
       aria-label="Seitenkopf"
     >
-      <Container max="page">
+      <Container max="default">
         <HeaderInner>
           <DesktopRow>
             <BrandWrap>
@@ -548,10 +546,10 @@ const HeaderShell = styled.header<{ $compact: boolean; $hidden: boolean }>`
   top: 0;
   z-index: 1000;
   width: 100%;
-  background: ${({ theme }) => theme.roles.surface.chrome};
+  background: ${({ theme }) => theme.color.surface.quiet};
   border-bottom: 1px solid
     ${({ theme, $compact }) =>
-      $compact ? theme.roles.border.strong : theme.roles.border.subtle};
+      $compact ? theme.color.border.strong : theme.color.border.default};
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   opacity: ${({ $hidden }) => ($hidden ? 0 : 1)};
@@ -568,12 +566,12 @@ const HeaderShell = styled.header<{ $compact: boolean; $hidden: boolean }>`
     inset: auto 0 0;
     height: 1px;
     background: ${({ theme, $compact }) =>
-      $compact ? theme.roles.border.strong : 'transparent'};
+      $compact ? theme.color.border.strong : 'transparent'};
     transition: ${({ theme }) => theme.motion.css.navigation.headerChrome};
     pointer-events: none;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (max-width: ${({ theme }) => theme.breakpoint.md}) {
     position: fixed;
     top: auto;
     bottom: 0;
@@ -596,11 +594,11 @@ const HeaderInner = styled.div`
   flex-direction: column;
   justify-content: center;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (max-width: ${({ theme }) => theme.breakpoint.md}) {
     min-height: 0;
     justify-content: flex-end;
     padding-bottom: max(
-      ${({ theme }) => theme.spacing(0.8)},
+      ${({ theme }) => theme.space(0.8)},
       env(safe-area-inset-bottom)
     );
   }
@@ -610,9 +608,9 @@ const DesktopRow = styled.div`
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
-  gap: ${({ theme }) => theme.spacing(1)};
+  gap: ${({ theme }) => theme.space(1)};
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (max-width: ${({ theme }) => theme.breakpoint.md}) {
     display: none;
   }
 `
@@ -637,7 +635,7 @@ const BrandStack = styled.span`
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: ${({ theme }) => theme.spacingHalf(0.35)};
+  gap: ${({ theme }) => theme.space(0.35)};
   min-width: 0;
 `
 
@@ -651,8 +649,8 @@ const DesktopNavTrack = styled.div`
   position: relative;
   display: inline-flex;
   align-items: center;
-  padding: ${({ theme }) => theme.spacingHalf(0.2)};
-  border-radius: ${({ theme }) => theme.borderRadius.pill};
+  padding: ${({ theme }) => theme.space(0.2)};
+  border-radius: ${({ theme }) => theme.radius.pill};
 `
 
 const ActivePill = styled.span<{
@@ -661,13 +659,13 @@ const ActivePill = styled.span<{
   $visible: boolean
 }>`
   position: absolute;
-  top: ${({ theme }) => theme.spacingHalf(0.2)};
-  bottom: ${({ theme }) => theme.spacingHalf(0.2)};
+  top: ${({ theme }) => theme.space(0.2)};
+  bottom: ${({ theme }) => theme.space(0.2)};
   left: 0;
   width: ${({ $width }) => `${$width}px`};
-  border-radius: ${({ theme }) => theme.borderRadius.pill};
-  background: ${({ theme }) => theme.getEnergyRole('density').surface};
-  border: 1px solid ${({ theme }) => theme.getEnergyRole('density').border};
+  border-radius: ${({ theme }) => theme.radius.pill};
+  background: ${({ theme }) => theme.palette.mossLight};
+  border: 1px solid ${({ theme }) => theme.domain.practice.daoyin};
   box-shadow: none;
   opacity: ${({ $visible }) => ($visible ? 1 : 0)};
   transform: translateX(${({ $left }) => `${$left}px`});
@@ -684,19 +682,17 @@ const navLinkStyles = css<{ $active: boolean }>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: ${({ theme }) => theme.spacing(3.35)};
-  padding-inline: ${({ theme }) => theme.spacing(0.95)};
-  border-radius: ${({ theme }) => theme.borderRadius.pill};
+  min-height: ${({ theme }) => theme.space(3.35)};
+  padding-inline: ${({ theme }) => theme.space(0.95)};
+  border-radius: ${({ theme }) => theme.radius.pill};
   text-decoration: none;
   border: 1px solid transparent;
   background: transparent;
   color: ${({ theme, $active }) =>
-    $active ? theme.getEnergyRole('density').text : theme.color.text.soft};
-  font-size: ${({ theme }) => theme.typography.fontSize.small};
+    $active ? theme.palette.mossDeep : theme.color.text.soft};
+  font-size: ${({ theme }) => theme.font.size.sm};
   font-weight: ${({ theme, $active }) =>
-    $active
-      ? theme.typography.fontWeight.bold
-      : theme.typography.fontWeight.medium};
+    $active ? theme.font.weight.bold : theme.font.weight.medium};
   box-shadow: none;
   transition: ${({ theme }) => theme.motion.css.navigation.link};
 
@@ -704,9 +700,9 @@ const navLinkStyles = css<{ $active: boolean }>`
   &:focus-visible {
     text-decoration: none;
     color: ${({ theme, $active }) =>
-      $active ? theme.getEnergyRole('density').text : theme.roles.text.primary};
+      $active ? theme.palette.mossDeep : theme.color.text.default};
     background: ${({ theme, $active }) =>
-      $active ? 'transparent' : theme.roles.surface.card};
+      $active ? 'transparent' : theme.color.surface.card};
   }
 `
 
@@ -717,9 +713,9 @@ const NavLink = styled(SmoothScroller)<{ $active: boolean }>`
 const MobileSurface = styled.div`
   display: none;
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (max-width: ${({ theme }) => theme.breakpoint.md}) {
     display: grid;
-    gap: ${({ theme }) => theme.spacing(0.65)};
+    gap: ${({ theme }) => theme.space(0.65)};
   }
 `
 
@@ -727,17 +723,17 @@ const MobileDock = styled.nav`
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: ${({ theme }) => theme.spacing(0.75)};
-  min-height: ${({ theme }) => theme.spacing(6)};
-  padding: ${({ theme }) => `${theme.spacing(0.55)} ${theme.spacing(0.6)}`};
-  border-radius: ${({ theme }) => theme.borderRadius.pill};
+  gap: ${({ theme }) => theme.space(0.75)};
+  min-height: ${({ theme }) => theme.space(6)};
+  padding: ${({ theme }) => `${theme.space(0.55)} ${theme.space(0.6)}`};
+  border-radius: ${({ theme }) => theme.radius.pill};
   background: color-mix(
     in srgb,
-    ${({ theme }) => theme.roles.surface.chrome} 94%,
+    ${({ theme }) => theme.color.surface.paper} 94%,
     transparent
   );
-  border: 1px solid ${({ theme }) => theme.roles.border.strong};
-  box-shadow: ${({ theme }) => theme.boxShadow.sm};
+  border: 1px solid ${({ theme }) => theme.color.border.strong};
+  box-shadow: ${({ theme }) => theme.shadow.sm};
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
 `
@@ -746,22 +742,26 @@ const MobileCurrent = styled(SmoothScroller)`
   display: inline-flex;
   align-items: center;
   min-width: 0;
-  min-height: ${({ theme }) => theme.spacing(4.6)};
-  gap: ${({ theme }) => theme.spacing(0.7)};
-  padding-inline: ${({ theme }) => theme.spacing(1.05)};
-  border-radius: ${({ theme }) => theme.borderRadius.pill};
-  color: ${({ theme }) => theme.getEnergyRole('density').text};
-  background: ${({ theme }) => theme.getEnergyRole('density').surface};
-  border: 1px solid ${({ theme }) => theme.getEnergyRole('density').border};
+  min-height: ${({ theme }) => theme.space(4.6)};
+  gap: ${({ theme }) => theme.space(0.7)};
+  padding-inline: ${({ theme }) => theme.space(1.05)};
+  border-radius: ${({ theme }) => theme.radius.pill};
+  color: ${({ theme }) => theme.palette.mossDeep};
+  background: ${({ theme }) => theme.palette.mossLight};
+  border: 1px solid ${({ theme }) => theme.domain.practice.daoyin};
   text-decoration: none;
   overflow: hidden;
   transition: ${({ theme }) => theme.motion.css.navigation.link};
 
   &:hover,
   &:focus-visible {
-    color: ${({ theme }) => theme.getEnergyRole('density').text};
+    color: ${({ theme }) => theme.palette.mossDeep};
     text-decoration: none;
-    background: ${({ theme }) => theme.getEnergyRole('density').surfaceStrong};
+    background: color-mix(
+      in srgb,
+      ${({ theme }) => theme.palette.mossLight} 72%,
+      ${({ theme }) => theme.color.surface.paper}
+    );
   }
 `
 
@@ -769,8 +769,8 @@ const MobileCurrentDot = styled.span`
   flex: 0 0 auto;
   width: 0.46rem;
   height: 0.46rem;
-  border-radius: ${({ theme }) => theme.borderRadius.pill};
-  background: ${({ theme }) => theme.getEnergyRole('density').text};
+  border-radius: ${({ theme }) => theme.radius.pill};
+  background: ${({ theme }) => theme.palette.mossDeep};
 `
 
 const MobileCurrentText = styled.span`
@@ -778,30 +778,30 @@ const MobileCurrentText = styled.span`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: ${({ theme }) => theme.typography.fontSize.small};
-  font-weight: ${({ theme }) => theme.typography.fontWeight.bold};
-  letter-spacing: ${({ theme }) => theme.typography.letterSpacing.tight};
+  font-size: ${({ theme }) => theme.font.size.sm};
+  font-weight: ${({ theme }) => theme.font.weight.bold};
+  letter-spacing: ${({ theme }) => theme.font.letterSpacing.tight};
 `
 
 const MenuButton = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: ${({ theme }) => theme.spacing(4.6)};
-  min-height: ${({ theme }) => theme.spacing(4.6)};
-  border-radius: ${({ theme }) => theme.borderRadius.pill};
-  background: ${({ theme }) => theme.roles.surface.card};
-  color: ${({ theme }) => theme.roles.text.primary};
-  border: 1px solid ${({ theme }) => theme.roles.border.subtle};
+  min-width: ${({ theme }) => theme.space(4.6)};
+  min-height: ${({ theme }) => theme.space(4.6)};
+  border-radius: ${({ theme }) => theme.radius.pill};
+  background: ${({ theme }) => theme.color.surface.card};
+  color: ${({ theme }) => theme.color.text.default};
+  border: 1px solid ${({ theme }) => theme.color.border.default};
   box-shadow: none;
   cursor: pointer;
   transition: ${({ theme }) => theme.motion.css.navigation.menuButton};
 
   &:hover,
   &:focus-visible {
-    background: ${({ theme }) => theme.getEnergyRole('density').surface};
-    border-color: ${({ theme }) => theme.getEnergyRole('density').border};
-    color: ${({ theme }) => theme.getEnergyRole('density').text};
+    background: ${({ theme }) => theme.palette.mossLight};
+    border-color: ${({ theme }) => theme.domain.practice.daoyin};
+    color: ${({ theme }) => theme.palette.mossDeep};
     transform: translateY(
       calc(${({ theme }) => theme.motion.foundations.distances.nudge} * -1)
     );
@@ -814,15 +814,15 @@ const MenuButton = styled.button`
 
 const MobileSheet = styled.nav`
   display: block;
-  padding: ${({ theme }) => theme.spacing(0.75)};
-  border-radius: ${({ theme }) => theme.borderRadius.large};
+  padding: ${({ theme }) => theme.space(0.75)};
+  border-radius: ${({ theme }) => theme.radius.lg};
   background: color-mix(
     in srgb,
-    ${({ theme }) => theme.roles.surface.chrome} 96%,
+    ${({ theme }) => theme.color.surface.paper} 96%,
     transparent
   );
-  border: 1px solid ${({ theme }) => theme.roles.border.strong};
-  box-shadow: ${({ theme }) => theme.boxShadow.md};
+  border: 1px solid ${({ theme }) => theme.color.border.strong};
+  box-shadow: ${({ theme }) => theme.shadow.md};
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
 `
@@ -832,7 +832,7 @@ const MobileList = styled.ol`
   margin: 0;
   padding: 0;
   display: grid;
-  gap: ${({ theme }) => theme.spacingHalf(0.65)};
+  gap: ${({ theme }) => theme.space(0.65)};
 `
 
 const MobileItem = styled.li`
@@ -843,6 +843,8 @@ const MobileLink = styled(SmoothScroller)<{ $active: boolean }>`
   ${navLinkStyles}
   width: 100%;
   justify-content: flex-start;
-  min-height: ${({ theme }) => theme.spacing(4.6)};
-  padding-inline: ${({ theme }) => theme.spacing(1)};
+  min-height: ${({ theme }) => theme.space(4.6)};
+  padding-inline: ${({ theme }) => theme.space(1)};
 `
+
+export default AppHeader

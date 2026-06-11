@@ -6,21 +6,18 @@ import {
   type ComponentPropsWithoutRef,
   type ReactNode,
 } from 'react'
-import styled from 'styled-components'
-import type { AssetConsumerSpec } from '@/components/assets/registry'
-import type { MovementKey, SurfaceToneKey } from '@/design/theme'
+import styled, { type DefaultTheme } from 'styled-components'
 import Surface from './Surface'
 
-type Padding = 'none' | 'sm' | 'md' | 'lg'
-type Radius = 'none' | 'small' | 'medium' | 'large' | 'pill'
+type CardTone = 'bare' | keyof DefaultTheme['color']['surface']
+type CardPadding = keyof DefaultTheme['layout']['surfacePadding']
+type CardRadius = keyof DefaultTheme['radius']
 
 type Props = {
-  padding?: Padding
-  tone?: SurfaceToneKey
-  movement?: MovementKey
-  radius?: Radius
+  padding?: CardPadding
+  tone?: CardTone
+  radius?: CardRadius
   bordered?: boolean
-  asset?: AssetConsumerSpec | null
   children?: ReactNode
 } & Omit<ComponentPropsWithoutRef<'div'>, 'color'>
 
@@ -35,10 +32,8 @@ const Card = forwardRef<HTMLDivElement, Props>(function Card(
   {
     padding = 'md',
     tone = 'card',
-    movement,
-    radius = 'large',
+    radius = 'lg',
     bordered = false,
-    asset,
     children,
     ...rest
   },
@@ -48,11 +43,9 @@ const Card = forwardRef<HTMLDivElement, Props>(function Card(
     <StyledCard
       ref={ref}
       tone={tone}
-      movement={movement}
       radius={radius}
       padding={padding}
       bordered={bordered}
-      asset={asset}
       {...rest}
     >
       {children}

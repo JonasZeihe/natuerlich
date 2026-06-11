@@ -14,21 +14,14 @@ const ImpressumPage = () => (
     container="narrow"
     variant="body"
     rhythm="spacious"
-    tone="default"
   >
     <PageFlow>
       <Header>
-        <Typography as="h1" variant="h1" cadence="dense" measure="title">
+        <Typography as="h1" variant="h1" measure="title">
           Impressum & Datenschutz
         </Typography>
 
-        <Typography
-          as="p"
-          variant="subtitle"
-          tone="soft"
-          cadence="open"
-          measure="prose"
-        >
+        <Typography as="p" variant="body" tone="soft" measure="text">
           Rechtliche Angaben, Datenschutz und Hinweise zur Nutzung dieser
           Website.
         </Typography>
@@ -37,19 +30,13 @@ const ImpressumPage = () => (
       <Content>
         <LegalBlock aria-labelledby="anbieter">
           <LegalStack>
-            <Typography
-              as="h2"
-              id="anbieter"
-              variant="h2"
-              cadence="dense"
-              measure="title"
-            >
+            <Typography as="h2" id="anbieter" variant="h2" measure="title">
               Diensteanbieter nach § 5 DDG und verantwortliche Stelle nach Art.
               4 Nr. 7 DSGVO
             </Typography>
 
             <Address>
-              <Typography as="p" variant="body" cadence="open">
+              <Typography as="p" variant="body">
                 Jonas Zeihe
                 <br />
                 Weinbergstraße 2
@@ -60,7 +47,7 @@ const ImpressumPage = () => (
               </Typography>
             </Address>
 
-            <Typography as="p" variant="body" cadence="open">
+            <Typography as="p" variant="body">
               E-Mail:{' '}
               <TextLink href="mailto:jonaszeihe@gmail.com">
                 jonaszeihe@gmail.com
@@ -75,13 +62,12 @@ const ImpressumPage = () => (
               as="h2"
               id="verantwortlich"
               variant="h2"
-              cadence="dense"
               measure="title"
             >
               Verantwortlich für Inhalte nach § 18 Abs. 2 MStV
             </Typography>
 
-            <Typography as="p" variant="body" tone="soft" cadence="open">
+            <Typography as="p" variant="body" tone="soft">
               Jonas Zeihe, Anschrift wie oben
             </Typography>
           </LegalStack>
@@ -89,21 +75,15 @@ const ImpressumPage = () => (
 
         <LegalBlock aria-labelledby="datenschutz">
           <LegalStack>
-            <Typography
-              as="h2"
-              id="datenschutz"
-              variant="h2"
-              cadence="dense"
-              measure="title"
-            >
+            <Typography as="h2" id="datenschutz" variant="h2" measure="title">
               Datenschutz
             </Typography>
 
             <Subsection>
-              <Typography as="h3" variant="subtitle" color="primary">
+              <Typography as="h3" variant="h3" tone="strong">
                 Grundsätze
               </Typography>
-              <Typography as="p" variant="body" tone="soft" cadence="open">
+              <Typography as="p" variant="body" tone="soft">
                 Diese Website kann grundsätzlich ohne Angabe personenbezogener
                 Daten genutzt werden. Es werden keine Tracking-Cookies gesetzt,
                 keine Webanalyse eingesetzt und keine Profilbildung vorgenommen.
@@ -111,10 +91,10 @@ const ImpressumPage = () => (
             </Subsection>
 
             <Subsection>
-              <Typography as="h3" variant="subtitle" color="primary">
+              <Typography as="h3" variant="h3" tone="strong">
                 Art der Website
               </Typography>
-              <Typography as="p" variant="body" tone="soft" cadence="open">
+              <Typography as="p" variant="body" tone="soft">
                 Bei dieser Website handelt es sich um eine statisch
                 bereitgestellte Website auf Basis von Next.js. Sie dient der
                 Darstellung meiner Arbeit, der Bereitstellung von
@@ -123,10 +103,10 @@ const ImpressumPage = () => (
             </Subsection>
 
             <Subsection>
-              <Typography as="h3" variant="subtitle" color="primary">
+              <Typography as="h3" variant="h3" tone="strong">
                 Hosting
               </Typography>
-              <Typography as="p" variant="body" tone="soft" cadence="open">
+              <Typography as="p" variant="body" tone="soft">
                 Diese Website wird auf Render betrieben. Beim Aufruf der Seiten
                 verarbeitet der Hoster technisch notwendige Server-Logdaten,
                 insbesondere IP-Adresse, Datum und Uhrzeit des Zugriffs,
@@ -135,7 +115,7 @@ const ImpressumPage = () => (
                 des Betriebs zu gewährleisten. Rechtsgrundlage ist Art. 6 Abs. 1
                 lit. f DSGVO.
               </Typography>
-              <Typography as="p" variant="body" tone="soft" cadence="open">
+              <Typography as="p" variant="body" tone="soft">
                 Weitere Informationen:{' '}
                 <TextLink
                   href="https://render.com/privacy"
@@ -149,10 +129,10 @@ const ImpressumPage = () => (
             </Subsection>
 
             <Subsection>
-              <Typography as="h3" variant="subtitle" color="primary">
+              <Typography as="h3" variant="h3" tone="strong">
                 Internationale Datenübermittlung
               </Typography>
-              <Typography as="p" variant="body" tone="soft" cadence="open">
+              <Typography as="p" variant="body" tone="soft">
                 Render ist ein Anbieter mit Sitz in den USA. Je nach technischer
                 Ausgestaltung können Daten, insbesondere Server-Logdaten, auch
                 in den USA verarbeitet werden. Die Verarbeitung erfolgt auf
@@ -162,10 +142,10 @@ const ImpressumPage = () => (
             </Subsection>
 
             <Subsection>
-              <Typography as="h3" variant="subtitle" color="primary">
+              <Typography as="h3" variant="h3" tone="strong">
                 Kontaktaufnahme per E-Mail
               </Typography>
-              <Typography as="p" variant="body" tone="soft" cadence="open">
+              <Typography as="p" variant="body" tone="soft">
                 Bei einer Kontaktaufnahme per E-Mail werden die übermittelten
                 Daten ausschließlich zur Bearbeitung der Anfrage verwendet.
                 Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO, sofern die
@@ -177,10 +157,10 @@ const ImpressumPage = () => (
             </Subsection>
 
             <Subsection>
-              <Typography as="h3" variant="subtitle" color="primary">
+              <Typography as="h3" variant="h3" tone="strong">
                 Lokale Speicherung im Browser
               </Typography>
-              <Typography as="p" variant="body" tone="soft" cadence="open">
+              <Typography as="p" variant="body" tone="soft">
                 Soweit diese Website technische Einstellungen lokal speichert,
                 erfolgt dies ausschließlich im Browser des verwendeten
                 Endgeräts. Eine zentrale Speicherung solcher Informationen
@@ -189,10 +169,10 @@ const ImpressumPage = () => (
             </Subsection>
 
             <Subsection>
-              <Typography as="h3" variant="subtitle" color="primary">
+              <Typography as="h3" variant="h3" tone="strong">
                 Ihre Rechte
               </Typography>
-              <Typography as="p" variant="body" tone="soft" cadence="open">
+              <Typography as="p" variant="body" tone="soft">
                 Sie haben das Recht auf Auskunft, Berichtigung, Löschung,
                 Einschränkung der Verarbeitung, Datenübertragbarkeit sowie
                 Widerspruch gegen die Verarbeitung Ihrer personenbezogenen Daten
@@ -208,10 +188,10 @@ const ImpressumPage = () => (
             </Subsection>
 
             <Subsection>
-              <Typography as="h3" variant="subtitle" color="primary">
+              <Typography as="h3" variant="h3" tone="strong">
                 Sicherheit
               </Typography>
-              <Typography as="p" variant="body" tone="soft" cadence="open">
+              <Typography as="p" variant="body" tone="soft">
                 Die Übertragung dieser Website erfolgt verschlüsselt mittels
                 HTTPS / TLS, soweit der verwendete Browser dies unterstützt.
               </Typography>
@@ -225,13 +205,12 @@ const ImpressumPage = () => (
               as="h2"
               id="haftung-inhalte"
               variant="h2"
-              cadence="dense"
               measure="title"
             >
               Haftung für Inhalte
             </Typography>
 
-            <Typography as="p" variant="body" tone="soft" cadence="open">
+            <Typography as="p" variant="body" tone="soft">
               Als Diensteanbieter bin ich für eigene Inhalte auf diesen Seiten
               nach den allgemeinen Gesetzen verantwortlich. Ich bin jedoch nicht
               verpflichtet, übermittelte oder gespeicherte fremde Informationen
@@ -243,17 +222,11 @@ const ImpressumPage = () => (
 
         <LegalBlock aria-labelledby="haftung-links">
           <LegalStack>
-            <Typography
-              as="h2"
-              id="haftung-links"
-              variant="h2"
-              cadence="dense"
-              measure="title"
-            >
+            <Typography as="h2" id="haftung-links" variant="h2" measure="title">
               Haftung für Links
             </Typography>
 
-            <Typography as="p" variant="body" tone="soft" cadence="open">
+            <Typography as="p" variant="body" tone="soft">
               Diese Website enthält Links zu externen Websites Dritter, auf
               deren Inhalte ich keinen Einfluss habe. Für diese fremden Inhalte
               ist stets der jeweilige Anbieter oder Betreiber verantwortlich.
@@ -265,17 +238,11 @@ const ImpressumPage = () => (
 
         <LegalBlock aria-labelledby="urheberrecht">
           <LegalStack>
-            <Typography
-              as="h2"
-              id="urheberrecht"
-              variant="h2"
-              cadence="dense"
-              measure="title"
-            >
+            <Typography as="h2" id="urheberrecht" variant="h2" measure="title">
               Urheberrecht und Medien
             </Typography>
 
-            <Typography as="p" variant="body" tone="soft" cadence="open">
+            <Typography as="p" variant="body" tone="soft">
               Die durch mich erstellten Inhalte und Werke auf dieser Website
               unterliegen dem deutschen Urheberrecht. Vervielfältigung,
               Bearbeitung, Verbreitung und Verwertung außerhalb der Grenzen des
@@ -284,7 +251,7 @@ const ImpressumPage = () => (
               Gebrauch gestattet.
             </Typography>
 
-            <Typography as="p" variant="body" tone="soft" cadence="open">
+            <Typography as="p" variant="body" tone="soft">
               Soweit Inhalte auf dieser Seite nicht von mir erstellt wurden,
               werden die Urheberrechte Dritter beachtet. Sollten Sie dennoch auf
               eine Urheberrechtsverletzung aufmerksam werden, informieren Sie
@@ -299,13 +266,12 @@ const ImpressumPage = () => (
               as="h2"
               id="streitbeilegung"
               variant="h2"
-              cadence="dense"
               measure="title"
             >
               Online-Streitbeilegung / Verbraucherstreitbeilegung
             </Typography>
 
-            <Typography as="p" variant="body" tone="soft" cadence="open">
+            <Typography as="p" variant="body" tone="soft">
               Die Europäische Kommission stellt eine Plattform zur
               Online-Streitbeilegung bereit:{' '}
               <TextLink
@@ -324,17 +290,11 @@ const ImpressumPage = () => (
 
         <LegalBlock aria-labelledby="stand">
           <LegalStack>
-            <Typography
-              as="h2"
-              id="stand"
-              variant="h2"
-              cadence="dense"
-              measure="title"
-            >
+            <Typography as="h2" id="stand" variant="h2" measure="title">
               Stand
             </Typography>
 
-            <Typography as="p" variant="body" tone="soft" cadence="open">
+            <Typography as="p" variant="body" tone="soft">
               Mai 2026
             </Typography>
           </LegalStack>
@@ -350,35 +310,34 @@ const ImpressumPage = () => (
 
 const PageFlow = styled(Stack)`
   width: 100%;
-  gap: ${({ theme }) => theme.layout.flow.region};
+  gap: ${({ theme }) => theme.layout.gap.region};
 `
 
 const Header = styled(Stack)`
   max-width: 58rem;
-  gap: ${({ theme }) => theme.layout.flow.block};
+  gap: ${({ theme }) => theme.layout.gap.block};
 `
 
 const Content = styled(Stack)`
   width: 100%;
-  gap: ${({ theme }) => theme.layout.flow.cluster};
+  gap: ${({ theme }) => theme.layout.gap.cluster};
 `
 
 const LegalBlock = styled(Surface).attrs({
   tone: 'quiet',
-  movement: 'arrival',
-  radius: 'large',
+  radius: 'lg',
   padding: 'lg',
 })`
   width: 100%;
 `
 
 const LegalStack = styled(Stack)`
-  gap: ${({ theme }) => theme.layout.flow.block};
+  gap: ${({ theme }) => theme.layout.gap.block};
 `
 
 const Subsection = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.layout.flow.text};
+  gap: ${({ theme }) => theme.layout.gap.text};
 `
 
 const Address = styled.address`
@@ -386,13 +345,13 @@ const Address = styled.address`
 `
 
 const TextLink = styled(Link)`
-  color: ${({ theme }) => theme.color.text.link};
-  text-decoration-color: ${({ theme }) => theme.color.text.link};
+  color: ${({ theme }) => theme.color.link.default};
+  text-decoration-color: ${({ theme }) => theme.color.link.default};
   text-underline-offset: 0.18em;
 
   &:hover,
   &:focus-visible {
-    color: ${({ theme }) => theme.color.text.linkHover};
+    color: ${({ theme }) => theme.color.link.hover};
     text-decoration-color: currentColor;
   }
 `
@@ -400,17 +359,17 @@ const TextLink = styled(Link)`
 const Actions = styled.nav`
   display: flex;
   flex-wrap: wrap;
-  gap: ${({ theme }) => theme.layout.flow.text};
+  gap: ${({ theme }) => theme.layout.gap.text};
 `
 
 const ActionLink = styled(Link)`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: ${({ theme }) => theme.spacing(3.2)};
-  padding-inline: ${({ theme }) => theme.spacing(1.15)};
-  border: 1px solid ${({ theme }) => theme.color.border.subtle};
-  border-radius: ${({ theme }) => theme.borderRadius.pill};
+  min-height: ${({ theme }) => theme.space(3.2)};
+  padding-inline: ${({ theme }) => theme.space(1.15)};
+  border: 1px solid ${({ theme }) => theme.color.border.default};
+  border-radius: ${({ theme }) => theme.radius.pill};
   color: ${({ theme }) => theme.color.text.soft};
   background: transparent;
   text-decoration: none;
@@ -418,9 +377,9 @@ const ActionLink = styled(Link)`
 
   &:hover,
   &:focus-visible {
-    background: ${({ theme }) => theme.color.surface.chrome};
+    background: ${({ theme }) => theme.color.surface.quiet};
     border-color: ${({ theme }) => theme.color.border.strong};
-    color: ${({ theme }) => theme.color.text.primary};
+    color: ${({ theme }) => theme.color.text.default};
     text-decoration: none;
     transform: translateY(
       calc(${({ theme }) => theme.motion.foundations.distances.nudge} * -1)

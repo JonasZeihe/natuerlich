@@ -6,89 +6,54 @@ import {
   type ComponentPropsWithoutRef,
   type ReactNode,
 } from 'react'
-import styled, { css } from 'styled-components'
-import AnchoredAsset from '@/components/assets/AnchoredAsset'
-import type {
-  AssetConsumerSpec,
-  PositionedAssetSpec,
-} from '@/components/assets/registry'
-import type { MovementKey, SurfaceToneKey } from '@/design/theme'
+import styled, { css, type DefaultTheme } from 'styled-components'
 
-type SurfacePadding = 'none' | 'sm' | 'md' | 'lg'
-type SurfaceRadius = 'none' | 'small' | 'medium' | 'large' | 'pill'
+type SurfaceTone = 'bare' | keyof DefaultTheme['color']['surface']
+type SurfacePadding = keyof DefaultTheme['layout']['surfacePadding']
+type SurfaceRadius = keyof DefaultTheme['radius']
 
 type Props = {
-  tone?: SurfaceToneKey
-  movement?: MovementKey
+  tone?: SurfaceTone
   radius?: SurfaceRadius
   padding?: SurfacePadding
   bordered?: boolean
-  asset?: AssetConsumerSpec | null
-  assets?: readonly PositionedAssetSpec[] | null
   children?: ReactNode
 } & Omit<ComponentPropsWithoutRef<'div'>, 'color'>
 
 type StyledProps = {
+  $tone: SurfaceTone
   $radius: SurfaceRadius
   $padding: SurfacePadding
   $bordered: boolean
-  $tone: SurfaceToneKey
-  $movement?: MovementKey
-  $assetBleeds: boolean
 }
+
+const isDarkSurface = (tone: SurfaceTone) =>
+  tone === 'inverse' || tone === 'backdrop'
 
 const Base = styled.div<StyledProps>`
   position: relative;
   min-width: 0;
-  border-radius: ${({ theme, $radius }) => theme.borderRadius[$radius]};
-  overflow: ${({ $assetBleeds }) => ($assetBleeds ? 'visible' : 'clip')};
-  padding: ${({ theme, $padding }) => theme.layout.surface[$padding]};
+  padding: ${({ theme, $padding }) => theme.layout.surfacePadding[$padding]};
+  border-radius: ${({ theme, $radius }) => theme.radius[$radius]};
+  overflow: clip;
 
-  ${({ theme, $tone, $movement, $bordered }) => {
-    const resolved = theme.getSurfaceTone($tone, $movement)
-    const hasBorder = $bordered && resolved.border !== 'transparent'
-
-    return css`
-      background: ${resolved.bg};
-      color: ${resolved.fg};
-      border: ${hasBorder ? `1px solid ${resolved.border}` : '0'};
-    `
-  }}
+  ${({ theme, $tone, $bordered }) => css`
+    background: ${$tone === 'bare'
+      ? 'transparent'
+      : theme.color.surface[$tone]};
+    color: ${isDarkSurface($tone)
+      ? theme.color.text.inverse
+      : theme.color.text.default};
+    border: ${$bordered ? `1px solid ${theme.color.border.default}` : '0'};
+  `}
 `
-
-const Content = styled.div`
-  position: relative;
-  z-index: 1;
-  min-width: 0;
-`
-
-const hasBleedingAsset = (
-  asset: AssetConsumerSpec | null | undefined,
-  assets: readonly PositionedAssetSpec[] | null | undefined
-) =>
-  asset?.boundary === 'bleed' ||
-  Boolean(assets?.some((item) => item.boundary === 'bleed'))
-
-const renderAssets = (
-  assets: readonly PositionedAssetSpec[] | null | undefined
-) =>
-  assets?.map((item, index) => (
-    <AnchoredAsset
-      key={`${item.name}-${index}`}
-      {...item}
-      placement="surface"
-    />
-  )) ?? null
 
 const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
   {
     tone = 'bare',
-    movement,
     radius = 'none',
     padding = 'none',
     bordered = false,
-    asset,
-    assets,
     children,
     ...rest
   },
@@ -98,16 +63,12 @@ const Surface = forwardRef<HTMLDivElement, Props>(function Surface(
     <Base
       ref={ref}
       $tone={tone}
-      $movement={movement}
       $radius={radius}
       $padding={padding}
       $bordered={bordered}
-      $assetBleeds={hasBleedingAsset(asset, assets)}
       {...rest}
     >
-      {asset ? <AnchoredAsset {...asset} placement="surface" /> : null}
-      {renderAssets(assets)}
-      <Content>{children}</Content>
+      {children}
     </Base>
   )
 })

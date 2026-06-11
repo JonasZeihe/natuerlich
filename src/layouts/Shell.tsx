@@ -48,7 +48,7 @@ const Outer = styled.div`
   width: 100%;
   min-width: 0;
   isolation: isolate;
-  background: ${({ theme }) => theme.roles.surface.canvas};
+  background: ${({ theme }) => theme.color.surface.page};
 `
 
 const MainShell = styled.div`

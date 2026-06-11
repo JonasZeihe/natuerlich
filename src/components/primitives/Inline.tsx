@@ -2,7 +2,7 @@
 'use client'
 
 import { Children, type ComponentPropsWithoutRef, type ReactNode } from 'react'
-import styled, { type DefaultTheme } from 'styled-components'
+import styled, { css, type DefaultTheme } from 'styled-components'
 
 type Align = 'start' | 'center' | 'end' | 'stretch'
 type Justify = 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly'
@@ -16,13 +16,20 @@ type Props = {
   children?: ReactNode
 } & Omit<ComponentPropsWithoutRef<'div'>, 'children'>
 
-const toGap = (theme: DefaultTheme, gap?: number | string) => {
-  if (typeof gap === 'number') return theme.spacing(gap)
-  if (typeof gap === 'string') return gap
-  return theme.layout.flow.text
+const resolveSpace = (
+  theme: DefaultTheme,
+  value: number | string | undefined,
+  fallback: string
+) => {
+  if (typeof value === 'number') return theme.space(value)
+  if (typeof value === 'string') return value
+  return fallback
 }
 
-const mapJustify = (justify: Justify) =>
+const resolveAlign = (align: Align) =>
+  align === 'start' ? 'flex-start' : align === 'end' ? 'flex-end' : align
+
+const resolveJustify = (justify: Justify) =>
   justify === 'start'
     ? 'flex-start'
     : justify === 'end'
@@ -43,24 +50,24 @@ const Row = styled.div<{
 }>`
   display: flex;
   flex-wrap: ${({ $wrap }) => ($wrap ? 'wrap' : 'nowrap')};
-  align-items: ${({ $align }) =>
-    $align === 'start' ? 'flex-start' : $align === 'end' ? 'flex-end' : $align};
-  justify-content: ${({ $justify }) => mapJustify($justify)};
-  gap: ${({ theme, $gap }) => toGap(theme, $gap)};
+  align-items: ${({ $align }) => resolveAlign($align)};
+  justify-content: ${({ $justify }) => resolveJustify($justify)};
+  gap: ${({ theme, $gap }) => resolveSpace(theme, $gap, theme.layout.gap.text)};
   min-width: 0;
 `
 
 const Item = styled.div<{ $withDivider: boolean }>`
   display: inline-flex;
   align-items: center;
-  gap: ${({ theme }) => theme.spacingHalf(1)};
+  min-width: 0;
+  gap: ${({ theme }) => theme.space(1)};
 
-  ${({ $withDivider, theme }) =>
+  ${({ theme, $withDivider }) =>
     $withDivider
-      ? `
-    border-left: 1px solid ${theme.roles.border.subtle};
-    padding-left: ${theme.layout.flow.text};
-  `
+      ? css`
+          border-left: 1px solid ${theme.color.border.default};
+          padding-left: ${theme.layout.gap.text};
+        `
       : ''}
 `
 

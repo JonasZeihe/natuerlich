@@ -1,12 +1,12 @@
 // src/components/compositions/page/PageCanvas.tsx
 'use client'
 
-import { type ReactNode } from 'react'
+import { type ComponentPropsWithoutRef, type ReactNode } from 'react'
 import styled, { css } from 'styled-components'
 
 type PageCanvasVariant = 'default' | 'landing' | 'article'
 
-type PageCanvasProps = React.ComponentPropsWithoutRef<'div'> & {
+type PageCanvasProps = ComponentPropsWithoutRef<'div'> & {
   variant?: PageCanvasVariant
   introOffset?: boolean
   noFooterGap?: boolean
@@ -24,7 +24,7 @@ const Root = styled.div<{
   width: 100%;
   min-width: 0;
   overflow: clip;
-  color: ${({ theme }) => theme.roles.text.primary};
+  color: ${({ theme }) => theme.color.text.default};
   padding-top: ${({ theme, $introOffset }) =>
     $introOffset ? `calc(${theme.layout.section.default} * 0.82)` : 0};
   padding-bottom: ${({ theme, $noFooterGap }) =>
@@ -33,11 +33,11 @@ const Root = styled.div<{
   ${({ theme, $variant }) =>
     $variant === 'article'
       ? css`
-          background: ${theme.roles.surface.field};
+          background: ${theme.color.surface.field};
         `
       : $variant === 'landing'
         ? css`
-            background: ${theme.roles.surface.canvas};
+            background: ${theme.color.surface.page};
           `
         : css`
             background: transparent;

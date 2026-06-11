@@ -21,11 +21,11 @@ const OrientationCards = ({ items, ariaLabel }: Props) => (
     <ContentRail columns={3} min="15rem" align="stretch">
       {items.map((item, index) => (
         <Card key={index}>
-          <Typography as="h3" variant="h3" color="primary" cadence="dense">
+          <Typography as="h3" variant="h3" tone="strong">
             {item.title}
           </Typography>
 
-          <Typography as="p" variant="body" tone="soft" cadence="open">
+          <Typography as="p" variant="body" tone="soft">
             {item.text}
           </Typography>
         </Card>
@@ -42,12 +42,12 @@ const Shell = styled.div`
 
 const Card = styled(ContentRailItem)`
   align-content: start;
-  gap: ${({ theme }) => theme.layout.flow.text};
-  padding-top: ${({ theme }) => theme.layout.flow.block};
+  gap: ${({ theme }) => theme.layout.gap.text};
+  padding-top: ${({ theme }) => theme.layout.gap.block};
   border-top: 1px solid
     color-mix(
       in srgb,
-      ${({ theme }) => theme.roles.movement.practice.border} 46%,
+      ${({ theme }) => theme.color.border.default} 46%,
       transparent
     );
 `

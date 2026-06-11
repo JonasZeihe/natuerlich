@@ -3,8 +3,8 @@
 
 import { useState, type ReactNode } from 'react'
 import styled, { css } from 'styled-components'
+import Button from '@/components/actions/Button'
 import ContentRail, { ContentRailItem } from '@/components/content/ContentRail'
-import Stack from '@/components/primitives/Stack'
 import Typography from '@/design/typography'
 
 type AudienceKey = 'individual' | 'group' | 'company'
@@ -62,6 +62,7 @@ const inferOfferTone = (title: ReactNode): OfferTone => {
   if (label.includes('Yoga')) return 'yoga'
   if (label.includes('Taijiquan')) return 'taiji'
   if (label.includes('Besondere')) return 'special'
+
   return 'foundation'
 }
 
@@ -87,16 +88,16 @@ const renderMeta = (first: ReactNode, second: ReactNode) => (
 const renderIndividual = (item: PathCardItem) => (
   <Details>
     <PriceLine>
-      <Typography as="p" variant="subtitle">
+      <Typography as="p" variant="h3">
         {item.individual.format}
       </Typography>
 
-      <Typography as="p" variant="subtitle">
+      <Typography as="p" variant="h3">
         {item.individual.price}
       </Typography>
     </PriceLine>
 
-    <SoftText as="p" variant="body" cadence="open">
+    <SoftText as="p" variant="body">
       {item.individual.text}
     </SoftText>
   </Details>
@@ -104,19 +105,19 @@ const renderIndividual = (item: PathCardItem) => (
 
 const renderGroup = (item: PathCardItem) => (
   <Details>
-    <Stack gap={0.55}>
-      <Typography as="p" variant="subtitle">
+    <DetailStack>
+      <Typography as="p" variant="h3">
         {item.group.format}
       </Typography>
 
       {renderMeta(item.group.duration, item.group.price)}
 
-      <SoftText as="p" variant="body" cadence="open">
+      <SoftText as="p" variant="body">
         {item.group.text}
       </SoftText>
-    </Stack>
+    </DetailStack>
 
-    <Stack gap={0.35}>
+    <CompactStack>
       <Typography as="p" variant="body">
         {item.group.classText}
       </Typography>
@@ -124,7 +125,7 @@ const renderGroup = (item: PathCardItem) => (
       <SoftText as="p" variant="body">
         {item.group.classPrice}
       </SoftText>
-    </Stack>
+    </CompactStack>
   </Details>
 )
 
@@ -133,13 +134,13 @@ const renderCompany = (item: PathCardItem) => {
 
   return (
     <Details>
-      <Typography as="p" variant="subtitle">
+      <Typography as="p" variant="h3">
         {item.company.format}
       </Typography>
 
       {renderMeta(item.company.duration, item.company.price)}
 
-      <SoftText as="p" variant="body" cadence="open">
+      <SoftText as="p" variant="body">
         {item.company.text}
       </SoftText>
     </Details>
@@ -149,6 +150,7 @@ const renderCompany = (item: PathCardItem) => {
 const renderDetails = (item: PathCardItem, audience: AudienceKey) => {
   if (audience === 'individual') return renderIndividual(item)
   if (audience === 'company') return renderCompany(item)
+
   return renderGroup(item)
 }
 
@@ -163,15 +165,16 @@ const PathCards = ({ items }: Props) => {
     <Shell>
       <Tabs aria-label="Angebotsrahmen">
         {audienceItems.map((item) => (
-          <Tab
+          <Button
             key={item.key}
             type="button"
-            $active={item.key === audience}
+            variant={item.key === audience ? 'primary' : 'ghost'}
+            size="sm"
             aria-pressed={item.key === audience}
             onClick={() => setAudience(item.key)}
           >
             {item.text}
-          </Tab>
+          </Button>
         ))}
       </Tabs>
 
@@ -190,15 +193,15 @@ const PathCards = ({ items }: Props) => {
             return (
               <OfferCard key={index} $tone={tone}>
                 <Head>
-                  <Typography as="h3" variant="h2" cadence="dense">
+                  <Typography as="h3" variant="h2" measure="title">
                     {item.title}
                   </Typography>
 
-                  <Typography as="p" variant="subtitle">
+                  <Typography as="p" variant="h3">
                     {item.line}
                   </Typography>
 
-                  <SoftText as="p" variant="body" cadence="open">
+                  <SoftText as="p" variant="body">
                     {item.text}
                   </SoftText>
                 </Head>
@@ -217,15 +220,15 @@ const PathCards = ({ items }: Props) => {
               return (
                 <SupplementalPanel key={index} $tone={tone}>
                   <SupplementalHead>
-                    <Typography as="h3" variant="h3" cadence="dense">
+                    <Typography as="h3" variant="h3">
                       {item.title}
                     </Typography>
 
-                    <Typography as="p" variant="subtitle">
+                    <Typography as="p" variant="body" tone="strong">
                       {item.line}
                     </Typography>
 
-                    <SoftText as="p" variant="body" cadence="open">
+                    <SoftText as="p" variant="body">
                       {item.text}
                     </SoftText>
                   </SupplementalHead>
@@ -243,7 +246,7 @@ const PathCards = ({ items }: Props) => {
 
 const Shell = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.layout.flow.cluster};
+  gap: ${({ theme }) => theme.layout.gap.cluster};
   width: 100%;
   min-width: 0;
 `
@@ -251,43 +254,21 @@ const Shell = styled.div`
 const Tabs = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: ${({ theme }) => theme.spacing(0.5)};
-`
-
-const Tab = styled.button<{ $active: boolean }>`
-  appearance: none;
-  border: 0;
-  border-radius: ${({ theme }) => theme.borderRadius.pill};
-  background: ${({ theme, $active }) =>
-    $active
-      ? theme.foundations.palette.mossDeep
-      : `color-mix(in srgb, ${theme.foundations.palette.morningLight} 82%, white)`};
-  color: ${({ theme, $active }) =>
-    $active
-      ? theme.foundations.palette.ivory
-      : theme.foundations.palette.mossDeep};
-  padding: ${({ theme }) => `${theme.spacing(0.7)} ${theme.spacing(1)}`};
-  font: inherit;
-  cursor: pointer;
-
-  &:focus-visible {
-    outline: 2px solid ${({ theme }) => theme.color.border.focus};
-    outline-offset: 3px;
-  }
+  gap: ${({ theme }) => theme.space(0.5)};
 `
 
 const OfferFlow = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.layout.flow.cluster};
+  gap: ${({ theme }) => theme.layout.gap.cluster};
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    gap: ${({ theme }) => theme.layout.flow.region};
+  @media (min-width: ${({ theme }) => theme.breakpoint.lg}) {
+    gap: ${({ theme }) => theme.layout.gap.region};
   }
 `
 
 const offerToneCSS = (tone: OfferTone) => css`
   ${({ theme }) => {
-    const { palette } = theme.foundations
+    const { palette } = theme
 
     const map = {
       foundation: {
@@ -347,15 +328,15 @@ const offerToneCSS = (tone: OfferTone) => css`
 `
 
 const OfferCard = styled(ContentRailItem)<{ $tone: OfferTone }>`
-  gap: ${({ theme }) => theme.layout.flow.block};
-  padding: ${({ theme }) => theme.layout.surface.lg};
-  border-radius: ${({ theme }) => theme.borderRadius.large};
+  gap: ${({ theme }) => theme.layout.gap.block};
+  padding: ${({ theme }) => theme.layout.surfacePadding.lg};
+  border-radius: ${({ theme }) => theme.radius.lg};
   ${({ $tone }) => offerToneCSS($tone)}
 `
 
 const Head = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.layout.flow.text};
+  gap: ${({ theme }) => theme.layout.gap.text};
 `
 
 const SupplementalFlow = styled.div`
@@ -365,12 +346,12 @@ const SupplementalFlow = styled.div`
 
 const SupplementalPanel = styled.article<{ $tone: OfferTone }>`
   display: grid;
-  gap: ${({ theme }) => theme.layout.flow.block};
-  padding: ${({ theme }) => theme.layout.surface.lg};
-  border-radius: ${({ theme }) => theme.borderRadius.large};
+  gap: ${({ theme }) => theme.layout.gap.block};
+  padding: ${({ theme }) => theme.layout.surfacePadding.lg};
+  border-radius: ${({ theme }) => theme.radius.lg};
   ${({ $tone }) => offerToneCSS($tone)}
 
-  @media (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media (min-width: ${({ theme }) => theme.breakpoint.md}) {
     grid-template-columns: minmax(0, 0.72fr) minmax(18rem, 0.58fr);
     align-items: start;
   }
@@ -378,14 +359,24 @@ const SupplementalPanel = styled.article<{ $tone: OfferTone }>`
 
 const SupplementalHead = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.layout.flow.text};
+  gap: ${({ theme }) => theme.layout.gap.text};
 `
 
 const Details = styled.div`
   display: grid;
-  gap: ${({ theme }) => theme.spacing(0.85)};
-  padding-top: ${({ theme }) => theme.spacing(1)};
+  gap: ${({ theme }) => theme.space(0.85)};
+  padding-top: ${({ theme }) => theme.space(1)};
   border-top: 1px solid var(--offer-divider);
+`
+
+const DetailStack = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.space(0.55)};
+`
+
+const CompactStack = styled.div`
+  display: grid;
+  gap: ${({ theme }) => theme.space(0.35)};
 `
 
 const SoftText = styled(Typography)`
@@ -396,8 +387,7 @@ const Meta = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: ${({ theme }) => theme.spacing(0.25)}
-    ${({ theme }) => theme.spacing(0.5)};
+  gap: ${({ theme }) => theme.space(0.25)} ${({ theme }) => theme.space(0.5)};
   color: var(--offer-soft);
 `
 
@@ -412,7 +402,7 @@ const PriceLine = styled.div`
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: ${({ theme }) => theme.spacing(0.75)};
+  gap: ${({ theme }) => theme.space(0.75)};
 `
 
 export default PathCards

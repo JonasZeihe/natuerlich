@@ -6,8 +6,13 @@ export const SITE_SECTIONS = [
     showInHeader: true,
   },
   {
+    id: 'beziehung',
+    label: 'Beziehung',
+    showInHeader: true,
+  },
+  {
     id: 'erkennen',
-    label: 'Erkennen',
+    label: 'Jonas',
     showInHeader: true,
   },
   {

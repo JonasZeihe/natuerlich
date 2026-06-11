@@ -22,9 +22,9 @@ const BoundaryFallback = styled.div`
   align-items: center;
   justify-content: center;
   min-height: 12rem;
-  padding: ${({ theme }) => theme.spacing(2)};
-  color: ${({ theme }) => theme.roles.text.primary};
-  background: ${({ theme }) => theme.roles.surface.canvas};
+  padding: ${({ theme }) => theme.space(2)};
+  color: ${({ theme }) => theme.color.text.default};
+  background: ${({ theme }) => theme.color.surface.page};
 `
 
 export class AppErrorBoundary extends React.Component<Props, State> {

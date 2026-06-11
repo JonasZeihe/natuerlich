@@ -29,7 +29,7 @@ const Root = styled.div<{
   display: grid;
   width: 100%;
   min-width: 0;
-  gap: ${({ theme, $gap }) => $gap ?? theme.layout.grid.gap};
+  gap: ${({ theme, $gap }) => $gap ?? theme.layout.gap};
   align-items: ${({ $align }) => ($align === 'stretch' ? 'stretch' : 'start')};
   justify-items: ${({ $align }) => ($align === 'stretch' ? 'stretch' : $align)};
 
@@ -73,7 +73,7 @@ const Root = styled.div<{
         `
       : ''}
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+  @media (max-width: ${({ theme }) => theme.breakpoint.sm}) {
     ${({ $variant }) =>
       $variant === 'cards'
         ? ''
